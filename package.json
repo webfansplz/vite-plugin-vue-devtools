@@ -1,0 +1,68 @@
+{
+  "name": "vite-plugin-vue-devtools",
+  "version": "0.0.1-alpha.0",
+  "packageManager": "pnpm@7.30.0",
+  "description": "A vite plugin for Vue Devtools",
+  "author": "webfansplz",
+  "license": "MIT",
+  "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webfansplz/vite-plugin-vue-devtools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webfansplz/vite-plugin-vue-devtools/issues"
+  },
+  "keywords": [
+    "vue-devtools",
+    "vite-plugin",
+    "vite-plugin-vue-devtools",
+    "vue",
+    "vite"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./*": "./*"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "*.d.ts"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "build": "rimraf dist && run-s build:*",
+    "build:client": "vite build src/client",
+    "build:js": "unbuild",
+    "dev": "nr stub && vite src/client",
+    "dev:client": "vite build src/client --watch",
+    "play": "nr -C playground dev",
+    "stub": "unbuild --stub",
+    "lint": "eslint . --fix",
+    "prepublishOnly": "npm run build",
+    "release": "bumpp && npm publish"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.38.5",
+    "@antfu/ni": "^0.21.3",
+    "@types/node": "^18.15.13",
+    "@unocss/eslint-config": "^0.51.5",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "bumpp": "^9.1.0",
+    "eslint": "^8.38.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.0.4",
+    "unbuild": "^1.2.1",
+    "unocss": "^0.51.5",
+    "vite": "^4.3.1",
+    "vue": "^3.2.47"
+  }
+}
