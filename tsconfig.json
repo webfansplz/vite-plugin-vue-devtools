@@ -10,6 +10,7 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "types": [
+      "vite-plugin-pages/client",
       "vite/client"
     ]
   }

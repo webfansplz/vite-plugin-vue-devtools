@@ -1,0 +1,147 @@
+@import 'splitpanes/dist/splitpanes.css';
+
+html {
+  --at-apply: font-sans;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  /* trap scroll inside iframe */
+  height: calc(100vh + 1px);
+}
+
+html.dark {
+  background: #151515;
+  color-scheme: dark;
+}
+
+/* Overrides Floating Vue */
+.v-popper--theme-dropdown .v-popper__inner,
+.v-popper--theme-tooltip .v-popper__inner {
+  --at-apply: bg-base text-black dark:text-white rounded border border-base shadow;
+  box-shadow: 0 6px 30px #0000001a;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-inner,
+.v-popper--theme-dropdown .v-popper__arrow-inner {
+  visibility: visible;
+  --at-apply: border-white dark:border-hex-121212;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-outer,
+.v-popper--theme-dropdown .v-popper__arrow-outer {
+  --at-apply: border-base;
+}
+
+.v-popper--theme-tooltip.v-popper--shown,
+.v-popper--theme-tooltip.v-popper--shown * {
+  transition: none !important;
+}
+
+/* Markdown */
+.n-markdown a {
+  --at-apply: text-primary hover:underline;
+}
+
+/* Splitpanes */
+.splitpanes__splitter {
+  position: relative;
+}
+
+.splitpanes__splitter:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: .2s ease;
+  content: '';
+  transition: opacity 0.4s;
+  z-index: 1;
+}
+
+.splitpanes__splitter:hover:before {
+  background: #8881;
+  opacity: 1;
+}
+
+.splitpanes--vertical>.splitpanes__splitter {
+  min-width: 0 !important;
+  width: 0 !important;
+}
+
+.splitpanes--horizontal>.splitpanes__splitter {
+  min-height: 0 !important;
+  height: 0 !important;
+}
+
+.splitpanes--vertical>.splitpanes__splitter:before {
+  left: -5px;
+  right: -4px;
+  height: 100%;
+}
+
+.splitpanes--horizontal>.splitpanes__splitter:before {
+  top: -5px;
+  bottom: -4px;
+  width: 100%;
+}
+
+/* JSON Editor */
+textarea {
+  background: #8881
+}
+
+.json-editor-vue {
+  --jse-theme-color: #8886 !important;
+  --jse-theme-color-highlight: #8889 !important;
+  --jse-background-color: #8888880A !important;
+}
+
+.json-editor-vue .no-main-menu {
+  border: none !important;
+}
+
+.json-editor-vue .jse-main {
+  min-height: 1em !important;
+}
+
+.json-editor-vue .jse-contents {
+  border-width: 0 !important;
+  border-radius: 5px !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-border);
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8885;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8886;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+}

@@ -80,3 +80,4 @@ dist
 # IDE
 .idea
 
+.vite-inspect
