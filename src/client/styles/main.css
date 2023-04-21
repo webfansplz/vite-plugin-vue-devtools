@@ -16,7 +16,7 @@ body::-webkit-scrollbar {
 
 body {
   /* trap scroll inside iframe */
-  height: calc(100vh + 1px);
+  /* height: calc(100vh + 1px); */
 }
 
 html.dark {

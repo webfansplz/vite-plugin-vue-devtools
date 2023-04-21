@@ -2,12 +2,12 @@
 // const tabs = useTabs()
 const tabs = [
   {
-    id: 'Inspect',
+    path: 'inspect',
     title: 'Inspect',
     icon: 'i-carbon-ibm-watson-discovery',
   },
   {
-    id: 'Inspector',
+    path: 'inspector',
     title: 'Inspector',
     icon: 'i-carbon-select-window',
   },
@@ -33,7 +33,7 @@ const tabs = [
 
     <SideNavItem
       v-for="tab of tabs"
-      :key="tab.id"
+      :key="tab.path"
       :tab="tab"
     />
   </div>

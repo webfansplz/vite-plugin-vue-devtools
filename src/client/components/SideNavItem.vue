@@ -7,7 +7,7 @@ defineProps<{
 <template>
   <VTooltip placement="right">
     <RouterLink
-      :to="`/${tab.id}`"
+      :to="`/${tab.path}`"
       flex="~"
       hover="bg-active"
       h-10 w-10 select-none items-center justify-center rounded-xl p1 text-secondary

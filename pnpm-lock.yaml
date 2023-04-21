@@ -28,6 +28,9 @@ importers:
       unplugin-auto-import: ^0.15.3
       unplugin-vue-components: ^0.24.1
       vite: ^4.3.1
+      vite-dev-rpc: ^0.1.2
+      vite-hot-client: ^0.2.1
+      vite-plugin-inspect: ^0.7.23
       vite-plugin-pages: ^0.29.0
       vue: ^3.2.47
       vue-router: ^4.1.6
@@ -35,6 +38,7 @@ importers:
       '@vueuse/core': 10.0.2_vue@3.2.47
       sirv: 2.0.2
       splitpanes: 3.1.5
+      vite-hot-client: 0.2.1_vite@4.3.1
       vue-router: 4.1.6_vue@3.2.47
     devDependencies:
       '@antfu/eslint-config': 0.38.5_voubu7prgxjfsfbgx5d4sqnwiy
@@ -58,6 +62,8 @@ importers:
       unplugin-auto-import: 0.15.3_@vueuse+core@10.0.2
       unplugin-vue-components: 0.24.1_vue@3.2.47
       vite: 4.3.1_@types+node@18.15.13
+      vite-dev-rpc: 0.1.2_vite@4.3.1
+      vite-plugin-inspect: 0.7.23_vite@4.3.1
       vite-plugin-pages: 0.29.0_vite@4.3.1
       vue: 3.2.47
 
@@ -596,7 +602,6 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-arm64/0.17.17:
@@ -605,7 +610,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-x64/0.17.17:
@@ -614,7 +618,6 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/darwin-arm64/0.17.17:
@@ -623,7 +626,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/darwin-x64/0.17.17:
@@ -632,7 +634,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64/0.17.17:
@@ -641,7 +642,6 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/freebsd-x64/0.17.17:
@@ -650,7 +650,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-arm/0.17.17:
@@ -659,7 +658,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-arm64/0.17.17:
@@ -668,7 +666,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-ia32/0.17.17:
@@ -677,7 +674,6 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-loong64/0.17.17:
@@ -686,7 +682,6 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-mips64el/0.17.17:
@@ -695,7 +690,6 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-ppc64/0.17.17:
@@ -704,7 +698,6 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-riscv64/0.17.17:
@@ -713,7 +706,6 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-s390x/0.17.17:
@@ -722,7 +714,6 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-x64/0.17.17:
@@ -731,7 +722,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/netbsd-x64/0.17.17:
@@ -740,7 +730,6 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/openbsd-x64/0.17.17:
@@ -749,7 +738,6 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/sunos-x64/0.17.17:
@@ -758,7 +746,6 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-arm64/0.17.17:
@@ -767,7 +754,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-ia32/0.17.17:
@@ -776,7 +762,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-x64/0.17.17:
@@ -785,7 +770,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@eslint-community/eslint-utils/4.4.0_eslint@8.38.0:
@@ -1430,7 +1414,6 @@ packages:
 
   /@types/node/18.15.13:
     resolution: {integrity: sha512-N+0kuo9KgrUQ1Sn/ifDXsvg0TTleP7rIy4zOBGECxAljqvqfqpTfzx0Q1NUedOixRMBfe2Whhb056a42cWs26Q==}
-    dev: true
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -3040,7 +3023,6 @@ packages:
       '@esbuild/win32-arm64': 0.17.17
       '@esbuild/win32-ia32': 0.17.17
       '@esbuild/win32-x64': 0.17.17
-    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -3683,7 +3665,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /function-bind/1.1.1:
@@ -5736,7 +5717,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -6648,6 +6628,23 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
+  /vite-dev-rpc/0.1.2_vite@4.3.1:
+    resolution: {integrity: sha512-tjW7jd5KQ4bXpGAErpw3qfLfryYs/lH4W/2gvHsWyHtYbF/O+iB7Kp99y0+3/Dc9/pFH7QcKsoHpOCqfGVhG4Q==}
+    peerDependencies:
+      vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0-0
+    dependencies:
+      birpc: 0.2.11
+      vite: 4.3.1_@types+node@18.15.13
+      vite-hot-client: 0.2.1_vite@4.3.1
+    dev: true
+
+  /vite-hot-client/0.2.1_vite@4.3.1:
+    resolution: {integrity: sha512-UqsQdw5PODnSrTDT85nr09RlhV0gkm2Xat74U2l8JZ5R8M/wTCggWSyPjxbLk5fbbVnWfr0JwW+vVoosjQnYrA==}
+    peerDependencies:
+      vite: ^2.6.0 || ^3.0.0 || ^4.0.0
+    dependencies:
+      vite: 4.3.1_@types+node@18.15.13
+
   /vite-plugin-inspect/0.7.23_vite@4.3.1:
     resolution: {integrity: sha512-VodzewpE9ufA8aPQhzTihbiMKAJ1aFoXNe+BB/3L52HB4Hf7I2WEOc1Yu4BC45rvw2VFuVnlXYlXL7JVQuseUw==}
     engines: {node: '>=14'}
@@ -6771,7 +6768,6 @@ packages:
       rollup: 3.20.6
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /vue-demi/0.14.0_vue@3.2.47:
     resolution: {integrity: sha512-gt58r2ogsNQeVoQ3EhoUAvUsH9xviydl0dWJj7dabBC/2L4uBId7ujtCwDRD0JhkGsV1i0CtfLAeyYKBht9oWg==}

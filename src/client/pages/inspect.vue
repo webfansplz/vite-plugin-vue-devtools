@@ -4,6 +4,6 @@
 
 <template>
   <div>
-    123
+    <iframe src="http://localhost:5173/__inspect/" h-full w-full />
   </div>
 </template>
