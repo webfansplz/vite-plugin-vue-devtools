@@ -20,3 +20,6 @@ const router = createRouter({
 app.use(router)
 app.use(FloatingVue)
 app.mount('#app')
+
+// @ts-expect-error - hack iframe console
+window.consola = window.parent.print

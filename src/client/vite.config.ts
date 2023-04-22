@@ -36,6 +36,9 @@ export default defineConfig({
     }),
     Unocss(),
     AutoImport({
+      dirs: [
+        './composables',
+      ],
       dts: join(__dirname, 'auto-imports.d.ts'),
       imports: [
         'vue',

@@ -2,6 +2,11 @@
 // const tabs = useTabs()
 const tabs = [
   {
+    path: 'components',
+    title: 'Components',
+    icon: 'i-carbon-assembly-cluster',
+  },
+  {
     path: 'inspect',
     title: 'Inspect',
     icon: 'i-carbon-ibm-watson-discovery',
