@@ -1,3 +1,6 @@
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
+import { normalizePath } from 'vite'
 import type { Plugin, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
@@ -7,6 +10,11 @@ import { DIR_CLIENT } from '../dir'
 import type { RPCFunctions } from '../types'
 
 const NAME = 'vite-plugin-vue-devtools'
+
+function getVueDevtoolsPath() {
+  const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
+  return pluginPath.replace(/\/dist$/, '/\/src')
+}
 
 async function getComponentsRelationships(rpc: ViteInspectAPI['rpc']) {
   const list = await rpc.list()
@@ -38,6 +46,7 @@ async function getComponentsRelationships(rpc: ViteInspectAPI['rpc']) {
 }
 
 export default function PluginVueDevtools(): Plugin[] {
+  const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect()
 
   function configureServer(server: ViteDevServer) {
@@ -59,6 +68,27 @@ export default function PluginVueDevtools(): Plugin[] {
     configureServer(server) {
       configureServer(server)
       // console.log(server)
+    },
+    async resolveId(importee: string) {
+      if (importee.startsWith('virtual:vue-devtools-path:')) {
+        const resolved = importee.replace('virtual:vue-devtools-path:', `${vueDevtoolsPath}/`)
+        return resolved
+      }
+    },
+    transformIndexHtml(html) {
+      return {
+        html,
+        tags: [
+          {
+            tag: 'script',
+            injectTo: 'head',
+            attrs: {
+              type: 'module',
+              src: '/@id/virtual:vue-devtools-path:app.js',
+            },
+          },
+        ],
+      }
     },
     async buildEnd() {
     },
