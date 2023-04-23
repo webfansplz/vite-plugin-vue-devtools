@@ -10,7 +10,7 @@ get()
 const route = useRoute()
 const router = useRouter()
 // router.push('/components')
-router.push('/graph')
+router.push('/timeline')
 </script>
 
 <template>

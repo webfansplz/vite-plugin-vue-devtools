@@ -15,10 +15,10 @@ importers:
       '@unocss/reset': ^0.51.5
       '@vitejs/plugin-vue': ^4.1.0
       '@vueuse/core': ^10.0.2
-      D: ^1.0.0
       bumpp: ^9.1.0
       codemirror: ^6.0.1
       codemirror-theme-vars: ^0.1.2
+      dayjs: ^1.11.7
       eslint: ^8.38.0
       floating-vue: 2.0.0-beta.20
       fuse.js: ^6.6.2
@@ -43,7 +43,6 @@ importers:
       vue-router: ^4.1.6
     dependencies:
       '@vueuse/core': 10.0.2_vue@3.2.47
-      D: 1.0.0
       fuse.js: 6.6.2
       nanoid: 4.0.2
       sirv: 2.0.2
@@ -64,6 +63,7 @@ importers:
       bumpp: 9.1.0
       codemirror: 6.0.1
       codemirror-theme-vars: 0.1.2
+      dayjs: 1.11.7
       eslint: 8.38.0
       floating-vue: 2.0.0-beta.20_vue@3.2.47
       npm-run-all: 4.1.5
@@ -2055,11 +2055,6 @@ packages:
     resolution: {integrity: sha512-g5QiLIfbg3pLuYUJPlisNKY+epQJTcMDsOnVNkscrDP1oi7vmJnzOANYJI/1pZcVJ6umUkBv3aFtlg1UvUHGzA==}
     dev: true
 
-  /D/1.0.0:
-    resolution: {integrity: sha512-nQvrCBu7K2pSSEtIM0EEF03FVjcczCXInMt3moLNFbjlWx6bZrX72uT6/1uAXDbnzGUAx9gTyDiQ+vrFi663oA==}
-    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
-    dev: false
-
   /abbrev/1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
     dev: true
@@ -2721,6 +2716,10 @@ packages:
 
   /csstype/3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+    dev: true
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
     dev: true
 
   /debug/2.6.9:

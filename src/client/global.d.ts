@@ -1,6 +1,7 @@
 interface Window {
   consola: (...args: any[]) => void
   __VUE_DEVTOOLS_GET_VUE_INSTANCE__: () => any
+  __VUE_DEVTOOLS_GET_TIMELINE_EVENT__: () => any[]
 }
 
 declare interface ComponentTreeNode {

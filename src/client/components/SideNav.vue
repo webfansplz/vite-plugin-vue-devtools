@@ -7,6 +7,11 @@ const tabs = [
     icon: 'i-carbon-assembly-cluster',
   },
   {
+    path: 'timeline',
+    title: 'Timeline',
+    icon: 'i-icon-park-outline:vertical-timeline',
+  },
+  {
     path: 'graph',
     title: 'Graph',
     icon: 'i-carbon-network-4',

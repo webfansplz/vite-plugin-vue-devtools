@@ -6,7 +6,7 @@ import { useCounterStore } from './stores'
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue'
 
-const count = ref(100)
+const count = ref(120)
 
 const map = new Map([['a', 1], ['b', 2]])
 function add(x: number, y: number) {

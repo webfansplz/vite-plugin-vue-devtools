@@ -18,5 +18,7 @@ declare module '@vue/runtime-core' {
     SideNav: typeof import('./components/SideNav.vue')['default']
     SideNavItem: typeof import('./components/SideNavItem.vue')['default']
     TabIcon: typeof import('./components/TabIcon.vue')['default']
+    TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
+    TimelineEventInfo: typeof import('./components/TimelineEventInfo.vue')['default']
   }
 }

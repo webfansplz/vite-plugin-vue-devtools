@@ -4,7 +4,7 @@ import Child from './Child.vue'
 
 defineProps<{ msg: string }>()
 
-const count = ref(120)
+const count = ref(30)
 </script>
 
 <template>
