@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.0.2",
+    "nanoid": "^4.0.2",
     "sirv": "^2.0.2",
     "splitpanes": "^3.1.5",
     "vite-hot-client": "^0.2.1",
@@ -64,6 +65,7 @@
     "@nuxt/devtools-ui-kit": "^0.4.1",
     "@types/codemirror": "^5.60.7",
     "@types/node": "^18.15.13",
+    "@types/splitpanes": "^2.2.1",
     "@unocss/eslint-config": "^0.51.5",
     "@unocss/reset": "^0.51.5",
     "@vitejs/plugin-vue": "^4.1.0",

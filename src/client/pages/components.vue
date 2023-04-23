@@ -3,6 +3,7 @@ import { Pane, Splitpanes } from 'splitpanes'
 import { ComponentWalker } from '../../node/components/tree'
 import { getInstanceState } from '../../node/components/data'
 
+// TODO: refactor components page
 const componentTree = ref<ComponentTreeNode[]>([])
 
 const normalizedComponentState = computed(() => {
@@ -42,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div h-screen>
     <Splitpanes>
       <Pane border="r base">
         <div p-2>
@@ -50,7 +51,7 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div p-2>
+        <div h-screen select-none overflow-scroll p-2>
           <ComponentState v-for="(item) in normalizedComponentState" :key="item.id" :data="item" />
         </div>
       </Pane>

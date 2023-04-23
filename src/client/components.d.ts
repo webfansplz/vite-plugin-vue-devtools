@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ComponentState: typeof import('./components/ComponentState.vue')['default']
+    ComponentStateField: typeof import('./components/ComponentStateField.vue')['default']
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

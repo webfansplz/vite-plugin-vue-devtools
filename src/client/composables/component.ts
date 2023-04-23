@@ -1,4 +1,5 @@
 import type { ComponentInternalInstance } from 'vue'
+import { getInstanceState } from '../../node/components/data'
 
 // import { getInstanceState } from '../../node/components/data'
 
@@ -8,10 +9,11 @@ const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
 })
 export const selectedComponent = ref<ComponentInternalInstance>()
 export const selectedComponentState = shallowRef<Record<string, any>[]>([])
-export function useComponent(instance: ComponentTreeNode) {
+export function useComponent(instance: ComponentTreeNode & { instance?: ComponentInternalInstance }) {
   function select(id: string) {
     selected.value = id
-    // selectedComponent.value = instance
+    selectedComponent.value = instance.instance
+    selectedComponentState.value = getInstanceState(instance.instance!)
   }
   function toggleExpand(id: string) {
     expandedMap.value[id] = !expandedMap.value[id]

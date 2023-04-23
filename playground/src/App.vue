@@ -8,11 +8,16 @@ import HelloWorld from './components/HelloWorld.vue'
 
 const count = ref(100)
 
+const map = new Map([['a', 1], ['b', 2]])
+function add(x: number, y: number) {
+  console.log('?????')
+}
+
 const doubleCount = computed(() => {
   return count.value * 3
 })
 
-const list = ref<number[]>([0, 1, 2, 3, 4])
+const list = ref<any[]>([0, 1, 2, 3, 4, ref([1, 2, 3, 4, 5])])
 
 const info = ref({
   name: 'webfansplz',

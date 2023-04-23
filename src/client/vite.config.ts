@@ -37,6 +37,8 @@ export default defineConfig({
     Unocss(),
     AutoImport({
       dirs: [
+        './logic',
+        './utils',
         './composables',
       ],
       dts: join(__dirname, 'auto-imports.d.ts'),
