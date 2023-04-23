@@ -9,7 +9,8 @@ async function get() {
 get()
 const route = useRoute()
 const router = useRouter()
-router.push('/components')
+// router.push('/components')
+router.push('/graph')
 </script>
 
 <template>

@@ -7,6 +7,11 @@ const tabs = [
     icon: 'i-carbon-assembly-cluster',
   },
   {
+    path: 'graph',
+    title: 'Graph',
+    icon: 'i-carbon-network-4',
+  },
+  {
     path: 'inspect',
     title: 'Inspect',
     icon: 'i-carbon-ibm-watson-discovery',

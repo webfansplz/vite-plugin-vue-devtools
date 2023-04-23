@@ -9,7 +9,7 @@ iframe.style.left = '50%'
 iframe.style.transform = 'translateX(-50%)'
 iframe.style.width = '1200px'
 iframe.style.height = '600px'
-document.body.appendChild(iframe)
+// document.body.appendChild(iframe)
 
 window.print = (...s) => {
   console.log('print', ...s)
@@ -32,8 +32,8 @@ if (hook) {
     window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
       return component
     }
-    const w = document.getElementById('_devtools').contentWindow
-    w.postMessage('update', 'http://localhost:5173/__devtools/')
+    const w = document.getElementById('_devtools')?.contentWindow
+    w?.postMessage('update', 'http://localhost:5173/__devtools/')
   })
 }
 else {
@@ -49,8 +49,8 @@ else {
         window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
           return component
         }
-        const w = document.getElementById('_devtools').contentWindow
-        w.postMessage('update', 'http://localhost:5173/__devtools/')
+        const w = document.getElementById('_devtools')?.contentWindow
+        w?.postMessage('update', 'http://localhost:5173/__devtools/')
       }
     },
     emit(event, ...payload) {

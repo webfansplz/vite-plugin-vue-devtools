@@ -19,6 +19,8 @@ function getVueDevtoolsPath() {
 async function getComponentsRelationships(rpc: ViteInspectAPI['rpc']) {
   const list = await rpc.list()
   const modules = list?.modules || []
+
+  return modules
   const vueModules = modules.filter(i => i.id.match(/\.vue($|\?v=)/))
 
   const graph = vueModules.map((i) => {

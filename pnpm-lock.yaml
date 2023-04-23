@@ -15,11 +15,13 @@ importers:
       '@unocss/reset': ^0.51.5
       '@vitejs/plugin-vue': ^4.1.0
       '@vueuse/core': ^10.0.2
+      D: ^1.0.0
       bumpp: ^9.1.0
       codemirror: ^6.0.1
       codemirror-theme-vars: ^0.1.2
       eslint: ^8.38.0
       floating-vue: 2.0.0-beta.20
+      fuse.js: ^6.6.2
       nanoid: ^4.0.2
       npm-run-all: ^4.1.5
       pinia: ^2.0.35
@@ -30,6 +32,8 @@ importers:
       unocss: ^0.51.5
       unplugin-auto-import: ^0.15.3
       unplugin-vue-components: ^0.24.1
+      vis-data: ^7.1.6
+      vis-network: ^9.1.6
       vite: ^4.3.1
       vite-dev-rpc: ^0.1.2
       vite-hot-client: ^0.2.1
@@ -39,6 +43,8 @@ importers:
       vue-router: ^4.1.6
     dependencies:
       '@vueuse/core': 10.0.2_vue@3.2.47
+      D: 1.0.0
+      fuse.js: 6.6.2
       nanoid: 4.0.2
       sirv: 2.0.2
       splitpanes: 3.1.5
@@ -48,7 +54,7 @@ importers:
       '@antfu/eslint-config': 0.38.5_voubu7prgxjfsfbgx5d4sqnwiy
       '@antfu/ni': 0.21.3
       '@iconify/json': 2.2.52
-      '@nuxt/devtools-ui-kit': 0.4.1_vite@4.3.1+vue@3.2.47
+      '@nuxt/devtools-ui-kit': 0.4.1_rkuuz3y6ae2jyrgmdnljh7gve4
       '@types/codemirror': 5.60.7
       '@types/node': 18.15.13
       '@types/splitpanes': 2.2.1
@@ -67,6 +73,8 @@ importers:
       unocss: 0.51.5_vite@4.3.1
       unplugin-auto-import: 0.15.3_@vueuse+core@10.0.2
       unplugin-vue-components: 0.24.1_vue@3.2.47
+      vis-data: 7.1.6
+      vis-network: 9.1.6_vis-data@7.1.6
       vite: 4.3.1_@types+node@18.15.13
       vite-dev-rpc: 0.1.2_vite@4.3.1
       vite-plugin-inspect: 0.7.23_vite@4.3.1
@@ -1060,7 +1068,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/devtools-ui-kit/0.4.1_vite@4.3.1+vue@3.2.47:
+  /@nuxt/devtools-ui-kit/0.4.1_rkuuz3y6ae2jyrgmdnljh7gve4:
     resolution: {integrity: sha512-bjV6QyKsqF0h29P85YfVW1I646M9Nm6BdE/Hw5DXoi20jcRIsynrqmJ/wUUKlEaYUGgoMwPRv0d6wIyZtlIAIw==}
     dependencies:
       '@iconify-json/carbon': 1.1.16
@@ -1075,7 +1083,7 @@ packages:
       '@unocss/preset-mini': 0.51.5
       '@unocss/reset': 0.51.5
       '@vueuse/core': 10.0.2_vue@3.2.47
-      '@vueuse/integrations': 10.0.2_osh5ahu7pjjwyp4t7mhvrqdjey
+      '@vueuse/integrations': 10.0.2_bm6p724wvjdxind6r7re44m5xe
       '@vueuse/nuxt': 10.0.2_vue@3.2.47
       defu: 6.1.2
       focus-trap: 7.4.0
@@ -1964,7 +1972,7 @@ packages:
       - '@vue/composition-api'
       - vue
 
-  /@vueuse/integrations/10.0.2_osh5ahu7pjjwyp4t7mhvrqdjey:
+  /@vueuse/integrations/10.0.2_bm6p724wvjdxind6r7re44m5xe:
     resolution: {integrity: sha512-HgyNe46D0fOhKe2PZsNDwHt6/0S+J5lJCwZbw4kPahH2T1oBqZIJppoSvE6b3aTWu0OXOJi1WISZoVfe5kn/TQ==}
     peerDependencies:
       async-validator: '*'
@@ -2008,6 +2016,7 @@ packages:
       '@vueuse/core': 10.0.2_vue@3.2.47
       '@vueuse/shared': 10.0.2_vue@3.2.47
       focus-trap: 7.4.0
+      fuse.js: 6.6.2
       vue-demi: 0.14.0_vue@3.2.47
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -2045,6 +2054,11 @@ packages:
   /@zeit/schemas/2.29.0:
     resolution: {integrity: sha512-g5QiLIfbg3pLuYUJPlisNKY+epQJTcMDsOnVNkscrDP1oi7vmJnzOANYJI/1pZcVJ6umUkBv3aFtlg1UvUHGzA==}
     dev: true
+
+  /D/1.0.0:
+    resolution: {integrity: sha512-nQvrCBu7K2pSSEtIM0EEF03FVjcczCXInMt3moLNFbjlWx6bZrX72uT6/1uAXDbnzGUAx9gTyDiQ+vrFi663oA==}
+    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
+    dev: false
 
   /abbrev/1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -3707,6 +3721,10 @@ packages:
   /functions-have-names/1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
+
+  /fuse.js/6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
 
   /gauge/4.0.4:
     resolution: {integrity: sha512-f9m+BEN5jkg6a0fZjleidjN51VE1X+mPFQ2DJ0uv1V39oCLCbsGe6yjbBnp7eK7z/+GAon99a3nHuqbuuthyPg==}
@@ -6673,6 +6691,29 @@ packages:
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /vis-data/7.1.6:
+    resolution: {integrity: sha512-lG7LJdkawlKSXsdcEkxe/zRDyW29a4r7N7PMwxCPxK12/QIdqxJwcMxwjVj9ozdisRhP5TyWDHZwsgjmj0g6Dg==}
+    requiresBuild: true
+    peerDependencies:
+      uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
+      vis-util: ^5.0.1
+    dev: true
+
+  /vis-network/9.1.6_vis-data@7.1.6:
+    resolution: {integrity: sha512-Eiwx1JleAsUqfy4pzcsFngCVlCEdjAtRPB/OwCV7PHBm+o2jtE4IZPcPITAEGUlxvL4Fdw7/lZsfD32dL+IL6g==}
+    requiresBuild: true
+    peerDependencies:
+      '@egjs/hammerjs': ^2.0.0
+      component-emitter: ^1.3.0
+      keycharm: ^0.2.0 || ^0.3.0 || ^0.4.0
+      timsort: ^0.3.0
+      uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
+      vis-data: ^6.3.0 || ^7.0.0
+      vis-util: ^5.0.1
+    dependencies:
+      vis-data: 7.1.6
     dev: true
 
   /vite-dev-rpc/0.1.2_vite@4.3.1:

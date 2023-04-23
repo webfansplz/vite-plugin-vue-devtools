@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchBox: typeof import('./components/SearchBox.vue')['default']
     SideNav: typeof import('./components/SideNav.vue')['default']
     SideNavItem: typeof import('./components/SideNavItem.vue')['default']
     TabIcon: typeof import('./components/TabIcon.vue')['default']

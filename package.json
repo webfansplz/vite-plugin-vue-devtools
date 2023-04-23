@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.0.2",
+    "fuse.js": "^6.6.2",
     "nanoid": "^4.0.2",
     "sirv": "^2.0.2",
     "splitpanes": "^3.1.5",
@@ -81,6 +82,8 @@
     "unocss": "^0.51.5",
     "unplugin-auto-import": "^0.15.3",
     "unplugin-vue-components": "^0.24.1",
+    "vis-data": "^7.1.6",
+    "vis-network": "^9.1.6",
     "vite": "^4.3.1",
     "vite-dev-rpc": "^0.1.2",
     "vite-plugin-inspect": "^0.7.23",
