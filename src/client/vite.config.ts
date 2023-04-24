@@ -31,7 +31,7 @@ export default defineConfig({
       pagesDir: 'pages',
     }),
     Components({
-      dirs: ['components'],
+      dirs: ['components', 'ui-kit'],
       dts: join(__dirname, 'components.d.ts'),
     }),
     Unocss(),

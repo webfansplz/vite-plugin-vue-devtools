@@ -11,7 +11,8 @@ const route = useRoute()
 const router = useRouter()
 // router.push('/components')
 // router.push('/timeline')
-router.push('/overview')
+// router.push('/overview')
+router.push('/pages')
 </script>
 
 <template>
