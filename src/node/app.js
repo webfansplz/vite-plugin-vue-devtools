@@ -66,6 +66,10 @@ hook.on('app:init', (app) => {
   window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
     return app._instance
   }
+
+  window.__VUE_DEVTOOLS_GET_VUE_APP__ = function () {
+    return app
+  }
 })
 
 hook.on('perf:start', (app, uid, component, type, time) => {

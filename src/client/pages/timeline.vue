@@ -22,7 +22,7 @@ function updateSelected(index: number) {
 </script>
 
 <template>
-  <div h-screen>
+  <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
         <div h-screen select-none overflow-scroll>

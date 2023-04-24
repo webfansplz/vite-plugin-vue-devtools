@@ -7,6 +7,11 @@ const tabs = [
     icon: 'i-carbon-information',
   },
   {
+    path: 'pages',
+    title: 'Pages',
+    icon: 'i-carbon-tree-view-alt',
+  },
+  {
     path: 'components',
     title: 'Components',
     icon: 'i-carbon-assembly-cluster',
