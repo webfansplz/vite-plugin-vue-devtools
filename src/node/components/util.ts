@@ -49,8 +49,10 @@ function getComponentTypeName(options: any) {
 function getComponentFileName(options: any) {
   const file = options.__file // injected by vite
   // TODO: classify
-  if (file)
-    return file
+  if (file) {
+    const filename = options.__file?.match(/\/?([^/]+?)(\.[^/.]+)?$/)?.[1]
+    return filename ?? file
+  }
   // return classify(basename(file, '.vue'))
 }
 

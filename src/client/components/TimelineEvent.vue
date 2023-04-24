@@ -18,7 +18,10 @@ const emits = defineEmits(['update-selected'])
       @click="emits('update-selected', index)"
     >
       <span flex-1 truncate font-mono space-x-1>
-        <span font-medium text-purple-600 dark:text-purple-400>{{ item.event.data.name }}</span>
+        <span
+          font-medium
+          :class="[index === selected ? 'text-white' : 'text-purple-600 dark:text-purple-400']"
+        >{{ item.event.data.name }}</span>
         <span opacity-75>{{ item.event.data.type }}</span>
       </span>
       <span flex-none font-mono opacity-50>{{ dayjs(item.event.now).format('HH:mm:ss') }}</span>

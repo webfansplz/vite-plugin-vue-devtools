@@ -29,9 +29,14 @@ function injectDevtools() {
   iframe.style.position = 'fixed'
   iframe.style.bottom = '0'
   iframe.style.left = '50%'
+  iframe.style.outline = 'none'
+  iframe.style.border = '1px solid rgba(125,125,125,0.2)'
+  iframe.style.borderRadius = '8px'
   iframe.style.transform = 'translateX(-50%)'
-  iframe.style.width = '1200px'
-  iframe.style.height = '600px'
+  // iframe.style.width = '1200px'
+  // iframe.style.height = '600px'
+  iframe.style.width = 'calc(80vw - 20px)'
+  iframe.style.height = 'calc(60vh - 20px)'
   document.body.appendChild(iframe)
 }
 
@@ -45,13 +50,30 @@ window.__VUE_DEVTOOLS_GET_TIMELINE_EVENT__ = function () {
   return timelineEvent.sort((a, b) => a.sortTime - b.sortTime).sort((a, b) => sortKey[a.event.data.measure] - sortKey[b.event.data.measure])
 }
 
+// function countRoutes(routes) {
+//   let count = routes.length
+//   for (const route of routes) {
+//     if (route.children)
+//       count += countRoutes(route.children)
+//   }
+//   return count
+// }
+
 hook.on('app:init', (app) => {
+  // console.log('sintance', app._instance)
+  // console.log(app.config.globalProperties.$router.options.routes)
+  // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
   window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
     return app._instance
   }
 })
 
 hook.on('perf:start', (app, uid, component, type, time) => {
+  const filename = component.type.__file?.match(/\/?([^/]+?)(\.[^/.]+)?$/)?.[1]
+  const name = component.type.__name ?? component.type.name ?? filename
+  if (!name)
+    return
+
   timelineEvent.push({
     layerId: 'perfomance',
     groupKey: `${uid}-${type}`,
@@ -61,7 +83,7 @@ hook.on('perf:start', (app, uid, component, type, time) => {
       now: Date.now(),
       data: {
         component,
-        name: component.type.__name,
+        name,
         type,
         measure: 'start',
       },
@@ -70,6 +92,10 @@ hook.on('perf:start', (app, uid, component, type, time) => {
 })
 
 hook.on('perf:end', async (app, uid, component, type, time) => {
+  const filename = component.type.__file?.match(/\/?([^/]+?)(\.[^/.]+)?$/)?.[1]
+  const name = component.type.__name ?? component.type.name ?? filename
+  if (!name)
+    return
   const item = timelineEvent.reverse().find(item => item.groupKey === `${uid}-${type}`)
   timelineEvent.push({
     layerId: 'perfomance',
@@ -80,7 +106,7 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
       now: item.event.now,
       data: {
         component,
-        name: component.type.__name,
+        name,
         type,
         measure: 'end',
         duration: `${time - item.event.time}ms`,
@@ -88,12 +114,12 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
     },
   })
 
-  //
-  window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
-    return component
-  }
-  const contentWindow = document.getElementById(iframeId)?.contentWindow
-  contentWindow?.postMessage('update', 'http://localhost:5173/__devtools/')
+  // TODO: replace updated component
+  // window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
+  //   return component
+  // }
+  // const contentWindow = document.getElementById(iframeId)?.contentWindow
+  // contentWindow?.postMessage('update', 'http://localhost:5173/__devtools/')
 })
 
 injectDevtools()

@@ -32,6 +32,7 @@ store.increment()
 </script>
 
 <template>
+  <RouterView />
   <h3 @click="store.increment">
     {{ store.count }}
   </h3>

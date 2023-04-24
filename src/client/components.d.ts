@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     ComponentState: typeof import('./components/ComponentState.vue')['default']
     ComponentStateField: typeof import('./components/ComponentStateField.vue')['default']
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
+    Logo: typeof import('./components/Logo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBox: typeof import('./components/SearchBox.vue')['default']
@@ -20,5 +21,6 @@ declare module '@vue/runtime-core' {
     TabIcon: typeof import('./components/TabIcon.vue')['default']
     TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
     TimelineEventInfo: typeof import('./components/TimelineEventInfo.vue')['default']
+    VButton: typeof import('./components/VButton.vue')['default']
   }
 }
