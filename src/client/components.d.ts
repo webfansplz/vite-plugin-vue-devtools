@@ -9,8 +9,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    ComponentState: typeof import('./components/ComponentState.vue')['default']
-    ComponentStateField: typeof import('./components/ComponentStateField.vue')['default']
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
     Logo: typeof import('./components/Logo.vue')['default']
     RoutePathItem: typeof import('./components/RoutePathItem.vue')['default']

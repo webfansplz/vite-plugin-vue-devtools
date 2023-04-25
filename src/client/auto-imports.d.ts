@@ -64,7 +64,6 @@ declare global {
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
-  const normalizeState: typeof import('./logic/component-state')['normalizeState']
   const objectToString: typeof import('./utils/index')['objectToString']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']

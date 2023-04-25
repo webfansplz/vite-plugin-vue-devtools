@@ -2,7 +2,9 @@ import type { ComponentInternalInstance, SuspenseBoundary } from 'vue'
 import { getInstanceName, getRenderKey, getUniqueComponentId, isBeingDestroyed, isFragment } from './util'
 import { ComponentFilter } from './filter'
 import { getRootElementsFromComponentInstance } from './el'
+import { getInstanceState } from './data'
 
+export const InstanceMap = new Map()
 export class ComponentWalker {
   maxDepth: number
   recursively: boolean
@@ -197,6 +199,9 @@ export class ComponentWalker {
     //     label: instance.suspense.suspenseKey,
     //   })
     // }
+    // consola(instance.uid, instance)
+
+    InstanceMap.set(treeNode.id, getInstanceState(instance))
     treeNode.instance = instance
 
     return treeNode
