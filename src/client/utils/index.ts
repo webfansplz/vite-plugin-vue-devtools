@@ -34,6 +34,10 @@ export const isSymbol = (val: unknown): val is symbol => typeof val === 'symbol'
 export function isObject(val: unknown): val is Record<any, any> {
   return val !== null && typeof val === 'object'
 }
+export function isComputed(raw: any): boolean {
+  // @ts-expect-error missing type
+  return isRef(raw) && !!raw.effect
+}
 
 const ESC = {
   '<': '&lt;',

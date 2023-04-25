@@ -1,32 +1,10 @@
 <script setup lang="ts">
+defineProps<{
+  data: { key: string; value: Record<string, unknown> }
+}>()
 const isExpanded = ref<boolean>(true)
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
-}
-
-function add(a, b) {
-  return a + b
-}
-
-const data = {
-  key: 'event info',
-  value: {
-    name: 'webfansplz',
-    age: 18,
-    address: {
-      city: 'shanghai',
-      street: 'nanjing road',
-    },
-    list: [
-      1, 2, 3, 4, 5, { name: 'boom' },
-    ],
-    add,
-    map: new Map([['a', 1], ['b', 2]]),
-    a: null,
-    b: undefined,
-    c: ref(2),
-    // d: computed(() => ({ name: 'boom!!!' })),
-  },
 }
 </script>
 
@@ -42,7 +20,7 @@ const data = {
         {{ data.key }}
       </span>
     </h3>
-    <div pl-3>
+    <div v-if="isExpanded" pl-3>
       <VStateType :data="data.value" />
     </div>
   </div>

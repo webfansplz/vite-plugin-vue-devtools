@@ -16,31 +16,23 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
     }"
     max-w="[50%]"
     mb-2 cursor-pointer rounded
-    :class="[isSelected ? 'bg-[#3ba776]' : 'hover:dark:bg-[#2c3e50] hover:bg-[#c2e9d7]']"
+    :class="[isSelected ? 'vue-block-active' : 'vue-block-hover']"
     @click="select(data.id)"
   >
-    <h3 flex items-center py-1 text-sm font-400>
-      <i
-        v-if="data.hasChildren" class="i-material-symbols:arrow-right"
-        h-6 w-6 text-5 text-gray-400 dark:text-gray-600
-        :class="{
-          'transform rotate-90': isExpanded,
-          'text-white': isSelected,
-        }"
-        @click="toggleExpand(data.id)"
-      />
-      <i v-else h-6 w-6 />
+    <h3 flex items-center py-1 text-sm font-400 @click="data.hasChildren ? toggleExpand(data.id) : () => {}">
+      <VExpandLogo v-if="data.hasChildren" :value="isExpanded" />
+      <i v-else inline-block h-6 w-6 />
       <span
         :class="[
-          isSelected ? 'text-white/60' : 'text-gray-400 dark:text-gray-600',
+          isSelected ? 'vue-tag-symbol-active' : 'vue-tag-symbol',
         ]"
       >&lt;</span>
-      <span :class="[isSelected ? 'text-white' : 'text-#42b983']">
+      <span :class="[isSelected ? 'text-white' : 'vue-block']">
         {{ data.name }}
       </span>
       <span
         :class="[
-          isSelected ? 'text-white/60' : 'text-gray-400 dark:text-gray-600',
+          isSelected ? 'vue-tag-symbol-active' : 'vue-tag-symbol',
         ]"
       >&gt;</span>
     </h3>

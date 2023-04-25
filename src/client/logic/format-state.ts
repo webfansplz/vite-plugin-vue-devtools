@@ -182,6 +182,16 @@ export function formatStateType(value: unknown): StateType {
         value: '"[object Router]"',
       }
     }
+    // @ts-expect-error skip
+    else if (typeof value.render === 'function') {
+      // TODO: Detailed Vue Component
+      return {
+        rawType: 'object',
+        recursive: false,
+        // @ts-expect-error skip
+        value: formatWithExtraType(value.__name, 'Component') ?? 'Vue Component',
+      }
+    }
     else if (isPlainObject(value)) {
       return {
         rawType: 'object',

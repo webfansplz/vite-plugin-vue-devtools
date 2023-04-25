@@ -62,6 +62,9 @@ window.__VUE_DEVTOOLS_GET_TIMELINE_EVENT__ = function () {
 hook.on('app:init', (app) => {
   // console.log('sintance', app._instance)
   // console.log(app.config.globalProperties.$router.options.routes)
+  // console.log(app.config.globalProperties.$pinia)
+  // console.log(app._instance.proxy._pStores)
+  // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
   // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
   window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
     return app._instance

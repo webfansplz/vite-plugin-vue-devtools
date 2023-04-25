@@ -25,10 +25,13 @@ declare module '@vue/runtime-core' {
     TimelineEventInfo: typeof import('./components/TimelineEventInfo.vue')['default']
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']
+    VExpandLogo: typeof import('./ui-kit/VExpandLogo.vue')['default']
     VIcon: typeof import('./ui-kit/VIcon.vue')['default']
     VIconTitle: typeof import('./ui-kit/VIconTitle.vue')['default']
     VPanelGrids: typeof import('./ui-kit/VPanelGrids.vue')['default']
     VSectionBlock: typeof import('./ui-kit/VSectionBlock.vue')['default']
+    VState: typeof import('./ui-kit/VState.vue')['default']
+    VStateType: typeof import('./ui-kit/VStateType.vue')['default']
     VTextInput: typeof import('./ui-kit/VTextInput.vue')['default']
   }
 }

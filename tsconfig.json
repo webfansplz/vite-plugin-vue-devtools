@@ -9,6 +9,7 @@
     "jsx": "preserve",
     "strictNullChecks": true,
     "resolveJsonModule": true,
+    "noImplicitAny": false,
     "types": [
       "vite-plugin-pages/client",
       "vite/client"

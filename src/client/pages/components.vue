@@ -1,22 +1,42 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
+
+// TODO: move to client/logic ?
 import { ComponentWalker } from '../../node/components/tree'
 import { getInstanceState } from '../../node/components/data'
 
-// TODO: refactor components page
 const componentTree = ref<ComponentTreeNode[]>([])
 
+function normalizeComponentState(value: unknown, type: string) {
+  if (type === 'Reactive')
+    return reactive(value as object)
+
+  else if (type === 'Computed')
+    return computed(() => value)
+
+  else if (type === 'Ref')
+    return ref(value)
+
+  else
+    return value
+}
+
 const normalizedComponentState = computed(() => {
-  const list: any = []
+  const list: { key: string;value: Record<string, unknown> }[] = []
   selectedComponentState.value.forEach((item) => {
-    if (list.some((i: any) => i.type === item.type)) {
-      const index = list.findIndex((i: any) => i.type === item.type)
-      list[index].data.push(item)
+    if (list.some(i => i.key === item.type)) {
+      const index = list.findIndex(i => i.key === item.type)
+      list[index].value = {
+        ...list[index].value,
+        [item.key]: normalizeComponentState(item.value, item.objectType),
+      }
     }
     else {
       list.push({
-        type: item.type,
-        data: [item],
+        key: item.type,
+        value: {
+          [item.key]: normalizeComponentState(item.value, item.objectType),
+        },
       })
     }
   })
@@ -52,7 +72,7 @@ onMounted(() => {
       </Pane>
       <Pane>
         <div h-screen select-none overflow-scroll p-2>
-          <ComponentState v-for="(item) in normalizedComponentState" :key="item.id" :data="item" />
+          <VState v-for="(item) in normalizedComponentState" :key="item.key" :data="item" />
         </div>
       </Pane>
     </Splitpanes>

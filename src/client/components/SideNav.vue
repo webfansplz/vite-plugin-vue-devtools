@@ -17,6 +17,11 @@ const tabs = [
     icon: 'i-carbon-assembly-cluster',
   },
   {
+    path: 'pinia',
+    title: 'Pinia',
+    icon: 'icon-park-outline:pineapple',
+  },
+  {
     path: 'timeline',
     title: 'Timeline',
     icon: 'i-icon-park-outline:vertical-timeline',

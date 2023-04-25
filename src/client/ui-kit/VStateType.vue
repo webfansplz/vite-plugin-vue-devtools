@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<{
 const rawTypeStyles: Record<string, string> = { literal: 'raw-literal', string: 'raw-string', object: 'raw-object', function: 'raw-function', null: 'raw-null' }
 
 const list = computed(() => {
+  // TODO: sort by type
   if (Array.isArray(props.data)) {
     return props.data.map((item) => {
       return formatStateType(item)
