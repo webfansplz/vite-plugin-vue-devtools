@@ -66,6 +66,11 @@ hook.on('app:init', (app) => {
   // console.log(app._instance.proxy._pStores)
   // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
   // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
+  // const stores = app._instance.proxy._pStores
+  // Object.values(stores).forEach((store) => {
+  //   console.log('`', store.$id)
+  //   console.log('`', (store.$state))
+  // })
   window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
     return app._instance
   }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useCounterStore } from './stores'
+import { useCounterStore, useUserStore } from './stores'
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
@@ -26,6 +26,8 @@ const info = ref({
 
 const store = useCounterStore()
 
+const userStore = useUserStore()
+
 store.increment()
 
 store.increment()
@@ -36,5 +38,8 @@ store.increment()
   <h3 @click="store.increment">
     {{ store.count }}
   </h3>
+  <p>
+    {{ userStore.name }}
+  </p>
   <HelloWorld msg="Vite + Vue" />
 </template>
