@@ -24,7 +24,7 @@ onMounted(() => {
                 {{ item.path }}
                 <VBadge
                   v-for="(tag, childIndex) in item.tags"
-                  :key="childIndex" text-white
+                  :key="childIndex" text-black
                   :style="{
                     backgroundColor: `#${tag.bgColor.toString(16)}`,
                   }"
