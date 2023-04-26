@@ -23,7 +23,7 @@ const pinia = createPinia()
 const app = createApp(App)
 
 const routes = [
-  { path: '/', component: Home },
+  { path: '/', component: Home, name: 'home', alias: '/index' },
   {
     path: '/about',
     component: About,

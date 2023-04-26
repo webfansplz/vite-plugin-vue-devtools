@@ -17,6 +17,11 @@ const tabs = [
     icon: 'i-carbon-assembly-cluster',
   },
   {
+    path: 'routes',
+    title: 'Routes',
+    icon: 'gis:map-route',
+  },
+  {
     path: 'pinia',
     title: 'Pinia',
     icon: 'icon-park-outline:pineapple',

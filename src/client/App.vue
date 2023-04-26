@@ -13,7 +13,8 @@ const router = useRouter()
 // router.push('/timeline')
 // router.push('/overview')
 // router.push('/pages')
-router.push('/pinia')
+// router.push('/pinia')
+router.push('/routes')
 </script>
 
 <template>
