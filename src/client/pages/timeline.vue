@@ -1,40 +1,52 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
+import {
+  activeLayerId,
+  activeTimelineEventIndex,
+  activeTimelineEvents,
+  timelineEventDetails,
+  timelineLayer,
+  toggleTimelineEventIndex,
+  toggleTimelineLayer,
+} from '../logic/timeline'
 
-const timelineInfo = ref<any[]>([])
-let timer: number | null
-const selected = ref(0)
-const timelineEventInfo = computed(() => {
-  return {
-    key: 'event info',
-    value: timelineInfo.value[selected.value].event.data,
-  }
-})
 onMounted(() => {
-  timer = window.setInterval(() => {
-    timelineInfo.value = window.parent.__VUE_DEVTOOLS_GET_TIMELINE_EVENT__()
-  }, 1000)
+
 })
 onUnmounted(() => {
-  clearInterval(timer!)
 })
 
-function updateSelected(index: number) {
-  selected.value = index
-}
+// updatePerformanceTimeline()
 </script>
 
 <template>
   <div h-screen n-panel-grids>
     <Splitpanes>
-      <Pane border="r base">
-        <div h-screen select-none overflow-scroll>
-          <TimelineEvent :data="timelineInfo" :selected="selected" @update-selected="updateSelected" />
+      <Pane border="r base" size="20">
+        <div h-screen select-none overflow-scroll p-2>
+          <div
+            v-for="(item) in timelineLayer"
+            :key="item.id"
+            vue-block
+            :class="[activeLayerId === item.id ? 'vue-block-active' : 'vue-block-hover']"
+            @click="toggleTimelineLayer(item.id)"
+          >
+            <h3 vue-block-title>
+              <span truncate :class="[activeLayerId === item.id ? 'text-white' : 'vue-block-text']">
+                {{ item.label }}
+              </span>
+            </h3>
+          </div>
         </div>
       </Pane>
-      <Pane>
+      <Pane border="r base" size="45">
+        <div h-screen select-none overflow-scroll>
+          <TimelineEvent :data="activeTimelineEvents" :selected="activeTimelineEventIndex" @update-selected="toggleTimelineEventIndex" />
+        </div>
+      </Pane>
+      <Pane v-if="timelineEventDetails.value" size="35">
         <div h-screen select-none overflow-scroll p-2>
-          <VState :data="timelineEventInfo" />
+          <VState :data="timelineEventDetails" />
         </div>
       </Pane>
     </Splitpanes>

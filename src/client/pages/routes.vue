@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
-import { activeRouteRecordIndex, activeRouteRecordMatcherState, initRoutes, routeRecordMatcherState, toggleRouteRecordMatcher } from '../logic/routes'
+import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatcherState, toggleRouteRecordMatcher } from '../logic/routes'
 
 onMounted(() => {
-  initRoutes()
+  // initRoutes()
 })
 </script>
 

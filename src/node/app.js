@@ -20,12 +20,10 @@ window.print = (...s) => {
 
 const iframeId = '__vue_devtools_iframe__'
 
-let id = 0
-
 function injectDevtools() {
   const iframe = document.createElement('iframe')
   iframe.id = iframeId
-  iframe.src = 'http://localhost:5173/__devtools/'
+  iframe.src = '/__devtools/'
   iframe.style.position = 'fixed'
   iframe.style.bottom = '0'
   iframe.style.left = '50%'
@@ -33,21 +31,20 @@ function injectDevtools() {
   iframe.style.border = '1px solid rgba(125,125,125,0.2)'
   iframe.style.borderRadius = '8px'
   iframe.style.transform = 'translateX(-50%)'
-  // iframe.style.width = '1200px'
-  // iframe.style.height = '600px'
   iframe.style.width = 'calc(80vw - 20px)'
   iframe.style.height = 'calc(60vh - 20px)'
   document.body.appendChild(iframe)
 }
 
-const timelineEvent = []
+const performanceTimeline = []
+let performanceTimelineSortId = 0
 
-window.__VUE_DEVTOOLS_GET_TIMELINE_EVENT__ = function () {
+window.__VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__ = function () {
   const sortKey = {
     start: -1,
     end: 1,
   }
-  return timelineEvent.sort((a, b) => a.sortTime - b.sortTime).sort((a, b) => sortKey[a.event.data.measure] - sortKey[b.event.data.measure])
+  return performanceTimeline.sort((a, b) => a.sortId - b.sortId).sort((a, b) => sortKey[a.event.data.measure] - sortKey[b.event.data.measure])
 }
 
 // function countRoutes(routes) {
@@ -81,16 +78,20 @@ hook.on('app:init', (app) => {
 })
 
 hook.on('perf:start', (app, uid, component, type, time) => {
+  // console.log('1')
   const filename = component.type.__file?.match(/\/?([^/]+?)(\.[^/.]+)?$/)?.[1]
   const name = component.type.__name ?? component.type.name ?? filename
   if (!name)
     return
 
-  timelineEvent.push({
-    layerId: 'perfomance',
+  performanceTimeline.push({
+    layerId: 'performance',
     groupKey: `${uid}-${type}`,
-    sortTime: id++,
+    sortId: performanceTimelineSortId++,
+
     event: {
+      title: name,
+      subtitle: type,
       time,
       now: Date.now(),
       data: {
@@ -108,12 +109,15 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
   const name = component.type.__name ?? component.type.name ?? filename
   if (!name)
     return
-  const item = timelineEvent.reverse().find(item => item.groupKey === `${uid}-${type}`)
-  timelineEvent.push({
-    layerId: 'perfomance',
+  const item = performanceTimeline.reverse().find(item => item.groupKey === `${uid}-${type}`)
+  performanceTimeline.push({
+    layerId: 'performance',
     groupKey: `${uid}-${type}`,
-    sortTime: id++,
+    sortId: performanceTimelineSortId++,
+
     event: {
+      title: name,
+      subtitle: type,
       time,
       now: item.event.now,
       data: {

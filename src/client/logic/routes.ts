@@ -1,5 +1,6 @@
-import type { RouteRecordNormalized, Router } from 'vue-router'
+import type { RouteLocationNormalized, RouteRecordNormalized, Router } from 'vue-router'
 import { createRouterMatcher } from 'vue-router'
+import { timelineApi } from './timeline'
 
 type RouteRecordMatcher = ReturnType<ReturnType<typeof createRouterMatcher>['getRoutes']>[0]
 
@@ -27,6 +28,7 @@ const ORANGE_400 = 0xFB923C
 // const GRAY_100 = 0xf4f4f5
 const DARK = 0x666666
 
+const LAYER_ID = 'router'
 export const router = ref<Router>()
 export const routeRecordMatcher = ref<RouteRecordMatcher[]>()
 export const activeRouteRecordIndex = ref(0)
@@ -146,15 +148,102 @@ export function toggleRouteRecordMatcher(index: number) {
   activeRouteRecordIndex.value = index
 }
 
+function formatRouteLocation(
+  routeLocation: RouteLocationNormalized,
+) {
+  const copy = Object.assign({}, routeLocation, {
+    // remove variables that can contain vue instances
+    matched: routeLocation.matched.map(matched =>
+      reactiveOmit(matched, ['instances', 'children', 'aliasOf']),
+    ),
+  })
+
+  return copy
+}
+
+function subscribeRouterChanged(router: Router) {
+  router.onError((error, to) => {
+    timelineApi.addTimelineEvent({
+      layerId: LAYER_ID,
+      event: {
+        title: 'Error during Navigation',
+        subtitle: to.fullPath,
+        time: Date.now(),
+        now: Date.now(),
+        data: { error: error.message },
+      },
+    })
+  })
+
+  router.beforeEach((to, from) => {
+    const data = {
+      guard: 'beforeEach',
+      from: formatRouteLocation(
+        from,
+      ),
+      to: formatRouteLocation(to),
+    }
+
+    timelineApi.addTimelineEvent({
+      layerId: LAYER_ID,
+      event: {
+        time: Date.now(),
+        now: Date.now(),
+        title: 'Start of navigation',
+        subtitle: to.fullPath,
+        data,
+      },
+    })
+  })
+
+  router.afterEach((to, from, failure) => {
+    const data: Record<string, unknown> = {
+      guard: 'afterEach',
+    }
+
+    if (failure) {
+      data.failure = failure ? failure.message : ''
+      data.status = '❌'
+    }
+    else {
+      data.status = '✅'
+    }
+
+    // we set here to have the right order
+    data.from = formatRouteLocation(from)
+    data.to = formatRouteLocation(to)
+
+    timelineApi.addTimelineEvent({
+      layerId: LAYER_ID,
+      event: {
+        title: 'End of navigation',
+        subtitle: to.fullPath,
+        time: Date.now(),
+        now: Date.now(),
+        data,
+      },
+    })
+  })
+}
+
 export function initRoutes() {
   const app = window.parent.__VUE_DEVTOOLS_GET_VUE_APP__()
   router.value = app.config.globalProperties.$router
-  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-  const matcher = createRouterMatcher(router.value?.options.routes!, router.value?.options!)
-  routeRecordMatcher.value = matcher.getRoutes()
-  // consola(formatRouteRecordMatcherForStateInspector(routes?.[0]))
-  // Update router Manually
-  router.value?.afterEach(() => {
-    triggerRef(router)
-  })
+  if (router.value) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+    const matcher = createRouterMatcher(router.value?.options.routes!, router.value?.options!)
+    routeRecordMatcher.value = matcher.getRoutes()
+    // consola(formatRouteRecordMatcherForStateInspector(routes?.[0]))
+
+    timelineApi.addTimelineLayer({
+      id: LAYER_ID,
+      label: 'Router Navigations',
+    })
+    subscribeRouterChanged(router.value)
+
+    // Update router Manually
+    router.value?.afterEach(() => {
+      triggerRef(router)
+    })
+  }
 }
