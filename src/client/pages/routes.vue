@@ -15,12 +15,12 @@ onMounted(() => {
           <div
             v-for="(item, index) in routeRecordMatcherState"
             :key="index"
-            mb-2 max-w-100 cursor-pointer rounded
+            vue-block
             :class="[activeRouteRecordIndex === index ? 'vue-block-active' : 'vue-block-hover']"
             @click="toggleRouteRecordMatcher(index)"
           >
-            <h3 flex items-center py-1 pl-2 text-sm font-400>
-              <span :class="[activeRouteRecordIndex === index ? 'text-white' : 'vue-block']">
+            <h3 vue-block-title>
+              <span :class="[activeRouteRecordIndex === index ? 'text-white' : 'vue-block-text']">
                 {{ item.path }}
                 <VBadge
                   v-for="(tag, childIndex) in item.tags"

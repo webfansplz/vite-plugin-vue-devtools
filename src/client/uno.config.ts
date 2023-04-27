@@ -28,7 +28,9 @@ export default defineConfig({
       // Vue block
       'vue-block-hover': 'hover:dark:bg-[#2c3e50] hover:bg-[#c2e9d7]',
       'vue-block-active': 'bg-[#3ba776] text-white',
-      'vue-block': 'text-#42b983',
+      'vue-block-text': 'text-#42b983',
+      'vue-block-title': 'flex items-center pl-2 text-sm font-400 h-8 lh-8',
+      'vue-block': 'mb-2 max-w-90% cursor-pointer rounded',
 
       // Vue tag
       'vue-tag-symbol': 'text-gray-400 dark:text-gray-600',

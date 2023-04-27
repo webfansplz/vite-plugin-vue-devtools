@@ -21,7 +21,6 @@ declare module '@vue/runtime-core' {
     SideNavItem: typeof import('./components/SideNavItem.vue')['default']
     TabIcon: typeof import('./components/TabIcon.vue')['default']
     TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
-    TimelineEventInfo: typeof import('./components/TimelineEventInfo.vue')['default']
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']
     VExpandLogo: typeof import('./ui-kit/VExpandLogo.vue')['default']

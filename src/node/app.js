@@ -94,8 +94,8 @@ hook.on('perf:start', (app, uid, component, type, time) => {
       time,
       now: Date.now(),
       data: {
-        component,
-        name,
+        component: name,
+        // name,
         type,
         measure: 'start',
       },
@@ -117,8 +117,8 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
       time,
       now: item.event.now,
       data: {
-        component,
-        name,
+        component: name,
+        // name,
         type,
         measure: 'end',
         duration: `${time - item.event.time}ms`,

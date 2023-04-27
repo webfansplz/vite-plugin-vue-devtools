@@ -14,12 +14,12 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
     :style="{
       paddingLeft: `${depth * 15 + 4}px`,
     }"
-    max-w="[50%]"
-    mb-2 cursor-pointer rounded
+    max-w="[90%]"
+    vue-block
     :class="[isSelected ? 'vue-block-active' : 'vue-block-hover']"
     @click="select(data.id)"
   >
-    <h3 flex items-center py-1 text-sm font-400 @click="data.hasChildren ? toggleExpand(data.id) : () => {}">
+    <h3 vue-block-title @click="data.hasChildren ? toggleExpand(data.id) : () => {}">
       <VExpandLogo v-if="data.hasChildren" :value="isExpanded" />
       <i v-else inline-block h-6 w-6 />
       <span
@@ -27,7 +27,7 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
           isSelected ? 'vue-tag-symbol-active' : 'vue-tag-symbol',
         ]"
       >&lt;</span>
-      <span :class="[isSelected ? 'text-white' : 'vue-block']">
+      <span :class="[isSelected ? 'text-white' : 'vue-block-text']">
         {{ data.name }}
       </span>
       <span

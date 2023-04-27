@@ -5,7 +5,10 @@ const timelineInfo = ref<any[]>([])
 let timer: number | null
 const selected = ref(0)
 const timelineEventInfo = computed(() => {
-  return timelineInfo.value[selected.value].event.data
+  return {
+    key: 'event info',
+    value: timelineInfo.value[selected.value].event.data,
+  }
 })
 onMounted(() => {
   timer = window.setInterval(() => {
@@ -31,7 +34,7 @@ function updateSelected(index: number) {
       </Pane>
       <Pane>
         <div h-screen select-none overflow-scroll p-2>
-          <TimelineEventInfo :data="timelineEventInfo" />
+          <VState :data="timelineEventInfo" />
         </div>
       </Pane>
     </Splitpanes>

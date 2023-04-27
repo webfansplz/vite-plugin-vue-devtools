@@ -66,9 +66,13 @@ export default function PluginVueDevtools(): Plugin[] {
     name: NAME,
     enforce: 'post',
     apply: 'serve',
-    // configResolved(config) {},
+    // configResolved(config) {
+    // },
     configureServer(server) {
       configureServer(server)
+      // setTimeout(() => {
+      //   console.log(server.resolvedUrls)
+      // }, 3000)
       // console.log(server)
     },
     async resolveId(importee: string) {

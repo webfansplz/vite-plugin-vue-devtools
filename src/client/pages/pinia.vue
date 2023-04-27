@@ -39,12 +39,12 @@ onMounted(() => {
           <div
             v-for="(item, index) in piniaStoresId"
             :key="index"
-            mb-2 max-w-100 cursor-pointer rounded
+            vue-block
             :class="[activeIndex === index ? 'vue-block-active' : 'vue-block-hover']"
             @click="select(index)"
           >
-            <h3 flex items-center py-1 pl-2 text-sm font-400 @click=" () => {}">
-              <span :class="[activeIndex === index ? 'text-white' : 'vue-block']">
+            <h3 vue-block-title>
+              <span :class="[activeIndex === index ? 'text-white' : 'vue-block-text']">
                 {{ item }}
               </span>
             </h3>
