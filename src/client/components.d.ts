@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
+    IframeView: typeof import('./components/IframeView.vue')['default']
     Logo: typeof import('./components/Logo.vue')['default']
     RoutePathItem: typeof import('./components/RoutePathItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

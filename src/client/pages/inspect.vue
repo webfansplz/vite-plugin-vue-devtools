@@ -4,6 +4,6 @@
 
 <template>
   <div>
-    <iframe src="http://localhost:5173/__inspect/" h-full w-full />
+    <IframeView src="/__inspect/" />
   </div>
 </template>
