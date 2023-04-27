@@ -1,20 +1,32 @@
 <script setup lang="ts">
-import { rpc } from './logic/rpc'
+import { initTimeline } from './logic/timeline'
+import { initPinia } from './logic/pinia'
+import { initRoutes } from './logic/routes'
 
-async function get() {
-  const graph = await rpc.componentGraph()
-  console.log(graph)
-}
+// import { rpc } from './logic/rpc'
 
-get()
+// async function get() {
+//   const graph = await rpc.componentGraph()
+//   console.log(graph)
+// }
+
+onMounted(() => {
+  setTimeout(() => {
+    initTimeline()
+    initRoutes()
+    initPinia()
+  }, 200)
+})
+
+// get()
 const route = useRoute()
 const router = useRouter()
 // router.push('/components')
-// router.push('/timeline')
+router.push('/timeline')
 // router.push('/overview')
 // router.push('/pages')
 // router.push('/pinia')
-router.push('/routes')
+// router.push('/routes')
 </script>
 
 <template>

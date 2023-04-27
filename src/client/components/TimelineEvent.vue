@@ -21,8 +21,8 @@ const emits = defineEmits(['update-selected'])
         <span
           font-medium
           :class="[index === selected ? 'text-white' : 'text-purple-600 dark:text-purple-400']"
-        >{{ item.event.data.component }}</span>
-        <span opacity-75>{{ item.event.data.type }}</span>
+        >{{ item.event.title }}</span>
+        <span opacity-75>{{ item.event.subtitle }}</span>
       </span>
       <span flex-none font-mono opacity-50>{{ dayjs(item.event.now).format('HH:mm:ss') }}</span>
     </li>

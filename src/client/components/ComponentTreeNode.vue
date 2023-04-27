@@ -14,7 +14,6 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
     :style="{
       paddingLeft: `${depth * 15 + 4}px`,
     }"
-    max-w="[90%]"
     vue-block
     :class="[isSelected ? 'vue-block-active' : 'vue-block-hover']"
     @click="select(data.id)"

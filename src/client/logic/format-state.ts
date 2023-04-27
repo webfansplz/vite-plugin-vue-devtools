@@ -27,6 +27,9 @@ export interface StateType {
   rawDisplay?: string
   recursive: boolean
 }
+function isReactive(raw: any): boolean {
+  return !!raw.__ob__
+}
 
 export function formatStateType(value: unknown): StateType {
   // Vue
@@ -48,15 +51,15 @@ export function formatStateType(value: unknown): StateType {
         : { value: formatWithExtraType(state.value, 'Ref') }),
     }
   }
-  else if (isReactive(value)) {
-    const state = formatStateType(toRaw(value))
-    return {
-      ...state,
-      ...(state.recursive
-        ? { rawDisplay: formatWithExtraType(state.rawDisplay, 'Reactive') }
-        : { value: formatWithExtraType(state.value, 'Reactive') }),
-    }
-  }
+  // else if (isReactive(value)) {
+  //   const state = formatStateType(toRaw(value))
+  //   return {
+  //     ...state,
+  //     ...(state.recursive
+  //       ? { rawDisplay: formatWithExtraType(state.rawDisplay, 'Reactive') }
+  //       : { value: formatWithExtraType(state.value, 'Reactive') }),
+  //   }
+  // }
 
   else if (isArray(value)) {
     return {
@@ -205,7 +208,7 @@ export function formatStateType(value: unknown): StateType {
       return {
         rawType: 'string',
         recursive: false,
-        value: '"Unrecognized Value"',
+        value: `"${toRawType(value)}"`,
       }
     }
   }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { Pane, Splitpanes } from 'splitpanes'
-import { initPinia, piniaGetters, piniaState, piniaStoresId } from '../logic/pinia'
+import { piniaGetters, piniaState, piniaStoresId } from '../logic/pinia'
 
 const activeIndex = ref(0)
 const omitStoreId = computed(() => {
@@ -27,7 +27,7 @@ const data = computed(() => {
   ].filter(Boolean)
 })
 onMounted(() => {
-  initPinia()
+  // initPinia()
 })
 </script>
 
