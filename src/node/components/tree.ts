@@ -199,7 +199,6 @@ export class ComponentWalker {
     //     label: instance.suspense.suspenseKey,
     //   })
     // }
-    // consola(instance.uid, instance)
 
     InstanceMap.set(treeNode.id, getInstanceState(instance))
     treeNode.instance = instance

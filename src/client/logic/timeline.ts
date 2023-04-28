@@ -62,7 +62,7 @@ export function initTimeline() {
     label: 'Performance',
   })
   update()
-  setTimeout(() => {
+  setInterval(() => {
     timelineEvent.value = timelineEvent.value.filter(item => item.layerId !== 'performance')
     update()
   }, 1000)

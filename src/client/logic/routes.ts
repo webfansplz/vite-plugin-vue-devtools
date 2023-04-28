@@ -227,13 +227,11 @@ function subscribeRouterChanged(router: Router) {
 }
 
 export function initRoutes() {
-  const app = window.parent.__VUE_DEVTOOLS_GET_VUE_APP__()
-  router.value = app.config.globalProperties.$router
+  router.value = app.value?.config.globalProperties.$router
   if (router.value) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     const matcher = createRouterMatcher(router.value?.options.routes!, router.value?.options!)
     routeRecordMatcher.value = matcher.getRoutes()
-    // consola(formatRouteRecordMatcherForStateInspector(routes?.[0]))
 
     timelineApi.addTimelineLayer({
       id: LAYER_ID,

@@ -4,6 +4,8 @@ import { Pane, Splitpanes } from 'splitpanes'
 // TODO: move to client/logic ?
 import { ComponentWalker } from '../../node/components/tree'
 import { getInstanceState } from '../../node/components/data'
+import { instance, onVueInstanceUpdate } from '../logic/instance'
+import { selected } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])
 
@@ -45,19 +47,18 @@ const normalizedComponentState = computed(() => {
 
 function init() {
   const walker = new ComponentWalker(500, null, true)
-  const instance = window.parent.__VUE_DEVTOOLS_GET_VUE_INSTANCE__()
-  selectedComponent.value = instance
-  selectedComponentState.value = getInstanceState(instance)
-  walker.getComponentTree(instance).then((res) => {
+  selectedComponent.value = instance.value
+  selectedComponentState.value = getInstanceState(instance.value!)
+  walker.getComponentTree(instance.value!).then((res) => {
     componentTree.value = res
   })
 }
 
 onMounted(() => {
   init()
-  window.addEventListener('message', (e) => {
-    if (e.data === 'update')
-      init()
+  onVueInstanceUpdate(() => {
+    init()
+    selected.value = 'vue-devtools:root'
   })
 })
 </script>

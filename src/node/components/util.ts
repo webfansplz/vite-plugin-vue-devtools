@@ -61,6 +61,7 @@ function getComponentFileName(options: any) {
  * @param {Vue} instance
  */
 export function getUniqueComponentId(instance: any) {
+  // console.log('file', instance, instance.type.__file ?? `${instance.type.name}${instance.uid}`)
   // TODO: unique id for root
   const appId = 'vue-devtools'
   const instanceId = instance === instance.root ? 'root' : instance.uid

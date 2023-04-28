@@ -13,6 +13,10 @@ const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
   },
 }
 
+window.__GET_VUE_DEVTOOLS_GLOBAL_HOOK__ = function () {
+  return hook
+}
+
 // print for iframe console
 window.print = (...s) => {
   console.log('print', ...s)
@@ -38,47 +42,21 @@ function injectDevtools() {
 
 const performanceTimeline = []
 let performanceTimelineSortId = 0
-
-window.__VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__ = function () {
-  const sortKey = {
-    start: -1,
-    end: 1,
-  }
-  return performanceTimeline.sort((a, b) => a.sortId - b.sortId).sort((a, b) => sortKey[a.event.data.measure] - sortKey[b.event.data.measure])
+const performTimelineSortKey = {
+  start: -1,
+  end: 1,
 }
 
-// function countRoutes(routes) {
-//   let count = routes.length
-//   for (const route of routes) {
-//     if (route.children)
-//       count += countRoutes(route.children)
-//   }
-//   return count
-// }
+window.__VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__ = function () {
+  const data = performanceTimeline
+    // .sort((a, b) => a.sortId - b.sortId)
+    .sort((a, b) => performTimelineSortKey[a.event.data.measure] - performTimelineSortKey[b.event.data.measure])
+    .sort((a, b) => a.event.time - b.event.time)
 
-hook.on('app:init', (app) => {
-  // console.log('sintance', app._instance)
-  // console.log(app.config.globalProperties.$router.options.routes)
-  // console.log(app.config.globalProperties.$pinia)
-  // console.log(app._instance.proxy._pStores)
-  // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
-  // console.log('app:init', countRoutes(app.config.globalProperties.$router.options.routes))
-  // const stores = app._instance.proxy._pStores
-  // Object.values(stores).forEach((store) => {
-  //   console.log('`', store.$id)
-  //   console.log('`', (store.$state))
-  // })
-  window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
-    return app._instance
-  }
-
-  window.__VUE_DEVTOOLS_GET_VUE_APP__ = function () {
-    return app
-  }
-})
+  return data
+}
 
 hook.on('perf:start', (app, uid, component, type, time) => {
-  // console.log('1')
   const filename = component.type.__file?.match(/\/?([^/]+?)(\.[^/.]+)?$/)?.[1]
   const name = component.type.__name ?? component.type.name ?? filename
   if (!name)
@@ -119,7 +97,7 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
       title: name,
       subtitle: type,
       time,
-      now: item.event.now,
+      now: Date.now(),
       data: {
         component: name,
         // name,
@@ -129,13 +107,6 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
       },
     },
   })
-
-  // TODO: replace updated component
-  // window.__VUE_DEVTOOLS_GET_VUE_INSTANCE__ = function () {
-  //   return component
-  // }
-  // const contentWindow = document.getElementById(iframeId)?.contentWindow
-  // contentWindow?.postMessage('update', 'http://localhost:5173/__devtools/')
 })
 
 injectDevtools()

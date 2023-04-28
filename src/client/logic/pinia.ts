@@ -4,13 +4,15 @@ import type { DebuggerEvent } from 'vue'
 import { MutationType } from 'pinia'
 import type { StateTree } from 'pinia'
 import { timelineApi } from './timeline'
+import { instance, onVueInstanceUpdate } from './instance'
 
+const LAYER_ID = 'pinia'
 const piniaVisible = ref(false)
 const stores = ref()
+const subscribes = ref<Function>([])
 export const piniaStoresId = ref<string>(['🍍 Pinia (root)'])
 export const piniaState = ref<Record<string, unknown>>({})
 export const piniaGetters = ref<Record<string, unknown>>({})
-const LAYER_ID = 'pinia'
 
 function formatEventData(
   events: DebuggerEvent[] | DebuggerEvent | undefined,
@@ -58,8 +60,8 @@ function formatMutationType(type: MutationType): string {
   }
 }
 
-function subscribeStoreChanged(store) {
-  store.$onAction(({ after, onError, name, args }) => {
+function subscribeStore(store) {
+  const action = store.$onAction(({ after, onError, name, args }) => {
     timelineApi.addTimelineEvent({
       layerId: LAYER_ID,
       event: {
@@ -112,8 +114,11 @@ function subscribeStoreChanged(store) {
       })
     })
   }, true)
+
+  subscribes.value.push(action)
+
   store._customProperties.forEach((name) => {
-    watch(
+    const stop = watch(
       () => unref<unknown>(store[name]),
       (newValue, oldValue) => {
         timelineApi.addTimelineEvent({
@@ -132,9 +137,11 @@ function subscribeStoreChanged(store) {
       },
       { deep: true },
     )
+
+    subscribes.value.push(stop)
   })
 
-  store.$subscribe(
+  const subscribe = store.$subscribe(
     ({ events, type }, state) => {
       const eventData = {
         time: Date.now(),
@@ -174,6 +181,8 @@ function subscribeStoreChanged(store) {
     { detached: true, flush: 'sync' },
   )
 
+  subscribes.value.push(subscribe)
+
   store._hotUpdate = markRaw((newStore) => {
     timeApi.addTimelineEvent({
       layerId: LAYER_ID,
@@ -192,7 +201,6 @@ function subscribeStoreChanged(store) {
 }
 
 function normalizePiniaInfo() {
-  piniaStoresId.value = ['🍍 Pinia (root)']
   Object.values(stores.value)?.forEach((store) => {
     const state = store._isOptionsAPI
       ? toRaw(store.$state)
@@ -210,22 +218,40 @@ function normalizePiniaInfo() {
     }
     piniaStoresId.value.push(store.$id)
 
-    subscribeStoreChanged(store)
+    subscribeStore(store)
+  })
+}
+
+export function updatePinia() {
+  stores.value = null
+  subscribes.value.forEach(stop => stop())
+  subscribes.value = []
+  nextTick(() => {
+    const proxy = instance.value.proxy
+    const _stores = proxy?._pStores
+    piniaVisible.value = !!_stores
+    if (_stores) {
+      stores.value = _stores
+      piniaState.value = {}
+      piniaGetters.value = {}
+      piniaStoresId.value = ['🍍 Pinia (root)']
+      normalizePiniaInfo()
+    }
   })
 }
 
 export function initPinia() {
-  const app = window.parent.__VUE_DEVTOOLS_GET_VUE_APP__()
-  const proxy = app._instance.proxy
-  const _stores = proxy?._pStores
-  piniaVisible.value = !!_stores
-  // consola('piniaVisible', piniaVisible.value)
-  if (_stores) {
-    stores.value = _stores
-    normalizePiniaInfo()
-    timelineApi.addTimelineLayer({
-      id: 'pinia',
-      label: 'Pinia 🍍',
-    })
-  }
+  updatePinia()
+  setTimeout(() => {
+    if (stores.value) {
+      timelineApi.addTimelineLayer({
+        id: 'pinia',
+        label: 'Pinia 🍍',
+      })
+    }
+  })
 }
+
+onVueInstanceUpdate(() => {
+  updatePinia()
+})

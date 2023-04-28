@@ -15,11 +15,12 @@ declare interface performanceTimeline {
   }
 }
 
+
 interface Window {
-  consola: (...args: any[]) => void
   __VUE_DEVTOOLS_GET_VUE_INSTANCE__: () => any
   __VUE_DEVTOOLS_GET_VUE_APP__: () => any
   __VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__: () => performanceTimeline[]
+  __GET_VUE_DEVTOOLS_GLOBAL_HOOK__: () => any
 }
 
 declare interface ComponentTreeNode {

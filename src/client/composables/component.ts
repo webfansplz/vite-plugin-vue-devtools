@@ -3,7 +3,7 @@ import { InstanceMap } from '../../node/components/tree'
 
 // import { getInstanceState } from '../../node/components/data'
 
-const selected = ref('vue-devtools:root')
+export const selected = ref('vue-devtools:root')
 const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
   'vue-devtools:root': true,
 })

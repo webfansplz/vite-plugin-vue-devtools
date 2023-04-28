@@ -47,8 +47,8 @@ function toggleExpand(id: string) {
       <i v-else inline-block h-6 w-6 />
       <span text-purple-700 dark:text-purple-300>{{ index }}</span>
       <span px-1 op-60>:</span>
-      <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" v-html="item?.rawDisplay" />
-      <span v-else :class="rawTypeStyles[item.rawType]" v-html="item?.value" />
+      <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.rawDisplay" />
+      <span v-else :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.value" />
     </p>
     <VStateType v-if="expandedId.includes(`${depth}-${index}`) && item?.recursive && depth <= 1" :data="item?.value" :depth="depth + 1" />
   </code>
