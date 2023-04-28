@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
 
-// TODO: move to client/logic ?
-import { ComponentWalker } from '../../node/components/tree'
-import { getInstanceState } from '../../node/components/data'
+import { ComponentWalker, getInstanceState } from '../logic/components'
 import { instance, onVueInstanceUpdate } from '../logic/instance'
 import { selected } from '../composables/component'
 
@@ -55,7 +53,7 @@ function init() {
 }
 
 onMounted(() => {
-  init()
+  // init()
   onVueInstanceUpdate(() => {
     init()
     selected.value = 'vue-devtools:root'
@@ -72,8 +70,8 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div h-screen select-none overflow-scroll p-2>
-          <VState v-for="(item) in normalizedComponentState" :key="item.key" :data="item" />
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
+          <VState v-for="(item, index) in normalizedComponentState" :id="index" :key="item.value" :data="item" />
         </div>
       </Pane>
     </Splitpanes>

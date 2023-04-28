@@ -1,7 +1,6 @@
 import type { ComponentInternalInstance } from 'vue'
-import { InstanceMap } from '../../node/components/tree'
 
-// import { getInstanceState } from '../../node/components/data'
+import { InstanceMap } from '../logic/components'
 
 export const selected = ref('vue-devtools:root')
 const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
