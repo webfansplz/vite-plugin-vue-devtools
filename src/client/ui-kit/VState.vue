@@ -1,10 +1,28 @@
+<script lang="ts">
+const expandedIdCache = ref<string[]>([])
+</script>
+
 <script setup lang="ts">
-defineProps<{
-  data: { key: string; value: Record<string, unknown> }
-}>()
+const props = withDefaults(
+  defineProps<{
+    data: { key: string; value: Record<string, unknown> }
+    id?: number
+  }>(),
+  {
+    id: 0,
+  })
+
 const isExpanded = ref<boolean>(true)
+
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
+}
+
+function updateExpandedIdCache(id: string) {
+  if (expandedIdCache.value.includes(id))
+    expandedIdCache.value = expandedIdCache.value.filter((i: string) => i !== id)
+  else
+    expandedIdCache.value.push(id)
 }
 </script>
 
@@ -21,7 +39,7 @@ function toggleExpanded() {
       </span>
     </h3>
     <div v-if="isExpanded" pl-3>
-      <VStateType :data="data.value" />
+      <VStateType :id="id" :data="data.value" :expanded-id="expandedIdCache" @update-expanded="updateExpandedIdCache" />
     </div>
   </div>
 </template>
