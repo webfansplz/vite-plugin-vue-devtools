@@ -1,3 +1,20 @@
+import { createApp, h } from 'vue'
+import App from 'virtual:vue-devtools-path:Container.vue'
+
+const CONTAINER_ID = '__vue-devtools-container__'
+
+function load() {
+  const el = document.createElement('div')
+  el.setAttribute('id', CONTAINER_ID)
+  document.getElementsByTagName('body')[0].appendChild(el)
+  createApp({
+    render: () => h(App),
+    devtools: {
+      hide: true,
+    },
+  }).mount(`#${CONTAINER_ID}`)
+}
+
 // reuse __VUE_DEVTOOLS_ (@vuejs/devtools) instance first
 const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
   events: new Map(),
@@ -56,6 +73,10 @@ window.__VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__ = function () {
   return data
 }
 
+hook.on('app:init', (app) => {
+  // console.log('init', app)
+})
+
 hook.on('perf:start', (app, uid, component, type, time) => {
   const filename = component.type.__file?.match(/\/?([^/]+?)(\.[^/.]+)?$/)?.[1]
   const name = component.type.__name ?? component.type.name ?? filename
@@ -109,4 +130,6 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
   })
 })
 
-injectDevtools()
+// injectDevtools()
+
+load()
