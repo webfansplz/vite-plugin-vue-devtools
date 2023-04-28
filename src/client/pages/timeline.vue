@@ -23,7 +23,7 @@ onUnmounted(() => {
   <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base" size="20">
-        <div h-screen select-none overflow-scroll p-2>
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <div
             v-for="(item) in timelineLayer"
             :key="item.id"
@@ -40,12 +40,12 @@ onUnmounted(() => {
         </div>
       </Pane>
       <Pane border="r base" size="45">
-        <div h-screen select-none overflow-scroll>
+        <div h-screen select-none overflow-scroll class="no-scrollbar">
           <TimelineEvent :data="activeTimelineEvents" :selected="activeTimelineEventIndex" @update-selected="toggleTimelineEventIndex" />
         </div>
       </Pane>
       <Pane v-if="timelineEventDetails.value" size="35">
-        <div h-screen select-none overflow-scroll p-2>
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <VState :data="timelineEventDetails" />
         </div>
       </Pane>

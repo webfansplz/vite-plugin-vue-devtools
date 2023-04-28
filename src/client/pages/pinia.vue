@@ -35,7 +35,7 @@ onMounted(() => {
   <div h-screen>
     <Splitpanes>
       <Pane border="r base">
-        <div h-screen select-none overflow-scroll p-2>
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <div
             v-for="(item, index) in piniaStoresId"
             :key="index"
@@ -52,8 +52,8 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div h-screen select-none overflow-scroll p-2>
-          <VState v-for="(item, index) in data" :key="index" :data="item" />
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
+          <VState v-for="(item, index) in data" :id="index" :key="index" :data="item" />
         </div>
       </Pane>
     </Splitpanes>

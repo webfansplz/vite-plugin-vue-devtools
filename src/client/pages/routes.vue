@@ -11,7 +11,7 @@ onMounted(() => {
   <div h-screen>
     <Splitpanes>
       <Pane border="r base">
-        <div h-screen select-none overflow-scroll p-2>
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <div
             v-for="(item, index) in routeRecordMatcherState"
             :key="index"
@@ -37,7 +37,7 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div h-screen select-none overflow-scroll p-2>
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <VState :data="activeRouteRecordMatcherState" />
         </div>
       </Pane>
