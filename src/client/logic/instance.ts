@@ -2,6 +2,7 @@ import type { App, ComponentInternalInstance } from 'vue'
 
 export const app = shallowRef<App<Element>>()
 
+// TODO: multi vue instance
 export const instance = shallowRef<ComponentInternalInstance>()
 
 export function onVueInstanceUpdate(cb: (i: ComponentInternalInstance) => void) {
