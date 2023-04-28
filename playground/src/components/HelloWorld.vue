@@ -11,7 +11,7 @@ const count = ref(30)
   <h1>{{ msg }}</h1>
   {{ count }}
 
-  <Child msg="123" />
+  <Child msg="123456" />
 </template>
 
 <style scoped>

@@ -6,11 +6,10 @@ import { useCounterStore, useUserStore } from './stores'
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue'
 
-const count = ref(120)
+const count = ref(130)
 
 const map = new Map([['a', 1], ['b', 2]])
 function add(x: number, y: number) {
-  console.log('?????')
 }
 
 const doubleCount = computed(() => {
@@ -28,9 +27,13 @@ const store = useCounterStore()
 
 const userStore = useUserStore()
 
-store.increment()
+// const userStore2 = useCounter2Store()
 
-store.increment()
+// const counter2Store = useCounter2Store()
+
+// store.increment()
+
+// store.increment()
 </script>
 
 <template>

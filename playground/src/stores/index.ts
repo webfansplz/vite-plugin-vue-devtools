@@ -2,6 +2,16 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useCounterStore = defineStore('counter', () => {
+  const count = ref(10)
+  const name = ref('webfansplz!!!')
+  function increment() {
+    count.value++
+  }
+
+  return { count, name, increment }
+})
+
+export const useCounter2Store = defineStore('counter-2', () => {
   const count = ref(0)
   const name = ref('webfansplz')
   function increment() {
