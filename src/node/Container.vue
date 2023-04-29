@@ -54,8 +54,8 @@ function getToggleButtonPosition() {
 </script>
 
 <template>
-  <iframe src="/__devtools/" class="nuxt-devtoools-panel" :style="panelPosition" />
-  <button class="nuxt-devtools-toggle" aria-label="Toggle devtools panel" :style="getToggleButtonPosition()" @click="togglePanel">
+  <iframe src="/__devtools/" class="vue-devtools-panel" :style="panelPosition" />
+  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="getToggleButtonPosition()" @click="togglePanel">
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />
@@ -65,7 +65,7 @@ function getToggleButtonPosition() {
 </template>
 
 <style scoped>
-.nuxt-devtoools-panel {
+.vue-devtools-panel {
   position: fixed;
   /* bottom: 10px; */
   /* left: 50%; */
@@ -77,7 +77,7 @@ function getToggleButtonPosition() {
   height: calc(60vh - 20px);
 }
 
-.nuxt-devtools-toggle {
+.vue-devtools-toggle {
   position: fixed;
   background: #0C0C0C;
   border: 1px solid rgba(125,125,125,0.2);
@@ -91,12 +91,12 @@ function getToggleButtonPosition() {
   outline: 0;
 }
 
-.nuxt-devtools-toggle:hover {
+.vue-devtools-toggle:hover {
   transform: var(--hover-translate);
   opacity: 1;
 }
 
-.nuxt-devtools-toggle svg {
+.vue-devtools-toggle svg {
   width: 16px;
   height: 16px;
   margin: auto;
