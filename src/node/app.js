@@ -39,24 +39,6 @@ window.print = (...s) => {
   console.log('print', ...s)
 }
 
-const iframeId = '__vue_devtools_iframe__'
-
-function injectDevtools() {
-  const iframe = document.createElement('iframe')
-  iframe.id = iframeId
-  iframe.src = '/__devtools/'
-  iframe.style.position = 'fixed'
-  iframe.style.bottom = '0'
-  iframe.style.left = '50%'
-  iframe.style.outline = 'none'
-  iframe.style.border = '1px solid rgba(125,125,125,0.2)'
-  iframe.style.borderRadius = '8px'
-  iframe.style.transform = 'translateX(-50%)'
-  iframe.style.width = 'calc(80vw - 20px)'
-  iframe.style.height = 'calc(60vh - 20px)'
-  document.body.appendChild(iframe)
-}
-
 const performanceTimeline = []
 let performanceTimelineSortId = 0
 const performTimelineSortKey = {
@@ -129,7 +111,5 @@ hook.on('perf:end', async (app, uid, component, type, time) => {
     },
   })
 })
-
-// injectDevtools()
 
 load()
