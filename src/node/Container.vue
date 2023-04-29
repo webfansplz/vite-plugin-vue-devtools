@@ -1,17 +1,40 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-const panelVisible = ref(false)
-const panelPosition = computed(() => panelVisible.value ? { bottom: '10px', left: '50%' } : { bottom: '-9999px', left: '-9999px' })
 const state = ref({
   position: 'bottom',
 })
-
-function togglePanel() {
-  panelVisible.value = !panelVisible.value
-}
-
-function getToggleButtonPosition() {
+const panelStyle = computed(() => {
+  if (state.value.position === 'bottom') {
+    return {
+      transform: 'translateX(-50%)',
+      bottom: '10px',
+      left: '50%',
+    }
+  }
+  else if (state.value.position === 'top') {
+    return {
+      transform: 'translateX(-50%)',
+      top: '10px',
+      left: '50%',
+    }
+  }
+  else if (state.value.position === 'left') {
+    return {
+      transform: 'translateY(-50%)',
+      top: '50%',
+      left: '10px',
+    }
+  }
+  else {
+    return {
+      transform: 'translateY(-50%)',
+      top: '50%',
+      right: '10px',
+    }
+  }
+})
+const toggleButtonPosition = computed(() => {
   if (state.value.position === 'left') {
     return {
       'left': '-8px',
@@ -50,12 +73,20 @@ function getToggleButtonPosition() {
     'width': '40px',
     '--hover-translate': 'translate(0, -3px)',
   }
+})
+const panelVisible = ref(false)
+const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { bottom: '-9999px', left: '-9999px' })
+
+function togglePanel() {
+  panelVisible.value = !panelVisible.value
 }
 </script>
 
 <template>
-  <iframe src="/__devtools/" class="vue-devtools-panel" :style="panelPosition" />
-  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="getToggleButtonPosition()" @click="togglePanel">
+  <div class="vue-devtools-panel" :style="panelPosition">
+    <iframe src="/__devtools/" />
+  </div>
+  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition" @click="togglePanel">
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />
@@ -67,14 +98,16 @@ function getToggleButtonPosition() {
 <style scoped>
 .vue-devtools-panel {
   position: fixed;
-  /* bottom: 10px; */
-  /* left: 50%; */
+  width: calc(80vw - 20px);
+  height: calc(60vh - 20px);
+}
+
+.vue-devtools-panel iframe {
+  width: 100%;
+  height: 100%;
   outline: 0;
   border:1px solid rgba(125,125,125,0.2);
   border-radius: 8px;
-  transform: translateX(-50%);
-  width: calc(80vw - 20px);
-  height: calc(60vh - 20px);
 }
 
 .vue-devtools-toggle {

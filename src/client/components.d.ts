@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
+    DockingPanel: typeof import('./components/DockingPanel.vue')['default']
     IframeView: typeof import('./components/IframeView.vue')['default']
     Logo: typeof import('./components/Logo.vue')['default']
     RoutePathItem: typeof import('./components/RoutePathItem.vue')['default']
@@ -23,6 +24,7 @@ declare module '@vue/runtime-core' {
     TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']
+    VDarkToggle: typeof import('./ui-kit/VDarkToggle.vue')['default']
     VExpandLogo: typeof import('./ui-kit/VExpandLogo.vue')['default']
     VIcon: typeof import('./ui-kit/VIcon.vue')['default']
     VIconTitle: typeof import('./ui-kit/VIconTitle.vue')['default']

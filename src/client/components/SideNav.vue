@@ -58,8 +58,7 @@ const tabs = [
           title="Vue DevTools"
         />
         <template #popper>
-          <!-- TODO: Menu -->
-          Menu
+          <DockingPanel />
         </template>
       </VDropdown>
 
