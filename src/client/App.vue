@@ -3,6 +3,8 @@ import { initTimeline } from './logic/timeline'
 import { initPinia } from './logic/pinia'
 import { initRoutes } from './logic/routes'
 
+useColorMode()
+
 // import { rpc } from './logic/rpc'
 
 // async function get() {

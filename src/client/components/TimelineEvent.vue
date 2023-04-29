@@ -13,7 +13,7 @@ const emits = defineEmits(['update-selected'])
   <ul>
     <li
       v-for="(item, index) in data" :key="index"
-      border="b base" h-10 flex cursor-pointer select-none items-center pl-3 pr-2 text-xs text-white space-x-2
+      border="b base" h-10 flex cursor-pointer select-none items-center pl-3 pr-2 text-xs space-x-2
       :class="[index === selected ? 'vue-block-active' : 'vue-block-hover']"
       @click="emits('update-selected', index)"
     >
