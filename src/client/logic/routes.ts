@@ -1,6 +1,7 @@
 import type { RouteLocationNormalized, RouteRecordNormalized, Router } from 'vue-router'
 import { createRouterMatcher } from 'vue-router'
 import { timelineApi } from './timeline'
+import { app } from './instance'
 
 type RouteRecordMatcher = ReturnType<ReturnType<typeof createRouterMatcher>['getRoutes']>[0]
 
