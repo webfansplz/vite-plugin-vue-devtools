@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { StateType } from '../logic/format-state'
+import { formatStateType } from '../logic/format-state'
 
 const props = withDefaults(defineProps<{
   id: number
