@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { vueVersion } from '../logic/instance'
 import { version } from '../../../package.json'
 import { componentCount, pageCount } from '../logic/overview'
 
@@ -34,7 +35,7 @@ const isMacOS = navigator?.platform.toLowerCase().includes('mac')
         <div p4 theme-card-green flex="~ col auto">
           <div logos-vue text-3xl />
           <!-- TODO: vue version -->
-          <code>v3.2.0</code>
+          <code>v{{ vueVersion }}</code>
         </div>
         <RouterLink min-w-40 p4 theme-card-lime flex="~ col auto" to="/pages">
           <div carbon-tree-view-alt text-3xl />
