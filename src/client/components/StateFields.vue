@@ -3,7 +3,7 @@ const expandedIdCache = ref<string[]>([])
 </script>
 
 <script setup lang="ts">
-const props = withDefaults(
+withDefaults(
   defineProps<{
     data: { key: string; value: Record<string, unknown> }
     id?: number
@@ -39,7 +39,7 @@ function updateExpandedIdCache(id: string) {
       </span>
     </h3>
     <div v-if="isExpanded" pl-3>
-      <VStateType :id="id" :data="data.value" :expanded-id="expandedIdCache" @update-expanded="updateExpandedIdCache" />
+      <StateFieldsTree :id="id" :data="data.value" :expanded-id="expandedIdCache" @update-expanded="updateExpandedIdCache" />
     </div>
   </div>
 </template>

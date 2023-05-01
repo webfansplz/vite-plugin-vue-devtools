@@ -46,7 +46,7 @@ onUnmounted(() => {
       </Pane>
       <Pane v-if="timelineEventDetails.value" size="35">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
-          <VState :data="timelineEventDetails" />
+          <StateFields :data="timelineEventDetails" />
         </div>
       </Pane>
     </Splitpanes>

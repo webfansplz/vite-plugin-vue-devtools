@@ -53,7 +53,7 @@ onMounted(() => {
       </Pane>
       <Pane>
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
-          <VState v-for="(item, index) in data" :id="index" :key="index" :data="item" />
+          <StateFields v-for="(item, index) in data" :id="index" :key="index" :data="item" />
         </div>
       </Pane>
     </Splitpanes>

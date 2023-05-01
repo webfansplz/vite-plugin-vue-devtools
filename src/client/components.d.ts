@@ -20,6 +20,8 @@ declare module '@vue/runtime-core' {
     SearchBox: typeof import('./components/SearchBox.vue')['default']
     SideNav: typeof import('./components/SideNav.vue')['default']
     SideNavItem: typeof import('./components/SideNavItem.vue')['default']
+    StateFields: typeof import('./components/StateFields.vue')['default']
+    StateFieldsTree: typeof import('./components/StateFieldsTree.vue')['default']
     TabIcon: typeof import('./components/TabIcon.vue')['default']
     TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
@@ -30,8 +32,6 @@ declare module '@vue/runtime-core' {
     VIconTitle: typeof import('./ui-kit/VIconTitle.vue')['default']
     VPanelGrids: typeof import('./ui-kit/VPanelGrids.vue')['default']
     VSectionBlock: typeof import('./ui-kit/VSectionBlock.vue')['default']
-    VState: typeof import('./ui-kit/VState.vue')['default']
-    VStateType: typeof import('./ui-kit/VStateType.vue')['default']
     VTextInput: typeof import('./ui-kit/VTextInput.vue')['default']
   }
 }

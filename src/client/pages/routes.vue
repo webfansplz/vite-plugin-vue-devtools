@@ -38,7 +38,7 @@ onMounted(() => {
       </Pane>
       <Pane>
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
-          <VState :data="activeRouteRecordMatcherState" />
+          <StateFields :data="activeRouteRecordMatcherState" />
         </div>
       </Pane>
     </Splitpanes>
