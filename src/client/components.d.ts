@@ -25,7 +25,7 @@ declare module '@vue/runtime-core' {
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']
     VDarkToggle: typeof import('./ui-kit/VDarkToggle.vue')['default']
-    VExpandLogo: typeof import('./ui-kit/VExpandLogo.vue')['default']
+    VExpandIcon: typeof import('./ui-kit/VExpandIcon.vue')['default']
     VIcon: typeof import('./ui-kit/VIcon.vue')['default']
     VIconTitle: typeof import('./ui-kit/VIconTitle.vue')['default']
     VPanelGrids: typeof import('./ui-kit/VPanelGrids.vue')['default']

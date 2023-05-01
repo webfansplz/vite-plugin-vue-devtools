@@ -33,7 +33,7 @@ function updateExpandedIdCache(id: string) {
       class="hover:bg-[#c2e9d7] hover:dark:bg-[#2c3e50]"
       @click="toggleExpanded"
     >
-      <VExpandLogo :value="isExpanded" />
+      <VExpandIcon :value="isExpanded" />
       <span text-primary>
         {{ data.key }}
       </span>

@@ -19,7 +19,7 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
     @click="select(data.id)"
   >
     <h3 vue-block-title @click="data.hasChildren ? toggleExpand(data.id) : () => {}">
-      <VExpandLogo v-if="data.hasChildren" :value="isExpanded" />
+      <VExpandIcon v-if="data.hasChildren" :value="isExpanded" />
       <i v-else inline-block h-6 w-6 />
       <span
         :class="[
