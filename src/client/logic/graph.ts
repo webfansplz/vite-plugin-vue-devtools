@@ -1,7 +1,7 @@
 import { useStorage } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import type { ModuleInfo } from '../../types'
-import { rpc } from '../logic/rpc'
+import { rpc } from './rpc'
 
 export const list = ref<ModuleInfo[]>(await rpc.componentGraph())
 export const searchText = useStorage('vite-inspect-search-text', '')
@@ -14,7 +14,6 @@ export const searchResults = computed(() => {
     list.value
   ) || []
 
-  console.log('data', data)
   if (!includeNodeModules.value)
     data = data.filter(item => !item.id.includes('/node_modules/'))
 

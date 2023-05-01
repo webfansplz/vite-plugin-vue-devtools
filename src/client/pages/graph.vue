@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { searchResults as modules } from '../logic/search'
+import { searchResults as modules } from '../logic/graph'
 
 const isDark = useDark()
 // const modules = ref<ModuleInfo[]>()

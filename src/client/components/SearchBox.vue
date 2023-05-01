@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { exactSearch, includeNodeModules, includeVirtual, searchText } from '../logic/search'
+import { exactSearch, includeNodeModules, includeVirtual, searchText } from '../logic/graph'
 </script>
 
 <template>
