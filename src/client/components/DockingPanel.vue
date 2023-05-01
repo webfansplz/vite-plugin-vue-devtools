@@ -1,6 +1,30 @@
 <script setup lang="ts">
-const frameState = {
+const frameState = ref({
   position: 'bottom',
+})
+
+const dockButton = [
+  {
+    position: 'bottom',
+    icon: 'i-carbon-open-panel-filled-bottom',
+  },
+  {
+    position: 'right',
+    icon: 'i-carbon-open-panel-filled-right',
+  },
+  {
+    position: 'left',
+    icon: 'i-carbon-open-panel-filled-left',
+  },
+  {
+    position: 'top',
+    icon: 'i-carbon-open-panel-filled-top',
+  },
+]
+
+function toggle(position: string) {
+  frameState.value.position = position
+  window.parent.__VUE_DEVTOOLS_TOGGLE_PANEL_POSITION__(position)
 }
 </script>
 
@@ -12,24 +36,10 @@ const frameState = {
       </div>
       <div flex="~ gap-1" text-lg>
         <button
-          i-carbon-open-panel-filled-bottom
-          :class="frameState.position === 'bottom' ? 'text-primary' : 'op50'"
-          @click="frameState.position = 'bottom'"
-        />
-        <button
-          i- carbon-open-panel-filled-right
-          :class="frameState.position === 'right' ? 'text-primary' : 'op50'"
-          @click="frameState.position = 'right'"
-        />
-        <button
-          i-carbon-open-panel-filled-left
-          :class="frameState.position === 'left' ? 'text-primary' : 'op50'"
-          @click="frameState.position = 'left'"
-        />
-        <button
-          i-carbon-open-panel-filled-top
-          :class="frameState.position === 'top' ? 'text-primary' : 'op50'"
-          @click="frameState.position = 'top'"
+          v-for="(item) in dockButton"
+          :key="item.position"
+          :class="[frameState.position === item.position ? 'text-primary' : 'op50', item.icon]"
+          @click="toggle(item.position)"
         />
       </div>
     </div>

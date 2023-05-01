@@ -30,7 +30,7 @@ const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
   },
 }
 
-window.__GET_VUE_DEVTOOLS_GLOBAL_HOOK__ = function () {
+window.__VUE_DEVTOOLS_GET_GLOBAL_HOOK__ = function () {
   return hook
 }
 

@@ -1,25 +1,30 @@
-<script setup lang="ts">
+<script setup>
 import { computed, ref } from 'vue'
 
-const state = ref({
+const panelState = ref({
   position: 'bottom',
 })
+
+window.__VUE_DEVTOOLS_TOGGLE_PANEL_POSITION__ = (position) => {
+  panelState.value.position = position
+}
+
 const panelStyle = computed(() => {
-  if (state.value.position === 'bottom') {
+  if (panelState.value.position === 'bottom') {
     return {
       transform: 'translateX(-50%)',
       bottom: '10px',
       left: '50%',
     }
   }
-  else if (state.value.position === 'top') {
+  else if (panelState.value.position === 'top') {
     return {
       transform: 'translateX(-50%)',
       top: '10px',
       left: '50%',
     }
   }
-  else if (state.value.position === 'left') {
+  else if (panelState.value.position === 'left') {
     return {
       transform: 'translateY(-50%)',
       top: '50%',
@@ -35,7 +40,7 @@ const panelStyle = computed(() => {
   }
 })
 const toggleButtonPosition = computed(() => {
-  if (state.value.position === 'left') {
+  if (panelState.value.position === 'left') {
     return {
       'left': '-8px',
       'top': 'calc(50% - 25px)',
@@ -45,7 +50,7 @@ const toggleButtonPosition = computed(() => {
       '--hover-translate': 'translateX(3px)',
     }
   }
-  if (state.value.position === 'right') {
+  if (panelState.value.position === 'right') {
     return {
       'right': '-8px',
       'top': 'calc(50% - 25px)',
@@ -55,7 +60,7 @@ const toggleButtonPosition = computed(() => {
       '--hover-translate': 'translateX(-3px)',
     }
   }
-  if (state.value.position === 'top') {
+  if (panelState.value.position === 'top') {
     return {
       'top': '-3px',
       'left': 'calc(50% - 25px)',
@@ -75,7 +80,7 @@ const toggleButtonPosition = computed(() => {
   }
 })
 const panelVisible = ref(false)
-const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { bottom: '-9999px', left: '-9999px' })
+const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { zIndex: -100000 })
 
 function togglePanel() {
   panelVisible.value = !panelVisible.value

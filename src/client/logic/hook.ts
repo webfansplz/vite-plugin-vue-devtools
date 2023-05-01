@@ -1,6 +1,6 @@
 import { instance, app as vueApp } from './instance'
 
-export const hook = window.parent.__GET_VUE_DEVTOOLS_GLOBAL_HOOK__()
+export const hook = window.parent.__VUE_DEVTOOLS_GET_GLOBAL_HOOK__()
 
 const enum DevtoolsHooks {
   COMPONENT_INIT = 'app:init',
