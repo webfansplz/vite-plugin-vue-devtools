@@ -1,5 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
+import vueDevtoolsOptions from 'virtual:vue-devtools-options'
+
+const clientUrl = `${vueDevtoolsOptions.base || '/'}__devtools/`
 
 const panelState = ref({
   position: 'bottom',
@@ -89,7 +92,7 @@ function togglePanel() {
 
 <template>
   <div class="vue-devtools-panel" :style="panelPosition">
-    <iframe src="/__devtools/" />
+    <iframe :src="clientUrl" />
   </div>
   <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition" @click="togglePanel">
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">

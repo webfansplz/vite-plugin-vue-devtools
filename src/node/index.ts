@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { normalizePath } from 'vite'
-import type { Plugin, ViteDevServer } from 'vite'
+import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import { createRPCServer } from 'vite-dev-rpc'
@@ -50,6 +50,7 @@ async function getComponentsRelationships(rpc: ViteInspectAPI['rpc']) {
 export default function PluginVueDevtools(): Plugin[] {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect()
+  let config: ResolvedConfig
 
   function configureServer(server: ViteDevServer) {
     const base = (server.config.base) || '/'
@@ -60,14 +61,16 @@ export default function PluginVueDevtools(): Plugin[] {
 
     createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
       componentGraph: () => getComponentsRelationships(inspect.api.rpc),
+      inspectClientUrl: () => `${config.base || '/'}__inspect/`,
     })
   }
   const plugin = <Plugin>{
     name: NAME,
     enforce: 'post',
     apply: 'serve',
-    // configResolved(config) {
-    // },
+    configResolved(resolvedConfig) {
+      config = resolvedConfig
+    },
     configureServer(server) {
       configureServer(server)
       // setTimeout(() => {
@@ -76,10 +79,17 @@ export default function PluginVueDevtools(): Plugin[] {
       // console.log(server)
     },
     async resolveId(importee: string) {
-      if (importee.startsWith('virtual:vue-devtools-path:')) {
+      if (importee.startsWith('virtual:vue-devtools-options')) {
+        return importee
+      }
+      else if (importee.startsWith('virtual:vue-devtools-path:')) {
         const resolved = importee.replace('virtual:vue-devtools-path:', `${vueDevtoolsPath}/`)
         return resolved
       }
+    },
+    async load(id) {
+      if (id === 'virtual:vue-devtools-options')
+        return `export default ${JSON.stringify({ ...config })}`
     },
     transformIndexHtml(html) {
       return {

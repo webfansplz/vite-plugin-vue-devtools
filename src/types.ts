@@ -13,6 +13,7 @@ export interface ModuleInfo {
 
 export interface RPCFunctions {
   componentGraph(): Promise<ModuleInfo[]>
+  inspectClientUrl(): Promise<string>
 }
 
 export interface ModulesList {
