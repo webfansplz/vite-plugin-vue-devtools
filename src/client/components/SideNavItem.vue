@@ -6,18 +6,20 @@ defineProps<{
 
 <template>
   <VTooltip placement="right">
-    <RouterLink
+    <Component
+      :is="tab.path ? 'RouterLink' : 'button'"
       :to="`/${tab.path}`"
       flex="~"
       hover="bg-active"
       h-10 w-10 select-none items-center justify-center rounded-xl p1 text-secondary
       exact-active-class="!text-primary bg-active"
+      @click="tab.event"
     >
       <TabIcon
         text-xl
         :icon="tab.icon" :title="tab.title"
       />
-    </RouterLink>
+    </Component>
     <template #popper>
       <div>
         {{ tab.title }}

@@ -2,6 +2,7 @@
 import { initTimeline } from './logic/timeline'
 import { initPinia } from './logic/pinia'
 import { initRoutes } from './logic/routes'
+import { initView } from './logic/global'
 
 useColorMode()
 
@@ -13,6 +14,7 @@ useColorMode()
 // }
 
 onMounted(() => {
+  initView()
   setTimeout(() => {
     initTimeline()
     initRoutes()
@@ -37,7 +39,7 @@ router.push('/components')
       grid="~ cols-[50px_1fr]"
       h-full h-screen of-hidden font-sans bg-base
     >
-      <SideNav of-x-hidden of-y-auto />
+      <SideNav v-if="route.path !== '/__inspecting'" of-x-hidden of-y-auto />
       <RouterView />
     </div>
   </main>

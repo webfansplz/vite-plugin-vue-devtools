@@ -3,18 +3,6 @@ import App from 'virtual:vue-devtools-path:Container.vue'
 
 const CONTAINER_ID = '__vue-devtools-container__'
 
-function load() {
-  const el = document.createElement('div')
-  el.setAttribute('id', CONTAINER_ID)
-  document.getElementsByTagName('body')[0].appendChild(el)
-  createApp({
-    render: () => h(App),
-    devtools: {
-      hide: true,
-    },
-  }).mount(`#${CONTAINER_ID}`)
-}
-
 // reuse __VUE_DEVTOOLS_ (@vuejs/devtools) instance first
 const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
   events: new Map(),
@@ -28,6 +16,19 @@ const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
     if (this.events.has(event))
       this.events.get(event).forEach(fn => fn(...payload))
   },
+}
+
+function load() {
+  const el = document.createElement('div')
+  el.setAttribute('id', CONTAINER_ID)
+  el.setAttribute('data-v-inspector-ignore', 'true')
+  document.getElementsByTagName('body')[0].appendChild(el)
+  createApp({
+    render: () => h(App, { hook }),
+    devtools: {
+      hide: true,
+    },
+  }).mount(`#${CONTAINER_ID}`)
 }
 
 window.__VUE_DEVTOOLS_GET_GLOBAL_HOOK__ = function () {

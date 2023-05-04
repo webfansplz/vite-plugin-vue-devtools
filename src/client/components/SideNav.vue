@@ -1,5 +1,9 @@
 <script setup lang="ts">
 // const tabs = useTabs()
+import { useClient } from '../logic/client'
+
+const client = useClient()
+const router = useRouter()
 const tabs = [
   {
     path: 'overview',
@@ -42,9 +46,12 @@ const tabs = [
     icon: 'i-carbon-ibm-watson-discovery',
   },
   {
-    path: 'inspector',
     title: 'Inspector',
     icon: 'i-carbon-select-window',
+    event: () => {
+      router.push('/__inspecting')
+      client.value?.inspector?.enable()
+    },
   },
 ]
 </script>

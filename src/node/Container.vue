@@ -1,8 +1,15 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, defineProps, ref } from 'vue'
 import vueDevtoolsOptions from 'virtual:vue-devtools-options'
 
+const props = defineProps({
+  hook: {
+    type: Object,
+  },
+})
 const clientUrl = `${vueDevtoolsOptions.base || '/'}__devtools/`
+const iframe = ref()
+const viewMode = ref('default')
 
 const panelState = ref({
   position: 'bottom',
@@ -13,6 +20,16 @@ window.__VUE_DEVTOOLS_TOGGLE_PANEL_POSITION__ = (position) => {
 }
 
 const panelStyle = computed(() => {
+  if (viewMode.value === 'component-inspector') {
+    return {
+      bottom: '10px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      height: '80px',
+      width: '400px',
+    }
+  }
+
   if (panelState.value.position === 'bottom') {
     return {
       transform: 'translateX(-50%)',
@@ -88,13 +105,75 @@ const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { z
 function togglePanel() {
   panelVisible.value = !panelVisible.value
 }
+
+function enableComponentInspector() {
+  window.__VUE_INSPECTOR__?.enable()
+  viewMode.value = 'component-inspector'
+}
+
+function disableComponentInspector() {
+  window.__VUE_INSPECTOR__?.disable()
+  props.hook.emit('host:inspector:close')
+  if (viewMode.value === 'component-inspector')
+    viewMode.value = 'default'
+}
+
+function waitForClientInjection(retry = 10, timeout = 200) {
+  const test = () => !!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+
+  if (test())
+    return
+
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (test()) {
+        clearInterval(interval)
+        resolve()
+      }
+      else if (retry-- <= 0) {
+        clearInterval(interval)
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('Vue Devtools client injection failed')
+      }
+    }, timeout)
+  })
+}
+
+async function onLoad() {
+  await waitForClientInjection()
+  setupClient()
+}
+
+function setupClient() {
+  const injection = iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+  const componentInspector = window.__VUE_INSPECTOR__
+  if (componentInspector) {
+    const _openInEditor = componentInspector.openInEditor
+    componentInspector.openInEditor = async (...params) => {
+      disableComponentInspector()
+      _openInEditor(...params)
+    }
+  }
+  injection.setClient({
+    hook: props.hook,
+    inspector: {
+      enable: enableComponentInspector,
+      disable: disableComponentInspector,
+    },
+    panel: {
+      toggle(position) {
+        panelState.value.position = position
+      },
+    },
+  })
+}
 </script>
 
 <template>
   <div class="vue-devtools-panel" :style="panelPosition">
-    <iframe :src="clientUrl" />
+    <iframe ref="iframe" :src="clientUrl" @load="onLoad" />
   </div>
-  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition" @click="togglePanel">
+  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition" @click.prevent="togglePanel">
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />

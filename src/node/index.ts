@@ -6,6 +6,7 @@ import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import { createRPCServer } from 'vite-dev-rpc'
 import type { ViteInspectAPI } from 'vite-plugin-inspect'
+import VueInspector from 'vite-plugin-vue-inspector'
 import { DIR_CLIENT } from '../dir'
 import type { RPCFunctions } from '../types'
 
@@ -108,10 +109,14 @@ export default function PluginVueDevtools(): Plugin[] {
     },
     async buildEnd() {
     },
-    plugin: [
-      inspect,
-    ],
   }
 
-  return [inspect, plugin]
+  return [
+    inspect,
+    VueInspector({
+      toggleComboKey: '',
+      toggleButtonVisibility: 'never',
+    }) as Plugin,
+    plugin,
+  ]
 }
