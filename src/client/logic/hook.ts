@@ -1,6 +1,8 @@
 import { instance, app as vueApp } from './instance'
 
-export const hook = window.parent.__VUE_DEVTOOLS_GET_GLOBAL_HOOK__()
+import { useClient } from './client'
+
+// export const hook = window.parent.__VUE_DEVTOOLS_GET_GLOBAL_HOOK__()
 
 const enum DevtoolsHooks {
   COMPONENT_INIT = 'app:init',
@@ -15,6 +17,9 @@ function hideInDevtools(app) {
 }
 
 export function connect() {
+  const client = useClient()
+  console.log('hooo', client.value)
+  const hook = client.value!.hook!
   hook.on(DevtoolsHooks.COMPONENT_INIT, (app) => {
     // console.log('init', app)
     if (app?._vueDevtools_hidden_)

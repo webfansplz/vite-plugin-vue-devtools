@@ -17,9 +17,8 @@ declare interface performanceTimeline {
 
 
 interface Window {
-  __VUE_DEVTOOLS_TOGGLE_PANEL_POSITION__: (state: string) => void
   __VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__: () => performanceTimeline[]
-  __VUE_DEVTOOLS_GET_GLOBAL_HOOK__: () => any
+  __VUE_DEVTOOLS_GLOBAL_HOOKS__: () => any
   __VUE_DEVTOOLS_VIEW__: Record<'setClient', unknown>
 }
 

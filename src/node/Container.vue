@@ -7,20 +7,21 @@ const props = defineProps({
     type: Object,
   },
 })
-const clientUrl = `${vueDevtoolsOptions.base || '/'}__devtools/`
-const iframe = ref()
-const viewMode = ref('default')
 
-const panelState = ref({
-  position: 'bottom',
-})
-
-window.__VUE_DEVTOOLS_TOGGLE_PANEL_POSITION__ = (position) => {
-  panelState.value.position = position
+window.__VUE_DEVTOOLS_GLOBAL_HOOKS__ = function () {
+  return props.hook
 }
 
+const clientUrl = `${vueDevtoolsOptions.base || '/'}__devtools/`
+const iframe = ref()
+const panelState = ref({
+  position: 'bottom',
+  viewMode: 'default',
+})
+const panelVisible = ref(false)
+const hookQueue = []
 const panelStyle = computed(() => {
-  if (viewMode.value === 'component-inspector') {
+  if (panelState.value.viewMode === 'component-inspector') {
     return {
       bottom: '10px',
       left: '50%',
@@ -99,7 +100,6 @@ const toggleButtonPosition = computed(() => {
     '--hover-translate': 'translate(0, -3px)',
   }
 })
-const panelVisible = ref(false)
 const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { zIndex: -100000 })
 
 function togglePanel() {
@@ -108,14 +108,14 @@ function togglePanel() {
 
 function enableComponentInspector() {
   window.__VUE_INSPECTOR__?.enable()
-  viewMode.value = 'component-inspector'
+  panelState.value.viewMode = 'component-inspector'
 }
 
 function disableComponentInspector() {
   window.__VUE_INSPECTOR__?.disable()
   props.hook.emit('host:inspector:close')
-  if (viewMode.value === 'component-inspector')
-    viewMode.value = 'default'
+  if (panelState.value.viewMode === 'component-inspector')
+    panelState.value.viewMode = 'default'
 }
 
 function waitForClientInjection(retry = 10, timeout = 200) {
@@ -131,6 +131,7 @@ function waitForClientInjection(retry = 10, timeout = 200) {
         resolve()
       }
       else if (retry-- <= 0) {
+        console.log(iframe.value.contentWindow.__VUE_DEVTOOLS_VIEW__)
         clearInterval(interval)
         // eslint-disable-next-line prefer-promise-reject-errors
         reject('Vue Devtools client injection failed')
@@ -156,6 +157,7 @@ function setupClient() {
   }
   injection.setClient({
     hook: props.hook,
+    hookQueue,
     inspector: {
       enable: enableComponentInspector,
       disable: disableComponentInspector,
@@ -167,6 +169,26 @@ function setupClient() {
     },
   })
 }
+
+function collectHook() {
+  let sortId = 0
+  props.hook.on('perf:start', (...args) => {
+    const component = args[2]
+    if (component?.root.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__)
+      return
+
+    hookQueue.push(['perf:start', Date.now(), [...args], sortId++])
+  })
+  props.hook.on('perf:end', (...args) => {
+    const component = args[2]
+    if (component?.root.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__)
+      return
+
+    hookQueue.push(['perf:end', Date.now(), [...args], sortId++])
+  })
+}
+
+collectHook()
 </script>
 
 <template>

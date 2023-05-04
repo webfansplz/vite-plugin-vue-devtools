@@ -9,11 +9,15 @@ export interface VueDevtoolsHostClient {
   hook?: {
     events: Map<string, () => void>
     emit: (event: string, ...payload: any[]) => void
-    on: (event: string, fn: () => void) => void
+    on: (event: string, fn: (...payload: any[]) => void) => void
   }
+  hookQueue: [string, number, any[], number][]
 }
 
-const client = ref<VueDevtoolsHostClient>()
+const client = ref<VueDevtoolsHostClient>({
+  hook: window.parent.__VUE_DEVTOOLS_GLOBAL_HOOKS__(),
+  hookQueue: [],
+})
 
 export function useClient() {
   return client

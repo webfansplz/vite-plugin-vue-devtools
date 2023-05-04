@@ -4,7 +4,6 @@ import { createPinia } from 'pinia'
 import Home from './pages/Home.vue'
 import About from './pages/About.vue'
 import './style.css'
-
 import App from './App.vue'
 
 const pinia = createPinia()

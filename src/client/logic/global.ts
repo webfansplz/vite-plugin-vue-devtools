@@ -1,22 +1,28 @@
 import type { VueDevtoolsHostClient } from './client'
 import { useClient } from './client'
+import { init as initTimeline } from './timeline'
 
 export interface VueDevtoolsGlobal {
   setClient(client: VueDevtoolsHostClient): void
 }
 
-export function initView() {
-  const router = useRouter()
-
+export function initClient() {
   window.__VUE_DEVTOOLS_VIEW__ = <VueDevtoolsGlobal>{
     setClient(_client) {
       const client = useClient()
       client.value = _client
-
-      _client.hook?.on('host:inspector:close', () => {
-        if (router.currentRoute.value.path === '/__inspecting')
-          router.replace('/components')
-      })
+      initTimeline(client.value.hookQueue.filter(([type]) => type.startsWith('perf:')))
     },
   }
+}
+
+export function initGlobalHook() {
+  const router = useRouter()
+  const route = useRoute()
+  const client = useClient()
+
+  client.value.hook?.on('host:inspector:close', () => {
+    if (route.path === '/__inspecting')
+      router.replace('/components')
+  })
 }

@@ -46,7 +46,7 @@ function getComponentTypeName(options: any) {
   return options.name || options._componentTag || options.__vdevtools_guessedName || options.__name
 }
 
-function getComponentFileName(options: any) {
+export function getComponentFileName(options: any) {
   const file = options.__file // injected by vite
   // TODO: classify
   if (file) {

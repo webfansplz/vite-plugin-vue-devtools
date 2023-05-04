@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { initTimeline } from './logic/timeline'
 import { initPinia } from './logic/pinia'
 import { initRoutes } from './logic/routes'
-import { initView } from './logic/global'
+import { initGlobalHook } from './logic/global'
 
+initGlobalHook()
 useColorMode()
 
 // import { rpc } from './logic/rpc'
@@ -14,9 +14,7 @@ useColorMode()
 // }
 
 onMounted(() => {
-  initView()
   setTimeout(() => {
-    initTimeline()
     initRoutes()
     initPinia()
   }, 200)

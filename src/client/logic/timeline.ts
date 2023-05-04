@@ -1,3 +1,6 @@
+import { getComponentFileName } from './components/util'
+import { useClient } from './client'
+
 interface TimelineLayer {
   id: string
   label: string
@@ -6,13 +9,13 @@ interface TimelineLayer {
 interface TimelineEvent {
   layerId: string
   groupKey?: string
-  sortId?: number
+  sortId: number
   event: {
     time: number
     title: string
     subtitle: string
     now: number
-    data: Record<string, unknown>
+    data: Record<string, any>
   }
 }
 
@@ -50,20 +53,62 @@ export const timelineEventDetails = computed(() => {
   }
 })
 
-export function initTimeline() {
-  function update() {
-    const data = window.parent.__VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__()
-    data.forEach((item) => {
-      timelineApi.addTimelineEvent(item)
-    })
+function addTimelineEvent(event: [string, number, any[], number]) {
+  const [eventType, now, [app, uid, component, type, time], sortId] = event
+  const filename = component.type.__name ?? component.type.name ?? getComponentFileName(component.type)
+  if (!filename)
+    return
+  const item = timelineEvent.value.slice(0).reverse().find(item => item.groupKey === `${uid}-${type}`)
+  timelineApi.addTimelineEvent({
+    layerId: 'performance',
+    groupKey: `${uid}-${type}`,
+    sortId,
+    event: {
+      title: filename,
+      subtitle: type,
+      time,
+      now,
+      data: {
+        component: filename,
+        // name,
+        type,
+        measure: eventType === 'perf:start' ? 'start' : 'end',
+        ...(eventType === 'perf:end'
+          ? { duration: `${time - (item?.event?.time ?? 0)}ms` }
+          : {}),
+      },
+    },
+  })
+}
+
+export function init(events: [string, number, any[], number][]) {
+  const performTimelineSortKey = {
+    start: -1,
+    end: 1,
   }
   timelineApi.addTimelineLayer({
     id: 'performance',
     label: 'Performance',
   })
-  update()
-  setInterval(() => {
-    timelineEvent.value = timelineEvent.value.filter(item => item.layerId !== 'performance')
-    update()
-  }, 1000)
+  events.forEach((event) => {
+    addTimelineEvent(event)
+  })
+
+  timelineEvent.value
+    = timelineEvent.value.sort((a, b) => a.sortId - b.sortId).sort((a, b) => performTimelineSortKey[a.event.data.measure] - performTimelineSortKey[b.event.data.measure])
+
+  const client = useClient()
+  let sortId = timelineEvent.value.length
+  client.value?.hook?.on('perf:start', (...args) => {
+    const component = args[2]
+    if (component?.root.type?.devtools?.hide)
+      return
+    addTimelineEvent(['perf:start', Date.now(), [...args], sortId++])
+  })
+  client.value?.hook?.on('perf:end', (...args) => {
+    const component = args[2]
+    if (component?.root.type?.devtools?.hide)
+      return
+    addTimelineEvent(['perf:end', Date.now(), [...args], sortId++])
+  })
 }

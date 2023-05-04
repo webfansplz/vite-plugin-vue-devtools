@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { useClient } from '../logic/client'
+
 const frameState = ref({
   position: 'bottom',
 })
 
+const client = useClient()
 const dockButton = [
   {
     position: 'bottom',
@@ -24,7 +27,7 @@ const dockButton = [
 
 function toggle(position: string) {
   frameState.value.position = position
-  window.parent.__VUE_DEVTOOLS_TOGGLE_PANEL_POSITION__(position)
+  client.value?.panel?.toggle(position)
 }
 </script>
 
