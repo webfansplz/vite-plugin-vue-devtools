@@ -1,18 +1,4 @@
-export interface VueDevtoolsHostClient {
-  inspector?: {
-    enable: () => void
-    disable: () => void
-  }
-  panel?: {
-    toggle: (position: string) => void
-  }
-  hook?: {
-    events: Map<string, () => void>
-    emit: (event: string, ...payload: any[]) => void
-    on: (event: string, fn: (...payload: any[]) => void) => void
-  }
-  hookQueue: [string, number, any[], number][]
-}
+import type { VueDevtoolsHostClient } from '../../types'
 
 const client = ref<VueDevtoolsHostClient>({
   hook: window.parent.__VUE_DEVTOOLS_GLOBAL_HOOKS__(),

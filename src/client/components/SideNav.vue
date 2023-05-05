@@ -1,64 +1,5 @@
 <script setup lang="ts">
-// const tabs = useTabs()
-import { useClient } from '../logic/client'
-
-const client = useClient()
-const router = useRouter()
-const tabs = [
-  {
-    path: 'overview',
-    title: 'Overview',
-    icon: 'i-carbon-information',
-  },
-  {
-    path: 'pages',
-    title: 'Pages',
-    icon: 'i-carbon-tree-view-alt',
-  },
-  {
-    path: 'components',
-    title: 'Components',
-    icon: 'i-carbon-assembly-cluster',
-  },
-  {
-    path: 'assets',
-    title: 'Assets',
-    icon: 'i-carbon-image-copy',
-  },
-  {
-    path: 'routes',
-    title: 'Routes',
-    icon: 'gis:map-route',
-  },
-  {
-    path: 'pinia',
-    title: 'Pinia',
-    icon: 'icon-park-outline:pineapple',
-  },
-  {
-    path: 'timeline',
-    title: 'Timeline',
-    icon: 'i-icon-park-outline:vertical-timeline',
-  },
-  {
-    path: 'graph',
-    title: 'Graph',
-    icon: 'i-carbon-network-4',
-  },
-  {
-    path: 'inspect',
-    title: 'Inspect',
-    icon: 'i-carbon-ibm-watson-discovery',
-  },
-  {
-    title: 'Inspector',
-    icon: 'i-carbon-select-window',
-    event: () => {
-      router.push('/__inspecting')
-      client.value?.inspector?.enable()
-    },
-  },
-]
+const categories = useCategorizedTabs()
 </script>
 
 <template>
@@ -77,10 +18,34 @@ const tabs = [
       <div mt-2 h-1px w-8 border="b base" />
     </div>
 
-    <SideNavItem
-      v-for="tab of tabs"
-      :key="tab.path"
-      :tab="tab"
-    />
+    <div flex="~ auto col gap-0.5 items-center" of-auto class="no-scrollbar" py1>
+      <template v-for="[name, tabs], idx of categories" :key="name">
+        <template v-if="tabs.length">
+          <div v-if="idx" my1 h-1px w-8 border="b base" />
+          <SideNavItem
+            v-for="tab of tabs"
+            :key="tab.path"
+            :tab="tab"
+          />
+        </template>
+      </template>
+      <div flex-auto />
+    </div>
+
+    <div flex="~ none col items-center">
+      <div h-1px w-8 border="b base" />
+      <RouterLink
+        to="/settings"
+        flex="~ items-center justify-center"
+        hover="bg-active"
+        relative my1 block h-10 w-10 select-none rounded-xl p1 text-secondary
+        exact-active-class="!text-primary bg-active"
+      >
+        <TabIcon
+          text-xl
+          icon="i-carbon-settings" title="Settings" :show-title="false"
+        />
+      </RouterLink>
+    </div>
   </div>
 </template>

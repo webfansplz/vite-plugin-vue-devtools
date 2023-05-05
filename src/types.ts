@@ -1,3 +1,5 @@
+import type { Router } from 'vue-router'
+
 export interface ComponentRelationship {
   id: string
   deps: string[]
@@ -40,4 +42,28 @@ export interface ModulesList {
   root: string
   modules: ModuleInfo[]
   ssrModules: ModuleInfo[]
+}
+
+export interface VueDevtoolsHostClient {
+  inspector?: {
+    enable: () => void
+    disable: () => void
+  }
+  panel?: {
+    toggle: (position: string) => void
+  }
+  hook?: {
+    events: Map<string, () => void>
+    emit: (event: string, ...payload: any[]) => void
+    on: (event: string, fn: (...payload: any[]) => void) => void
+  }
+  hookQueue: [string, number, any[], number][]
+}
+
+export interface BuiltinTab {
+  event?: (client: VueDevtoolsHostClient, router: Router) => void
+  path?: string
+  title: string
+  icon: string
+  category?: string
 }

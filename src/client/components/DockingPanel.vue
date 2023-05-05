@@ -52,9 +52,12 @@ function toggle(position: string) {
           <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
         </VButton>
       </VDarkToggle>
-      <VButton n="sm primary" to="/settings">
+      <RouterLink
+        class="n-button-base active:n-button-active focus-visible:n-focus-base n-transition n-primary n-sm hover:n-button-hover n-disabled:n-disabled"
+        to="/settings"
+      >
         <div carbon-settings translate-y--1px /> Settings
-      </VButton>
+      </RouterLink>
     </div>
   </div>
 </template>

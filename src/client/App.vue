@@ -3,33 +3,32 @@ import { initPinia } from './logic/pinia'
 import { initRoutes } from './logic/routes'
 import { initGlobalHook } from './logic/global'
 
+const router = useRouter()
+const route = useRoute()
+const { scale } = useDevToolsSettings()
+const { route: _route } = useFrameState()
 initGlobalHook()
 useColorMode()
 
-// import { rpc } from './logic/rpc'
-
-// async function get() {
-//   const graph = await rpc.componentGraph()
-//   console.log(graph)
-// }
+router.afterEach(() => {
+  const path = route.path
+  if (path.includes('__'))
+    return
+  _route.value = path
+})
 
 onMounted(() => {
   setTimeout(() => {
     initRoutes()
     initPinia()
   }, 200)
+
+  watchEffect(() => {
+    document.body.style.fontSize = `${scale.value * 15}px`
+  })
 })
 
-// get()
-const route = useRoute()
-const router = useRouter()
-// router.push('/components')
-router.push('/assets')
-// router.push('/timeline')
-// router.push('/overview')
-// router.push('/pages')
-// router.push('/pinia')
-// router.push('/routes')
+router.push(_route.value)
 </script>
 
 <template>

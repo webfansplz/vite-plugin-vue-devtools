@@ -14,7 +14,7 @@ importers:
       '@unocss/eslint-config': ^0.51.5
       '@unocss/reset': ^0.51.5
       '@vitejs/plugin-vue': ^4.1.0
-      '@vueuse/core': ^10.0.2
+      '@vueuse/core': ^10.1.2
       bumpp: ^9.1.0
       codemirror: ^6.0.1
       codemirror-theme-vars: ^0.1.2
@@ -47,7 +47,7 @@ importers:
       vue: ^3.2.47
       vue-router: ^4.1.6
     dependencies:
-      '@vueuse/core': 10.0.2_vue@3.2.47
+      '@vueuse/core': 10.1.2_vue@3.2.47
       nanoid: 4.0.2
       sirv: 2.0.2
       splitpanes: 3.1.5
@@ -81,7 +81,7 @@ importers:
       typescript: 5.0.4
       unbuild: 1.2.1
       unocss: 0.51.5_vite@4.3.1
-      unplugin-auto-import: 0.15.3_@vueuse+core@10.0.2
+      unplugin-auto-import: 0.15.3_@vueuse+core@10.1.2
       unplugin-vue-components: 0.24.1_vue@3.2.47
       vis-data: 7.1.6
       vis-network: 9.1.6_vis-data@7.1.6
@@ -1054,7 +1054,7 @@ packages:
       '@unocss/preset-icons': 0.51.5
       '@unocss/preset-mini': 0.51.5
       '@unocss/reset': 0.51.5
-      '@vueuse/core': 10.0.2_vue@3.2.47
+      '@vueuse/core': 10.1.2_vue@3.2.47
       '@vueuse/integrations': 10.0.2_bm6p724wvjdxind6r7re44m5xe
       '@vueuse/nuxt': 10.0.2_vue@3.2.47
       defu: 6.1.2
@@ -1431,6 +1431,10 @@ packages:
 
   /@types/web-bluetooth/0.0.16:
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
+    dev: true
+
+  /@types/web-bluetooth/0.0.17:
+    resolution: {integrity: sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==}
 
   /@typescript-eslint/eslint-plugin/5.59.0_wsbkzerfphvgr4lle7vmeh64yi:
     resolution: {integrity: sha512-p0QgrEyrxAWBecR56gyn3wkG15TJdI//eetInP3zYRewDh0XS+DhB3VUAd3QqvziFsfaQIoIuZMxZRB7vXYaYw==}
@@ -1941,6 +1945,18 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: true
+
+  /@vueuse/core/10.1.2_vue@3.2.47:
+    resolution: {integrity: sha512-roNn8WuerI56A5uiTyF/TEYX0Y+VKlhZAF94unUfdhbDUI+NfwQMn4FUnUscIRUhv3344qvAghopU4bzLPNFlA==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.17
+      '@vueuse/metadata': 10.1.2
+      '@vueuse/shared': 10.1.2_vue@3.2.47
+      vue-demi: 0.14.0_vue@3.2.47
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
 
   /@vueuse/integrations/10.0.2_bm6p724wvjdxind6r7re44m5xe:
     resolution: {integrity: sha512-HgyNe46D0fOhKe2PZsNDwHt6/0S+J5lJCwZbw4kPahH2T1oBqZIJppoSvE6b3aTWu0OXOJi1WISZoVfe5kn/TQ==}
@@ -1995,6 +2011,10 @@ packages:
 
   /@vueuse/metadata/10.0.2:
     resolution: {integrity: sha512-APSjlABrV+Q74c+FR0kFETvcN9W2pAaT3XF3WwqWUuk4srmVxv7DY4WshZxK2KYk1+MVY0Fus6J1Hk/JXVm6Aw==}
+    dev: true
+
+  /@vueuse/metadata/10.1.2:
+    resolution: {integrity: sha512-3mc5BqN9aU2SqBeBuWE7ne4OtXHoHKggNgxZR2K+zIW4YLsy6xoZ4/9vErQs6tvoKDX6QAqm3lvsrv0mczAwIQ==}
 
   /@vueuse/nuxt/10.0.2_vue@3.2.47:
     resolution: {integrity: sha512-JO/ja8DbvagM5bYmWKOCu+ZEge1Q9fLBnMlCiy7auWvMK6JiGpqloxqGYZGgKS3JXwhbCC9DkuZ1rGZ1RuyZ5w==}
@@ -2015,6 +2035,15 @@ packages:
 
   /@vueuse/shared/10.0.2_vue@3.2.47:
     resolution: {integrity: sha512-7W2l6qZaFvla3zAeEVo8hNHkNRKCezJa3JjZAKv3K4KsevXobHhVNr+RHaOVNK/6ETpFmtqiK+0pMIADbHjjag==}
+    dependencies:
+      vue-demi: 0.14.0_vue@3.2.47
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: true
+
+  /@vueuse/shared/10.1.2_vue@3.2.47:
+    resolution: {integrity: sha512-1uoUTPBlgyscK9v6ScGeVYDDzlPSFXBlxuK7SfrDGyUTBiznb3mNceqhwvZHjtDRELZEN79V5uWPTF1VDV8svA==}
     dependencies:
       vue-demi: 0.14.0_vue@3.2.47
     transitivePeerDependencies:
@@ -6490,7 +6519,7 @@ packages:
       - vite
     dev: true
 
-  /unplugin-auto-import/0.15.3_@vueuse+core@10.0.2:
+  /unplugin-auto-import/0.15.3_@vueuse+core@10.1.2:
     resolution: {integrity: sha512-RLT8SqbPn4bT7yBshZId0uPSofKWnwr66RyDaxWaFb/+f7OTDOWAsVNz+hOQLBWSjvbekr2xZY9ccS8TDHJbCQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -6504,7 +6533,7 @@ packages:
     dependencies:
       '@antfu/utils': 0.7.2
       '@rollup/pluginutils': 5.0.2
-      '@vueuse/core': 10.0.2_vue@3.2.47
+      '@vueuse/core': 10.1.2_vue@3.2.47
       local-pkg: 0.4.3
       magic-string: 0.30.0
       minimatch: 9.0.0

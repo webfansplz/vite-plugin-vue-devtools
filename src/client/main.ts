@@ -25,6 +25,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 })
+
 app.use(router)
 app.use(FloatingVue)
 app.mount('#app')

@@ -51,7 +51,7 @@
     "release": "bumpp && npm publish"
   },
   "dependencies": {
-    "@vueuse/core": "^10.0.2",
+    "@vueuse/core": "^10.1.2",
     "nanoid": "^4.0.2",
     "sirv": "^2.0.2",
     "splitpanes": "^3.1.5",

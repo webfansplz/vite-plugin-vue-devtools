@@ -1,4 +1,4 @@
-import type { VueDevtoolsHostClient } from './client'
+import type { VueDevtoolsHostClient } from '../../types'
 import { useClient } from './client'
 import { init as initTimeline } from './timeline'
 
