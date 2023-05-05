@@ -54,7 +54,7 @@ function toggleExpand(id: string) {
       <span v-else :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.value" />
     </p>
     <StateFieldsTree
-      v-if="expandedId.includes(`${id}-${depth}-${index}`) && item?.recursive && depth <= 1"
+      v-if="expandedId.includes(`${id}-${depth}-${index}`) && item?.recursive && depth <= 2"
       :id="id"
       :data="item?.value"
       :depth="depth + 1"

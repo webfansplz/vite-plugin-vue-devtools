@@ -9,10 +9,18 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AssetDetails: typeof import('./components/AssetDetails.vue')['default']
+    AssetFontPreview: typeof import('./components/AssetFontPreview.vue')['default']
+    AssetGridItem: typeof import('./components/AssetGridItem.vue')['default']
+    AssetListItem: typeof import('./components/AssetListItem.vue')['default']
+    AssetPreview: typeof import('./components/AssetPreview.vue')['default']
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
     DockingPanel: typeof import('./components/DockingPanel.vue')['default']
+    DrawerRight: typeof import('./components/DrawerRight.vue')['default']
+    FilepathItem: typeof import('./components/FilepathItem.vue')['default']
     IframeView: typeof import('./components/IframeView.vue')['default']
     Logo: typeof import('./components/Logo.vue')['default']
+    Navbar: typeof import('./components/Navbar.vue')['default']
     RoutePathItem: typeof import('./components/RoutePathItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -29,6 +37,7 @@ declare module '@vue/runtime-core' {
     VDarkToggle: typeof import('./ui-kit/VDarkToggle.vue')['default']
     VExpandIcon: typeof import('./ui-kit/VExpandIcon.vue')['default']
     VIcon: typeof import('./ui-kit/VIcon.vue')['default']
+    VIconButton: typeof import('./ui-kit/VIconButton.vue')['default']
     VIconTitle: typeof import('./ui-kit/VIconTitle.vue')['default']
     VPanelGrids: typeof import('./ui-kit/VPanelGrids.vue')['default']
     VSectionBlock: typeof import('./ui-kit/VSectionBlock.vue')['default']

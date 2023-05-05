@@ -21,6 +21,11 @@ const tabs = [
     icon: 'i-carbon-assembly-cluster',
   },
   {
+    path: 'assets',
+    title: 'Assets',
+    icon: 'i-carbon-image-copy',
+  },
+  {
     path: 'routes',
     title: 'Routes',
     icon: 'gis:map-route',

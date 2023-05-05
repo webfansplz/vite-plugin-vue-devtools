@@ -6,7 +6,9 @@ defineProps<{
 </script>
 
 <template>
-  <button
+  <Component
+    :is="to ? 'a' : 'button'"
+    :href="to"
     v-bind="$attrs"
     class="n-button-base active:n-button-active focus-visible:n-focus-base n-transition hover:n-button-hover n-disabled:n-disabled"
   >
@@ -14,5 +16,5 @@ defineProps<{
       <div v-if="icon" class="n-icon n-button-icon" :class="icon" />
     </slot>
     <slot />
-  </button>
+  </Component>
 </template>

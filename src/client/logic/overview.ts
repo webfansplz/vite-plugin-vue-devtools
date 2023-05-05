@@ -1,5 +1,5 @@
-import { rpc } from '../logic/rpc'
 import type { ModuleInfo } from '../../types'
+import { rpc } from './rpc'
 import { initPages, routes } from './pages'
 
 initPages()

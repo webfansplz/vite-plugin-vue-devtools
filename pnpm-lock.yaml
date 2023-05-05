@@ -20,10 +20,14 @@ importers:
       codemirror-theme-vars: ^0.1.2
       dayjs: ^1.11.7
       eslint: ^8.38.0
+      fast-glob: ^3.2.12
       floating-vue: 2.0.0-beta.20
       fuse.js: ^6.6.2
+      image-meta: ^0.1.1
       nanoid: ^4.0.2
       npm-run-all: ^4.1.5
+      ohash: ^1.1.2
+      pathe: ^1.1.0
       pinia: ^2.0.35
       sirv: ^2.0.2
       splitpanes: ^3.1.5
@@ -44,7 +48,6 @@ importers:
       vue-router: ^4.1.6
     dependencies:
       '@vueuse/core': 10.0.2_vue@3.2.47
-      fuse.js: 6.6.2
       nanoid: 4.0.2
       sirv: 2.0.2
       splitpanes: 3.1.5
@@ -67,8 +70,13 @@ importers:
       codemirror-theme-vars: 0.1.2
       dayjs: 1.11.7
       eslint: 8.38.0
+      fast-glob: 3.2.12
       floating-vue: 2.0.0-beta.20_vue@3.2.47
+      fuse.js: 6.6.2
+      image-meta: 0.1.1
       npm-run-all: 4.1.5
+      ohash: 1.1.2
+      pathe: 1.1.0
       pinia: 2.0.35_dtjfskxukdxv24psui2m5c75zy
       typescript: 5.0.4
       unbuild: 1.2.1
@@ -2336,7 +2344,7 @@ packages:
       giget: 1.1.2
       jiti: 1.18.2
       mlly: 1.2.0
-      ohash: 1.1.1
+      ohash: 1.1.2
       pathe: 1.1.0
       perfect-debounce: 0.1.3
       pkg-types: 1.0.2
@@ -3672,6 +3680,7 @@ packages:
   /fuse.js/6.6.2:
     resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
     engines: {node: '>=10'}
+    dev: true
 
   /gauge/4.0.4:
     resolution: {integrity: sha512-f9m+BEN5jkg6a0fZjleidjN51VE1X+mPFQ2DJ0uv1V39oCLCbsGe6yjbBnp7eK7z/+GAon99a3nHuqbuuthyPg==}
@@ -5151,8 +5160,8 @@ packages:
       ufo: 1.1.1
     dev: true
 
-  /ohash/1.1.1:
-    resolution: {integrity: sha512-N9UDJn2IV6oO6pNclJ80tRXraNNJqw/asscr3Lu7+ibRQdEswejJuuXNclMQTJVTsVhQs+ZJThVziy6t2v2KXA==}
+  /ohash/1.1.2:
+    resolution: {integrity: sha512-9CIOSq5945rI045GFtcO3uudyOkYVY1nyfFxVQp+9BRgslr8jPNiSSrsFGg/BNTUFOLqx0P5tng6G32brIPw0w==}
     dev: true
 
   /on-headers/1.0.2:
