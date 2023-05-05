@@ -170,6 +170,14 @@ function setupClient() {
   })
 }
 
+function initPanelPosition() {
+  const frameState = localStorage.getItem('__vue-devtools-frame-state__')
+  if (frameState) {
+    const parsedFrameState = JSON.parse(frameState)
+    panelState.value.position = parsedFrameState.position
+  }
+}
+
 function collectHook() {
   let sortId = 0
   props.hook.on('perf:start', (...args) => {
@@ -189,6 +197,7 @@ function collectHook() {
 }
 
 collectHook()
+initPanelPosition()
 </script>
 
 <template>
