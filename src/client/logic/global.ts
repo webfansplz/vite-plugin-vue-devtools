@@ -20,9 +20,10 @@ export function initGlobalHook() {
   const router = useRouter()
   const route = useRoute()
   const client = useClient()
+  const frameState = useFrameState()
 
   client.value.hook?.on('host:inspector:close', () => {
     if (route.path === '/__inspecting')
-      router.replace('/components')
+      router.replace(frameState.route.value)
   })
 }
