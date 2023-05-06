@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps, ref } from 'vue'
+import { computed, defineProps, onMounted, ref } from 'vue'
 import vueDevtoolsOptions from 'virtual:vue-devtools-options'
 
 const props = defineProps({
@@ -246,6 +246,13 @@ function collectHookBuffer() {
     })
   })
 }
+
+onMounted(() => {
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'KeyD' && e.altKey && e.shiftKey)
+      togglePanel()
+  })
+})
 
 collectHookBuffer()
 initPanelPosition()
