@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useCounterStore, useUserStore } from './stores'
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
 
 const count = ref(130)
 
@@ -24,10 +22,6 @@ const info = ref({
   age: 18,
 })
 
-const store = useCounterStore()
-
-const userStore = useUserStore()
-
 const router = useRouter()
 
 // const userStore2 = useCounter2Store()
@@ -41,13 +35,7 @@ const router = useRouter()
 
 <template>
   <RouterView />
-  <h3 @click="store.increment">
-    {{ store.count }}
-  </h3>
-  <p>
-    {{ userStore.name }}
-  </p>
-  <HelloWorld msg="Vite + Vue" />
+  World msg="Vite + Vue" />
   <button @click="router.push('/about')">
     go
   </button>
