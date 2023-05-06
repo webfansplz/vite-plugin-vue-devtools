@@ -6,9 +6,17 @@ import { initGlobalHook } from './logic/global'
 const router = useRouter()
 const route = useRoute()
 const { scale } = useDevToolsSettings()
-const { route: _route } = useFrameState()
+const { route: _route, isFirstVisit } = useFrameState()
 initGlobalHook()
 useColorMode()
+
+router.beforeEach((to, _, next) => {
+  if (to.path === '/' && !isFirstVisit.value) {
+    next('/overview')
+    return
+  }
+  next()
+})
 
 router.afterEach(() => {
   const path = route.path

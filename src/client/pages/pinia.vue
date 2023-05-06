@@ -26,9 +26,6 @@ const data = computed(() => {
     },
   ].filter(Boolean)
 })
-onMounted(() => {
-  // initPinia()
-})
 </script>
 
 <template>
