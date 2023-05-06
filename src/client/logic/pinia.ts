@@ -7,7 +7,7 @@ import { timelineApi } from './timeline'
 import { instance, onVueInstanceUpdate } from './instance'
 
 const LAYER_ID = 'pinia'
-const piniaVisible = ref(false)
+export const piniaVisible = ref(false)
 const stores = ref()
 const subscribes = ref<Function>([])
 export const piniaStoresId = ref<string>(['🍍 Pinia (root)'])

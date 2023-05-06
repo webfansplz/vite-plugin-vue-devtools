@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { Pane, Splitpanes } from 'splitpanes'
-import { piniaGetters, piniaState, piniaStoresId } from '../logic/pinia'
+import { piniaGetters, piniaState, piniaStoresId, piniaVisible } from '../logic/pinia'
 
 const activeIndex = ref(0)
 const omitStoreId = computed(() => {
@@ -29,7 +29,7 @@ const data = computed(() => {
 </script>
 
 <template>
-  <div v-if="piniaStoresId.length > 1" h-screen n-panel-grids>
+  <div v-if="piniaVisible" h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
