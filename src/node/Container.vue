@@ -191,7 +191,7 @@ function collectHookBuffer() {
   }
 
   function skipCollect(component) {
-    return component?.root.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+    return component?.root?.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
   }
   props.hook.on(DevtoolsHooks.PERF_START, (app, uid, component, type, time) => {
     if (skipCollect(component))

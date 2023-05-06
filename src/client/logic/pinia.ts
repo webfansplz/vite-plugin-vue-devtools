@@ -4,7 +4,6 @@ import type { DebuggerEvent } from 'vue'
 import { MutationType } from 'pinia'
 import type { StateTree } from 'pinia'
 import { timelineApi } from './timeline'
-import { instance, onVueInstanceUpdate } from './instance'
 
 const LAYER_ID = 'pinia'
 export const piniaVisible = ref(false)
@@ -222,36 +221,33 @@ function normalizePiniaInfo() {
   })
 }
 
-export function updatePinia() {
+export function updatePinia(component) {
   stores.value = null
   subscribes.value.forEach(stop => stop())
   subscribes.value = []
+  piniaState.value = {}
+  piniaGetters.value = {}
+  piniaStoresId.value = ['🍍 Pinia (root)']
   nextTick(() => {
-    const proxy = instance.value?.proxy
+    const proxy = component?.proxy
     const _stores = proxy?._pStores
     piniaVisible.value = !!_stores
     if (_stores) {
       stores.value = _stores
-      piniaState.value = {}
-      piniaGetters.value = {}
-      piniaStoresId.value = ['🍍 Pinia (root)']
       normalizePiniaInfo()
     }
   })
 }
 
-export function initPinia() {
-  updatePinia()
+export function initPinia(component) {
+  updatePinia(component)
   setTimeout(() => {
     if (stores.value) {
+      timelineApi.removeTimelineLayer(LAYER_ID)
       timelineApi.addTimelineLayer({
-        id: 'pinia',
+        id: LAYER_ID,
         label: 'Pinia 🍍',
       })
     }
   })
 }
-
-onVueInstanceUpdate(() => {
-  updatePinia()
-})

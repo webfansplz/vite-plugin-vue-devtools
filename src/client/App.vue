@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { initPinia } from './logic/pinia'
 import { initRoutes } from './logic/routes'
 import { initGlobalHook } from './logic/global'
 
@@ -28,7 +27,6 @@ router.afterEach(() => {
 onMounted(() => {
   setTimeout(() => {
     initRoutes()
-    initPinia()
   }, 200)
 
   watchEffect(() => {

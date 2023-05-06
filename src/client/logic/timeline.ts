@@ -34,6 +34,9 @@ export function toggleTimelineLayer(id: string) {
 }
 
 export const timelineApi = {
+  removeTimelineLayer(layerId: string) {
+    timelineLayer.value = timelineLayer.value.filter(layer => layer.id !== layerId)
+  },
   addTimelineLayer(layer: TimelineLayer) {
     timelineLayer.value.push(layer)
   },

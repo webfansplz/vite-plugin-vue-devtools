@@ -1,5 +1,5 @@
+import { initPinia } from './pinia'
 import { initVueApp, instance, app as vueApp } from './instance'
-
 import { useClient } from './client'
 
 const enum DevtoolsHooks {
@@ -33,6 +33,8 @@ export function connect() {
   })
 
   hook.on(DevtoolsHooks.COMPONENT_ADDED, (app, uid, parentUid, component) => {
+    initPinia(component)
+
     if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
       return
 
@@ -60,7 +62,10 @@ export function connect() {
 }
 
 export function initHook(buffer: [string, Record<string, any>][]) {
-  buffer.forEach(([_, { app, component }]) => {
+  buffer.forEach(([eventType, { app, component }]) => {
+    if (eventType === DevtoolsHooks.COMPONENT_ADDED)
+      initPinia(component)
+
     initVueApp(app, component)
   })
 }
