@@ -14,7 +14,7 @@ const NAME = 'vite-plugin-vue-devtools'
 
 function getVueDevtoolsPath() {
   const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
-  return pluginPath.replace(/\/dist$/, '/\/src')
+  return pluginPath.replace(/\/dist$/, '/\/src/node')
 }
 
 export default function PluginVueDevtools(): Plugin[] {
@@ -46,10 +46,6 @@ export default function PluginVueDevtools(): Plugin[] {
     },
     configureServer(server) {
       configureServer(server)
-      // setTimeout(() => {
-      //   console.log(server.resolvedUrls)
-      // }, 3000)
-      // console.log(server)
     },
     async resolveId(importee: string) {
       if (importee.startsWith('virtual:vue-devtools-options')) {

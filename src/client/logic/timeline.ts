@@ -9,7 +9,7 @@ interface TimelineLayer {
 interface TimelineEvent {
   layerId: string
   groupKey?: string
-  sortId: number
+  sortId?: number
   event: {
     time: number
     title: string
@@ -97,7 +97,7 @@ export function initTimeline(events: [string, Record<string, any>][]) {
   })
 
   timelineEvent.value
-    = timelineEvent.value.sort((a, b) => a.sortId - b.sortId).sort((a, b) => performTimelineSortKey[a.event.data.measure] - performTimelineSortKey[b.event.data.measure])
+    = timelineEvent.value.sort((a, b) => a.sortId! - b.sortId!).sort((a, b) => performTimelineSortKey[a.event.data.measure] - performTimelineSortKey[b.event.data.measure])
 
   const client = useClient()
   let sortId = timelineEvent.value.length

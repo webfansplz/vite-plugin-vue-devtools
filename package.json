@@ -33,6 +33,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
+    "src/node/app.js",
+    "src/node/Container.vue",
     "*.d.ts"
   ],
   "engines": {
@@ -83,6 +85,7 @@
     "ohash": "^1.1.2",
     "pathe": "^1.1.0",
     "pinia": "^2.0.35",
+    "rimraf": "^5.0.0",
     "typescript": "^5.0.4",
     "unbuild": "^1.2.1",
     "unocss": "^0.51.5",
