@@ -1,4 +1,5 @@
 import type { App, ComponentInternalInstance } from 'vue'
+import { initPages } from './pages'
 
 export const app = shallowRef<App<Element>>()
 
@@ -19,6 +20,7 @@ export function initVueApp(_app, component) {
   if (_app) {
     app.value = _app
     triggerRef(app)
+    initPages()
   }
 
   if (component.root) {

@@ -1,8 +1,7 @@
 import type { ModuleInfo } from '../../types'
 import { rpc } from './rpc'
-import { initPages, routes } from './pages'
+import { routes } from './pages'
 
-initPages()
 const modules = ref<ModuleInfo[]>(await rpc.componentGraph())
 const vueModules = computed(() => modules.value.filter(i => i.id.match(/\.vue($|\?v=)/)))
 export const pageCount = computed(() => routes.value.length)

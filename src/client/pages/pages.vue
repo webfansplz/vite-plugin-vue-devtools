@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { currentRoute, initPages, router, routes } from '../logic/pages'
+import { currentRoute, router, routes } from '../logic/pages'
 
 const routeInput = ref('')
 
 onMounted(() => {
-  initPages()
   routeInput.value = currentRoute.value?.path ?? '/'
 })
 

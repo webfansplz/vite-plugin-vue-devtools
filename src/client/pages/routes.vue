@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
-import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatcherState, toggleRouteRecordMatcher } from '../logic/routes'
+import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatcherState, router, toggleRouteRecordMatcher } from '../logic/routes'
 
 onMounted(() => {
   // initRoutes()
@@ -8,7 +8,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="routeRecordMatcherState?.length" h-screen n-panel-grids>
+  <div v-if="router" h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
