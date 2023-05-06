@@ -55,6 +55,7 @@ function toggle(position: string) {
         </VButton>
       </VDarkToggle>
       <RouterLink
+        replace
         class="n-button-base active:n-button-active focus-visible:n-focus-base n-transition n-primary n-sm hover:n-button-hover n-disabled:n-disabled"
         to="/settings"
       >

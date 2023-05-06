@@ -3,7 +3,7 @@ const { isFirstVisit } = useFrameState()
 const router = useRouter()
 function visit() {
   isFirstVisit.value = false
-  router.push('/overview')
+  router.replace('/overview')
 }
 </script>
 

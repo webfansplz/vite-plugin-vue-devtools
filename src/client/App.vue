@@ -36,7 +36,7 @@ onMounted(() => {
   })
 })
 
-router.push(_route.value)
+router.replace(_route.value)
 </script>
 
 <template>

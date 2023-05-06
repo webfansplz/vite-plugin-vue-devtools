@@ -34,14 +34,13 @@ const isMacOS = navigator?.platform.toLowerCase().includes('mac')
       <div flex="~ gap2 wrap">
         <div p4 theme-card-green flex="~ col auto">
           <div logos-vue text-3xl />
-          <!-- TODO: vue version -->
           <code>v{{ vueVersion }}</code>
         </div>
-        <RouterLink min-w-40 p4 theme-card-lime flex="~ col auto" to="/pages">
+        <RouterLink flex="~ col auto" to="/pages" replace min-w-40 p4 theme-card-lime>
           <div carbon-tree-view-alt text-3xl />
           <div>{{ pageCount }} pages</div>
         </RouterLink>
-        <RouterLink min-w-40 p4 theme-card-lime flex="~ col auto" to="/components">
+        <RouterLink flex="~ col auto" to="/components" replace min-w-40 p4 theme-card-lime>
           <div i-carbon-assembly-cluster text-3xl />
           <div>{{ componentCount }} components</div>
         </RouterLink>
@@ -63,8 +62,7 @@ const isMacOS = navigator?.platform.toLowerCase().includes('mac')
           <div i-carbon-debug />
           Bug Reports
         </a>
-        <!-- TODO: settings page -->
-        <RouterLink to="/settings" flex="~ gap1" inline-block items-center op50 hover:op80>
+        <RouterLink to="/settings" flex="~ gap1" replace inline-block items-center op50 hover:op80>
           <div i-carbon-settings />
           Settings
         </RouterLink>

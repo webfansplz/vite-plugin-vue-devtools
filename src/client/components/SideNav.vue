@@ -35,6 +35,7 @@ const categories = useCategorizedTabs()
     <div flex="~ none col items-center">
       <div h-1px w-8 border="b base" />
       <RouterLink
+        replace
         to="/settings"
         flex="~ items-center justify-center"
         hover="bg-active"

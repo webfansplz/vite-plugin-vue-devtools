@@ -56,7 +56,7 @@ const builtinTabs: BuiltinTab[] = [
     icon: 'i-carbon-select-window',
     category: 'advanced',
     event: (client, router) => {
-      router.push('/__inspecting')
+      router.replace('/__inspecting')
       client?.inspector?.enable()
     },
   },

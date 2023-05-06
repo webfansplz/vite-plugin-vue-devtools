@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useCounterStore, useUserStore } from './stores'
 
 // This starter template is using Vue 3 <script setup> SFCs
@@ -27,6 +28,8 @@ const store = useCounterStore()
 
 const userStore = useUserStore()
 
+const router = useRouter()
+
 // const userStore2 = useCounter2Store()
 
 // const counter2Store = useCounter2Store()
@@ -45,4 +48,10 @@ const userStore = useUserStore()
     {{ userStore.name }}
   </p>
   <HelloWorld msg="Vite + Vue" />
+  <button @click="router.push('/about')">
+    go
+  </button>
+  <button @click="router.go(-1)">
+    back
+  </button>
 </template>

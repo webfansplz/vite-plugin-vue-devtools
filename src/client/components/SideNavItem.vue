@@ -13,6 +13,7 @@ const router = useRouter()
   <VTooltip placement="right">
     <Component
       :is="tab.path ? 'RouterLink' : 'button'"
+      replace
       :to="`/${tab.path}`"
       flex="~"
       hover="bg-active"
