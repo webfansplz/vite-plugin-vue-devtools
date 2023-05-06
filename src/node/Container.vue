@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps, onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import vueDevtoolsOptions from 'virtual:vue-devtools-options'
 
 const props = defineProps({
