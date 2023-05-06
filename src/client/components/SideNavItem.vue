@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { BuiltinTab } from '../../types'
-import { useClient } from '../logic/client'
+import { useDevtoolsClient } from '../logic/client'
 
 defineProps<{
   tab: BuiltinTab
 }>()
-const client = useClient()
+const client = useDevtoolsClient()
 const router = useRouter()
 </script>
 

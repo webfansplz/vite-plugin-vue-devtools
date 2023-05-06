@@ -239,15 +239,9 @@ export function updatePinia(component) {
   })
 }
 
-export function initPinia(component) {
-  updatePinia(component)
-  setTimeout(() => {
-    if (stores.value) {
-      timelineApi.removeTimelineLayer(LAYER_ID)
-      timelineApi.addTimelineLayer({
-        id: LAYER_ID,
-        label: 'Pinia 🍍',
-      })
-    }
+export function initPinia() {
+  timelineApi.addTimelineLayer({
+    id: LAYER_ID,
+    label: 'Pinia 🍍',
   })
 }

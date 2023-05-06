@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { vueVersion } from '../logic/instance'
+import { vueVersion } from '../logic/app'
 import { version } from '../../../package.json'
 import { componentCount, pageCount } from '../logic/overview'
 

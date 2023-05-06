@@ -5,20 +5,16 @@ import 'floating-vue/dist/style.css'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import routes from 'virtual:generated-pages'
 import App from './App.vue'
-import { connect } from './logic/hook'
-import { initClient } from './logic/global'
+import { initDevtoolsClient } from './logic/global'
 
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 
-// import './styles/cm.css'
 import 'uno.css'
 
 window.console.log = window.parent.print
 
-initClient()
-
-connect()
+initDevtoolsClient()
 
 const app = createApp(App)
 const router = createRouter({

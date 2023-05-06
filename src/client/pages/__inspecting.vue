@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useClient } from '../logic/client'
+import { useDevtoolsClient } from '../logic/client'
 
-const client = useClient()
+const client = useDevtoolsClient()
 useEventListener('keydown', (e) => {
   if (e.key === 'Escape')
     close()

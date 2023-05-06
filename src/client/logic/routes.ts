@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized, RouteRecordNormalized, Router } from 'vue-router'
 import { createRouterMatcher } from 'vue-router'
 import { timelineApi } from './timeline'
-import { app } from './instance'
+import { router } from './app'
 
 type RouteRecordMatcher = ReturnType<ReturnType<typeof createRouterMatcher>['getRoutes']>[0]
 
@@ -30,7 +30,7 @@ const ORANGE_400 = 0xFB923C
 const DARK = 0x666666
 
 const LAYER_ID = 'router'
-export const router = ref<Router>()
+// export const router = ref<Router>()
 export const routeRecordMatcher = ref<RouteRecordMatcher[]>()
 export const activeRouteRecordIndex = ref(0)
 const map = new Map()
@@ -229,7 +229,6 @@ function subscribeRouterChanged(router: Router) {
 }
 
 export function initRoutes() {
-  router.value = app.value?.config.globalProperties.$router
   if (router.value) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     const matcher = createRouterMatcher(router.value?.options.routes!, router.value?.options!)
@@ -240,10 +239,5 @@ export function initRoutes() {
       label: 'Router Navigations',
     })
     subscribeRouterChanged(router.value)
-
-    // Update router Manually
-    router.value?.afterEach(() => {
-      triggerRef(router)
-    })
   }
 }

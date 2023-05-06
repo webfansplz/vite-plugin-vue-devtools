@@ -100,7 +100,7 @@ const toggleButtonPosition = computed(() => {
     '--hover-translate': 'translate(0, -3px)',
   }
 })
-const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { zIndex: -100000 })
+const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { zIndex: -100000, left: '-9999px', top: '-9999px' })
 
 function togglePanel() {
   panelVisible.value = !panelVisible.value
@@ -118,7 +118,7 @@ function disableComponentInspector() {
     panelState.value.viewMode = 'default'
 }
 
-function waitForClientInjection(retry = 10, timeout = 200) {
+function waitForClientInjection(retry = 30, timeout = 200) {
   const test = () => !!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
 
   if (test())
@@ -131,7 +131,6 @@ function waitForClientInjection(retry = 10, timeout = 200) {
         resolve()
       }
       else if (retry-- <= 0) {
-        console.log(iframe.value.contentWindow.__VUE_DEVTOOLS_VIEW__)
         clearInterval(interval)
         // eslint-disable-next-line prefer-promise-reject-errors
         reject('Vue Devtools client injection failed')
@@ -181,7 +180,7 @@ function initPanelPosition() {
 function collectHookBuffer() {
   let sortId = 0
   const DevtoolsHooks = {
-    COMPONENT_INIT: 'app:init',
+    APP_INIT: 'app:init',
     COMPONENT_UPDATED: 'component:updated',
     COMPONENT_ADDED: 'component:added',
     COMPONENT_REMOVED: 'component:removed',
@@ -190,11 +189,21 @@ function collectHookBuffer() {
     PERF_END: 'perf:end',
   }
 
-  function skipCollect(component) {
-    return component?.root?.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+  function stopCollect(component) {
+    return component?.root?.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded
   }
+
+  props.hook.on(DevtoolsHooks.APP_INIT, (app) => {
+    if (!app || app._instance.type?.devtools?.hide)
+      return
+
+    hookBuffer.push([DevtoolsHooks.APP_INIT, {
+      app,
+    }])
+  })
+
   props.hook.on(DevtoolsHooks.PERF_START, (app, uid, component, type, time) => {
-    if (skipCollect(component))
+    if (stopCollect(component))
       return
 
     hookBuffer.push([DevtoolsHooks.PERF_START, {
@@ -208,7 +217,7 @@ function collectHookBuffer() {
     }])
   })
   props.hook.on(DevtoolsHooks.PERF_END, (app, uid, component, type, time) => {
-    if (skipCollect(component))
+    if (stopCollect(component))
       return
 
     hookBuffer.push([DevtoolsHooks.PERF_END, {
@@ -220,16 +229,16 @@ function collectHookBuffer() {
       time,
       sortId: sortId++,
     }])
-  });
+  })
 
-  [
+  ;[
     DevtoolsHooks.COMPONENT_UPDATED,
     DevtoolsHooks.COMPONENT_ADDED,
     DevtoolsHooks.COMPONENT_REMOVED,
     DevtoolsHooks.COMPONENT_EMIT,
   ].forEach((item) => {
     props.hook.on(item, (app, uid, parentUid, component) => {
-      if (!app || (typeof uid !== 'number' && !uid) || !component || skipCollect(component))
+      if (!app || (typeof uid !== 'number' && !uid) || !component || stopCollect(component))
         return
       hookBuffer.push([item, {
         app, uid, parentUid, component,

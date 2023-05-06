@@ -2,7 +2,7 @@
 import { Pane, Splitpanes } from 'splitpanes'
 
 import { ComponentWalker, getInstanceState } from '../logic/components'
-import { instance, onVueInstanceUpdate } from '../logic/instance'
+import { instance, onVueInstanceUpdate } from '../logic/app'
 import { selected } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])

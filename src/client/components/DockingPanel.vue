@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useClient } from '../logic/client'
+import { useDevtoolsClient } from '../logic/client'
 
 const { position: _position } = useFrameState()
 const frameState = ref({
   position: _position.value,
 })
 
-const client = useClient()
+const client = useDevtoolsClient()
 const dockButton = [
   {
     position: 'bottom',

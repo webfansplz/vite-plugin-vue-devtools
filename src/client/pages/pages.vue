@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { currentRoute, router, routes } from '../logic/pages'
+import { currentRoute, router, routes } from '../logic/app'
 
 const routeInput = ref('')
 
@@ -23,6 +23,7 @@ function navigate() {
 
 function navigateToRoute(path: string) {
   router.value?.push(path)
+  routeInput.value = path
 }
 </script>
 

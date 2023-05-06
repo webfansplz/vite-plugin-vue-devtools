@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
-import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatcherState, router, toggleRouteRecordMatcher } from '../logic/routes'
+import { router } from '../logic/app'
+import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatcherState, toggleRouteRecordMatcher } from '../logic/routes'
 </script>
 
 <template>

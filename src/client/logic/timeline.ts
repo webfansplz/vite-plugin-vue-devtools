@@ -1,5 +1,5 @@
 import { getComponentFileName } from './components/util'
-import { useClient } from './client'
+import { useDevtoolsClient } from './client'
 
 interface TimelineLayer {
   id: string
@@ -86,7 +86,7 @@ function addTimelineEvent(event: [string, Record<string, any>]) {
   })
 }
 
-export function initTimeline(events: [string, Record<string, any>][]) {
+export function initPerfTimeline(events: [string, Record<string, any>][]) {
   const performTimelineSortKey = {
     start: -1,
     end: 1,
@@ -102,7 +102,7 @@ export function initTimeline(events: [string, Record<string, any>][]) {
   timelineEvent.value
     = timelineEvent.value.sort((a, b) => a.sortId! - b.sortId!).sort((a, b) => performTimelineSortKey[a.event.data.measure] - performTimelineSortKey[b.event.data.measure])
 
-  const client = useClient()
+  const client = useDevtoolsClient()
   let sortId = timelineEvent.value.length
   client.value?.hook?.on('perf:start', (app, uid, component, type, time) => {
     if (component?.root.type?.devtools?.hide)

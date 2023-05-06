@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
-const count = ref(130)
+const count = ref(100)
 
 const map = new Map([['a', 1], ['b', 2]])
 function add(x: number, y: number) {
@@ -35,7 +35,7 @@ const router = useRouter()
 
 <template>
   <RouterView />
-  World msg="Vite + Vue" />
+  <!-- <HelloWorld msg="Vite + Vue" /> -->
   <button @click="router.push('/about')">
     go
   </button>

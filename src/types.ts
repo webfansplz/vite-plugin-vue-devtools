@@ -45,6 +45,7 @@ export interface ModulesList {
 }
 
 export interface VueDevtoolsHostClient {
+  markClientLoaded: () => void
   inspector?: {
     enable: () => void
     disable: () => void
@@ -52,7 +53,7 @@ export interface VueDevtoolsHostClient {
   panel?: {
     toggle: (position: string) => void
   }
-  hook?: {
+  hook: {
     events: Map<string, () => void>
     emit: (event: string, ...payload: any[]) => void
     on: (event: string, fn: (...payload: any[]) => void) => void

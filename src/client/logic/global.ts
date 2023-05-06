@@ -1,31 +1,22 @@
 import type { VueDevtoolsHostClient } from '../../types'
-import { useClient } from './client'
-import { initTimeline } from './timeline'
-import { initHook } from './hook'
+import { useDevtoolsClient } from './client'
+import { initApp } from './app'
 
 export interface VueDevtoolsGlobal {
+  loaded: boolean
   setClient(client: VueDevtoolsHostClient): void
 }
 
-export function initClient() {
+export function initDevtoolsClient() {
   window.__VUE_DEVTOOLS_VIEW__ = <VueDevtoolsGlobal>{
+    loaded: false,
     setClient(_client) {
-      const client = useClient()
+      const client = useDevtoolsClient()
       client.value = _client
-      initTimeline(client.value.hookBuffer.filter(([type]) => type.startsWith('perf:')))
-      initHook(client.value.hookBuffer.filter(([type]) => type.startsWith('component:')))
+      client.value.markClientLoaded = () => {
+        this.loaded = true
+      }
+      initApp(client.value.hookBuffer.find(([type]) => type === 'app:init'))
     },
   }
-}
-
-export function initGlobalHook() {
-  const router = useRouter()
-  const route = useRoute()
-  const client = useClient()
-  const frameState = useFrameState()
-
-  client.value.hook?.on('host:inspector:close', () => {
-    if (route.path === '/__inspecting')
-      router.replace(frameState.route.value)
-  })
 }
