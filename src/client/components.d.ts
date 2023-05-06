@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']
+    VCard: typeof import('./ui-kit/VCard.vue')['default']
     VDarkToggle: typeof import('./ui-kit/VDarkToggle.vue')['default']
     VExpandIcon: typeof import('./ui-kit/VExpandIcon.vue')['default']
     VIcon: typeof import('./ui-kit/VIcon.vue')['default']

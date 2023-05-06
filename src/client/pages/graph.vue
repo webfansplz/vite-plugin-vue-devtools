@@ -101,7 +101,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div n-panel-grids>
     <SearchBox />
     <div ref="container" h-100vh w-full />
   </div>

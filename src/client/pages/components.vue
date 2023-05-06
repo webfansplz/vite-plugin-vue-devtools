@@ -62,7 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div h-screen>
+  <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
         <div p-2>

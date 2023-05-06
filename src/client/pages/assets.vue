@@ -54,7 +54,7 @@ const navbar = ref<HTMLElement>()
 </script>
 
 <template>
-  <div h-full of-auto>
+  <div v-if="assets?.length" h-full of-auto n-panel-grids>
     <Navbar ref="navbar" v-model:search="search" pb2>
       <template #actions>
         <div flex-none flex="~ gap4">
@@ -104,4 +104,11 @@ const navbar = ref<HTMLElement>()
       <AssetDetails v-if="selected" :asset="selected" />
     </DrawerRight>
   </div>
+  <VPanelGrids v-else px5>
+    <VCard flex="~ col gap2" min-w-30 items-center p3>
+      <h1 text-sm italic op50>
+        No Assets
+      </h1>
+    </VCard>
+  </VPanelGrids>
 </template>

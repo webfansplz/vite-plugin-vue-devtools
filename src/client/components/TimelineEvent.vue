@@ -10,7 +10,7 @@ const emits = defineEmits(['update-selected'])
 </script>
 
 <template>
-  <ul>
+  <ul v-if="data.length">
     <li
       v-for="(item, index) in data" :key="index"
       border="b base" h-10 flex cursor-pointer select-none items-center pl-3 pr-2 text-xs space-x-2
@@ -27,4 +27,11 @@ const emits = defineEmits(['update-selected'])
       <span flex-none font-mono opacity-50>{{ dayjs(item.event.now).format('HH:mm:ss') }}</span>
     </li>
   </ul>
+  <VPanelGrids v-else px5>
+    <VCard flex="~ col gap2" min-w-30 items-center p3>
+      <h1 text-sm italic op50>
+        No Events
+      </h1>
+    </VCard>
+  </VPanelGrids>
 </template>
