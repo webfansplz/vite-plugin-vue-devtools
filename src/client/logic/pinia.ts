@@ -227,7 +227,7 @@ export function updatePinia() {
   subscribes.value.forEach(stop => stop())
   subscribes.value = []
   nextTick(() => {
-    const proxy = instance.value.proxy
+    const proxy = instance.value?.proxy
     const _stores = proxy?._pStores
     piniaVisible.value = !!_stores
     if (_stores) {

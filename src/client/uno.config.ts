@@ -67,4 +67,16 @@ export default defineConfig({
     transformerVariantGroup(),
     transformerCompileClass(),
   ],
+  safelist: [
+    'i-carbon-information',
+    'i-carbon-tree-view-alt',
+    'i-carbon-assembly-cluster',
+    'i-carbon-image-copy',
+    'gis:map-route',
+    'icon-park-outline:pineapple',
+    'i-icon-park-outline:vertical-timeline',
+    'i-carbon-network-4',
+    'i-carbon-ibm-watson-discovery',
+    'i-carbon-select-window',
+  ],
 })

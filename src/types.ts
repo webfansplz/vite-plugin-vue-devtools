@@ -57,7 +57,7 @@ export interface VueDevtoolsHostClient {
     emit: (event: string, ...payload: any[]) => void
     on: (event: string, fn: (...payload: any[]) => void) => void
   }
-  hookQueue: [string, number, any[], number][]
+  hookBuffer: [string, Record<string, any>][]
 }
 
 export interface BuiltinTab {

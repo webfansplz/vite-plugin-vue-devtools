@@ -39,7 +39,7 @@ export default function PluginVueDevtools(): Plugin[] {
   }
   const plugin = <Plugin>{
     name: NAME,
-    enforce: 'post',
+    enforce: 'pre',
     apply: 'serve',
     configResolved(resolvedConfig) {
       config = resolvedConfig
@@ -84,11 +84,11 @@ export default function PluginVueDevtools(): Plugin[] {
   }
 
   return [
+    plugin,
     inspect,
     VueInspector({
       toggleComboKey: '',
       toggleButtonVisibility: 'never',
     }) as Plugin,
-    plugin,
   ]
 }

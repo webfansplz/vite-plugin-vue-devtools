@@ -1,8 +1,6 @@
-import { instance, app as vueApp } from './instance'
+import { initVueApp, instance, app as vueApp } from './instance'
 
 import { useClient } from './client'
-
-// export const hook = window.parent.__VUE_DEVTOOLS_GET_GLOBAL_HOOK__()
 
 const enum DevtoolsHooks {
   COMPONENT_INIT = 'app:init',
@@ -12,13 +10,12 @@ const enum DevtoolsHooks {
   COMPONENT_EMIT = 'component:emit',
 }
 
-function hideInDevtools(app) {
-  return app?._vueDevtools_hidden_ || app._instance?.type?.devtools?.hide
+function hideInDevtools(component) {
+  return component?.root.type?.devtools?.hide
 }
 
 export function connect() {
   const client = useClient()
-  console.log('hooo', client.value)
   const hook = client.value!.hook!
   hook.on(DevtoolsHooks.COMPONENT_INIT, (app) => {
     // console.log('init', app)
@@ -29,71 +26,41 @@ export function connect() {
   })
 
   hook.on(DevtoolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
-    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(app))
+    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
       return
 
-    if (app) {
-      vueApp.value = app
-      triggerRef(vueApp)
-    }
-
-    if (component.root) {
-      instance.value = component.root
-      instance.value && (instance.value.uid = 0)
-      triggerRef(instance)
-    }
+    initVueApp(app, component)
   })
 
   hook.on(DevtoolsHooks.COMPONENT_ADDED, (app, uid, parentUid, component) => {
-    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(app))
+    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
       return
 
-    console.log('added')
-    if (app) {
-      vueApp.value = app
-      triggerRef(vueApp)
-    }
-
-    if (component.root) {
-      instance.value = component.root
-      instance.value && (instance.value.uid = 0)
-      triggerRef(instance)
-    }
+    // console.log('added')
+    initVueApp(app, component)
   })
 
   hook.on(DevtoolsHooks.COMPONENT_REMOVED, (app, uid, parentUid, component) => {
-    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(app))
+    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
       return
 
-    console.log('removed')
+    // console.log('removed')
 
-    if (app) {
-      vueApp.value = app
-      triggerRef(vueApp)
-    }
-
-    if (component.root) {
-      instance.value = component.root
-      instance.value && (instance.value.uid = 0)
-      triggerRef(instance)
-    }
+    initVueApp(app, component)
   })
 
   hook.on(DevtoolsHooks.COMPONENT_EMIT, (app, uid, parentUid, component) => {
-    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(app))
+    if (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
       return
 
-    console.log('component:emit')
+    // console.log('component:emit')
 
-    if (app) {
-      vueApp.value = app
-      triggerRef(vueApp)
-    }
+    initVueApp(app, component)
+  })
+}
 
-    if (component.root) {
-      instance.value = component.root
-      instance.value && (instance.value.uid = 0)
-      triggerRef(instance)
-    }
+export function initHook(buffer: [string, Record<string, any>][]) {
+  buffer.forEach(([_, { app, component }]) => {
+    initVueApp(app, component)
   })
 }

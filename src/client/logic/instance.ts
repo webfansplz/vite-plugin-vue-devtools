@@ -14,3 +14,16 @@ export function onVueInstanceUpdate(cb: (i: ComponentInternalInstance) => void) 
     immediate: true,
   })
 }
+
+export function initVueApp(_app, component) {
+  if (_app) {
+    app.value = _app
+    triggerRef(app)
+  }
+
+  if (component.root) {
+    instance.value = component.root
+    instance.value && (instance.value.uid = 0)
+    triggerRef(instance)
+  }
+}

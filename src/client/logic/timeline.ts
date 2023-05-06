@@ -53,8 +53,10 @@ export const timelineEventDetails = computed(() => {
   }
 })
 
-function addTimelineEvent(event: [string, number, any[], number]) {
-  const [eventType, now, [app, uid, component, type, time], sortId] = event
+function addTimelineEvent(event: [string, Record<string, any>]) {
+  const [eventType, {
+    now, app, uid, component, type, time, sortId,
+  }] = event
   const filename = component.type.__name ?? component.type.name ?? getComponentFileName(component.type)
   if (!filename)
     return
@@ -81,7 +83,7 @@ function addTimelineEvent(event: [string, number, any[], number]) {
   })
 }
 
-export function init(events: [string, number, any[], number][]) {
+export function initTimeline(events: [string, Record<string, any>][]) {
   const performTimelineSortKey = {
     start: -1,
     end: 1,
@@ -99,16 +101,30 @@ export function init(events: [string, number, any[], number][]) {
 
   const client = useClient()
   let sortId = timelineEvent.value.length
-  client.value?.hook?.on('perf:start', (...args) => {
-    const component = args[2]
+  client.value?.hook?.on('perf:start', (app, uid, component, type, time) => {
     if (component?.root.type?.devtools?.hide)
       return
-    addTimelineEvent(['perf:start', Date.now(), [...args], sortId++])
+    addTimelineEvent(['perf:start', {
+      now: Date.now(),
+      app,
+      uid,
+      component,
+      type,
+      time,
+      sortId: sortId++,
+    }])
   })
-  client.value?.hook?.on('perf:end', (...args) => {
-    const component = args[2]
+  client.value?.hook?.on('perf:end', (app, uid, component, type, time) => {
     if (component?.root.type?.devtools?.hide)
       return
-    addTimelineEvent(['perf:end', Date.now(), [...args], sortId++])
+    addTimelineEvent(['perf:end', {
+      now: Date.now(),
+      app,
+      uid,
+      component,
+      type,
+      time,
+      sortId: sortId++,
+    }])
   })
 }

@@ -14,11 +14,12 @@ import './styles/main.css'
 // import './styles/cm.css'
 import 'uno.css'
 
+window.console.log = window.parent.print
+
+
 initClient()
 
 connect()
-
-window.console.log = window.parent.print
 
 const app = createApp(App)
 const router = createRouter({

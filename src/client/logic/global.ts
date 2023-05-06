@@ -1,6 +1,7 @@
 import type { VueDevtoolsHostClient } from '../../types'
 import { useClient } from './client'
-import { init as initTimeline } from './timeline'
+import { initTimeline } from './timeline'
+import { initHook } from './hook'
 
 export interface VueDevtoolsGlobal {
   setClient(client: VueDevtoolsHostClient): void
@@ -11,7 +12,8 @@ export function initClient() {
     setClient(_client) {
       const client = useClient()
       client.value = _client
-      initTimeline(client.value.hookQueue.filter(([type]) => type.startsWith('perf:')))
+      initTimeline(client.value.hookBuffer.filter(([type]) => type.startsWith('perf:')))
+      initHook(client.value.hookBuffer.filter(([type]) => type.startsWith('component:')))
     },
   }
 }

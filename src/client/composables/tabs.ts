@@ -68,9 +68,7 @@ export function useTabs() {
     enabled: computed(() => {
       return builtinTabs.filter(tab => !settings.hiddenTabs.value.includes(tab.title ?? ''))
     }),
-    all: computed(() => [
-      ...builtinTabs,
-    ]),
+    all: computed(() => builtinTabs),
   }
 }
 

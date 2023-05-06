@@ -19,7 +19,7 @@ const panelState = ref({
   viewMode: 'default',
 })
 const panelVisible = ref(false)
-const hookQueue = []
+const hookBuffer = []
 const panelStyle = computed(() => {
   if (panelState.value.viewMode === 'component-inspector') {
     return {
@@ -157,7 +157,7 @@ function setupClient() {
   }
   injection.setClient({
     hook: props.hook,
-    hookQueue,
+    hookBuffer,
     inspector: {
       enable: enableComponentInspector,
       disable: disableComponentInspector,
@@ -178,25 +178,67 @@ function initPanelPosition() {
   }
 }
 
-function collectHook() {
+function collectHookBuffer() {
   let sortId = 0
-  props.hook.on('perf:start', (...args) => {
-    const component = args[2]
-    if (component?.root.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__)
+  const DevtoolsHooks = {
+    COMPONENT_INIT: 'app:init',
+    COMPONENT_UPDATED: 'component:updated',
+    COMPONENT_ADDED: 'component:added',
+    COMPONENT_REMOVED: 'component:removed',
+    COMPONENT_EMIT: 'component:emit',
+    PERF_START: 'perf:start',
+    PERF_END: 'perf:end',
+  }
+
+  function skipCollect(component) {
+    return component?.root.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+  }
+  props.hook.on(DevtoolsHooks.PERF_START, (app, uid, component, type, time) => {
+    if (skipCollect(component))
       return
 
-    hookQueue.push(['perf:start', Date.now(), [...args], sortId++])
+    hookBuffer.push([DevtoolsHooks.PERF_START, {
+      now: Date.now(),
+      app,
+      uid,
+      component,
+      type,
+      time,
+      sortId: sortId++,
+    }])
   })
-  props.hook.on('perf:end', (...args) => {
-    const component = args[2]
-    if (component?.root.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__)
+  props.hook.on(DevtoolsHooks.PERF_END, (app, uid, component, type, time) => {
+    if (skipCollect(component))
       return
 
-    hookQueue.push(['perf:end', Date.now(), [...args], sortId++])
+    hookBuffer.push([DevtoolsHooks.PERF_END, {
+      now: Date.now(),
+      app,
+      uid,
+      component,
+      type,
+      time,
+      sortId: sortId++,
+    }])
+  });
+
+  [
+    DevtoolsHooks.COMPONENT_UPDATED,
+    DevtoolsHooks.COMPONENT_ADDED,
+    DevtoolsHooks.COMPONENT_REMOVED,
+    DevtoolsHooks.COMPONENT_EMIT,
+  ].forEach((item) => {
+    props.hook.on(item, (app, uid, parentUid, component) => {
+      if (!app || (typeof uid !== 'number' && !uid) || !component || skipCollect(component))
+        return
+      hookBuffer.push([item, {
+        app, uid, parentUid, component,
+      }])
+    })
   })
 }
 
-collectHook()
+collectHookBuffer()
 initPanelPosition()
 </script>
 
