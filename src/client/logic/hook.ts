@@ -11,7 +11,7 @@ const enum DevtoolsHooks {
 }
 
 function hideInDevtools(component) {
-  return component?.root.type?.devtools?.hide
+  return component?.root?.type?.devtools?.hide
 }
 
 export function connect() {

@@ -27,7 +27,7 @@ router.afterEach(() => {
 onMounted(() => {
   setTimeout(() => {
     initRoutes()
-  }, 200)
+  }, 800)
 
   watchEffect(() => {
     document.body.style.fontSize = `${scale.value * 15}px`

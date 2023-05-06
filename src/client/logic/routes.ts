@@ -33,6 +33,7 @@ const LAYER_ID = 'router'
 export const router = ref<Router>()
 export const routeRecordMatcher = ref<RouteRecordMatcher[]>()
 export const activeRouteRecordIndex = ref(0)
+const map = new Map()
 export const routeRecordMatcherState = computed(() => {
   return routeRecordMatcher.value?.map((route) => {
     const state = formatRouteRecordMatcherForStateInspector(route)
@@ -42,7 +43,7 @@ export const routeRecordMatcherState = computed(() => {
       tags,
       state,
     }
-  }).sort((a, b) => a.path!.length - b.path!.length)
+  }).sort((a, b) => a.path!.length - b.path!.length).filter(i => !map.has(i.path) && map.set(i.path, 1))
 })
 export const activeRouteRecordMatcherState = computed(() => {
   const state = routeRecordMatcherState.value?.[activeRouteRecordIndex.value]?.state
