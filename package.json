@@ -51,6 +51,9 @@
     "prepublishOnly": "npm run build",
     "release": "bumpp && npm publish"
   },
+  "peerDependencies": {
+    "vite": "^3.0.0-0 || ^4.0.0-0"
+  },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
     "nanoid": "^4.0.2",
