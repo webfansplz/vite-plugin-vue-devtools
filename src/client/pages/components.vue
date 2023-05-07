@@ -71,7 +71,7 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div v-if="normalizedComponentState" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
+        <div v-if="normalizedComponentState.length" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.value" :data="item" />
         </div>
         <VPanelGrids v-else px5>
