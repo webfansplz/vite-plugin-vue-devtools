@@ -278,6 +278,7 @@ initPanelPosition()
 <style scoped>
 .vue-devtools-panel {
   position: fixed;
+  z-index: 2147483647;
   width: calc(80vw - 20px);
   height: calc(60vh - 20px);
 }
