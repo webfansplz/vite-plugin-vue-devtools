@@ -81,7 +81,7 @@ Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-in
 
 You can also use the "Inspector" feature to inspect the DOM tree and see which component is rendering it. Click to go to your editor of the specific line. Making it much easier to make changes, without the requirement of understanding the project structure thoroughly. (This feature is implemented based on the [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
 
-<img src="./assets/inspector.png" />
+<img src="./assets/inspector.png" height=450 />
 
 ## 📦 Installation
 
