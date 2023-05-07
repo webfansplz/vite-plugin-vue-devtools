@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { normalizePath } from 'vite'
-import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite'
+import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import { createRPCServer } from 'vite-dev-rpc'
@@ -17,7 +17,7 @@ function getVueDevtoolsPath() {
   return pluginPath.replace(/\/dist$/, '/\/src/node')
 }
 
-export default function PluginVueDevtools(): Plugin[] {
+export default function PluginVueDevtools(): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect()
   let config: ResolvedConfig
@@ -37,7 +37,7 @@ export default function PluginVueDevtools(): Plugin[] {
       getTextAssetContent,
     })
   }
-  const plugin = <Plugin>{
+  const plugin = <PluginOption>{
     name: NAME,
     enforce: 'pre',
     apply: 'serve',
@@ -85,6 +85,6 @@ export default function PluginVueDevtools(): Plugin[] {
     VueInspector({
       toggleComboKey: '',
       toggleButtonVisibility: 'never',
-    }) as Plugin,
+    }),
   ]
 }
