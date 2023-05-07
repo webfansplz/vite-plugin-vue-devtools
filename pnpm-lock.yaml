@@ -47,6 +47,7 @@ importers:
       vite-plugin-vue-inspector: ^3.4.1
       vue: ^3.2.47
       vue-router: ^4.1.6
+      vue-virtual-scroller: 2.0.0-beta.8
     dependencies:
       '@vueuse/core': 10.1.2_vue@3.2.47
       nanoid: 4.0.2
@@ -92,6 +93,7 @@ importers:
       vite-dev-rpc: 0.1.2_vite@4.3.1
       vite-plugin-pages: 0.29.0_vite@4.3.1
       vue: 3.2.47
+      vue-virtual-scroller: 2.0.0-beta.8_vue@3.2.47
 
   playground:
     specifiers:
@@ -4929,6 +4931,10 @@ packages:
       yallist: 4.0.0
     dev: true
 
+  /mitt/2.1.0:
+    resolution: {integrity: sha512-ILj2TpLiysu2wkBbWjAmww7TkZb65aiQO+DkVdUTBpBXq+MHYiETENkKFMtsJZX1Lf4pe4QOrTSjIfUwN5lRdg==}
+    dev: true
+
   /mkdirp/1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
@@ -6907,6 +6913,14 @@ packages:
       - supports-color
     dev: true
 
+  /vue-observe-visibility/2.0.0-alpha.1_vue@3.2.47:
+    resolution: {integrity: sha512-flFbp/gs9pZniXR6fans8smv1kDScJ8RS7rEpMjhVabiKeq7Qz3D9+eGsypncjfIyyU84saU88XZ0zjbD6Gq/g==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.2.47
+    dev: true
+
   /vue-resize/2.0.0-alpha.1_vue@3.2.47:
     resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}
     peerDependencies:
@@ -6923,6 +6937,17 @@ packages:
       '@vue/devtools-api': 6.5.0
       vue: 3.2.47
     dev: false
+
+  /vue-virtual-scroller/2.0.0-beta.8_vue@3.2.47:
+    resolution: {integrity: sha512-b8/f5NQ5nIEBRTNi6GcPItE4s7kxNHw2AIHLtDp+2QvqdTjVN0FgONwX9cr53jWRgnu+HRLPaWDOR2JPI5MTfQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      mitt: 2.1.0
+      vue: 3.2.47
+      vue-observe-visibility: 2.0.0-alpha.1_vue@3.2.47
+      vue-resize: 2.0.0-alpha.1_vue@3.2.47
+    dev: true
 
   /vue/2.7.14:
     resolution: {integrity: sha512-b2qkFyOM0kwqWFuQmgd4o+uHGU7T+2z3T+WQp8UBjADfEv2n4FEMffzBmCKNP0IGzOEEfYjvtcC62xaSKeQDrQ==}
