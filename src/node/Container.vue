@@ -20,6 +20,7 @@ const panelState = ref({
 })
 const panelVisible = ref(false)
 const hookBuffer = []
+let isAppCreated = false
 const panelStyle = computed(() => {
   if (panelState.value.viewMode === 'component-inspector') {
     return {
@@ -118,8 +119,8 @@ function disableComponentInspector() {
     panelState.value.viewMode = 'default'
 }
 
-function waitForClientInjection(retry = 30, timeout = 200) {
-  const test = () => !!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+function waitForClientInjection(retry = 50, timeout = 200) {
+  const test = () => !!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__ && isAppCreated
 
   if (test())
     return
@@ -200,6 +201,9 @@ function collectHookBuffer() {
     hookBuffer.push([DevtoolsHooks.APP_INIT, {
       app,
     }])
+    setTimeout(() => {
+      isAppCreated = true
+    }, 80)
   })
 
   props.hook.on(DevtoolsHooks.PERF_START, (app, uid, component, type, time) => {
