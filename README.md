@@ -129,7 +129,7 @@ export default defineConfig({
 
 ## 🌸 Credits
 
-- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools).
+- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu for the awesome work!
 
 ## 📄 License
 
