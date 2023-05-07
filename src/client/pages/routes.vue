@@ -19,15 +19,20 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
             <h3 vue-block-title>
               <span :class="[activeRouteRecordIndex === index ? 'text-white' : 'vue-block-text']">
                 {{ item.path }}
-                <VBadge
+                <template
                   v-for="(tag, childIndex) in item.tags"
-                  :key="childIndex" text-black
-                  :style="{
-                    backgroundColor: `#${tag.bgColor.toString(16)}`,
-                  }"
                 >
-                  {{ tag.label }}
-                </VBadge>
+                  <VBadge
+                    v-if="tag.label"
+                    :key="childIndex"
+                    text-black
+                    :style="{
+                      backgroundColor: `#${tag.bgColor.toString(16)}`,
+                    }"
+                  >
+                    {{ tag.label }}
+                  </VBadge>
+                </template>
               </span>
             </h3>
           </div>
