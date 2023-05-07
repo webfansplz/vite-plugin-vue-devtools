@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import { getComponentFileName } from './components/util'
 import { useDevtoolsClient } from './client'
 
@@ -10,6 +11,7 @@ interface TimelineEvent {
   layerId: string
   groupKey?: string
   sortId?: number
+  id?: number
   event: {
     time: number
     title: string
@@ -23,7 +25,7 @@ export const timelineLayer = ref<TimelineLayer[]>([])
 export const timelineEvent = ref<TimelineEvent[]>([])
 export const activeLayerId = ref('performance')
 export const activeTimelineEvents = computed(() => {
-  return timelineEvent.value.filter(item => item.layerId === activeLayerId.value)
+  return timelineEvent.value.map(item => ({ ...item, id: nanoid() })).filter(item => item.layerId === activeLayerId.value)
 })
 
 export const activeTimelineEventIndex = ref(0)

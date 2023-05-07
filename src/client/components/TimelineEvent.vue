@@ -17,7 +17,7 @@ const emits = defineEmits(['update-selected'])
       v-slot="{ item, index }"
       :items="data"
       :min-item-size="40"
-      key-field="sortId"
+      key-field="id"
       page-mode
     >
       <li
