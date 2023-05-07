@@ -18,6 +18,7 @@ const emits = defineEmits(['update-selected'])
       :items="data"
       :min-item-size="40"
       key-field="sortId"
+      page-mode
     >
       <li
         border="b base" h-10 flex cursor-pointer select-none items-center pl-3 pr-2 text-xs space-x-2
