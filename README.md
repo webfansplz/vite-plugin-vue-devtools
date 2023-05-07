@@ -61,7 +61,7 @@ Routes tab is a feature integrated with [Vue Router](https://github.com/vuejs/ro
 
 ### Pinia
 
-The Routes tab is a feature integrated with [Pinia](https://github.com/vuejs/pinia), allowing you to view the registered modules and their details.
+Pinia tab is a feature integrated with [Pinia](https://github.com/vuejs/pinia), allowing you to view the registered modules and their details.
 
 <img src="./assets/pinia.png" />
 
