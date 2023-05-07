@@ -65,7 +65,7 @@ onMounted(() => {
   <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
-        <div p-2>
+        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <ComponentTreeNode v-for="(item) in componentTree" :key="item.id" :data="item" />
         </div>
       </Pane>
