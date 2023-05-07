@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="./assets/bg.png" />
+</p>
 <h1 align="center">
 Vue DevTools <sup>Preview</sup>
 </h1>
@@ -29,37 +32,56 @@ Vue DevTools <sup>Preview</sup>
 
 The pages tab shows your current routes and provide a quick way to navigate to them. For dynamic routes, it also provide a form to fill with each params interactively. You can also use the textbox to play and test how each route is matched.
 
+<img src="./assets/pages.png" />
+
+
 ### Components
 
 Components tab show all the components you are using in your app and hierarchy. You can also select them to see the details of the component (e.g. data,props).
+
+<img src="./assets/components.png" />
 
 ### Assets
 
 Assets tab that shows all your static assets (vite config.publicDir only now) and their information. You can open the asset in the browser or download it.
 
+<img src="./assets/assets.png" />
+
 ### Timeline
 
 Timeline tab has three categories: Performance, Router Navigations, and Pinia. You can switch between them to see the state changes and timelines.
+
+<img src="./assets/timeline.png" />
 
 ### Routes
 
 Routes tab is a feature integrated with [Vue Router](https://github.com/vuejs/router), allowing you to view the registered routes and their details.
 
+<img src="./assets/routes.png" />
+
 ### Pinia
 
 The Routes tab is a feature integrated with [Pinia](https://github.com/vuejs/pinia), allowing you to view the registered modules and their details.
+
+<img src="./assets/pinia.png" />
 
 ### Graph
 
 Graph tab provides a graph view that show the relationship between components. 
 
+<img src="./assets/graph.png" />
+
 ### Inspect
 
 Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of Vite. It can be helpful to understand how each plugin is transforming your code and spot potential issues.
 
+<img src="./assets/inspect.png" />
+
 ### Inspector
 
 You can also use the "Inspector" feature to inspect the DOM tree and see which component is rendering it. Click to go to your editor of the specific line. Making it much easier to make changes, without the requirement of understanding the project structure thoroughly. (This feature is implemented based on the [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
+
+<img src="./assets/inspector.png" />
 
 ## 📦 Installation
 
