@@ -53,10 +53,11 @@ function init() {
 }
 
 onMounted(() => {
-  // init()
-  onVueInstanceUpdate(() => {
-    init()
-    selected.value = 'vue-devtools:root'
+  onVueInstanceUpdate((v) => {
+    if (v) {
+      init()
+      selected.value = 'vue-devtools:root'
+    }
   })
 })
 </script>
