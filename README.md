@@ -11,6 +11,43 @@ Vue DevTools <sup>Preview</sup>
   <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> |
 </p> -->
 
+## 🎉 Features
+
+### Pages
+
+The pages tab shows your current routes and provide a quick way to navigate to them. For dynamic routes, it also provide a form to fill with each params interactively. You can also use the textbox to play and test how each route is matched.
+
+### Components
+
+Components tab show all the components you are using in your app and hierarchy. You can also select them to see the details of the component (e.g. data,props).
+
+### Assets
+
+Assets tab that shows all your static assets (vite config.publicDir only now) and their information. You can open the asset in the browser or download it.
+
+### Timeline
+
+Timeline tab has three categories: Performance, Router Navigations, and Pinia. You can switch between them to see the state changes and timelines.
+
+### Routes
+
+Routes tab is a feature integrated with [Vue Router](https://github.com/vuejs/router), allowing you to view the registered routes and their details.
+
+### Pinia
+
+The Routes tab is a feature integrated with [Pinia](https://github.com/vuejs/pinia), allowing you to view the registered modules and their details.
+
+### Graph
+
+Graph tab provides a graph view that show the relationship between components. 
+
+### Inspect
+
+Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of Vite. It can be helpful to understand how each plugin is transforming your code and spot potential issues.
+
+### Inspector
+
+You can also use the "Inspector" feature to inspect the DOM tree and see which component is rendering it. Click to go to your editor of the specific line. Making it much easier to make changes, without the requirement of understanding the project structure thoroughly. (This feature is implemented based on the [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
 
 ## 📦 Installation
 
