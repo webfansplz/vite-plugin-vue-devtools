@@ -71,9 +71,16 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
+        <div v-if="normalizedComponentState" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.value" :data="item" />
         </div>
+        <VPanelGrids v-else px5>
+          <VCard flex="~ col gap2" min-w-30 items-center p3>
+            <h1 text-sm italic op50>
+              No Data
+            </h1>
+          </VCard>
+        </VPanelGrids>
       </Pane>
     </Splitpanes>
   </div>
