@@ -2,6 +2,18 @@
 Vue DevTools <sup>Preview</sup>
 </h1>
 
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-vue-devtools" alt="NPM Version" /></a>
+  <!-- <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-vue-devtools" alt="NPM Downloads" /></a> -->
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/webfansplz/vite-plugin-vue-devtools" alt="License" /></a>
+</p>
+
+<p align="center">
+<a href="https://stackblitz.com/edit/vitejs-vite-oxbwzk?embed=1&file=vite.config.ts&view=preview"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
+</p>
+
+
 ## 📖 Introduction
 
 `vite-plugin-vue-devtools` is a Vite plugin designed to enhance the Vue developer experience.
