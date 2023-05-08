@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useCounterStore, useUserStore } from '../stores'
+import { useAppStore, useUserStore } from '../stores'
 
-const store = useCounterStore()
+const store = useAppStore()
 
 const userStore = useUserStore()
 const count = ref(10)
@@ -10,10 +10,10 @@ const count = ref(10)
 
 <template>
   <div>
-    About
+    About1
   </div>
-  <h3 @click="store.increment">
-    {{ store.count }}
+  <h3 @click="userStore.increment">
+    {{ userStore.age }}
   </h3>
   <p>
     {{ userStore.name }}

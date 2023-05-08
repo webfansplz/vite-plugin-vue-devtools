@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAppStore } from './stores'
 
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-
+const appStore = useAppStore()
 const count = ref(100)
 
 const map = new Map([['a', 1], ['b', 2]])
@@ -23,17 +22,10 @@ const info = ref({
 })
 
 const router = useRouter()
-
-// const userStore2 = useCounter2Store()
-
-// const counter2Store = useCounter2Store()
-
-// store.increment()
-
-// store.increment()
 </script>
 
 <template>
+  {{ appStore.count }}
   <RouterView />
   <!-- <HelloWorld msg="Vite + Vue" /> -->
   <button @click="router.push('/about')">
@@ -41,5 +33,8 @@ const router = useRouter()
   </button>
   <button @click="router.go(-1)">
     back
+  </button>
+  <button @click="appStore.increment()">
+    increment
   </button>
 </template>
