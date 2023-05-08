@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { nanoid } from 'nanoid'
 import type { StateType } from '../logic/format-state'
 import { formatStateType } from '../logic/format-state'
 
@@ -44,22 +45,23 @@ function toggleExpand(id: string) {
 </script>
 
 <template>
-  <code v-for="(item, index) in list" :key="index" block select-none pl-2 text-sm>
-    <p flex items-center :class="[item?.recursive && 'cursor-pointer']" @click="item?.recursive ? toggleExpand(`${id}-${depth}-${index}`) : () => {}">
-      <VExpandIcon v-if="item?.recursive" :value="expandedId.includes(`${id}-${depth}-${index}`)" />
-      <i v-else inline-block h-6 w-6 />
-      <span text-purple-700 dark:text-purple-300>{{ index }}</span>
-      <span px-1 op-60>:</span>
-      <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.rawDisplay" />
-      <span v-else :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.value" />
-    </p>
-    <StateFieldsTree
-      v-if="expandedId.includes(`${id}-${depth}-${index}`) && item?.recursive && depth <= 2"
-      :id="id"
-      :data="item?.value"
-      :depth="depth + 1"
-      :expanded-id="expandedId"
-      @update-expanded="toggleExpand"
-    />
-  </code>
+  <!-- eslint-disable-next-line vue/valid-v-for -->
+  <code v-for="(item, index) in list" :key="nanoid()" block select-none pl-2 text-sm>
+      <p flex items-center :class="[item?.recursive && 'cursor-pointer']" @click="item?.recursive ? toggleExpand(`${id}-${depth}-${index}`) : () => { }">
+        <VExpandIcon v-if="item?.recursive" :value="expandedId.includes(`${id}-${depth}-${index}`)" />
+        <i v-else inline-block h-6 w-6 />
+        <span text-purple-700 dark:text-purple-300>{{ index }}</span>
+        <span px-1 op-60>:</span>
+        <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.rawDisplay" />
+        <span v-else :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.value" />
+      </p>
+      <StateFieldsTree
+        v-if="expandedId.includes(`${id}-${depth}-${index}`) && item?.recursive && depth <= 2"
+        :id="id"
+        :data="item?.value"
+        :depth="depth + 1"
+        :expanded-id="expandedId"
+        @update-expanded="toggleExpand"
+      />
+    </code>
 </template>

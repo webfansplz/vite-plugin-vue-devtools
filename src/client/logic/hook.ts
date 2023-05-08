@@ -31,6 +31,8 @@ function produceHook() {
   }
 
   hook.on(DevtoolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
+    updatePinia(component)
+
     if (skipCollect(app, uid, component))
       return
 
@@ -48,6 +50,8 @@ function produceHook() {
   })
 
   hook.on(DevtoolsHooks.COMPONENT_REMOVED, (app, uid, parentUid, component) => {
+    updatePinia(component)
+
     if (skipCollect(app, uid, component))
       return
 
@@ -57,6 +61,8 @@ function produceHook() {
   })
 
   hook.on(DevtoolsHooks.COMPONENT_EMIT, (app, uid, parentUid, component) => {
+    updatePinia(component)
+
     if (skipCollect(app, uid, component))
       return
 
@@ -68,9 +74,7 @@ function produceHook() {
 
 function ConsumeHook(buffer: [string, Record<string, any>][]) {
   buffer.forEach(([eventType, { app, component }]) => {
-    if (eventType === DevtoolsHooks.COMPONENT_ADDED)
-      updatePinia(component)
-
+    updatePinia(component)
     updateApp(app, component)
   })
 }

@@ -8,7 +8,7 @@ import { timelineApi } from './timeline'
 const LAYER_ID = 'pinia'
 export const piniaVisible = ref(false)
 const stores = ref()
-const subscribes = ref<Function>([])
+const subscribes = ref<Record<string, Function>>({})
 export const piniaStoresId = ref<string>(['🍍 Pinia (root)'])
 export const piniaState = ref<Record<string, unknown>>({})
 export const piniaGetters = ref<Record<string, unknown>>({})
@@ -114,7 +114,11 @@ function subscribeStore(store) {
     })
   }, true)
 
-  subscribes.value.push(action)
+  if (subscribes.value[store.$id])
+    subscribes.value[store.$id].push(action)
+
+  else
+    subscribes.value[store.$id] = [action]
 
   store._customProperties.forEach((name) => {
     const stop = watch(
@@ -137,7 +141,7 @@ function subscribeStore(store) {
       { deep: true },
     )
 
-    subscribes.value.push(stop)
+    subscribes.value[store.$id].push(stop)
   })
 
   const subscribe = store.$subscribe(
@@ -180,7 +184,7 @@ function subscribeStore(store) {
     { detached: true, flush: 'sync' },
   )
 
-  subscribes.value.push(subscribe)
+  subscribes.value[store.$id].push(subscribe)
 
   store._hotUpdate = markRaw((newStore) => {
     timeApi.addTimelineEvent({
@@ -201,6 +205,15 @@ function subscribeStore(store) {
 
 function normalizePiniaInfo() {
   Object.values(stores.value)?.forEach((store) => {
+    let insertIndex = -1
+    if (piniaStoresId.value.includes(store.$id)) {
+      subscribes.value[store.$id].forEach(stop => stop())
+      subscribes.value[store.$id] = []
+      delete piniaState.value[store.$id]
+      delete piniaGetters.value[store.$id]
+      insertIndex = piniaStoresId.value.indexOf(store.$id)
+      piniaStoresId.value.splice(insertIndex, 1)
+    }
     const state = store._isOptionsAPI
       ? toRaw(store.$state)
       : Object.keys(store.$state).reduce((state, key) => {
@@ -215,27 +228,26 @@ function normalizePiniaInfo() {
         return getters
       }, {} as _GettersTree<StateTree>)
     }
-    piniaStoresId.value.push(store.$id)
+
+    if (insertIndex)
+      piniaStoresId.value.splice(insertIndex, 0, store.$id)
+    else
+      piniaStoresId.value.push(store.$id)
 
     subscribeStore(store)
   })
 }
 
 export function updatePinia(component) {
+  const proxy = component?.proxy
+  const _stores = proxy?._pStores
+  if (!_stores)
+    return
   stores.value = null
-  subscribes.value.forEach(stop => stop())
-  subscribes.value = []
-  piniaState.value = {}
-  piniaGetters.value = {}
-  piniaStoresId.value = ['🍍 Pinia (root)']
   nextTick(() => {
-    const proxy = component?.proxy
-    const _stores = proxy?._pStores
     piniaVisible.value = !!_stores
-    if (_stores) {
-      stores.value = _stores
-      normalizePiniaInfo()
-    }
+    stores.value = _stores
+    normalizePiniaInfo()
   })
 }
 
