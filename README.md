@@ -129,6 +129,10 @@ export default defineConfig({
   })
   ```
 
+## 📖 Blog Post
+
+- [Introducing Vue DevTools (Vite Plugin)](https://gist.github.com/webfansplz/bc90a773a0dd474a34e043ab2d2a37a4)
+
 ## 🌸 Credits
 
 - This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
