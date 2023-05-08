@@ -99,11 +99,11 @@ pnpm install vite-plugin-vue-devtools -D
 
 ```ts
 import { defineConfig } from 'vite'
-import VueDevtools from 'vite-plugin-vue-devtools'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
   plugins: [
-    VueDevtools(),
+    VueDevTools(),
     vue(),
   ],
 })
@@ -129,7 +129,9 @@ export default defineConfig({
 
 ## 🌸 Credits
 
-- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu for the awesome work!
+- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
+
+- [vuejs/devtools](https://github.com/vuejs/devtools)
 
 ## 📄 License
 
