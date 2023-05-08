@@ -43,7 +43,7 @@ importers:
       vite: ^4.3.5
       vite-dev-rpc: ^0.1.2
       vite-hot-client: ^0.2.1
-      vite-plugin-inspect: ^0.7.25
+      vite-plugin-inspect: ^0.7.26
       vite-plugin-pages: ^0.29.0
       vite-plugin-vue-inspector: ^3.4.1
       vue: ^3.2.47
@@ -55,7 +55,7 @@ importers:
       sirv: 2.0.3
       splitpanes: 3.1.5
       vite-hot-client: 0.2.1_vite@4.3.5
-      vite-plugin-inspect: 0.7.25_vite@4.3.5
+      vite-plugin-inspect: 0.7.26_vite@4.3.5
       vite-plugin-vue-inspector: 3.4.1_vite@4.3.5
       vue-router: 4.1.6_vue@3.2.47
     devDependencies:
@@ -1609,7 +1609,7 @@ packages:
       tinyws: 0.1.0_ws@8.13.0
       unimport: 3.0.6
       vite: 4.3.5_@types+node@20.1.0
-      vite-plugin-inspect: 0.7.25_vite@4.3.5
+      vite-plugin-inspect: 0.7.26_vite@4.3.5
       vite-plugin-vue-inspector: 3.4.1_vite@4.3.5
       wait-on: 7.0.1
       which: 3.0.1
@@ -2629,7 +2629,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.3.5
+      vite: 4.3.5_@types+node@20.1.0
       vue: 3.2.47
     dev: true
 
@@ -9468,6 +9468,24 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: true
+
+  /vite-plugin-inspect/0.7.26_vite@4.3.5:
+    resolution: {integrity: sha512-gRjBay+OxLr/Dr+HXlfJVXZH0cqhE5hkkBvo2du2cA1LGUBnV8Aym89AdPrURkSpTk3Rvw9dNWM2VLIuw6RKJg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      vite: ^3.1.0 || ^4.0.0
+    dependencies:
+      '@antfu/utils': 0.7.2
+      '@rollup/pluginutils': 5.0.2
+      debug: 4.3.4
+      fs-extra: 11.1.1
+      picocolors: 1.0.0
+      sirv: 2.0.3
+      vite: 4.3.5_@types+node@20.1.0
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
 
   /vite-plugin-pages/0.29.0_vite@4.3.5:
     resolution: {integrity: sha512-vRgLflQNMs8QnDB8A5XwX8b2XYSIN1Mdy3Bx7A7N9NTFeybRj/zpvoosdbMgJ3LsJ84AznHC3GytWQZGNpE5BA==}
@@ -9540,6 +9558,7 @@ packages:
       rollup: 3.21.5
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
 
   /vite/4.3.5_@types+node@20.1.0:
     resolution: {integrity: sha512-0gEnL9wiRFxgz40o/i/eTBwm+NEbpUeTWhzKrZDSdKm6nplj+z4lKz8ANDgildxHm47Vg8EUia0aicKbawUVVA==}

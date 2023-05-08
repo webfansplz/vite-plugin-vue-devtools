@@ -19,7 +19,9 @@ function getVueDevtoolsPath() {
 
 export default function PluginVueDevtools(): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
-  const inspect = Inspect()
+  const inspect = Inspect({
+    silent: true,
+  })
   let config: ResolvedConfig
 
   function configureServer(server: ViteDevServer) {

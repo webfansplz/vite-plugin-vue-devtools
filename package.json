@@ -60,7 +60,7 @@
     "sirv": "^2.0.3",
     "splitpanes": "^3.1.5",
     "vite-hot-client": "^0.2.1",
-    "vite-plugin-inspect": "^0.7.25",
+    "vite-plugin-inspect": "^0.7.26",
     "vite-plugin-vue-inspector": "^3.4.1",
     "vue-router": "^4.1.6"
   },
