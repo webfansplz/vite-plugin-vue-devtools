@@ -32,7 +32,12 @@ const list = computed(() => {
       o[key] = formatStateType((props.data as Record<string, StateType>)[k])!
     }
 
-    return o as unknown as StateType[]
+    const sorted = {}
+    Object.keys(o).sort().forEach((key) => {
+      sorted[key] = o[key]
+    })
+
+    return sorted as unknown as StateType[]
   }
   else {
     return formatStateType('') as unknown as StateType[]

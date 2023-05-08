@@ -9,7 +9,8 @@ const LAYER_ID = 'pinia'
 export const piniaVisible = ref(false)
 const stores = ref()
 const subscribes = ref<Record<string, Function>>({})
-export const piniaStoresId = ref<string>(['🍍 Pinia (root)'])
+export const piniaStoresId = ref<string>([])
+export const piniaStoresCategory = computed(() => ['🍍 Pinia (root)', ...piniaStoresId.value.sort()])
 export const piniaState = ref<Record<string, unknown>>({})
 export const piniaGetters = ref<Record<string, unknown>>({})
 
