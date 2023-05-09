@@ -55,15 +55,19 @@ onMounted(() => {
   })
 })
 
+useEventListener('keydown', (e) => {
+  if (e.code === 'KeyD' && e.altKey && e.shiftKey) {
+    const client = useDevtoolsClient()
+    client.value?.panel?.toggle()
+  }
+})
+
 router.replace(_route.value)
 </script>
 
 <template>
   <main fixed inset-0 h-screen w-screen>
-    <div
-      grid="~ cols-[50px_1fr]"
-      h-full h-screen of-hidden font-sans bg-base
-    >
+    <div grid="~ cols-[50px_1fr]" h-full h-screen of-hidden font-sans bg-base>
       <SideNav v-if="route.path !== '/__inspecting'" of-x-hidden of-y-auto />
       <RouterView />
     </div>
