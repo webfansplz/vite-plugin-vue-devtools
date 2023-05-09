@@ -1,7 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import vueDevtoolsOptions from 'virtual:vue-devtools-options'
-import { useEventListener } from '@vueuse/core'
 
 const props = defineProps({
   hook: {
@@ -15,11 +14,13 @@ window.__VUE_DEVTOOLS_GLOBAL_HOOKS__ = function () {
 
 const isDragging = ref(false)
 
-useEventListener(window, 'mouseup', () => {
+document.addEventListener('mouseup', () => {
+  console.log('mouseup')
   isDragging.value = false
 })
 
-useEventListener(window, 'mouseleave', () => {
+document.addEventListener('mouseleave', () => {
+  console.log('mouseleave')
   isDragging.value = false
 })
 
@@ -139,7 +140,7 @@ const panelPosition = computed(() =>
 document.addEventListener('mousemove', (e) => {
   if (!isDragging.value)
     return
-
+  console.log('move', e.clientX, e.clientY)
   const alignSide = panelState.value.position === 'left' || panelState.value.position === 'right'
 
   if (isDragging.value === 'horizontal' || isDragging.value === 'both') {
