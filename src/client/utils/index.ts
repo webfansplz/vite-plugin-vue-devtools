@@ -54,7 +54,6 @@ export function escape(s: string) {
   return s.replace(/[<>"&]/g, escapeChar)
 }
 
-
 export function isMacOS() {
   return navigator?.platform
     ? navigator?.platform.toLowerCase().includes('mac')
@@ -63,4 +62,3 @@ export function isMacOS() {
 
 // eslint-disable-next-line no-sequences
 export const pick = <T extends object, K extends keyof T>(obj: T, keys: K[]): T => keys.reduce((pre: T, cur: K) => (cur in obj && (pre[cur] = obj[cur]), pre), <T>({}))
-
