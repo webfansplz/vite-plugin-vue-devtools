@@ -15,12 +15,10 @@ window.__VUE_DEVTOOLS_GLOBAL_HOOKS__ = function () {
 const isDragging = ref(false)
 
 document.addEventListener('mouseup', () => {
-  console.log('mouseup')
   isDragging.value = false
 })
 
 document.addEventListener('mouseleave', () => {
-  console.log('mouseleave')
   isDragging.value = false
 })
 
