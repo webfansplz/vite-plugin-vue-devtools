@@ -138,7 +138,7 @@ const panelPosition = computed(() =>
 document.addEventListener('mousemove', (e) => {
   if (!isDragging.value)
     return
-  console.log('move', e.clientX, e.clientY)
+
   const alignSide = panelState.value.position === 'left' || panelState.value.position === 'right'
 
   if (isDragging.value === 'horizontal' || isDragging.value === 'both') {
