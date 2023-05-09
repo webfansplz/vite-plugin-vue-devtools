@@ -27,7 +27,7 @@ function load() {
     devtools: {
       hide: true,
     },
-  }).mount(`#${CONTAINER_ID}`)
+  }).mount(el)
 }
 load()
 
