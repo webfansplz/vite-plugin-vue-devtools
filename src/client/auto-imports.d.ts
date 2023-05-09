@@ -42,6 +42,7 @@ declare global {
   const isDate: typeof import('./utils/index')['isDate']
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isFunction: typeof import('./utils/index')['isFunction']
+  const isMacOS: typeof import('./utils/index')['isMacOS']
   const isMap: typeof import('./utils/index')['isMap']
   const isObject: typeof import('./utils/index')['isObject']
   const isPlainObject: typeof import('./utils/index')['isPlainObject']

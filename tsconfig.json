@@ -15,5 +15,6 @@
       "vite-plugin-pages/client",
       "vite/client"
     ]
-  }
+  },
+  "exclude": ["node_modules", "dist", "src/node/app.js"]
 }

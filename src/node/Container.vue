@@ -12,6 +12,20 @@ window.__VUE_DEVTOOLS_GLOBAL_HOOKS__ = function () {
   return props.hook
 }
 
+const isDragging = ref(false)
+
+document.addEventListener('mouseup', () => {
+  isDragging.value = false
+})
+
+document.addEventListener('mouseleave', () => {
+  isDragging.value = false
+})
+
+const PANEL_MIN = 15
+const PANEL_MAX = 100
+const PANEL_PADDING = 10
+
 const clientUrl = `${vueDevtoolsOptions.base || '/'}__devtools/`
 const iframe = ref()
 const panelState = ref({
@@ -21,43 +35,57 @@ const panelState = ref({
 const panelVisible = ref(false)
 const hookBuffer = []
 let isAppCreated = false
+
+const panelHight = ref(60)
+const panelWidth = ref(80)
+
 const panelStyle = computed(() => {
+  const height = `calc(${panelHight.value}vh - ${PANEL_PADDING}px)`
+  const width = `calc(${panelWidth.value}vw - ${PANEL_PADDING}px)`
   if (panelState.value.viewMode === 'component-inspector') {
     return {
-      bottom: '10px',
+      bottom: `${PANEL_PADDING}px`,
       left: '50%',
       transform: 'translateX(-50%)',
-      height: '80px',
-      width: '400px',
+      height,
+      width,
     }
   }
 
   if (panelState.value.position === 'bottom') {
     return {
       transform: 'translateX(-50%)',
-      bottom: '10px',
+      bottom: `${PANEL_PADDING}px`,
       left: '50%',
+      height,
+      width,
     }
   }
   else if (panelState.value.position === 'top') {
     return {
       transform: 'translateX(-50%)',
-      top: '10px',
+      top: `${PANEL_PADDING}px`,
       left: '50%',
+      height,
+      width,
     }
   }
   else if (panelState.value.position === 'left') {
     return {
       transform: 'translateY(-50%)',
       top: '50%',
-      left: '10px',
+      left: `${PANEL_PADDING}px`,
+      height,
+      width,
     }
   }
   else {
     return {
       transform: 'translateY(-50%)',
       top: '50%',
-      right: '10px',
+      right: `${PANEL_PADDING}px`,
+      height,
+      width,
     }
   }
 })
@@ -101,7 +129,40 @@ const toggleButtonPosition = computed(() => {
     '--hover-translate': 'translate(0, -3px)',
   }
 })
-const panelPosition = computed(() => panelVisible.value ? panelStyle.value : { zIndex: -100000, left: '-9999px', top: '-9999px' })
+const panelPosition = computed(() =>
+  panelVisible.value
+    ? panelStyle.value
+    : { zIndex: -100000, left: '-9999px', top: '-9999px' },
+)
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging.value)
+    return
+
+  const alignSide = panelState.value.position === 'left' || panelState.value.position === 'right'
+
+  if (isDragging.value === 'horizontal' || isDragging.value === 'both') {
+    const y = panelState.value.position === 'top'
+      ? window.innerHeight - e.clientY
+      : e.clientY
+    const boxHeight = window.innerHeight
+    const value = alignSide
+      ? (Math.abs(y - (window.innerHeight / 2))) / boxHeight * 100 * 2
+      : (window.innerHeight - y) / boxHeight * 100
+    panelHight.value = Math.min(PANEL_MAX, Math.max(PANEL_MIN, value))
+  }
+
+  if (isDragging.value === 'vertical' || isDragging.value === 'both') {
+    const x = panelState.value.position === 'left'
+      ? window.innerWidth - e.clientX
+      : e.clientX
+    const boxWidth = window.innerWidth
+    const value = alignSide
+      ? (window.innerWidth - x) / boxWidth * 100
+      : (Math.abs(x - (window.innerWidth / 2))) / boxWidth * 100 * 2
+    panelWidth.value = Math.min(PANEL_MAX, Math.max(PANEL_MIN, value))
+  }
+})
 
 function togglePanel() {
   panelVisible.value = !panelVisible.value
@@ -265,7 +326,24 @@ initPanelPosition()
 
 <template>
   <div class="vue-devtools-panel" :style="panelPosition">
-    <iframe ref="iframe" :src="clientUrl" @load="onLoad" />
+    <iframe
+      ref="iframe"
+      :src="clientUrl"
+      :style="{
+        'pointer-events': isDragging ? 'none' : 'auto',
+      }"
+      @load="onLoad"
+    />
+    <template v-if="panelState.viewMode === 'default'">
+      <div v-if="panelState.position !== 'top'" class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal" :style="{ top: 0 }" @mousedown.prevent="() => isDragging = 'horizontal'" />
+      <div v-if="panelState.position !== 'bottom'" class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal" :style="{ bottom: 0 }" @mousedown.prevent="() => isDragging = 'horizontal'" />
+      <div v-if="panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical" :style="{ left: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
+      <div v-if="panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical" :style="{ right: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
+      <div v-if="panelState.position !== 'top' && panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'top' && panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+    </template>
   </div>
   <button
     class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
@@ -319,5 +397,37 @@ initPanelPosition()
   height: 16px;
   margin: auto;
   margin-top: 3px;
+}
+
+.vue-devtools-resize-handle:hover {
+  background: rgba(125,125,125,0.1);
+}
+
+.vue-devtools-resize-handle-horizontal {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  height: 10px;
+  margin: -5px 0;
+  cursor: ns-resize;
+  border-radius: 5px;
+}
+
+.vue-devtools-resize-handle-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -6px;
+  border-radius: 6px;
+}
+
+.vue-devtools-resize-handle-vertical{
+  position: absolute;
+  top: 6px;
+  bottom: 0;
+  width: 10px;
+  margin: 0 -5px;
+  cursor: ew-resize;
+  border-radius: 5px;
 }
 </style>
