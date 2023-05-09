@@ -18,7 +18,7 @@ Vue DevTools <sup>Preview</sup>
 </p>
 
 <p align="center">
-<a href="https://stackblitz.com/edit/vitejs-vite-oxbwzk?embed=1&file=vite.config.ts&view=preview"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
+<a href="https://stackblitz.com/edit/vitejs-vite-oxbwzk?file=vite.config.ts&view=preview"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
 </p>
 
 
