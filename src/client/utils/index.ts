@@ -53,3 +53,9 @@ function escapeChar(a: string) {
 export function escape(s: string) {
   return s.replace(/[<>"&]/g, escapeChar)
 }
+
+export function isMacOS() {
+  return navigator?.platform
+    ? navigator?.platform.toLowerCase().includes('mac')
+    : /Macintosh/.test(navigator.userAgent)
+}

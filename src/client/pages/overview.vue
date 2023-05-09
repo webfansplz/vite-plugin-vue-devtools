@@ -2,13 +2,12 @@
 import { vueVersion } from '../logic/app'
 import { version } from '../../../package.json'
 import { componentCount, pageCount } from '../logic/overview'
-
-const isMacOS = navigator?.platform.toLowerCase().includes('mac')
+import { isMacOS } from '../utils'
 </script>
 
 <template>
-  <VPanelGrids h-screen w-full flex>
-    <div flex="~ col gap2" ma h-full max-w-300 w-full p8 px20>
+  <VPanelGrids h-screen w-full flex of-auto>
+    <div flex="~ col gap2" ma h-full max-w-300 w-full px20>
       <div flex-auto />
 
       <!-- Banner -->
@@ -68,9 +67,9 @@ const isMacOS = navigator?.platform.toLowerCase().includes('mac')
         </RouterLink>
       </div>
       <div flex-auto />
-      <div flex="~ gap-1" items-center justify-center text-sm op40>
+      <div flex="~ gap-1" cursor-default items-center justify-center pb-8 text-sm op40>
         Press
-        <template v-if="isMacOS">
+        <template v-if="isMacOS()">
           <VButton n="xs" class="px2">
             ⇧ Shift
           </VButton>
