@@ -1,6 +1,6 @@
 function getFuntionDetails(func: Function) {
   let string = ''
-  let matches = null
+  let matches: RegExpMatchArray | null = null
   try {
     string = Function.prototype.toString.call(func)
     matches = String.prototype.match.call(string, /\([\s\S]*?\)/)
@@ -27,9 +27,9 @@ export interface StateType {
   rawDisplay?: string
   recursive: boolean
 }
-function isReactive(raw: any): boolean {
-  return !!raw.__ob__
-}
+// function isReactive(raw: any): boolean {
+//   return !!raw.__ob__
+// }
 
 export function formatStateType(value: unknown): StateType {
   // Vue

@@ -21,9 +21,9 @@ type RouteRecordTags = {
   bgColor: number
 }[]
 
-const PINK_500 = 0xEC4899
-const BLUE_600 = 0x2563EB
-const LIME_500 = 0x84CC16
+// const PINK_500 = 0xEC4899
+// const BLUE_600 = 0x2563EB
+// const LIME_500 = 0x84CC16
 const CYAN_400 = 0x22D3EE
 const ORANGE_400 = 0xFB923C
 // const GRAY_100 = 0xf4f4f5
@@ -53,13 +53,13 @@ export const activeRouteRecordMatcherState = computed(() => {
   }
 })
 
-function modifierForKey(key: any) {
-  if (key.optional)
-    return key.repeatable ? '*' : '?'
+// function modifierForKey(key: any) {
+//   if (key.optional)
+//     return key.repeatable ? '*' : '?'
 
-  else
-    return key.repeatable ? '+' : ''
-}
+//   else
+//     return key.repeatable ? '+' : ''
+// }
 
 function formatRouteRecordForInspector(
   route: RouteRecordMatcher,

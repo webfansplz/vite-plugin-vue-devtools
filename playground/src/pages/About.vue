@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useAppStore, useUserStore } from '../stores'
+import { useUserStore } from '../stores'
 
-const store = useAppStore()
+// const store = useAppStore()
 
 const userStore = useUserStore()
-const count = ref(10)
+// const count = ref(10)
 </script>
 
 <template>

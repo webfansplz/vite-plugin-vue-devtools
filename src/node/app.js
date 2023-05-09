@@ -36,6 +36,6 @@ window.print = (...s) => {
   console.log('print', ...s)
 }
 
-hook.on('app:init', (app) => {
-  // console.log('init', app)
-})
+// hook.on('app:init', (app) => {
+//   console.log('init', app)
+// })

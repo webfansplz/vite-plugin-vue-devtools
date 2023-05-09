@@ -28,16 +28,20 @@ function updateExpandedIdCache(id: string) {
 
 <template>
   <div>
-    <h3 flex cursor-pointer items-center rounded py-1 class="hover:bg-[#c2e9d7] hover:dark:bg-[#2c3e50]"
-      @click="toggleExpanded">
+    <h3
+      flex cursor-pointer items-center rounded py-1 class="hover:bg-[#c2e9d7] hover:dark:bg-[#2c3e50]"
+      @click="toggleExpanded"
+    >
       <VExpandIcon :value="isExpanded" />
       <span text-primary>
         {{ data.key }}
       </span>
     </h3>
     <div v-show="isExpanded" pl-3>
-      <StateFieldsTree :id="id" :data="data.value" :expanded-id="expandedIdCache"
-        @update-expanded="updateExpandedIdCache" />
+      <StateFieldsTree
+        :id="id" :data="data.value" :expanded-id="expandedIdCache"
+        @update-expanded="updateExpandedIdCache"
+      />
     </div>
   </div>
 </template>

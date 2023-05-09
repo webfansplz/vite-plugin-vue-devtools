@@ -73,7 +73,7 @@ function produceHook() {
 }
 
 function ConsumeHook(buffer: [string, Record<string, any>][]) {
-  buffer.forEach(([eventType, { app, component }]) => {
+  buffer.forEach(([_, { app, component }]) => {
     updatePinia(component)
     updateApp(app, component)
   })

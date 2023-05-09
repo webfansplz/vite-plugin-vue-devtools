@@ -53,3 +53,6 @@ function escapeChar(a: string) {
 export function escape(s: string) {
   return s.replace(/[<>"&]/g, escapeChar)
 }
+
+// eslint-disable-next-line no-sequences
+export const pick = <T extends object, K extends keyof T>(obj: T, keys: K[]): T => keys.reduce((pre: T, cur: K) => (cur in obj && (pre[cur] = obj[cur]), pre), <T>({}))
