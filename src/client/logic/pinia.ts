@@ -146,7 +146,7 @@ function subscribeStore(store) {
   })
 
   const subscribe = store.$subscribe(
-    ({ events, type }, state) => {
+    ({ events, type }, _) => {
       const eventData = {
         time: Date.now(),
         now: Date.now(),
@@ -187,7 +187,7 @@ function subscribeStore(store) {
 
   subscribes.value[store.$id].push(subscribe)
 
-  store._hotUpdate = markRaw((newStore) => {
+  store._hotUpdate = markRaw((_) => {
     timeApi.addTimelineEvent({
       layerId: LAYER_ID,
       event: {

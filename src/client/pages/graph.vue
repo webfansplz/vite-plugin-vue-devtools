@@ -88,11 +88,11 @@ onMounted(() => {
 
   const network = new Network(container.value!, data.value, options)
 
-  network.on('click', (data) => {
-    const node = data.nodes?.[0]
-    // if (node)
-    //   router.push(`/module?id=${encodeURIComponent(node)}`)
-  })
+  // network.on('click', (data) => {
+  //   const node = data.nodes?.[0]
+  //   // if (node)
+  //   //   router.push(`/module?id=${encodeURIComponent(node)}`)
+  // })
 
   watch(data, () => {
     network.setData(data.value)

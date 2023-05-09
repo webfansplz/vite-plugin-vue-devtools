@@ -28,7 +28,7 @@ const dockButton = [
 
 function toggle(position: string) {
   frameState.value.position = position
-  client.value?.panel?.toggle(position)
+  client.value?.panel?.togglePosition(position)
   _position.value = position
 }
 </script>
@@ -41,8 +41,7 @@ function toggle(position: string) {
       </div>
       <div flex="~ gap-1" text-lg>
         <button
-          v-for="(item) in dockButton"
-          :key="item.position"
+          v-for="(item) in dockButton" :key="item.position"
           :class="[frameState.position === item.position ? 'text-primary' : 'op50', item.icon]"
           @click="toggle(item.position)"
         />
@@ -51,7 +50,7 @@ function toggle(position: string) {
     <div px3 py2 border="b base" flex="~ gap-2">
       <VDarkToggle v-slot="{ toggle, isDark }">
         <VButton n="sm primary" @click="toggle()">
-          <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
+          <div carbon-sun translate-y--1px dark:carbon-moon /> {{ isDark.value ? 'Dark' : 'Light' }}
         </VButton>
       </VDarkToggle>
       <RouterLink

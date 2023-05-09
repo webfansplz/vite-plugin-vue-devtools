@@ -60,7 +60,7 @@ export const timelineEventDetails = computed(() => {
 
 function addTimelineEvent(event: [string, Record<string, any>]) {
   const [eventType, {
-    now, app, uid, component, type, time, sortId,
+    now, _, uid, component, type, time, sortId,
   }] = event
   const filename = component.type.__name ?? component.type.name ?? getComponentFileName(component.type)
   if (!filename)

@@ -51,7 +51,8 @@ export interface VueDevtoolsHostClient {
     disable: () => void
   }
   panel?: {
-    toggle: (position: string) => void
+    togglePosition: (position: string) => void
+    toggle: () => void
   }
   hook: {
     events: Map<string, () => void>

@@ -224,7 +224,8 @@ function setupClient() {
       disable: disableComponentInspector,
     },
     panel: {
-      toggle(position) {
+      toggle: togglePanel,
+      togglePosition(position) {
         panelState.value.position = position
       },
     },
@@ -344,7 +345,10 @@ initPanelPosition()
       <div v-if="panelState.position !== 'bottom' && panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
     </template>
   </div>
-  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition" @click.prevent="togglePanel">
+  <button
+    class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
+    @click.prevent="togglePanel"
+  >
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />
@@ -365,15 +369,15 @@ initPanelPosition()
   width: 100%;
   height: 100%;
   outline: 0;
-  border:1px solid rgba(125,125,125,0.2);
+  border: 1px solid rgba(125, 125, 125, 0.2);
   border-radius: 8px;
 }
 
 .vue-devtools-toggle {
   position: fixed;
   background: #0C0C0C;
-  border: 1px solid rgba(125,125,125,0.2);
-  box-shadow: 3px 5px 10px rgba(0,0,0,0.1);
+  border: 1px solid rgba(125, 125, 125, 0.2);
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
   z-index: 2147483647;
   cursor: pointer;
   opacity: 0.8;
@@ -392,7 +396,7 @@ initPanelPosition()
   width: 16px;
   height: 16px;
   margin: auto;
-  margin-top:3px;
+  margin-top: 3px;
 }
 
 .vue-devtools-resize-handle:hover {

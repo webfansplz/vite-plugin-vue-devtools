@@ -91,7 +91,7 @@ export function getInstanceState(instance: ComponentInternalInstance) {
  * @return {Array}
  */
 function processProps(instance: ComponentInternalInstance) {
-  const propsData = []
+  const propsData: any[] = []
   const propDefinitions = instance.type.props
 
   for (let key in instance.props) {
@@ -242,7 +242,7 @@ function getSetupStateInfo(raw: any) {
   }
 }
 
-export function getCustomObjectDetails(object: any, proto: string): any | undefined {
+export function getCustomObjectDetails(object: any, _: string): any | undefined {
   const info = getSetupStateInfo(object)
 
   const isState = info.ref || info.computed || info.reactive
@@ -278,7 +278,7 @@ export function getCustomObjectDetails(object: any, proto: string): any | undefi
  */
 function processComputed(instance: any, mergedType: any): any {
   const type = mergedType
-  const computed = []
+  const computed: any[] = []
   const defs = type.computed || {}
   // use for...in here because if 'computed' is not defined
   // on component, computed properties will be placed in prototype
@@ -286,7 +286,7 @@ function processComputed(instance: any, mergedType: any): any {
   // properties from object's prototype
   for (const key in defs) {
     const def = defs[key]
-    const type = typeof def === 'function' && def.vuex
+    const type = (typeof def === 'function' && def.vuex)
       ? 'vuex bindings'
       : 'computed'
     computed.push({
@@ -321,7 +321,7 @@ function processProvide(instance: any): any[] {
 function processInject(instance: any, mergedType: any): any[] {
   if (!mergedType?.inject)
     return []
-  let keys = []
+  let keys: any[] = []
   let defaultValue: string
   if (Array.isArray(mergedType.inject)) {
     keys = mergedType.inject.map((key: any) => ({
@@ -348,7 +348,7 @@ function processInject(instance: any, mergedType: any): any[] {
   }
   return keys.map(({ key, originalKey }: any) => ({
     type: 'injected',
-    key: originalKey && key !== originalKey ? `${originalKey.toString()} ➞ ${key.toString()}` : key.toString(),
+    key: (originalKey && key !== originalKey) ? `${originalKey.toString()} ➞ ${key.toString()}` : key.toString(),
     // eslint-disable-next-line no-prototype-builtins
     value: returnError(() => instance.ctx.hasOwnProperty(key) ? instance.ctx[key] : instance.provides.hasOwnProperty(originalKey) ? instance.provides[originalKey] : defaultValue),
   }))
@@ -367,7 +367,7 @@ function processEventListeners(instance: ComponentInternalInstance): any[] {
   const emitsDefinition = instance.type.emits
   const declaredEmits = Array.isArray(emitsDefinition) ? emitsDefinition : Object.keys(emitsDefinition ?? {})
   const keys = Object.keys(instance.vnode.props ?? {})
-  const result = []
+  const result: any[] = []
   for (const key of keys) {
     const [prefix, ...eventNameParts] = key.split(/(?=[A-Z])/)
     if (prefix === 'on') {
