@@ -47,8 +47,8 @@ const panelStyle = computed(() => {
       bottom: `${PANEL_PADDING}px`,
       left: '50%',
       transform: 'translateX(-50%)',
-      height,
-      width,
+      height: '80px',
+      width: '400px',
     }
   }
 
