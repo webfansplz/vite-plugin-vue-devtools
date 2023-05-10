@@ -43,3 +43,12 @@ app.use(pinia)
 app.mount('#app')
 
 // const a = app._instance
+
+// setTimeout(() => {
+//   router.addRoute(
+//     { path: '/boom', name: 'boom', component: About },
+//   )
+//   setTimeout(() => {
+//     router.removeRoute('boom')
+//   }, 3000)
+// }, 3000)
