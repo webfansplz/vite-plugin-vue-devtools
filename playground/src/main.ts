@@ -44,9 +44,13 @@ app.mount('#app')
 
 // const a = app._instance
 
+// console.log('ai')
+// router.addRoute(
+//   { path: '/boom', name: 'boom', component: About },
+// )
 // setTimeout(() => {
 //   router.addRoute(
-//     { path: '/boom', name: 'boom', component: About },
+//     { path: '/boom2', name: 'boom2', component: About },
 //   )
 //   setTimeout(() => {
 //     router.removeRoute('boom')
