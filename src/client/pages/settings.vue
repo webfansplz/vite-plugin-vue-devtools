@@ -73,12 +73,20 @@ function toggleTabCategory(name: string, v: boolean) {
       <div>
         <div py3 flex="~ col gap-1" border="b base">
           <h3 mb1 text-lg>
+            Position
+          </h3>
+          <div>
+            <VPanelPosition />
+          </div>
+        </div>
+        <div py3 flex="~ col gap-1" border="b base">
+          <h3 mb1 text-lg>
             Appearance
           </h3>
           <div>
             <VDarkToggle v-slot="{ toggle, isDark }">
               <VButton n="primary" @click="toggle()">
-                <div carbon-sun translate-y--1px dark:carbon-moon /> {{ isDark.value ? 'Dark' : 'Light' }}
+                <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
               </VButton>
             </VDarkToggle>
           </div>

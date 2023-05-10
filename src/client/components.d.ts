@@ -41,6 +41,7 @@ declare module '@vue/runtime-core' {
     VIconButton: typeof import('./ui-kit/VIconButton.vue')['default']
     VIconTitle: typeof import('./ui-kit/VIconTitle.vue')['default']
     VPanelGrids: typeof import('./ui-kit/VPanelGrids.vue')['default']
+    VPanelPosition: typeof import('./ui-kit/VPanelPosition.vue')['default']
     VSectionBlock: typeof import('./ui-kit/VSectionBlock.vue')['default']
     VSelect: typeof import('./ui-kit/VSelect.vue')['default']
     VSwitch: typeof import('./ui-kit/VSwitch.vue')['default']
