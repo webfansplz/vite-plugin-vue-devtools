@@ -10,12 +10,6 @@ import {
   toggleTimelineLayer,
 } from '../logic/timeline'
 
-onMounted(() => {
-
-})
-onUnmounted(() => {
-})
-
 // updatePerformanceTimeline()
 </script>
 
