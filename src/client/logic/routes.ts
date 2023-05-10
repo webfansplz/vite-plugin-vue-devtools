@@ -1,4 +1,4 @@
-import type { RouteLocationNormalized, RouteRecordNormalized, Router } from 'vue-router'
+import type { RouteLocationNormalized, RouteRecordName, RouteRecordNormalized, RouteRecordRaw, Router } from 'vue-router'
 import { createRouterMatcher } from 'vue-router'
 import { timelineApi } from './timeline'
 import { router } from './app'
@@ -33,7 +33,10 @@ const LAYER_ID = 'router'
 // export const router = ref<Router>()
 export const routeRecordMatcher = ref<RouteRecordMatcher[]>()
 export const activeRouteRecordIndex = ref(0)
-const map = new Map()
+let routeRecordMatcherStateMap = new Map()
+export function isRouteName(name: any): name is RouteRecordName {
+  return typeof name === 'string' || typeof name === 'symbol'
+}
 export const routeRecordMatcherState = computed(() => {
   return routeRecordMatcher.value?.map((route) => {
     const state = formatRouteRecordMatcherForStateInspector(route)
@@ -43,7 +46,7 @@ export const routeRecordMatcherState = computed(() => {
       tags,
       state,
     }
-  }).sort((a, b) => a.path!.length - b.path!.length).filter(i => !map.has(i.path) && map.set(i.path, 1))
+  }).sort((a, b) => a.path!.length - b.path!.length).filter(i => !routeRecordMatcherStateMap.has(i.path) && routeRecordMatcherStateMap.set(i.path, 1))
 })
 export const activeRouteRecordMatcherState = computed(() => {
   const state = routeRecordMatcherState.value?.[activeRouteRecordIndex.value]?.state
@@ -233,6 +236,57 @@ export function initRoutes() {
     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     const matcher = createRouterMatcher(router.value?.options.routes!, router.value?.options!)
     routeRecordMatcher.value = matcher.getRoutes()
+
+    function addRoute(
+      parentOrRoute: RouteRecordName | RouteRecordRaw,
+      route?: RouteRecordRaw,
+    ) {
+      let parent: Parameters<(typeof matcher)['addRoute']>[1] | undefined
+      let record: RouteRecordRaw
+      if (isRouteName(parentOrRoute)) {
+        parent = matcher.getRecordMatcher(parentOrRoute)
+        record = route!
+      }
+      else {
+        record = parentOrRoute
+      }
+
+      return matcher.addRoute(record, parent)
+    }
+
+    function removeRoute(name: RouteRecordName) {
+      const recordMatcher = matcher.getRecordMatcher(name)
+      if (recordMatcher)
+        matcher.removeRoute(recordMatcher)
+    }
+
+    function updateRecordMatcher() {
+      triggerRef(router)
+      routeRecordMatcherStateMap = new Map()
+      routeRecordMatcher.value = matcher.getRoutes()
+      triggerRef(routeRecordMatcher)
+      activeRouteRecordIndex.value = 0
+    }
+
+    // addRoute overrides (find a better way to inspect it)
+    const _addRoute = router.value.addRoute
+    router.value.addRoute = (...args) => {
+      // @ts-expect-error missing types
+      const res = _addRoute(...args)
+      // @ts-expect-error missing types
+      addRoute(...args)
+      updateRecordMatcher()
+      return res
+    }
+
+    // removeRoute overrides (find a better way to inspect it)
+    const _removeRoute = router.value.removeRoute
+    router.value.removeRoute = (...args) => {
+      const res = _removeRoute(...args)
+      removeRoute(...args)
+      updateRecordMatcher()
+      return res
+    }
 
     timelineApi.addTimelineLayer({
       id: LAYER_ID,
