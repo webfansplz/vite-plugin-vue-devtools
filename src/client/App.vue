@@ -3,7 +3,6 @@ import { useDevtoolsClient } from './logic/client'
 import { hookApi } from './logic/hook'
 import { initRoutes } from './logic/routes'
 import { initPinia } from './logic/pinia'
-import { initPerfTimeline } from './logic/timeline'
 
 const route = useRoute()
 const router = useRouter()
@@ -21,7 +20,8 @@ hookApi.hook.on('init:vue:app', () => {
   // listen hook
   hookApi.produce()
   // perf timeline
-  initPerfTimeline(hookBuffer.filter(([type]) => type.startsWith('perf:')))
+  // close perf timeline to avoid performance issue (#9)
+  // initPerfTimeline(hookBuffer.filter(([type]) => type.startsWith('perf:')))
   // consume hook buffer
   hookApi.consume(hookBuffer.filter(([type]) => type.startsWith('component:')))
   // init routes

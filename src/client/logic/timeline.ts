@@ -23,7 +23,7 @@ interface TimelineEvent {
 
 export const timelineLayer = ref<TimelineLayer[]>([])
 export const timelineEvent = ref<TimelineEvent[]>([])
-export const activeLayerId = ref('performance')
+export const activeLayerId = ref('router')
 export const activeTimelineEvents = computed(() => {
   return timelineEvent.value.map(item => ({ ...item, id: nanoid() })).filter(item => item.layerId === activeLayerId.value)
 })
