@@ -8,6 +8,18 @@ const props = defineProps({
   },
 })
 
+const DevtoolsHooks = {
+  APP_INIT: 'app:init',
+  COMPONENT_UPDATED: 'component:updated',
+  COMPONENT_ADDED: 'component:added',
+  COMPONENT_REMOVED: 'component:removed',
+  COMPONENT_EMIT: 'component:emit',
+  PERF_START: 'perf:start',
+  PERF_END: 'perf:end',
+  ADD_ROUTE: 'router:add-route',
+  REMOVE_ROUTE: 'router:remove-route',
+}
+
 window.__VUE_DEVTOOLS_GLOBAL_HOOKS__ = function () {
   return props.hook
 }
@@ -240,17 +252,40 @@ function initPanelPosition() {
   }
 }
 
+function captureDynamicRoute(app) {
+  const router = app?.config?.globalProperties?.$router
+  if (!router)
+    return
+
+  const _addRoute = router.addRoute
+  router.addRoute = (...args) => {
+    const res = _addRoute(...args)
+
+    if (!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded) {
+      hookBuffer.push([DevtoolsHooks.ADD_ROUTE, {
+        args: [...args],
+      }])
+    }
+
+    return res
+  }
+
+  const _removeRoute = router.removeRoute
+  router.removeRoute = (...args) => {
+    const res = _removeRoute(...args)
+
+    if (!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded) {
+      hookBuffer.push([DevtoolsHooks.REMOVE_ROUTE, {
+        args: [...args],
+      }])
+    }
+
+    return res
+  }
+}
+
 function collectHookBuffer() {
   let sortId = 0
-  const DevtoolsHooks = {
-    APP_INIT: 'app:init',
-    COMPONENT_UPDATED: 'component:updated',
-    COMPONENT_ADDED: 'component:added',
-    COMPONENT_REMOVED: 'component:removed',
-    COMPONENT_EMIT: 'component:emit',
-    PERF_START: 'perf:start',
-    PERF_END: 'perf:end',
-  }
 
   function stopCollect(component) {
     return component?.root?.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded
@@ -260,6 +295,7 @@ function collectHookBuffer() {
     if (!app || app._instance.type?.devtools?.hide)
       return
 
+    captureDynamicRoute(app)
     hookBuffer.push([DevtoolsHooks.APP_INIT, {
       app,
     }])
@@ -295,9 +331,9 @@ function collectHookBuffer() {
       time,
       sortId: sortId++,
     }])
-  })
+  });
 
-  ;[
+  [
     DevtoolsHooks.COMPONENT_UPDATED,
     DevtoolsHooks.COMPONENT_ADDED,
     DevtoolsHooks.COMPONENT_REMOVED,
@@ -326,29 +362,35 @@ initPanelPosition()
 
 <template>
   <div class="vue-devtools-panel" :style="panelPosition">
-    <iframe
-      ref="iframe"
-      :src="clientUrl"
-      :style="{
-        'pointer-events': isDragging ? 'none' : 'auto',
-      }"
-      @load="onLoad"
-    />
+    <iframe ref="iframe" :src="clientUrl" :style="{
+      'pointer-events': isDragging ? 'none' : 'auto',
+    }" @load="onLoad" />
     <template v-if="panelState.viewMode === 'default'">
-      <div v-if="panelState.position !== 'top'" class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal" :style="{ top: 0 }" @mousedown.prevent="() => isDragging = 'horizontal'" />
-      <div v-if="panelState.position !== 'bottom'" class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal" :style="{ bottom: 0 }" @mousedown.prevent="() => isDragging = 'horizontal'" />
-      <div v-if="panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical" :style="{ left: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
-      <div v-if="panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical" :style="{ right: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
-      <div v-if="panelState.position !== 'top' && panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
-      <div v-if="panelState.position !== 'top' && panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
-      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
-      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-corner" :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'top'" class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
+        :style="{ top: 0 }" @mousedown.prevent="() => isDragging = 'horizontal'" />
+      <div v-if="panelState.position !== 'bottom'"
+        class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal" :style="{ bottom: 0 }"
+        @mousedown.prevent="() => isDragging = 'horizontal'" />
+      <div v-if="panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
+        :style="{ left: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
+      <div v-if="panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
+        :style="{ right: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
+      <div v-if="panelState.position !== 'top' && panelState.position !== 'left'"
+        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
+        :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'top' && panelState.position !== 'right'"
+        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
+        :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'right'"
+        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
+        :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'left'"
+        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
+        :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
     </template>
   </div>
-  <button
-    class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
-    @click.prevent="togglePanel"
-  >
+  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
+    @click.prevent="togglePanel">
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />
@@ -400,7 +442,7 @@ initPanelPosition()
 }
 
 .vue-devtools-resize-handle:hover {
-  background: rgba(125,125,125,0.1);
+  background: rgba(125, 125, 125, 0.1);
 }
 
 .vue-devtools-resize-handle-horizontal {
@@ -421,7 +463,7 @@ initPanelPosition()
   border-radius: 6px;
 }
 
-.vue-devtools-resize-handle-vertical{
+.vue-devtools-resize-handle-vertical {
   position: absolute;
   top: 6px;
   bottom: 0;

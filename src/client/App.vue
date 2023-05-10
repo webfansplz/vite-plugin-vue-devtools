@@ -25,7 +25,7 @@ hookApi.hook.on('init:vue:app', () => {
   // consume hook buffer
   hookApi.consume(hookBuffer.filter(([type]) => type.startsWith('component:')))
   // init routes
-  initRoutes()
+  initRoutes(hookBuffer.filter(([type]) => type.startsWith('router:')))
   // init pinia
   initPinia()
   hookApi.hook.on('host:inspector:close', () => {

@@ -231,7 +231,7 @@ function subscribeRouterChanged(router: Router) {
   })
 }
 
-export function initRoutes() {
+export function initRoutes(buffer: [string, Record<string, any>][]) {
   if (router.value) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     const matcher = createRouterMatcher(router.value?.options.routes!, router.value?.options!)
@@ -267,6 +267,12 @@ export function initRoutes() {
       triggerRef(routeRecordMatcher)
       activeRouteRecordIndex.value = 0
     }
+
+    buffer.forEach(([type, payload]) => {
+      // @ts-expect-error missing types
+      type === 'router:add-route' ? addRoute(...payload.args) : removeRoute(...payload.args)
+      updateRecordMatcher()
+    })
 
     // addRoute overrides (find a better way to inspect it)
     const _addRoute = router.value.addRoute
