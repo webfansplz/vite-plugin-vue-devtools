@@ -112,7 +112,7 @@ const toggleButtonPosition = computed(() => {
       '--hover-translate': 'translateX(3px)',
     }
   }
-  if (panelState.value.position === 'right') {
+  else if (panelState.value.position === 'right') {
     return {
       'right': '-8px',
       'top': 'calc(50% - 25px)',
@@ -122,7 +122,7 @@ const toggleButtonPosition = computed(() => {
       '--hover-translate': 'translateX(-3px)',
     }
   }
-  if (panelState.value.position === 'top') {
+  else if (panelState.value.position === 'top') {
     return {
       'top': '-3px',
       'left': 'calc(50% - 25px)',
@@ -132,13 +132,15 @@ const toggleButtonPosition = computed(() => {
       '--hover-translate': 'translate(0, 3px)',
     }
   }
-  return {
-    'bottom': '-5px',
-    'left': 'calc(50% - 25px)',
-    'borderRadius': '100px 100px 0 0',
-    'height': '30px',
-    'width': '40px',
-    '--hover-translate': 'translate(0, -3px)',
+  else {
+    return {
+      'bottom': '-5px',
+      'left': 'calc(50% - 25px)',
+      'borderRadius': '100px 100px 0 0',
+      'height': '30px',
+      'width': '40px',
+      '--hover-translate': 'translate(0, -3px)',
+    }
   }
 })
 const panelPosition = computed(() =>
