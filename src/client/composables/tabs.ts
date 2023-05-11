@@ -40,6 +40,11 @@ const builtinTabs: BuiltinTab[] = [
     icon: 'i-icon-park-outline:vertical-timeline',
   },
   {
+    path: 'plugin',
+    title: 'Plugin',
+    icon: 'i-icon-park-outline:vertical-timeline',
+  },
+  {
     path: 'graph',
     title: 'Graph',
     icon: 'i-carbon-network-4',
