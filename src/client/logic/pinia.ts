@@ -241,6 +241,8 @@ function normalizePiniaInfo() {
 
 export function updatePinia(component) {
   const proxy = component?.proxy
+  if (!proxy || !('_pStores' in proxy))
+    return
   const _stores = proxy?._pStores
   if (!_stores)
     return
