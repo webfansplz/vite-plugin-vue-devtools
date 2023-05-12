@@ -13,6 +13,7 @@ withDefaults(
   })
 
 const isExpanded = ref<boolean>(true)
+const { copy } = useClipboard({ legacy: true })
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
@@ -29,13 +30,22 @@ function updateExpandedIdCache(id: string) {
 <template>
   <div>
     <h3
-      flex cursor-pointer items-center rounded py-1 class="hover:bg-[#c2e9d7] hover:dark:bg-[#2c3e50]"
+      flex cursor-pointer items-center justify-between rounded py-1 class="hover:bg-[#c2e9d7] hover:dark:bg-[#2c3e50]"
       @click="toggleExpanded"
     >
-      <VExpandIcon :value="isExpanded" />
-      <span text-primary>
-        {{ data.key }}
-      </span>
+      <div>
+        <VExpandIcon :value="isExpanded" />
+        <span text-primary>
+          {{ data.key }}
+        </span>
+      </div>
+      <VIconButton
+        mr2
+        flex-none
+        :title="`Copy ${data.key} to clipboard`"
+        icon="carbon-copy"
+        @click.stop="copy(JSON.stringify(data.value))"
+      />
     </h3>
     <div v-show="isExpanded" pl-3>
       <StateFieldsTree
