@@ -30,12 +30,3 @@ function load() {
   }).mount(el)
 }
 load()
-
-// print for iframe console
-window.print = (...s) => {
-  console.log('print', ...s)
-}
-
-// hook.on('app:init', (app) => {
-//   console.log('init', app)
-// })

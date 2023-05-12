@@ -12,8 +12,6 @@ import './styles/main.css'
 
 import 'uno.css'
 
-window.console.log = window.parent.print
-
 initDevtoolsClient()
 
 const app = createApp(App)
