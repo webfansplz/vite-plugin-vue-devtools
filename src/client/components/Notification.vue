@@ -3,7 +3,7 @@ const show = ref(false)
 const icon = ref<string | undefined>()
 const text = ref<string | undefined>()
 
-provideNotification((_text, _icon, duration = 150000) => {
+provideNotification((_text, _icon, duration = 1500) => {
   text.value = _text
   icon.value = _icon
   show.value = true
