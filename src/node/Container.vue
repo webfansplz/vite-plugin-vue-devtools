@@ -424,7 +424,6 @@ initPanelPosition()
   cursor: pointer;
   opacity: 0.8;
   padding: 0;
-  align-items: center;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   outline: 0;
 }
