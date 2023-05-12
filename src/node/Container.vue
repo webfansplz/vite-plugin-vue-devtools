@@ -1,14 +1,23 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import vueDevtoolsOptions from 'virtual:vue-devtools-options'
+import vueDevToolsOptions from 'virtual:vue-devtools-options'
 
-const props = defineProps({
-  hook: {
-    type: Object,
+// Reuse @vuejs/devtools instance first
+const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
+  events: new Map(),
+  on(event, fn) {
+    if (!this.events.has(event))
+      this.events.set(event, [])
+
+    this.events.get(event).push(fn)
   },
-})
+  emit(event, ...payload) {
+    if (this.events.has(event))
+      this.events.get(event).forEach(fn => fn(...payload))
+  },
+}
 
-const DevtoolsHooks = {
+const DevToolsHooks = {
   APP_INIT: 'app:init',
   COMPONENT_UPDATED: 'component:updated',
   COMPONENT_ADDED: 'component:added',
@@ -20,40 +29,27 @@ const DevtoolsHooks = {
   REMOVE_ROUTE: 'router:remove-route',
 }
 
-window.__VUE_DEVTOOLS_GLOBAL_HOOKS__ = function () {
-  return props.hook
-}
-
-const isDragging = ref(false)
-
-document.addEventListener('mouseup', () => {
-  isDragging.value = false
-})
-
-document.addEventListener('mouseleave', () => {
-  isDragging.value = false
-})
-
 const PANEL_MIN = 15
 const PANEL_MAX = 100
 const PANEL_PADDING = 10
 
-const clientUrl = `${vueDevtoolsOptions.base || '/'}__devtools/`
+const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools/`
 const iframe = ref()
-const panelState = ref({
-  position: 'bottom',
-  viewMode: 'default',
-})
-const panelVisible = ref(false)
+
 const hookBuffer = []
 let isAppCreated = false
 
-const panelHight = ref(60)
-const panelWidth = ref(80)
-
+/** -----panel start-----**/
+const panelVisible = ref(false)
+const panelState = ref({
+  position: 'bottom',
+  viewMode: 'default',
+  width: 80,
+  height: 60,
+})
 const panelStyle = computed(() => {
-  const height = `calc(${panelHight.value}vh - ${PANEL_PADDING}px)`
-  const width = `calc(${panelWidth.value}vw - ${PANEL_PADDING}px)`
+  const height = `calc(${panelState.value.height}vh - ${PANEL_PADDING}px)`
+  const width = `calc(${panelState.value.width}vw - ${PANEL_PADDING}px)`
   if (panelState.value.viewMode === 'component-inspector') {
     return {
       bottom: `${PANEL_PADDING}px`,
@@ -147,6 +143,33 @@ const panelPosition = computed(() =>
     : { zIndex: -100000, left: '-9999px', top: '-9999px' },
 )
 
+function togglePanel() {
+  panelVisible.value = !panelVisible.value
+}
+
+function initPanelPosition() {
+  const frameState = localStorage.getItem('__vue-devtools-frame-state__')
+  if (frameState) {
+    const parsedFrameState = JSON.parse(frameState)
+    panelState.value.position = parsedFrameState.position
+  }
+}
+
+/** -----resize start-----**/
+const isDragging = ref(false)
+const resizeBaseClassName = 'vue-devtools-resize-handle'
+const resizeVerticalClassName = [resizeBaseClassName, `${resizeBaseClassName}-vertical`]
+const resizeHorizontalClassName = [resizeBaseClassName, `${resizeBaseClassName}-horizontal`]
+const resizeCornerClassName = [resizeBaseClassName, `${resizeBaseClassName}-corner`]
+function toggleDragging(direction) {
+  isDragging.value = direction
+}
+document.addEventListener('mouseup', () => {
+  isDragging.value = false
+})
+document.addEventListener('mouseleave', () => {
+  isDragging.value = false
+})
 document.addEventListener('mousemove', (e) => {
   if (!isDragging.value)
     return
@@ -161,7 +184,7 @@ document.addEventListener('mousemove', (e) => {
     const value = alignSide
       ? (Math.abs(y - (window.innerHeight / 2))) / boxHeight * 100 * 2
       : (window.innerHeight - y) / boxHeight * 100
-    panelHight.value = Math.min(PANEL_MAX, Math.max(PANEL_MIN, value))
+    panelState.value.height = Math.min(PANEL_MAX, Math.max(PANEL_MIN, value))
   }
 
   if (isDragging.value === 'vertical' || isDragging.value === 'both') {
@@ -172,13 +195,14 @@ document.addEventListener('mousemove', (e) => {
     const value = alignSide
       ? (window.innerWidth - x) / boxWidth * 100
       : (Math.abs(x - (window.innerWidth / 2))) / boxWidth * 100 * 2
-    panelWidth.value = Math.min(PANEL_MAX, Math.max(PANEL_MIN, value))
+    panelState.value.width = Math.min(PANEL_MAX, Math.max(PANEL_MIN, value))
   }
 })
+/** -----resize end-----**/
 
-function togglePanel() {
-  panelVisible.value = !panelVisible.value
-}
+/** -----panel end-----**/
+
+/** -----inspector end-----**/
 
 function enableComponentInspector() {
   window.__VUE_INSPECTOR__?.enable()
@@ -187,11 +211,13 @@ function enableComponentInspector() {
 
 function disableComponentInspector() {
   window.__VUE_INSPECTOR__?.disable()
-  props.hook.emit('host:inspector:close')
+  hook.emit('host:inspector:close')
   if (panelState.value.viewMode === 'component-inspector')
     panelState.value.viewMode = 'default'
 }
+/** -----inspector end-----**/
 
+/** -----client start-----**/
 function waitForClientInjection(retry = 50, timeout = 200) {
   const test = () => !!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__ && isAppCreated
 
@@ -206,16 +232,10 @@ function waitForClientInjection(retry = 50, timeout = 200) {
       }
       else if (retry-- <= 0) {
         clearInterval(interval)
-        // eslint-disable-next-line prefer-promise-reject-errors
-        reject('Vue Devtools client injection failed')
+        reject(Error('Vue Devtools client injection failed'))
       }
     }, timeout)
   })
-}
-
-async function onLoad() {
-  await waitForClientInjection()
-  setupClient()
 }
 
 function setupClient() {
@@ -229,7 +249,7 @@ function setupClient() {
     }
   }
   injection.setClient({
-    hook: props.hook,
+    hook,
     hookBuffer,
     inspector: {
       enable: enableComponentInspector,
@@ -243,16 +263,13 @@ function setupClient() {
     },
   })
 }
+/** -----client end-----**/
 
-function initPanelPosition() {
-  const frameState = localStorage.getItem('__vue-devtools-frame-state__')
-  if (frameState) {
-    const parsedFrameState = JSON.parse(frameState)
-    panelState.value.position = parsedFrameState.position
-  }
+function updateHookBuffer(type, args) {
+  hookBuffer.push([type, args])
 }
 
-function captureDynamicRoute(app) {
+function collectDynamicRoute(app) {
   const router = app?.config?.globalProperties?.$router
   if (!router)
     return
@@ -262,9 +279,9 @@ function captureDynamicRoute(app) {
     const res = _addRoute(...args)
 
     if (!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded) {
-      hookBuffer.push([DevtoolsHooks.ADD_ROUTE, {
+      updateHookBuffer(DevToolsHooks.ADD_ROUTE, {
         args: [...args],
-      }])
+      })
     }
 
     return res
@@ -275,9 +292,9 @@ function captureDynamicRoute(app) {
     const res = _removeRoute(...args)
 
     if (!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded) {
-      hookBuffer.push([DevtoolsHooks.REMOVE_ROUTE, {
+      updateHookBuffer(DevToolsHooks.REMOVE_ROUTE, {
         args: [...args],
-      }])
+      })
     }
 
     return res
@@ -285,68 +302,79 @@ function captureDynamicRoute(app) {
 }
 
 function collectHookBuffer() {
-  let sortId = 0
+  // const sortId = 0
 
   function stopCollect(component) {
     return component?.root?.type?.devtools?.hide || iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded
   }
 
-  props.hook.on(DevtoolsHooks.APP_INIT, (app) => {
+  hook.on(DevToolsHooks.APP_INIT, (app) => {
     if (!app || app._instance.type?.devtools?.hide)
       return
 
-    captureDynamicRoute(app)
-    hookBuffer.push([DevtoolsHooks.APP_INIT, {
+    collectDynamicRoute(app)
+    updateHookBuffer(DevToolsHooks.APP_INIT, {
       app,
-    }])
+    })
     setTimeout(() => {
       isAppCreated = true
     }, 80)
-  })
-
-  props.hook.on(DevtoolsHooks.PERF_START, (app, uid, component, type, time) => {
-    if (stopCollect(component))
-      return
-
-    hookBuffer.push([DevtoolsHooks.PERF_START, {
-      now: Date.now(),
-      app,
-      uid,
-      component,
-      type,
-      time,
-      sortId: sortId++,
-    }])
-  })
-  props.hook.on(DevtoolsHooks.PERF_END, (app, uid, component, type, time) => {
-    if (stopCollect(component))
-      return
-
-    hookBuffer.push([DevtoolsHooks.PERF_END, {
-      now: Date.now(),
-      app,
-      uid,
-      component,
-      type,
-      time,
-      sortId: sortId++,
-    }])
   });
 
+  // close perf to avoid performance issue (#9)
+  // hook.on(DevToolsHooks.PERF_START, (app, uid, component, type, time) => {
+  //   if (stopCollect(component))
+  //     return
+
+  //   updateHookBuffer(DevToolsHooks.COMPONENT_EMIT, {
+  //     now: Date.now(),
+  //     app,
+  //     uid,
+  //     component,
+  //     type,
+  //     time,
+  //     sortId: sortId++,
+  //   })
+  // })
+  // hook.on(DevToolsHooks.PERF_END, (app, uid, component, type, time) => {
+  //   if (stopCollect(component))
+  //     return
+
+  //   updateHookBuffer(DevToolsHooks.PERF_END, {
+  //     now: Date.now(),
+  //     app,
+  //     uid,
+  //     component,
+  //     type,
+  //     time,
+  //     sortId: sortId++,
+  //   })
+  // })
+
   [
-    DevtoolsHooks.COMPONENT_UPDATED,
-    DevtoolsHooks.COMPONENT_ADDED,
-    DevtoolsHooks.COMPONENT_REMOVED,
-    DevtoolsHooks.COMPONENT_EMIT,
+    DevToolsHooks.COMPONENT_UPDATED,
+    DevToolsHooks.COMPONENT_ADDED,
+    DevToolsHooks.COMPONENT_REMOVED,
+    DevToolsHooks.COMPONENT_EMIT,
   ].forEach((item) => {
-    props.hook.on(item, (app, uid, parentUid, component) => {
+    hook.on(item, (app, uid, parentUid, component) => {
       if (!app || (typeof uid !== 'number' && !uid) || !component || stopCollect(component))
         return
-      hookBuffer.push([item, {
+
+      updateHookBuffer(item, {
         app, uid, parentUid, component,
-      }])
+      })
     })
   })
+}
+
+// init
+collectHookBuffer()
+initPanelPosition()
+
+async function onLoad() {
+  await waitForClientInjection()
+  setupClient()
 }
 
 onMounted(() => {
@@ -355,40 +383,40 @@ onMounted(() => {
       togglePanel()
   })
 })
-
-collectHookBuffer()
-initPanelPosition()
 </script>
 
 <template>
   <div class="vue-devtools-panel" :style="panelPosition">
+    <!-- client -->
     <iframe ref="iframe" :src="clientUrl" :style="{
       'pointer-events': isDragging ? 'none' : 'auto',
     }" @load="onLoad" />
+    <!-- resize -->
     <template v-if="panelState.viewMode === 'default'">
-      <div v-if="panelState.position !== 'top'" class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
-        :style="{ top: 0 }" @mousedown.prevent="() => isDragging = 'horizontal'" />
-      <div v-if="panelState.position !== 'bottom'"
-        class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal" :style="{ bottom: 0 }"
-        @mousedown.prevent="() => isDragging = 'horizontal'" />
-      <div v-if="panelState.position !== 'left'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
-        :style="{ left: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
-      <div v-if="panelState.position !== 'right'" class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
-        :style="{ right: 0 }" @mousedown.prevent="() => isDragging = 'vertical'" />
-      <div v-if="panelState.position !== 'top' && panelState.position !== 'left'"
-        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
-        :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
-      <div v-if="panelState.position !== 'top' && panelState.position !== 'right'"
-        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
-        :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
-      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'right'"
-        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
-        :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
-      <div v-if="panelState.position !== 'bottom' && panelState.position !== 'left'"
-        class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
-        :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="() => isDragging = 'both'" />
+      <template v-if="panelState.position !== 'top'">
+        <div :class="resizeHorizontalClassName" :style="{ top: 0 }" @mousedown.prevent="toggleDragging('horizontal')" />
+        <div v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
+          :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')" />
+        <div v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
+          :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')" />
+      </template>
+
+      <template v-if="panelState.position !== 'bottom'">
+        <div :class="resizeHorizontalClassName" :style="{ bottom: 0 }"
+          @mousedown.prevent="toggleDragging('horizontal')" />
+        <div v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
+          :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')" />
+        <div v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
+          :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')" />
+      </template>
+
+      <div v-if="panelState.position !== 'left'" :class="resizeVerticalClassName" :style="{ left: 0 }"
+        @mousedown.prevent="toggleDragging('vertical')" />
+      <div v-if="panelState.position !== 'right'" :class="resizeVerticalClassName" :style="{ right: 0 }"
+        @mousedown.prevent="toggleDragging('vertical')" />
     </template>
   </div>
+  <!-- toggle button -->
   <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
     @click.prevent="togglePanel">
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
