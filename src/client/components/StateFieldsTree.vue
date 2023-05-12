@@ -47,6 +47,8 @@ const list = computed(() => {
 function toggleExpand(id: string) {
   emits('updateExpanded', id)
 }
+
+const copy = useCopy()
 </script>
 
 <template>
@@ -58,7 +60,14 @@ function toggleExpand(id: string) {
       <span text-purple-700 dark:text-purple-300>{{ index }}</span>
       <span px-1 op-60>:</span>
       <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.rawDisplay" />
-      <span v-else :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.value" />
+      <span
+        v-else
+        :class="rawTypeStyles[item.rawType]"
+        max-w="[75%]" truncate
+        hover="underline underline-offset-3 cursor-pointer"
+        @click="copy(String(item?.value))"
+        v-html="item?.value"
+      />
     </p>
     <StateFieldsTree
       v-if="expandedId.includes(`${id}-${depth}-${index}`) && item?.recursive && depth <= 2"
