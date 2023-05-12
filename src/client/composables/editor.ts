@@ -4,7 +4,6 @@ export function useCopy() {
 
   return (text: string) => {
     clipboard.copy(text)
-    console.log(showNotification)
-    showNotification('Copied to clipboard', 'carbon-checkmark')
+    showNotification('Copied to clipboard', 'i-carbon-checkmark')
   }
 }
