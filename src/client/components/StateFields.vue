@@ -13,7 +13,7 @@ withDefaults(
   })
 
 const isExpanded = ref<boolean>(true)
-const { copy } = useClipboard({ legacy: true })
+const copy = useCopy()
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value

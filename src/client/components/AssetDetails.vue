@@ -20,7 +20,7 @@ const textContent = computedAsync(() => {
   return rpc.getTextAssetContent(props.asset.filePath)
 })
 
-// const copy = useCopy()
+const copy = useCopy()
 const timeago = useTimeAgo(() => props.asset.mtime)
 const fileSize = computed(() => {
   const size = props.asset.size
@@ -110,12 +110,12 @@ const supportsPreview = computed(() => {
               <div flex-auto of-hidden truncate ws-pre font-mono>
                 {{ asset.publicPath }}
               </div>
-              <!-- <VIconButton
+              <VIconButton
                 flex-none
                 title="Copy public path"
                 icon="carbon-copy"
                 @click="copy(asset.publicPath)"
-              /> -->
+              />
               <VIconButton
                 flex-none
                 :to="`${origin}${asset.publicPath}`"
