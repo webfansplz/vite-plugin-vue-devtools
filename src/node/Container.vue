@@ -358,6 +358,7 @@ onMounted(() => {
 
 collectHookBuffer()
 initPanelPosition()
+
 </script>
 
 <template>

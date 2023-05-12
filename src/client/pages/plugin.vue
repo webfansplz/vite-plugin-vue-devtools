@@ -1,4 +1,20 @@
 <script setup lang="ts">
+import { useElementSize } from '@vueuse/core'
+import { getCurrentInstance } from 'vue'
+const instance = getCurrentInstance()
+
+
+const h = ref('200px')
+
+const resizeObserver = new ResizeObserver(entries => {
+  entries.forEach(item => {
+    h.value = item.target.offsetHeight - 150 + 'px'
+  })
+})
+
+resizeObserver.observe(window.parent.document.querySelector('.vue-devtools-panel') as HTMLElement)
+
+
 interface PluginInfoWithMetic {
   src: string
   mode?: 'client' | 'server' | 'all'
@@ -19,7 +35,7 @@ function test(s = false): any {
   if (!s) {
     for (let i = 0; i < number; i++) {
       temp.push({
-        src: `${i}vite`,
+        src: `vue/dist/pages/runtime/plugins/router.js${i}vite`,
         start: i,
         end: i + 10,
         duration: 10050,
@@ -42,7 +58,7 @@ const plugins = computed((): PluginInfoWithMetic[] => {
     const p = typeof plugin === 'string' ? { src: plugin } : plugin
     return {
       ...p,
-      src: `${idx}vite`,
+      src: `vue/dist/pages/runtime/plugins/router.js${idx}vite`,
       metric: metics.find(m => m.src === p.src || m.src.startsWith(p.src)),
       ssr: false,
       mode: 'client',
@@ -59,27 +75,24 @@ const totalTime = computed(() => {
 </script>
 
 <template>
-  <VSectionBlock icon="carbon-plug" text="Plugins" :description="`Total plugins: ${plugins.length}`">
-    <div class="plugin-container" overflow-auto pt4>
-      <PluginItem
-        v-for="plugin, idx of plugins" :key="idx" :plugin="plugin" :index="idx + 1" ml--4 border-base py2
-        :class="idx ? 'border-t' : ''"
-      />
-      <div class="text-sm" flex="~ gap-1 items-center justify-end" mt-3>
-        <div i-carbon-timer text-lg op75 />
-        <span op50>Total execution time:</span>
-        <DurationDisplay :duration="totalTime" :factor="10" />
-      </div>
+  <VSectionBlock icon="carbon-plug" text="Plugins" :border="true" :description="`Total plugins: ${plugins.length}`">
+    <div class="plugin-container" :style="{
+      height: h
+    }" overflow-auto>
+      <PluginItem v-for="plugin, idx of plugins" :key="idx" :plugin="plugin" :index="idx + 1" ml--4 border-base py2
+        :class="idx ? 'border-t' : ''" />
+
     </div>
   </VSectionBlock>
-
+  <div class="text-sm" flex="~ gap-1 items-center justify-end" pr-3 mb-3>
+    <div i-carbon-timer text-lg op75 />
+    <span op50>Total execution time:</span>
+    <DurationDisplay :duration="totalTime" :factor="10" />
+  </div>
   <!-- <HelpFab>
     <DocsPlugins />
   </HelpFab> -->
 </template>
 
 <style scoped>
-  .plugin-container{
-    height: 400px;
-  }
 </style>

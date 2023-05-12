@@ -31,21 +31,37 @@ const shortPath = '#dada'
       <Badge
         v-if="shortPath.startsWith('#')"
         bg-rose-400:10 text-rose
+        rounded-5px
+        p-3px
+        ml-5px
         v-text="'virtual'"
+        text-xs
       />
       <Badge
         v-else-if="!shortPath.startsWith('.')"
         bg-gray-400:10 text-gray
+        rounded-5px
+        p-3px
+        ml-5px
+        text-xs
         v-text="'module'"
       />
       <Badge
         v-if="plugin.mode === 'server'"
         bg-teal-400:10 text-teal-400
+        rounded-5px
+        p-3px
+        ml-5px
+        text-xs
         v-text="'server'"
       />
       <Badge
         v-if="plugin.mode === 'client'"
         bg-orange-400:10 text-orange-400
+        rounded-5px
+        p-3px
+        ml-5px
+        text-xs
         v-text="'client'"
       />
     </div>

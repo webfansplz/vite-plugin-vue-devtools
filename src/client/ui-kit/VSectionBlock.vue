@@ -10,11 +10,13 @@ const props = withDefaults(
     collapse?: boolean
     open?: boolean
     padding?: boolean | string
+    border?:boolean
   }>(), {
     containerClass: '',
     open: true,
     padding: true,
     collapse: true,
+    border:false
   },
 )
 
@@ -26,7 +28,7 @@ function onToggle(e: any) {
 
 <template>
   <details :open="open" @toggle="onToggle">
-    <summary class="cursor-pointer select-none hover:bg-active p4" :class="collapse ? '' : 'pointer-events-none'">
+    <summary class="cursor-pointer select-none hover:bg-active p4" style="border-bottom:1px solid rgba(156,163,175,0.2)" :class="collapse ? '' : 'pointer-events-none'" >
       <VIconTitle :icon="icon" :text="text" text-xl transition :class="open ? 'op100' : 'op60'">
         <div>
           <div text-base>
