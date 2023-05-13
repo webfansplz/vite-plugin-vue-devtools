@@ -149,9 +149,18 @@ importers:
 
   playground:
     dependencies:
+      '@vueuse/core':
+        specifier: ^10.1.2
+        version: 10.1.2(vue@3.2.47)
+      pinia:
+        specifier: ^2.0.35
+        version: 2.0.35(typescript@5.0.4)(vue@3.2.47)
       vue:
         specifier: ^3.2.47
         version: 3.2.47
+      vue-router:
+        specifier: ^4.1.6
+        version: 4.1.6(vue@3.2.47)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^4.2.1
@@ -7695,7 +7704,6 @@ packages:
       typescript: 5.0.4
       vue: 3.2.47
       vue-demi: 0.14.0(vue@3.2.47)
-    dev: true
 
   /pkg-types@1.0.2:
     resolution: {integrity: sha512-hM58GKXOcj8WTqUXnsQyJYXdeAPbythQgEF3nTcEo+nkD49chjQ9IKm/QJy9xf6JakXptz86h7ecP2024rrLaQ==}
@@ -9264,7 +9272,6 @@ packages:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
-    dev: true
 
   /ufo@1.1.1:
     resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}
