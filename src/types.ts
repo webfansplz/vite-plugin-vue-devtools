@@ -71,3 +71,12 @@ export interface BuiltinTab {
   icon: string
   category?: string
 }
+
+export interface DocumentInfo {
+  id: string
+  name: string
+  description: string
+  website: string
+  github: string
+  icon: string
+}
