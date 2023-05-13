@@ -8,7 +8,7 @@ import { createRPCServer } from 'vite-dev-rpc'
 import VueInspector from 'vite-plugin-vue-inspector'
 import { DIR_CLIENT } from '../dir'
 import type { RPCFunctions } from '../types'
-import { getComponentsRelationships, getImageMeta, getStaticAssets, getTextAssetContent } from './rpc'
+import { getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent } from './rpc'
 
 const NAME = 'vite-plugin-vue-devtools'
 
@@ -37,6 +37,7 @@ export default function PluginVueDevtools(): PluginOption {
       staticAssets: () => getStaticAssets(config),
       getImageMeta,
       getTextAssetContent,
+      getPackages: () => getPackages(config.root),
     })
   }
   const plugin = <PluginOption>{
