@@ -18,7 +18,6 @@ export async function getPackages(root: string) {
       packages[name] = version
     }
   }
-  console.log(packages)
   return {
     packages,
   }
