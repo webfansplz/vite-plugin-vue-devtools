@@ -40,6 +40,15 @@ const builtinTabs: BuiltinTab[] = [
     icon: 'i-icon-park-outline:vertical-timeline',
   },
   {
+    title: 'Inspector',
+    icon: 'i-carbon-select-window',
+    category: 'advanced',
+    event: (client, router) => {
+      router.replace('/__inspecting')
+      client?.inspector?.enable()
+    },
+  },
+  {
     path: 'graph',
     title: 'Graph',
     icon: 'i-carbon-network-4',
@@ -52,13 +61,10 @@ const builtinTabs: BuiltinTab[] = [
     category: 'advanced',
   },
   {
-    title: 'Inspector',
-    icon: 'i-carbon-select-window',
+    path: 'documentations',
+    title: 'Documentations',
+    icon: 'i-carbon-document',
     category: 'advanced',
-    event: (client, router) => {
-      router.replace('/__inspecting')
-      client?.inspector?.enable()
-    },
   },
 ]
 
