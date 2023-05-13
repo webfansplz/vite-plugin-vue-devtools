@@ -3,19 +3,14 @@ import { computed, onMounted, ref } from 'vue'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 
 // Reuse @vuejs/devtools instance first
-const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
-  events: new Map(),
-  on(event, fn) {
-    if (!this.events.has(event))
-      this.events.set(event, [])
 
-    this.events.get(event).push(fn)
+const props = defineProps({
+  hook: {
+    type: Object,
   },
-  emit(event, ...payload) {
-    if (this.events.has(event))
-      this.events.get(event).forEach(fn => fn(...payload))
-  },
-}
+})
+
+const hook = props.hook
 
 const DevToolsHooks = {
   APP_INIT: 'app:init',
