@@ -27,6 +27,7 @@ import { isMacOS } from '../utils'
           <code op40>v{{ version }}</code>
         </div>
       </div>
+      <div flex-auto />
       <!-- Main Grid -->
       <div flex="~ gap2 wrap">
         <div p4 theme-card-green flex="~ col auto">
