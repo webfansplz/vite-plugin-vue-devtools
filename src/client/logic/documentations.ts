@@ -11,7 +11,7 @@ export const data = [
     github: 'https://github.com/vuejs/core',
     icon: VueIcon,
     deny: true,
-    hint: 'Because of the cn.vuejs.org security setting, this will be opened from the new TAB',
+    hint: 'Because of the vuejs.org security setting, this will be opened from the new TAB',
   },
   {
     id: 'vue-router',
