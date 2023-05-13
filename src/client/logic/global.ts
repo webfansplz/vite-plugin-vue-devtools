@@ -7,6 +7,14 @@ export interface VueDevtoolsGlobal {
   setClient(client: VueDevtoolsHostClient): void
 }
 
+function normalizeHookBuffer(buffer: VueDevtoolsHostClient['hookBuffer']) {
+  return buffer.reduce((box, [type, ...args]) => {
+    const categoryName = type.split(':')[0];
+    (box[categoryName] ??= []).push([type, ...args])
+    return box
+  }, {})
+}
+
 export function createDevToolsClient() {
   window.__VUE_DEVTOOLS_VIEW__ = <VueDevtoolsGlobal>{
     loaded: false,
@@ -16,7 +24,8 @@ export function createDevToolsClient() {
       client.value.markClientLoaded = () => {
         this.loaded = true
       }
-      initApp(client.value.hookBuffer.find(([type]) => type === 'app:init'))
+      client.value.categorizedHookBuffer = normalizeHookBuffer(client.value.hookBuffer)
+      initApp(client.value.categorizedHookBuffer.app?.[0] ?? [])
     },
   }
 }

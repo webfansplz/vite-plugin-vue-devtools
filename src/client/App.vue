@@ -14,18 +14,18 @@ useColorMode()
 hookApi.hook.on('init:vue:app', () => {
   const client = useDevtoolsClient()
   const frameState = useFrameState()
-  const hookBuffer = client.value.hookBuffer
+  const categorizedHookBuffer = client.value.categorizedHookBuffer
   // mark client as loaded
   client.value.markClientLoaded()
   // listen hook
   hookApi.produce()
   // perf timeline
   // close perf timeline to avoid performance issue (#9)
-  // initPerfTimeline(hookBuffer.filter(([type]) => type.startsWith('perf:')))
+  // initPerfTimeline(categorizedHookBuffer.perf)
   // consume hook buffer
-  hookApi.consume(hookBuffer.filter(([type]) => type.startsWith('component:')))
+  hookApi.consume(categorizedHookBuffer.component ?? [])
   // init routes
-  initRoutes(hookBuffer.filter(([type]) => type.startsWith('router:')))
+  initRoutes(categorizedHookBuffer.router ?? [])
   // init pinia
   initPinia()
   hookApi.hook.on('host:inspector:close', () => {

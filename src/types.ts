@@ -60,6 +60,7 @@ export interface VueDevtoolsHostClient {
     on: (event: string, fn: (...payload: any[]) => void) => void
   }
   hookBuffer: [string, Record<string, any>][]
+  categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
 }
 
 export interface BuiltinTab {
