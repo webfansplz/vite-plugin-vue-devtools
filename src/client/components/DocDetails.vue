@@ -14,18 +14,19 @@ function navigate(path: string) {
 </script>
 
 <template>
-  <VCard
-    flex="~ gap2"
-    max-h="50vh"
-    cursor-pointer
-    p4
-    hover="border-primary"
-    @click="emit('navigate', data)"
-  >
+  <VCard flex="~ gap2" max-h="50vh" cursor-pointer p4 hover="border-primary" @click="emit('navigate', data)">
     <div flex="~ col gap2" flex-auto of-hidden px1>
       <div of-hidden text-ellipsis ws-nowrap text-lg>
-        <span>
+        <span flex items-center>
           {{ data.name }}
+          <VTooltip v-if="data.tips" placement="bottom-start">
+            <span i-carbon:warning-filled ml-2 text-3 op-60 />
+            <template #popper>
+              <p>
+                {{ data.tips }}
+              </p>
+            </template>
+          </VTooltip>
         </span>
       </div>
 
@@ -33,22 +34,12 @@ function navigate(path: string) {
         {{ data.description }}
       </div>
 
-      <div v-if="data.hint" op50 flex="~ gap-2">
-        <span i-carbon:warning-filled text-lg />
-        {{ data.hint }}
-      </div>
-
       <div flex-auto />
 
       <div v-if="data.website" flex="~ gap-2" title="Documentation">
         <span i-carbon-link text-lg op50 />
         <span
-          of-hidden
-          truncate
-          ws-nowrap
-          text-sm
-          op50
-          hover="op100 underline text-primary"
+          of-hidden truncate ws-nowrap text-sm op50 hover="op100 underline text-primary"
           @click.self.stop="navigate(data.website)"
         >
           {{ data.website.replace(/^https?:\/\//, "") }}
@@ -57,12 +48,7 @@ function navigate(path: string) {
       <div v-if="data.github" flex="~ gap-2">
         <span i-carbon-logo-github text-lg op50 />
         <span
-          of-hidden
-          truncate
-          ws-nowrap
-          text-sm
-          op50
-          hover="op100 underline text-primary"
+          of-hidden truncate ws-nowrap text-sm op50 hover="op100 underline text-primary"
           @click.self.stop="navigate(data.github)"
         >
           {{ data.github.replace(/^https?:\/\/github.com\//, "") }}

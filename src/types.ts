@@ -79,6 +79,6 @@ export interface DocumentInfo {
   website: string
   github: string
   icon: string
-  hint: string
-  deny: boolean
+  tips: string
+  openInBlank: boolean
 }
