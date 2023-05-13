@@ -14,8 +14,14 @@ function navigate(path: string) {
 </script>
 
 <template>
-  <VCard flex="~ gap2" max-h="50vh" cursor-pointer p4 :hover="data.id === 'vue' ? '' : 'border-primary'"
-    @click="emit('navigate', data)">
+  <VCard
+    flex="~ gap2"
+    max-h="50vh"
+    cursor-pointer
+    p4
+    hover="border-primary"
+    @click="emit('navigate', data)"
+  >
     <div flex="~ col gap2" flex-auto of-hidden px1>
       <div of-hidden text-ellipsis ws-nowrap text-lg>
         <span>
@@ -27,20 +33,39 @@ function navigate(path: string) {
         {{ data.description }}
       </div>
 
+      <div v-if="data.hint" op50 flex="~ gap-2">
+        <span i-carbon:warning-filled text-lg />
+        {{ data.hint }}
+      </div>
+
       <div flex-auto />
 
       <div v-if="data.website" flex="~ gap-2" title="Documentation">
         <span i-carbon-link text-lg op50 />
-        <span of-hidden truncate ws-nowrap text-sm op50 hover="op100 underline text-primary"
-          @click.self.stop="navigate(data.website)">
-          {{ data.website.replace(/^https?:\/\//, '') }}
+        <span
+          of-hidden
+          truncate
+          ws-nowrap
+          text-sm
+          op50
+          hover="op100 underline text-primary"
+          @click.self.stop="navigate(data.website)"
+        >
+          {{ data.website.replace(/^https?:\/\//, "") }}
         </span>
       </div>
       <div v-if="data.github" flex="~ gap-2">
         <span i-carbon-logo-github text-lg op50 />
-        <span of-hidden truncate ws-nowrap text-sm op50 hover="op100 underline text-primary"
-          @click.self.stop="navigate(data.github)">
-          {{ data.github.replace(/^https?:\/\/github.com\//, '') }}
+        <span
+          of-hidden
+          truncate
+          ws-nowrap
+          text-sm
+          op50
+          hover="op100 underline text-primary"
+          @click.self.stop="navigate(data.github)"
+        >
+          {{ data.github.replace(/^https?:\/\/github.com\//, "") }}
         </span>
       </div>
 
