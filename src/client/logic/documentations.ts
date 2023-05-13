@@ -10,6 +10,8 @@ export const data = [
     website: 'https://vuejs.org',
     github: 'https://github.com/vuejs/core',
     icon: VueIcon,
+    openInBlank: true,
+    tips: 'Unable to embed it due to the security settings',
   },
   {
     id: 'vue-router',
