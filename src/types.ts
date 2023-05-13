@@ -36,6 +36,7 @@ export interface RPCFunctions {
   staticAssets(): Promise<AssetInfo[]>
   getImageMeta(path: string): Promise<ImageMeta>
   getTextAssetContent(path: string): Promise<string>
+  getPackages(): Promise<Record<string, string>>
 }
 
 export interface ModulesList {
