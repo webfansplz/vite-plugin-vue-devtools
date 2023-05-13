@@ -45,7 +45,7 @@ Components tab show all the components you are using in your app and hierarchy. 
 
 ### Assets
 
-Assets tab that shows all your static assets (vite config.publicDir only now) and their information. You can open the asset in the browser or download it.
+Assets tab that shows all your static assets and their information. You can open the asset in the browser or download it.
 
 <img src="./assets/assets.png" />
 
