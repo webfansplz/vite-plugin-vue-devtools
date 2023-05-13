@@ -7,7 +7,7 @@ export interface VueDevtoolsGlobal {
   setClient(client: VueDevtoolsHostClient): void
 }
 
-export function initDevtoolsClient() {
+export function createDevToolsClient() {
   window.__VUE_DEVTOOLS_VIEW__ = <VueDevtoolsGlobal>{
     loaded: false,
     setClient(_client) {
