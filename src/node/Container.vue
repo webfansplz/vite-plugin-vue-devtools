@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useElementHover } from '@vueuse/core'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 
 // Reuse @vuejs/devtools instance first
@@ -380,12 +380,15 @@ onMounted(() => {
   })
 })
 
+const toggleButtonRef = ref(null)
+const isHovered = useElementHover(toggleButtonRef)
+
 const modalRef = ref(null)
 onClickOutside(modalRef, () => {
   const frameState = localStorage.getItem('__vue-devtools-frame-state__')
   if (frameState) {
     const parsedFrameState = JSON.parse(frameState)
-    if (parsedFrameState.clickOut)
+    if (parsedFrameState.clickOut && !isHovered.value)
       panelVisible.value = false
   }
 })
@@ -423,8 +426,10 @@ onClickOutside(modalRef, () => {
     </template>
   </div>
   <!-- toggle button -->
-  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
-    @click.prevent="togglePanel">
+  <button
+    ref="toggleButtonRef" class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
+    @click.prevent="togglePanel"
+  >
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />
