@@ -5,6 +5,8 @@ const {
   hiddenTabCategories,
 } = useDevToolsSettings()
 
+const { clickOut } = useFrameState()
+
 const scaleOptions = [
   ['Tiny', 12 / 15],
   ['Small', 14 / 15],
@@ -27,6 +29,10 @@ function toggleTabCategory(name: string, v: boolean) {
     hiddenTabCategories.value = hiddenTabCategories.value.filter(i => i !== name)
   else
     hiddenTabCategories.value.push(name)
+}
+
+function toggleClickOut() {
+  clickOut.value = !clickOut.value
 }
 </script>
 
@@ -92,6 +98,12 @@ function toggleTabCategory(name: string, v: boolean) {
               {{ i[0] }}
             </option>
           </VSelect>
+        </div>
+        <div py3 flex="~ justify-between gap-1">
+          <h3 mb1 text-lg>
+            Click out
+          </h3>
+          <VSwitch flex="~ row-reverse" py1 n-primary :model-value="clickOut" @update:model-value="toggleClickOut" />
         </div>
       </div>
     </div>

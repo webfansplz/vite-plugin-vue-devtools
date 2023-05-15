@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 
 // Reuse @vuejs/devtools instance first
@@ -378,10 +379,20 @@ onMounted(() => {
       togglePanel()
   })
 })
+
+const modalRef = ref(null)
+onClickOutside(modalRef, () => {
+  const frameState = localStorage.getItem('__vue-devtools-frame-state__')
+  if (frameState) {
+    const parsedFrameState = JSON.parse(frameState)
+    if (parsedFrameState.clickOut)
+      panelVisible.value = false
+  }
+})
 </script>
 
 <template>
-  <div class="vue-devtools-panel" :style="panelPosition">
+  <div ref="modalRef" class="vue-devtools-panel" :style="panelPosition">
     <!-- client -->
     <iframe ref="iframe" :src="clientUrl" :style="{
       'pointer-events': isDragging ? 'none' : 'auto',
