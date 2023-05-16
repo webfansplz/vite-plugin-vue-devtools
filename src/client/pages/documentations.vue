@@ -3,15 +3,24 @@ import { rpc } from '../logic/rpc'
 import type { DocumentInfo } from '../../types'
 import { data } from '../logic/documentations'
 
-const items = ref(data)
+const items = ref()
 const iframeViewUrl = ref('')
 rpc.getPackages().then((res) => {
-  const packagesName = Object.keys(res.packages)
-  items.value = items.value.filter(item => packagesName.includes(item.id))
+  const packages = [] as DocumentInfo[]
+  for (const key in (res.packages as unknown as { [key: string]: DocumentInfo }))
+    packages.push(res.packages[key])
+
+  packages.forEach((item) => {
+    const dataItem = data.find(dataItem => dataItem.id === item.name)
+    if (dataItem)
+      Object.assign(item, dataItem)
+  })
+  items.value = packages
+  console.log(items.value)
 })
 
 function navigate(data: DocumentInfo) {
-  if (data.openInBlank)
+  if (data.openInBlank || data.website.startsWith('https://github.com/'))
     window.open(data.website, '_blank')
   else
     iframeViewUrl.value = data.website

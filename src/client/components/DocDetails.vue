@@ -33,6 +33,7 @@ function navigate(path: string) {
       <div v-if="data.description" class="line-clamp-2" mt--1 text-sm op50>
         {{ data.description }}
       </div>
+      <div v-if="!data.description" h-1rem />
 
       <div flex-auto />
 
@@ -61,6 +62,7 @@ function navigate(path: string) {
       <div v-if="data.icon" h-20 w-20 flex flex-none rounded bg-gray:3 p4>
         <img v-if="data.icon" :src="data.icon" :alt="data.name" ma h-full>
       </div>
+      <div v-else i-octicon:package-24 h-14 w-14 flex flex-none rounded bg-gray:70 p4 />
     </div>
   </VCard>
 </template>

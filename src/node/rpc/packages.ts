@@ -4,6 +4,7 @@ import { resolve } from 'pathe'
 export async function getPackages(root: string) {
   // TODO: support monorepo workspace ?
   const pkgPath = resolve(root, 'package.json')
+  const nodeModulesPath = resolve(root, 'node_modules')
   const data = JSON.parse(await fsp.readFile(pkgPath, 'utf-8').catch(() => '{}'))
   const categorizedPackages = {}
   const packages = {}
@@ -15,7 +16,25 @@ export async function getPackages(root: string) {
   for (const type in categorizedPackages) {
     for (const name in categorizedPackages[type]) {
       const version = categorizedPackages[type][name]
-      packages[name] = version
+
+      const packageJsonPath = resolve(nodeModulesPath, name, 'package.json')
+      const packageData = JSON.parse(await fsp.readFile(packageJsonPath, 'utf-8').catch(() => '{}'))
+
+      const {
+        description,
+        homepage: website,
+        author,
+        repository,
+      } = packageData
+
+      packages[name] = {
+        name,
+        version,
+        description,
+        website,
+        author,
+        github: repository?.url?.replace('git+', '').replace('.git', ''),
+      }
     }
   }
   return {
