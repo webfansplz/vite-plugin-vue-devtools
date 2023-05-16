@@ -12,6 +12,11 @@ const anchor = ref<HTMLDivElement>()
 const key = computed(() => props.src)
 const iframeEl = ref<HTMLIFrameElement>()
 const box = reactive(useElementBounding(anchor))
+const iframeLoaded = ref(true)
+
+setTimeout(() => {
+  iframeLoaded.value = false
+}, 300)
 
 onMounted(() => {
   if (iframeCacheMap.get(key.value)) {
@@ -28,6 +33,7 @@ onMounted(() => {
       iframeEl.value.onload = () => {
         syncColorMode()
         iframeEl.value!.style.opacity = '1'
+        iframeLoaded.value = true
       }
     }
     catch (e) {
@@ -43,8 +49,10 @@ watchEffect(updateIframeBox)
 watchEffect(syncColorMode)
 
 onUnmounted(() => {
-  if (iframeEl.value)
+  if (iframeEl.value) {
     iframeEl.value.style.visibility = 'hidden'
+    iframeLoaded.value = false
+  }
 })
 
 function syncColorMode() {
@@ -74,5 +82,9 @@ function updateIframeBox() {
 </script>
 
 <template>
-  <div ref="anchor" h-full w-full />
+  <div ref="anchor" h-full w-full>
+    <div v-if="!iframeLoaded" absolute inset-0 flex items-center justify-center>
+      <i class="mdi:loading animate-spin text-3xl" />
+    </div>
+  </div>
 </template>
