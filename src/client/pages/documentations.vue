@@ -16,7 +16,6 @@ rpc.getPackages().then((res) => {
       Object.assign(item, dataItem)
   })
   items.value = packages
-  console.log(items.value)
 })
 
 function navigate(data: DocumentInfo) {
