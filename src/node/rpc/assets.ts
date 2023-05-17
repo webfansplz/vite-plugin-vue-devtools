@@ -9,7 +9,7 @@ import type { AssetInfo, AssetType, ImageMeta } from '../../types'
 const _imageMetaCache = new Map<string, ImageMeta | undefined>()
 
 function guessType(path: string): AssetType {
-  if (/\.(png|jpe?g|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path))
+  if (/\.(a?png|jpe?g|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path))
     return 'image'
   if (/\.(mp4|webm|ogv|mov|avi|flv|wmv|mpg|mpeg|mkv|3gp|3g2|ts|mts|m2ts|vob|ogm|ogx|rm|rmvb|asf|amv|divx|m4v|svi|viv|f4v|f4p|f4a|f4b)$/i.test(path))
     return 'video'
@@ -28,7 +28,7 @@ export async function getStaticAssets(config: ResolvedConfig): Promise<AssetInfo
 
   const files = await fg([
     // image
-    '**/*.(png|jpe?g|gif|svg|webp|avif|ico|bmp|tiff)',
+    '**/*.(a?png|jpe?g|gif|svg|webp|avif|ico|bmp|tiff)',
     // video
     '**/*.(mp4|webm|ogv|mov|avi|flv|wmv|mpg|mpeg|mkv|3gp|3g2|m2ts|vob|ogm|ogx|rm|rmvb|asf|amv|divx|m4v|svi|viv|f4v|f4p|f4a|f4b)',
     // audio
