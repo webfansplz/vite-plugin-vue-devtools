@@ -56,15 +56,21 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
+    "algoliasearch": "^4.17.0",
+    "birpc": "^0.2.11",
+    "execa": "^7.1.1",
     "nanoid": "^4.0.2",
     "sirv": "^2.0.3",
     "splitpanes": "^3.1.5",
     "vite-hot-client": "^0.2.1",
     "vite-plugin-inspect": "^0.7.26",
     "vite-plugin-vue-inspector": "^3.4.1",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "xterm": "^5.1.0",
+    "xterm-addon-fit": "^0.7.0"
   },
   "devDependencies": {
+    "@algolia/client-search": "^4.17.0",
     "@antfu/eslint-config": "^0.38.5",
     "@antfu/ni": "^0.21.3",
     "@iconify/json": "^2.2.61",

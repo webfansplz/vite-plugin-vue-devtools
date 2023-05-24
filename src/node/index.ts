@@ -4,11 +4,11 @@ import { normalizePath } from 'vite'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
-import { createRPCServer } from 'vite-dev-rpc'
 import VueInspector from 'vite-plugin-vue-inspector'
+import { createRPCServer } from '../vite-dev-rpc'
 import { DIR_CLIENT } from '../dir'
-import type { RPCFunctions } from '../types'
-import { getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent } from './rpc'
+import type { InstallPackageOptions, RPCFunctions } from '../types'
+import { getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, installPackage } from './rpc'
 
 const NAME = 'vite-plugin-vue-devtools'
 
@@ -31,13 +31,24 @@ export default function PluginVueDevtools(): PluginOption {
       dev: true,
     }))
 
-    createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
+    const rpc = createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
       componentGraph: () => getComponentsRelationships(inspect.api.rpc),
       inspectClientUrl: () => `${config.base || '/'}__inspect/`,
       staticAssets: () => getStaticAssets(config),
       getImageMeta,
       getTextAssetContent,
       getPackages: () => getPackages(config.root),
+      installPackage: (packages: string[], options: InstallPackageOptions = {}) => installPackage(packages, {
+        ...options,
+        cwd: config.root,
+        callback: (type: string, data: string) => {
+          if (type === 'data')
+            rpc.onTerminalData({ data })
+
+          else if (type === 'exit')
+            rpc.onTerminalExit({ data })
+        },
+      }),
     })
   }
   const plugin = <PluginOption>{
