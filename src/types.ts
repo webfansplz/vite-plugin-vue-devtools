@@ -14,6 +14,13 @@ export interface ModuleInfo {
 }
 
 export type AssetType = 'image' | 'font' | 'video' | 'audio' | 'text' | 'json' | 'other'
+
+export interface InstallPackageOptions {
+  isDev?: boolean
+  cwd?: string
+  callback?: (type: string, data: string) => void
+}
+
 export interface AssetInfo {
   path: string
   type: AssetType
@@ -37,6 +44,9 @@ export interface RPCFunctions {
   getImageMeta(path: string): Promise<ImageMeta>
   getTextAssetContent(path: string): Promise<string>
   getPackages(): Promise<Record<string, string>>
+  onTerminalData(_: { id?: string; data: string }): void
+  onTerminalExit(_: { id?: string; data?: string }): void
+  installPackage(packages: string[], options?: InstallPackageOptions): Promise<void>
 }
 
 export interface ModulesList {
@@ -81,4 +91,25 @@ export interface DocumentInfo {
   icon: string
   tips: string
   openInBlank: boolean
+}
+
+export interface PackageInfo {
+  name: string
+  version: string
+  descriptions: string
+  owner: {
+    name: string
+    link: string
+  }
+  repository: {
+    url: string
+  }
+  humanDownloadsLast30Days: string
+  versions: string[]
+  author: string
+  downloads: string
+  versionIndex: number
+  activeVersion: string
+  repoLink: string
+  authorLink: string
 }

@@ -33,6 +33,7 @@ declare module '@vue/runtime-core' {
     StateFields: typeof import('./components/StateFields.vue')['default']
     StateFieldsTree: typeof import('./components/StateFieldsTree.vue')['default']
     TabIcon: typeof import('./components/TabIcon.vue')['default']
+    TerminalView: typeof import('./components/TerminalView.vue')['default']
     TimelineEvent: typeof import('./components/TimelineEvent.vue')['default']
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']

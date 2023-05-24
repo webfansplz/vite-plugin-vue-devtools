@@ -49,6 +49,12 @@ const builtinTabs: BuiltinTab[] = [
     },
   },
   {
+    path: 'npm',
+    title: 'Search packages',
+    icon: 'i-teenyicons:npm-outline',
+    category: 'advanced',
+  },
+  {
     path: 'graph',
     title: 'Graph',
     icon: 'i-carbon-network-4',
