@@ -72,7 +72,7 @@ export default function PluginVueDevtools(): PluginOption {
     },
     async load(id) {
       if (id === 'virtual:vue-devtools-options')
-        return `export default ${JSON.stringify({ ...config })}`
+        return `export default ${JSON.stringify({ ...config, define: {} })}`
     },
     transformIndexHtml(html) {
       return {
