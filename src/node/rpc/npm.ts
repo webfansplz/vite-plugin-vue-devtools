@@ -1,5 +1,7 @@
 import { detect, parseNi, parseNr } from '@antfu/ni'
-import { execaCommand } from 'execa'
+
+// import { execaCommand } from 'execa'
+
 import type { InstallPackageOptions } from '../../types'
 
 export async function installPackage(packages: string[], options: InstallPackageOptions = {}) {
@@ -11,6 +13,7 @@ export async function installPackage(packages: string[], options: InstallPackage
   const agent = await detect({})
 
   const command = await parseNi(agent!, [...packages, ...(isDev ? ['-D'] : []), '--ignore-scripts'])
+  const { execaCommand } = await import('execa')
 
   const _process = execaCommand(command!, {
     encoding: 'utf-8',
