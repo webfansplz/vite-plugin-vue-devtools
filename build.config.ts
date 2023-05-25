@@ -10,6 +10,7 @@ export default defineBuildConfig({
     'vite',
     'vite-plugin-inspect',
     'vite-plugin-vue-inspector',
+    'execa',
   ],
   rollup: {
     emitCJS: true,
