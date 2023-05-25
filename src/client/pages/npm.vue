@@ -61,8 +61,6 @@ async function search(query: string) {
   responseTime.value = res.processingTimeMS
   total.value = res.nbHits
   list.value = page.value ? list.value.concat(res.hits) : res.hits
-
-  console.log('res', res)
 }
 
 watch(keywords, (value) => {
