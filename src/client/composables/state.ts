@@ -4,14 +4,14 @@ export interface DevToolsFrameState {
   route: string
   position: string
   isFirstVisit: boolean
-  clickOut: boolean
+  closeOnOutsideClick: boolean
 }
 
 const frameState = useLocalStorage<DevToolsFrameState>('__vue-devtools-frame-state__', {
   route: '/',
   position: 'bottom',
   isFirstVisit: true,
-  clickOut: false,
+  closeOnOutsideClick: false,
 }, { mergeDefaults: true })
 
 const frameStateRefs = toRefs(frameState)

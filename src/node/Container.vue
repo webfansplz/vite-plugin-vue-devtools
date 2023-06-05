@@ -1,6 +1,5 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { onClickOutside, useElementHover } from '@vueuse/core'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 
 // Reuse @vuejs/devtools instance first
@@ -381,14 +380,17 @@ onMounted(() => {
 })
 
 const toggleButtonRef = ref(null)
-const isHovered = useElementHover(toggleButtonRef)
-
 const modalRef = ref(null)
-onClickOutside(modalRef, () => {
+
+window.addEventListener('click', (event) => {
+  const modalEl = modalRef.value
+  const toggleButtonEl = toggleButtonRef.value
+  if (!modalEl || !toggleButtonEl || event.composedPath().includes(modalEl) || event.composedPath().includes(toggleButtonEl))
+    return
   const frameState = localStorage.getItem('__vue-devtools-frame-state__')
   if (frameState) {
     const parsedFrameState = JSON.parse(frameState)
-    if (parsedFrameState.clickOut && !isHovered.value)
+    if (parsedFrameState.clickOut)
       panelVisible.value = false
   }
 })
@@ -397,32 +399,48 @@ onClickOutside(modalRef, () => {
 <template>
   <div ref="modalRef" class="vue-devtools-panel" :style="panelPosition">
     <!-- client -->
-    <iframe ref="iframe" :src="clientUrl" :style="{
-      'pointer-events': isDragging ? 'none' : 'auto',
-    }" @load="onLoad" />
+    <iframe
+      ref="iframe" :src="clientUrl" :style="{
+        'pointer-events': isDragging ? 'none' : 'auto',
+      }" @load="onLoad"
+    />
     <!-- resize -->
     <template v-if="panelState.viewMode === 'default'">
       <template v-if="panelState.position !== 'top'">
         <div :class="resizeHorizontalClassName" :style="{ top: 0 }" @mousedown.prevent="toggleDragging('horizontal')" />
-        <div v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
-          :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')" />
-        <div v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
-          :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')" />
+        <div
+          v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
+          :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
+        <div
+          v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
+          :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
       </template>
 
       <template v-if="panelState.position !== 'bottom'">
-        <div :class="resizeHorizontalClassName" :style="{ bottom: 0 }"
-          @mousedown.prevent="toggleDragging('horizontal')" />
-        <div v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
-          :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')" />
-        <div v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
-          :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')" />
+        <div
+          :class="resizeHorizontalClassName" :style="{ bottom: 0 }"
+          @mousedown.prevent="toggleDragging('horizontal')"
+        />
+        <div
+          v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
+          :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
+        <div
+          v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
+          :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
       </template>
 
-      <div v-if="panelState.position !== 'left'" :class="resizeVerticalClassName" :style="{ left: 0 }"
-        @mousedown.prevent="toggleDragging('vertical')" />
-      <div v-if="panelState.position !== 'right'" :class="resizeVerticalClassName" :style="{ right: 0 }"
-        @mousedown.prevent="toggleDragging('vertical')" />
+      <div
+        v-if="panelState.position !== 'left'" :class="resizeVerticalClassName" :style="{ left: 0 }"
+        @mousedown.prevent="toggleDragging('vertical')"
+      />
+      <div
+        v-if="panelState.position !== 'right'" :class="resizeVerticalClassName" :style="{ right: 0 }"
+        @mousedown.prevent="toggleDragging('vertical')"
+      />
     </template>
   </div>
   <!-- toggle button -->
