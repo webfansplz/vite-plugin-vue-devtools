@@ -17,7 +17,17 @@ function getVueDevtoolsPath() {
   return pluginPath.replace(/\/dist$/, '/\/src/node')
 }
 
-export default function PluginVueDevtools(): PluginOption {
+export interface VitePluginVueDevToolsOptions {
+  /**
+  * append an import to the module id ending with `appendTo` instead of adding a script into body
+  * useful for projects that do not use html file as an entry
+  *
+  * WARNING: only set this if you know exactly what it does.
+  */
+  appendTo?: string | RegExp
+}
+
+export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions = { appendTo: '' }): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect({
     silent: true,
@@ -74,7 +84,21 @@ export default function PluginVueDevtools(): PluginOption {
       if (id === 'virtual:vue-devtools-options')
         return `export default ${JSON.stringify({ base: config.base })}`
     },
+    transform(code, id) {
+      const { appendTo } = options
+
+      if (!appendTo)
+        return
+
+      const [filename] = id.split('?', 2)
+      if ((typeof appendTo === 'string' && filename.endsWith(appendTo))
+        || (appendTo instanceof RegExp && appendTo.test(filename)))
+        return { code: `${code}\nimport 'virtual:vue-devtools-path:app.js'` }
+    },
     transformIndexHtml(html) {
+      if (options.appendTo)
+        return
+
       return {
         html,
         tags: [
