@@ -188,7 +188,7 @@ function subscribeStore(store) {
   subscribes.value[store.$id].push(subscribe)
 
   store._hotUpdate = markRaw((_) => {
-    timeApi.addTimelineEvent({
+    timelineApi.addTimelineEvent({
       layerId: LAYER_ID,
       event: {
         time: Date.now(),
