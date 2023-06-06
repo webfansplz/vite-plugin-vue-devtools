@@ -31,7 +31,7 @@ function toggleTabCategory(name: string, v: boolean) {
     hiddenTabCategories.value.push(name)
 }
 
-function toggleClickOut() {
+function toggleClickOutside() {
   closeOnOutsideClick.value = !closeOnOutsideClick.value
 }
 </script>
@@ -109,9 +109,9 @@ function toggleClickOut() {
         </div>
         <div py3 flex="~ justify-between gap-1">
           <h3 mb1 text-lg>
-            Click out
+            Close DevTools when clicking outside
           </h3>
-          <VSwitch flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick" @update:model-value="toggleClickOut" />
+          <VSwitch flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick" @update:model-value="toggleClickOutside" />
         </div>
       </div>
     </div>

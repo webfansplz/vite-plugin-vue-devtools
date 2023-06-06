@@ -390,7 +390,7 @@ window.addEventListener('click', (event) => {
   const frameState = localStorage.getItem('__vue-devtools-frame-state__')
   if (frameState) {
     const parsedFrameState = JSON.parse(frameState)
-    if (parsedFrameState.clickOut)
+    if (parsedFrameState.closeOnOutsideClick)
       panelVisible.value = false
   }
 })
