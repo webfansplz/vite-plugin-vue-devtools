@@ -14,9 +14,6 @@ const iframeEl = ref<HTMLIFrameElement>()
 const box = reactive(useElementBounding(anchor))
 const iframeLoaded = ref(false)
 
-if (props.src.startsWith('http'))
-  iframeLoaded.value = true
-
 onMounted(() => {
   if (iframeCacheMap.get(key.value)) {
     iframeEl.value = iframeCacheMap.get(key.value)!
@@ -32,7 +29,7 @@ onMounted(() => {
       iframeEl.value.onload = () => {
         syncColorMode()
         iframeEl.value!.style.opacity = '1'
-        iframeLoaded.value = false
+        iframeLoaded.value = true
       }
     }
     catch (e) {
@@ -82,7 +79,7 @@ function updateIframeBox() {
 
 <template>
   <div ref="anchor" h-full w-full>
-    <div v-if="iframeLoaded" absolute inset-0 flex items-center justify-center>
+    <div v-if="!iframeLoaded" absolute inset-0 flex items-center justify-center>
       <i class="mdi:loading animate-spin text-3xl" />
     </div>
   </div>
