@@ -378,42 +378,76 @@ onMounted(() => {
       togglePanel()
   })
 })
+
+const toggleButtonRef = ref(null)
+const modalRef = ref(null)
+
+window.addEventListener('click', (event) => {
+  const modalEl = modalRef.value
+  const toggleButtonEl = toggleButtonRef.value
+  if (!modalEl || !toggleButtonEl || event.composedPath().includes(modalEl) || event.composedPath().includes(toggleButtonEl))
+    return
+  const frameState = localStorage.getItem('__vue-devtools-frame-state__')
+  if (frameState) {
+    const parsedFrameState = JSON.parse(frameState)
+    if (parsedFrameState.closeOnOutsideClick)
+      panelVisible.value = false
+  }
+})
 </script>
 
 <template>
-  <div class="vue-devtools-panel" :style="panelPosition">
+  <div ref="modalRef" class="vue-devtools-panel" :style="panelPosition">
     <!-- client -->
-    <iframe ref="iframe" :src="clientUrl" :style="{
-      'pointer-events': isDragging ? 'none' : 'auto',
-    }" @load="onLoad" />
+    <iframe
+      ref="iframe" :src="clientUrl" :style="{
+        'pointer-events': isDragging ? 'none' : 'auto',
+      }" @load="onLoad"
+    />
     <!-- resize -->
     <template v-if="panelState.viewMode === 'default'">
       <template v-if="panelState.position !== 'top'">
         <div :class="resizeHorizontalClassName" :style="{ top: 0 }" @mousedown.prevent="toggleDragging('horizontal')" />
-        <div v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
-          :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')" />
-        <div v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
-          :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')" />
+        <div
+          v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
+          :style="{ top: 0, left: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
+        <div
+          v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
+          :style="{ top: 0, right: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
       </template>
 
       <template v-if="panelState.position !== 'bottom'">
-        <div :class="resizeHorizontalClassName" :style="{ bottom: 0 }"
-          @mousedown.prevent="toggleDragging('horizontal')" />
-        <div v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
-          :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')" />
-        <div v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
-          :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')" />
+        <div
+          :class="resizeHorizontalClassName" :style="{ bottom: 0 }"
+          @mousedown.prevent="toggleDragging('horizontal')"
+        />
+        <div
+          v-if="panelState.position !== 'right'" :class="resizeCornerClassName"
+          :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
+        <div
+          v-if="panelState.position !== 'left'" :class="resizeCornerClassName"
+          :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }" @mousedown.prevent="toggleDragging('both')"
+        />
       </template>
 
-      <div v-if="panelState.position !== 'left'" :class="resizeVerticalClassName" :style="{ left: 0 }"
-        @mousedown.prevent="toggleDragging('vertical')" />
-      <div v-if="panelState.position !== 'right'" :class="resizeVerticalClassName" :style="{ right: 0 }"
-        @mousedown.prevent="toggleDragging('vertical')" />
+      <div
+        v-if="panelState.position !== 'left'" :class="resizeVerticalClassName" :style="{ left: 0 }"
+        @mousedown.prevent="toggleDragging('vertical')"
+      />
+      <div
+        v-if="panelState.position !== 'right'" :class="resizeVerticalClassName" :style="{ right: 0 }"
+        @mousedown.prevent="toggleDragging('vertical')"
+      />
     </template>
   </div>
   <!-- toggle button -->
-  <button class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
-    @click.prevent="togglePanel">
+  <button
+    ref="toggleButtonRef" class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
+    @click.prevent="togglePanel"
+  >
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
       <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />

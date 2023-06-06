@@ -5,6 +5,8 @@ const {
   hiddenTabCategories,
 } = useDevToolsSettings()
 
+const { closeOnOutsideClick } = useFrameState()
+
 const scaleOptions = [
   ['Tiny', 12 / 15],
   ['Small', 14 / 15],
@@ -28,6 +30,10 @@ function toggleTabCategory(name: string, v: boolean) {
   else
     hiddenTabCategories.value.push(name)
 }
+
+function toggleClickOutside() {
+  closeOnOutsideClick.value = !closeOnOutsideClick.value
+}
 </script>
 
 <template>
@@ -39,20 +45,28 @@ function toggleTabCategory(name: string, v: boolean) {
           Tabs
         </h3>
         <template v-for="[name, tabs] of categories" :key="name">
-          <div v-if="tabs.length" flex="~ col gap-1" mx--1
-            :class="hiddenTabCategories.includes(name) ? 'op50 grayscale' : ''" pt-2>
-            <VSwitch flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabCategories.includes(name)"
-              @update:model-value="v => toggleTabCategory(name, v)">
+          <div
+            v-if="tabs.length" flex="~ col gap-1" mx--1
+            :class="hiddenTabCategories.includes(name) ? 'op50 grayscale' : ''" pt-2
+          >
+            <VSwitch
+              flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabCategories.includes(name)"
+              @update:model-value="v => toggleTabCategory(name, v)"
+            >
               <div flex="~ gap-2" flex-auto items-center justify-start>
                 <span capitalize op75>{{ name }}</span>
               </div>
             </VSwitch>
             <div flex="~ col gap-1" border="~ base rounded" py3 pl4 pr2>
               <template v-for="tab of tabs" :key="tab.name">
-                <VSwitch flex="~ row-reverse" py1 n-primary :model-value="!hiddenTabs.includes(tab.title)"
-                  @update:model-value="v => toggleTab(tab.title, v)">
-                  <div flex="~ gap-2" flex-auto items-center justify-start
-                    :class="hiddenTabs.includes(tab.title) ? 'op25' : ''">
+                <VSwitch
+                  flex="~ row-reverse" py1 n-primary :model-value="!hiddenTabs.includes(tab.title)"
+                  @update:model-value="v => toggleTab(tab.title, v)"
+                >
+                  <div
+                    flex="~ gap-2" flex-auto items-center justify-start
+                    :class="hiddenTabs.includes(tab.title) ? 'op25' : ''"
+                  >
                     <TabIcon text-xl :icon="tab.icon" :title="tab.title" />
                     <span>{{ tab.title }}</span>
                   </div>
@@ -78,7 +92,7 @@ function toggleTabCategory(name: string, v: boolean) {
           <div>
             <VDarkToggle v-slot="{ toggle, isDark }">
               <VButton n="primary" @click="toggle">
-                <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
+                <div carbon-sun translate-y--1px dark:carbon-moon /> {{ isDark.value ? 'Dark' : 'Light' }}
               </VButton>
             </VDarkToggle>
           </div>
@@ -92,6 +106,12 @@ function toggleTabCategory(name: string, v: boolean) {
               {{ i[0] }}
             </option>
           </VSelect>
+        </div>
+        <div py3 flex="~ justify-between gap-1">
+          <h3 mb1 text-lg>
+            Close DevTools when clicking outside
+          </h3>
+          <VSwitch flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick" @update:model-value="toggleClickOutside" />
         </div>
       </div>
     </div>
