@@ -74,7 +74,7 @@ watch(keywords, () => {
             colorMode === 'dark' ? 'jse-theme-dark' : '',
           ]" :main-menu-bar="false" :navigation-bar="false" :status-bar="false" :read-only="true" :indentation="2"
             :tab-size="2" />
-          <div v-shosw="!list.length" h-full flex items-center justify-center>
+          <div v-show="!list.length" h-full flex items-center justify-center>
             <VCard flex="~ col gap2" min-w-30 items-center p3>
               <h1 text-sm italic op50>
                 No Data
