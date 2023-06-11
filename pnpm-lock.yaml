@@ -8,8 +8,8 @@ importers:
         specifier: ^10.1.2
         version: 10.1.2(vue@3.3.4)
       '@webfansplz/vuedoc-parser':
-        specifier: ^0.0.1
-        version: 0.0.1(@types/node@20.2.5)(axios-cache-adapter@2.7.3)(axios@1.4.0)(body-parser@1.20.2)(cli-color@2.0.3)(express@4.18.2)(image-downloader@4.3.0)(jimp@0.16.13)(morgan@1.10.0)(pug@3.0.2)
+        specifier: ^0.0.2
+        version: 0.0.2(@types/node@20.2.5)(axios-cache-adapter@2.7.3)(axios@1.4.0)(body-parser@1.20.2)(cli-color@2.0.3)(express@4.18.2)(image-downloader@4.3.0)(jimp@0.16.13)(morgan@1.10.0)(pug@3.0.2)
       algoliasearch:
         specifier: ^4.17.1
         version: 4.17.1
@@ -3492,8 +3492,8 @@ packages:
       '@xtuc/long': 4.2.2
     dev: true
 
-  /@webfansplz/vuedoc-parser@0.0.1(@types/node@20.2.5)(axios-cache-adapter@2.7.3)(axios@1.4.0)(body-parser@1.20.2)(cli-color@2.0.3)(express@4.18.2)(image-downloader@4.3.0)(jimp@0.16.13)(morgan@1.10.0)(pug@3.0.2):
-    resolution: {integrity: sha512-zsP6MIsQwgP36XcaGQiqcgWWEQ849Vi/bQc0YymqGrpBpfEnsYaY9TSGpR7UwFj5K9fDpIQzGniFKDntZ622wQ==}
+  /@webfansplz/vuedoc-parser@0.0.2(@types/node@20.2.5)(axios-cache-adapter@2.7.3)(axios@1.4.0)(body-parser@1.20.2)(cli-color@2.0.3)(express@4.18.2)(image-downloader@4.3.0)(jimp@0.16.13)(morgan@1.10.0)(pug@3.0.2):
+    resolution: {integrity: sha512-BN2KseGCVzRl2Rd5m5m54dTA+DqiFMEjPl1wUTvS79feWaj/aMaUUttGFbxXqaIGtFMhGk/Hux77Sqc2N4LOHw==}
     engines: {node: '>=16.6'}
     peerDependencies:
       '@types/node': ^18.6.3

@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
-    "@webfansplz/vuedoc-parser": "^0.0.1",
+    "@webfansplz/vuedoc-parser": "^0.0.2",
     "algoliasearch": "^4.17.1",
     "birpc": "^0.2.12",
     "execa": "^7.1.1",

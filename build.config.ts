@@ -11,6 +11,7 @@ export default defineBuildConfig({
     'vite-plugin-inspect',
     'vite-plugin-vue-inspector',
     'execa',
+    '@webfansplz/vuedoc-parser',
   ],
   rollup: {
     emitCJS: true,
