@@ -16,7 +16,7 @@ const checked = useVModel(props, 'modelValue', emit, { passive: true })
 
 <template>
   <label
-    class="n-switch n-switch-base n-disabled:n-disabled cursor-pointer"
+    class="n-switch n-switch-base cursor-pointer n-disabled:n-disabled"
     :checked="checked || null"
     :disabled="disabled || null"
   >
