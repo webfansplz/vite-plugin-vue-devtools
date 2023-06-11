@@ -8,7 +8,7 @@ import VueInspector from 'vite-plugin-vue-inspector'
 import { createRPCServer } from '../vite-dev-rpc'
 import { DIR_CLIENT } from '../dir'
 import type { InstallPackageOptions, RPCFunctions } from '../types'
-import { getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, installPackage } from './rpc'
+import { getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList, installPackage } from './rpc'
 
 const NAME = 'vite-plugin-vue-devtools'
 
@@ -48,6 +48,8 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       getImageMeta,
       getTextAssetContent,
       getPackages: () => getPackages(config.root),
+      getVueSFCList: () => getVueSFCList(config.root),
+      getComponentInfo: (filename: string) => getComponentInfo(config.root, filename),
       installPackage: (packages: string[], options: InstallPackageOptions = {}) => installPackage(packages, {
         ...options,
         cwd: config.root,
