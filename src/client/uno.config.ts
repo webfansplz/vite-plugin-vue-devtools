@@ -79,5 +79,6 @@ export default defineConfig({
     'i-carbon-ibm-watson-discovery',
     'i-carbon-select-window',
     'i-teenyicons:npm-outline',
+    'i-carbon-document-preliminary',
   ],
 })

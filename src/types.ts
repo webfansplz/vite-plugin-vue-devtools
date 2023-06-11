@@ -44,6 +44,8 @@ export interface RPCFunctions {
   getImageMeta(path: string): Promise<ImageMeta>
   getTextAssetContent(path: string): Promise<string>
   getPackages(): Promise<Record<string, string>>
+  getVueSFCList(): Promise<string[]>
+  getComponentInfo(filename: string): Promise<Record<string, unknown>>
   onTerminalData(_: { id?: string; data: string }): void
   onTerminalExit(_: { id?: string; data?: string }): void
   installPackage(packages: string[], options?: InstallPackageOptions): Promise<void>
