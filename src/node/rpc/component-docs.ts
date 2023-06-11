@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { parseComponent } from '@webfansplz/vuedoc-parser'
 import fg from 'fast-glob'
 
 export async function getVueSFCList(root: string) {
@@ -14,6 +13,7 @@ export async function getVueSFCList(root: string) {
 }
 
 export async function getComponentInfo(root: string, filename: string) {
+  const { parseComponent } = await import('@webfansplz/vuedoc-parser')
   return await parseComponent({
     filename: path.resolve(root, filename),
   })
