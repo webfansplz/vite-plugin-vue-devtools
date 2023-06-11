@@ -49,8 +49,8 @@ const builtinTabs: BuiltinTab[] = [
     },
   },
   {
-    path: 'component-doc',
-    title: 'Component Doc',
+    path: 'component-docs',
+    title: 'Component docs',
     icon: 'i-carbon-document-preliminary',
     category: 'advanced',
   },
