@@ -49,6 +49,7 @@ export interface RPCFunctions {
   onTerminalData(_: { id?: string; data: string }): void
   onTerminalExit(_: { id?: string; data?: string }): void
   installPackage(packages: string[], options?: InstallPackageOptions): Promise<void>
+  uninstallPackage(packages: string[], options?: InstallPackageOptions): Promise<void>
 }
 
 export interface ModulesList {

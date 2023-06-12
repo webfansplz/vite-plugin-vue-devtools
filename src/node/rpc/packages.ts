@@ -15,7 +15,9 @@ export async function getPackages(root: string) {
   for (const type in categorizedPackages) {
     for (const name in categorizedPackages[type]) {
       const version = categorizedPackages[type][name]
-      packages[name] = version
+      packages[name] = {}
+      packages[name].version = version
+      packages[name].type = type
     }
   }
   return {

@@ -22,8 +22,12 @@ const page = ref(0)
 const el = ref<HTMLElement | null>(null)
 const terminalVisible = ref(false)
 const list = ref<SearchResponse<PackageInfo>['hits']>([])
-
+const proList = ref<Record<string, string>[]>([])
 const locked = useScrollLock(el)
+
+const openPro = ref(false)
+const openNpm = ref(true)
+
 function toThousands(num: number): string {
   return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
 }
@@ -40,6 +44,18 @@ async function download(item: PackageInfo, isDev: boolean) {
     setTimeout(() => {
       terminalVisible.value = false
       locked.value = false
+    }, 2000)
+  })
+}
+
+async function uninstall(item: any, type: string) {
+  const isDev = type !== 'dependencies'
+  terminalVisible.value = true
+  rpc.uninstallPackage([`${item.name}`], { isDev })
+  hookApi.hook.on('__vue-devtools:terminal:exit__', () => {
+    setTimeout(() => {
+      terminalVisible.value = false
+      getProjectNpm()
     }, 2000)
   })
 }
@@ -63,11 +79,26 @@ async function search(query: string) {
   list.value = page.value ? list.value.concat(res.hits) : res.hits
 }
 
+function getProjectNpm() {
+  rpc.getPackages().then((res) => {
+    proList.value = Object.keys(res.packages).map((key) => {
+      return {
+        name: key,
+        version: res.packages[key].version,
+        type: res.packages[key].type,
+      }
+    })
+  })
+}
+getProjectNpm()
+
 watch(keywords, (value) => {
   page.value = 0
   el.value?.scrollTo({
     top: 0,
   })
+  openNpm.value = true
+  openPro.value = false
   search(value)
 }, {
   immediate: true,
@@ -76,7 +107,7 @@ watch(keywords, (value) => {
 useInfiniteScroll(
   el,
   () => {
-    if (list.value.length >= total.value)
+    if (list.value.length >= total.value || !openNpm.value)
       return
     page.value++
     search(keywords.value)
@@ -91,8 +122,65 @@ useInfiniteScroll(
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>
     <VSectionBlock
-      text="Search Results" :description="`found ${toThousands(total)} packages in ${responseTime}ms`"
-      padding="0"
+      v-model:open="openPro" text="Project dependent"
+      :description="`found ${toThousands(proList.length)} packages`" padding="0"
+    >
+      <div max-h="80%" of-hidden px-4>
+        <table w-full>
+          <thead border="b base">
+            <tr>
+              <th text-left>
+                Name
+              </th>
+              <th text-left>
+                Version
+              </th>
+              <th text-center>
+                Type
+              </th>
+              <th text-center>
+                Uninstall
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in proList" :key="index" class="group" h-7 border="b dashed transparent hover:base">
+              <td text-sm op70>
+                <div flex="inline gap3" items-center>
+                  {{ item.name }}
+                </div>
+              </td>
+              <td text-sm op70>
+                <div flex="inline gap3" items-center>
+                  {{ item.version }}
+                </div>
+              </td>
+              <td flex justify-center text-sm op70>
+                <div>
+                  {{ item.type === 'dependencies' ? 'Prod' : 'Dev' }}
+                </div>
+              </td>
+              <td w-30 text-center>
+                <VDropdown placement="bottom" :distance="5" text-center>
+                  <VButton icon="carbon:trash-can m0 text-xs" py-1 />
+                  <template #popper>
+                    <VButton v-close-popper py-1 @click="uninstall(item, item.type)">
+                      Confirm
+                    </VButton>
+                    <VButton v-close-popper py-1>
+                      Cancel
+                    </VButton>
+                  </template>
+                </VDropdown>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </VSectionBlock>
+    <VSectionBlock
+      v-model:open="openNpm" text="Search Results"
+      :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0"
     >
       <div max-h="80%" of-hidden px-4>
         <table w-full>
