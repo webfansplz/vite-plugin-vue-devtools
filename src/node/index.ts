@@ -7,8 +7,8 @@ import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
 import { createRPCServer } from '../vite-dev-rpc'
 import { DIR_CLIENT } from '../dir'
-import type { InstallPackageOptions, RPCFunctions } from '../types'
-import { getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList, installPackage } from './rpc'
+import type { ExecNpmScriptOptions, RPCFunctions } from '../types'
+import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './rpc'
 
 const NAME = 'vite-plugin-vue-devtools'
 
@@ -50,8 +50,21 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       getPackages: () => getPackages(config.root),
       getVueSFCList: () => getVueSFCList(config.root),
       getComponentInfo: (filename: string) => getComponentInfo(config.root, filename),
-      installPackage: (packages: string[], options: InstallPackageOptions = {}) => installPackage(packages, {
+      installPackage: (packages: string[], options: ExecNpmScriptOptions = {}) => execNpmScript(packages, {
         ...options,
+        type: 'install',
+        cwd: config.root,
+        callback: (type: string, data: string) => {
+          if (type === 'data')
+            rpc.onTerminalData({ data })
+
+          else if (type === 'exit')
+            rpc.onTerminalExit({ data })
+        },
+      }),
+      uninstallPackage: (packages: string[], options: ExecNpmScriptOptions = {}) => execNpmScript(packages, {
+        ...options,
+        type: 'uninstall',
         cwd: config.root,
         callback: (type: string, data: string) => {
           if (type === 'data')
