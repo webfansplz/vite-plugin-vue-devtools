@@ -69,7 +69,7 @@ router.replace(_route.value)
   <main fixed inset-0 h-screen w-screen>
     <Notification />
     <div grid="~ cols-[50px_1fr]" h-full h-screen of-hidden font-sans bg-base>
-      <SideNav v-if="route.path !== '/__inspecting'" of-x-hidden of-y-auto />
+      <SideNav v-if="!route.path.startsWith('/__')" of-x-hidden of-y-auto />
       <RouterView />
     </div>
   </main>

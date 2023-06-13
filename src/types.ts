@@ -66,6 +66,7 @@ export interface VueDevtoolsHostClient {
     disable: () => void
   }
   panel?: {
+    toggleViewMode: (mode?: 'xs' | 'default') => void
     togglePosition: (position: string) => void
     toggle: () => void
   }

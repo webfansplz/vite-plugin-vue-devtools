@@ -49,6 +49,15 @@ const builtinTabs: BuiltinTab[] = [
     },
   },
   {
+    title: 'EyeDropper',
+    icon: 'i-mdi:eyedropper',
+    category: 'advanced',
+    event: (client, router) => {
+      router.replace('/__eyedropper')
+      client.panel?.toggleViewMode('xs')
+    },
+  },
+  {
     path: 'component-docs',
     title: 'Component docs',
     icon: 'i-carbon-document-preliminary',

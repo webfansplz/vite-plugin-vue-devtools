@@ -45,7 +45,7 @@ const panelState = ref({
 const panelStyle = computed(() => {
   const height = `calc(${panelState.value.height}vh - ${PANEL_PADDING}px)`
   const width = `calc(${panelState.value.width}vw - ${PANEL_PADDING}px)`
-  if (panelState.value.viewMode === 'component-inspector') {
+  if (panelState.value.viewMode === 'xs') {
     return {
       bottom: `${PANEL_PADDING}px`,
       left: '50%',
@@ -199,15 +199,27 @@ document.addEventListener('mousemove', (e) => {
 
 /** -----inspector end-----**/
 
+function toggleViewMode(state) {
+  if (state) {
+    panelState.value.viewMode = state
+    return
+  }
+  if (panelState.value.viewMode === 'xs')
+    panelState.value.viewMode = 'default'
+
+  else
+    panelState.value.viewMode = 'xs'
+}
+
 function enableComponentInspector() {
   window.__VUE_INSPECTOR__?.enable()
-  panelState.value.viewMode = 'component-inspector'
+  panelState.value.viewMode = 'xs'
 }
 
 function disableComponentInspector() {
   window.__VUE_INSPECTOR__?.disable()
   hook.emit('host:inspector:close')
-  if (panelState.value.viewMode === 'component-inspector')
+  if (panelState.value.viewMode === 'xs')
     panelState.value.viewMode = 'default'
 }
 /** -----inspector end-----**/
@@ -251,6 +263,7 @@ function setupClient() {
       disable: disableComponentInspector,
     },
     panel: {
+      toggleViewMode,
       toggle: togglePanel,
       togglePosition(position) {
         panelState.value.position = position
@@ -445,8 +458,8 @@ window.addEventListener('click', (event) => {
   </div>
   <!-- toggle button -->
   <button
-    ref="toggleButtonRef" class="vue-devtools-toggle" aria-label="Toggle devtools panel" :style="toggleButtonPosition"
-    @click.prevent="togglePanel"
+    ref="toggleButtonRef" class="vue-devtools-toggle" aria-label="Toggle devtools panel"
+    :style="toggleButtonPosition" @click.prevent="togglePanel"
   >
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36Z" />
