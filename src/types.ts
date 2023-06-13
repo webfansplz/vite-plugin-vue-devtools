@@ -116,3 +116,10 @@ export interface PackageInfo {
   repoLink: string
   authorLink: string
 }
+
+export interface RPCPackageMeta {
+  [pkName: string]: {
+    type: string
+    version: string
+  }
+}

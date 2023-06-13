@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import algoliasearch from 'algoliasearch'
 import type { SearchResponse } from '@algolia/client-search'
-import type { PackageInfo } from '../../types'
+import type { PackageInfo, RPCPackageMeta } from '../../types'
 import { rpc } from '../logic/rpc'
 import { hookApi } from '../logic/hook'
 
@@ -22,7 +22,13 @@ const page = ref(0)
 const el = ref<HTMLElement | null>(null)
 const terminalVisible = ref(false)
 const list = ref<SearchResponse<PackageInfo>['hits']>([])
-const proList = ref<Record<string, string>[]>([])
+
+type ProItem = {
+  [p in keyof RPCPackageMeta[string]]: RPCPackageMeta[string][p]
+} & {
+  name: string
+}
+const proList = ref<ProItem[]>([])
 const locked = useScrollLock(el)
 
 const openPro = ref(false)
@@ -48,7 +54,7 @@ async function download(item: PackageInfo, isDev: boolean) {
   })
 }
 
-async function uninstall(item: any, type: string) {
+async function uninstall(item: ProItem, type: string) {
   const isDev = type !== 'dependencies'
   terminalVisible.value = true
   rpc.uninstallPackage([`${item.name}`], { isDev })
@@ -121,10 +127,8 @@ useInfiniteScroll(
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>
-    <VSectionBlock
-      v-model:open="openPro" text="Project dependent"
-      :description="`found ${toThousands(proList.length)} packages`" padding="0"
-    >
+    <VSectionBlock v-model:open="openPro" text="Project dependent"
+      :description="`found ${toThousands(proList.length)} packages`" padding="0">
       <div max-h="80%" of-hidden px-4>
         <table w-full>
           <thead border="b base">
@@ -178,10 +182,8 @@ useInfiniteScroll(
         </table>
       </div>
     </VSectionBlock>
-    <VSectionBlock
-      v-model:open="openNpm" text="Search Results"
-      :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0"
-    >
+    <VSectionBlock v-model:open="openNpm" text="Search Results"
+      :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0">
       <div max-h="80%" of-hidden px-4>
         <table w-full>
           <thead border="b base">
@@ -218,20 +220,16 @@ useInfiniteScroll(
                 </div>
               </td>
               <VDropdown max-w="10" placement="bottom-start" :distance="5">
-                <td
-                  hover="text-primary" h-7 cursor-pointer ws-nowrap pr-1 text-left font-mono text-sm lh-7 underline
-                  op70
-                >
+                <td hover="text-primary" h-7 cursor-pointer ws-nowrap pr-1 text-left font-mono text-sm lh-7 underline
+                  op70>
                   {{ item.activeVersion ?? item.version }}
                 </td>
                 <template #popper>
                   <ul max-h="35" of-scroll py-3>
-                    <li
-                      v-for="(version) in Object.keys(item.versions).reverse()" :key="version" v-close-popper
+                    <li v-for="(version) in Object.keys(item.versions).reverse()" :key="version" v-close-popper
                       border="b dashed transparent" class="group" hover="bg-active"
                       :class="String(item.activeVersion ?? item.version) === version ? 'text-primary' : ''" h-7
-                      cursor-pointer px-3 text-center lh-7 @click="toggleVersion(item, version)"
-                    >
+                      cursor-pointer px-3 text-center lh-7 @click="toggleVersion(item, version)">
                       {{ version }}
                     </li>
                   </ul>
