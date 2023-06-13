@@ -15,9 +15,10 @@ export interface ModuleInfo {
 
 export type AssetType = 'image' | 'font' | 'video' | 'audio' | 'text' | 'json' | 'other'
 
-export interface InstallPackageOptions {
+export interface ExecNpmScriptOptions {
   isDev?: boolean
   cwd?: string
+  type?: 'install' | 'uninstall'
   callback?: (type: string, data: string) => void
 }
 
@@ -48,8 +49,8 @@ export interface RPCFunctions {
   getComponentInfo(filename: string): Promise<Record<string, unknown>>
   onTerminalData(_: { id?: string; data: string }): void
   onTerminalExit(_: { id?: string; data?: string }): void
-  installPackage(packages: string[], options?: InstallPackageOptions): Promise<void>
-  uninstallPackage(packages: string[], options?: InstallPackageOptions): Promise<void>
+  installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
+  uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
 }
 
 export interface ModulesList {
@@ -117,9 +118,8 @@ export interface PackageInfo {
   authorLink: string
 }
 
-export interface RPCPackageMeta {
-  [pkName: string]: {
-    type: string
-    version: string
-  }
+export interface PackageMeta {
+  type: string
+  version: string
+  name: string
 }

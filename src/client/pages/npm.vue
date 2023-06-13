@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import algoliasearch from 'algoliasearch'
 import type { SearchResponse } from '@algolia/client-search'
-import type { PackageInfo, RPCPackageMeta } from '../../types'
+import type { PackageInfo, PackageMeta } from '../../types'
 import { rpc } from '../logic/rpc'
 import { hookApi } from '../logic/hook'
 
@@ -23,16 +23,11 @@ const el = ref<HTMLElement | null>(null)
 const terminalVisible = ref(false)
 const list = ref<SearchResponse<PackageInfo>['hits']>([])
 
-type ProItem = {
-  [p in keyof RPCPackageMeta[string]]: RPCPackageMeta[string][p]
-} & {
-  name: string
-}
-const proList = ref<ProItem[]>([])
+const projectDeps = ref<PackageMeta[]>([])
 const locked = useScrollLock(el)
 
-const openPro = ref(false)
-const openNpm = ref(true)
+const projectDepsVisible = ref(false)
+const packageListVisible = ref(true)
 
 function toThousands(num: number): string {
   return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
@@ -54,14 +49,16 @@ async function download(item: PackageInfo, isDev: boolean) {
   })
 }
 
-async function uninstall(item: ProItem, type: string) {
+async function uninstall(item: PackageMeta, type: string) {
   const isDev = type !== 'dependencies'
   terminalVisible.value = true
+  locked.value = true
   rpc.uninstallPackage([`${item.name}`], { isDev })
   hookApi.hook.on('__vue-devtools:terminal:exit__', () => {
     setTimeout(() => {
       terminalVisible.value = false
-      getProjectNpm()
+      locked.value = false
+      getProjectDeps()
     }, 2000)
   })
 }
@@ -85,9 +82,9 @@ async function search(query: string) {
   list.value = page.value ? list.value.concat(res.hits) : res.hits
 }
 
-function getProjectNpm() {
+function getProjectDeps() {
   rpc.getPackages().then((res) => {
-    proList.value = Object.keys(res.packages).map((key) => {
+    projectDeps.value = Object.keys(res.packages).map((key) => {
       return {
         name: key,
         version: res.packages[key].version,
@@ -96,15 +93,15 @@ function getProjectNpm() {
     })
   })
 }
-getProjectNpm()
+getProjectDeps()
 
 watch(keywords, (value) => {
   page.value = 0
   el.value?.scrollTo({
     top: 0,
   })
-  openNpm.value = true
-  openPro.value = false
+  packageListVisible.value = true
+  projectDepsVisible.value = false
   search(value)
 }, {
   immediate: true,
@@ -113,7 +110,7 @@ watch(keywords, (value) => {
 useInfiniteScroll(
   el,
   () => {
-    if (list.value.length >= total.value || !openNpm.value)
+    if (list.value.length >= total.value || !packageListVisible.value)
       return
     page.value++
     search(keywords.value)
@@ -127,8 +124,8 @@ useInfiniteScroll(
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>
-    <VSectionBlock v-model:open="openPro" text="Project dependent"
-      :description="`found ${toThousands(proList.length)} packages`" padding="0">
+    <VSectionBlock v-model:open="projectDepsVisible" text="Project dependencies"
+      :description="`found ${toThousands(projectDeps.length)} packages`" padding="0">
       <div max-h="80%" of-hidden px-4>
         <table w-full>
           <thead border="b base">
@@ -148,7 +145,8 @@ useInfiniteScroll(
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in proList" :key="index" class="group" h-7 border="b dashed transparent hover:base">
+            <tr v-for="(item, index) in projectDeps" :key="index" class="group" h-7
+              border="b dashed transparent hover:base">
               <td text-sm op70>
                 <div flex="inline gap3" items-center>
                   {{ item.name }}
@@ -161,7 +159,7 @@ useInfiniteScroll(
               </td>
               <td flex justify-center text-sm op70>
                 <div>
-                  {{ item.type === 'dependencies' ? 'Prod' : 'Dev' }}
+                  {{ item.type }}
                 </div>
               </td>
               <td w-30 text-center>
@@ -182,7 +180,7 @@ useInfiniteScroll(
         </table>
       </div>
     </VSectionBlock>
-    <VSectionBlock v-model:open="openNpm" text="Search Results"
+    <VSectionBlock v-model:open="packageListVisible" text="Search Results"
       :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0">
       <div max-h="80%" of-hidden px-4>
         <table w-full>
