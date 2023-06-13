@@ -80,5 +80,6 @@ export default defineConfig({
     'i-carbon-select-window',
     'i-teenyicons:npm-outline',
     'i-carbon-document-preliminary',
+    'i-mdi:eyedropper',
   ],
 })
