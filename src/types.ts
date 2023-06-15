@@ -1,4 +1,5 @@
 import type { Router } from 'vue-router'
+import type { BuiltinTabKey } from './client/composables/tabs'
 
 export interface ComponentRelationship {
   id: string
@@ -85,6 +86,7 @@ export interface BuiltinTab {
   title: string
   icon: string
   category?: string
+  key: BuiltinTabKey
 }
 
 export interface DocumentInfo {

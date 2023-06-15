@@ -67,7 +67,7 @@ importers:
         version: 2.2.71
       '@nuxt/devtools-ui-kit':
         specifier: ^0.5.5
-        version: 0.5.5(@nuxt/devtools@0.5.5)(axios@1.4.0)(fuse.js@6.6.2)(nuxt@3.5.2)(postcss@8.4.24)(rollup@3.20.6)(vite@4.3.9)(vue@3.3.4)(webpack@5.84.1)
+        version: 0.5.5(@nuxt/devtools@0.5.5)(axios@1.4.0)(fuse.js@6.6.2)(nuxt@3.5.2)(postcss@8.4.24)(rollup@3.20.6)(sortablejs@1.15.0)(vite@4.3.9)(vue@3.3.4)(webpack@5.84.1)
       '@types/codemirror':
         specifier: ^5.60.7
         version: 5.60.7
@@ -137,6 +137,9 @@ importers:
       simple-git-hooks:
         specifier: ^2.8.1
         version: 2.8.1
+      sortablejs:
+        specifier: ^1.15.0
+        version: 1.15.0
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
@@ -1969,7 +1972,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/devtools-ui-kit@0.5.5(@nuxt/devtools@0.5.5)(axios@1.4.0)(fuse.js@6.6.2)(nuxt@3.5.2)(postcss@8.4.24)(rollup@3.20.6)(vite@4.3.9)(vue@3.3.4)(webpack@5.84.1):
+  /@nuxt/devtools-ui-kit@0.5.5(@nuxt/devtools@0.5.5)(axios@1.4.0)(fuse.js@6.6.2)(nuxt@3.5.2)(postcss@8.4.24)(rollup@3.20.6)(sortablejs@1.15.0)(vite@4.3.9)(vue@3.3.4)(webpack@5.84.1):
     resolution: {integrity: sha512-RYyBIZABEGWqbmT/XD79YI29tFo4nBO69GFUPSp4wiQSJKR2qmlq0t7RB1T9E16zFMqn4M0K19N1ncWCp4s3QQ==}
     peerDependencies:
       '@nuxt/devtools': 0.5.5
@@ -1986,7 +1989,7 @@ packages:
       '@unocss/preset-mini': 0.52.5
       '@unocss/reset': 0.52.5
       '@vueuse/core': 10.1.2(vue@3.3.4)
-      '@vueuse/integrations': 10.1.2(axios@1.4.0)(focus-trap@7.4.3)(fuse.js@6.6.2)(vue@3.3.4)
+      '@vueuse/integrations': 10.1.2(axios@1.4.0)(focus-trap@7.4.3)(fuse.js@6.6.2)(sortablejs@1.15.0)(vue@3.3.4)
       '@vueuse/nuxt': 10.1.2(nuxt@3.5.2)(rollup@3.20.6)(vue@3.3.4)
       defu: 6.1.2
       focus-trap: 7.4.3
@@ -3305,7 +3308,7 @@ packages:
       - '@vue/composition-api'
       - vue
 
-  /@vueuse/integrations@10.1.2(axios@1.4.0)(focus-trap@7.4.3)(fuse.js@6.6.2)(vue@3.3.4):
+  /@vueuse/integrations@10.1.2(axios@1.4.0)(focus-trap@7.4.3)(fuse.js@6.6.2)(sortablejs@1.15.0)(vue@3.3.4):
     resolution: {integrity: sha512-wUpG3Wv6LiWerOwCzOAM0iGhNQ4vfFUTkhj/xQy7TLXduh2M3D8N08aS0KqlxsejY6R8NLxydDIM+68QfHZZ8Q==}
     peerDependencies:
       async-validator: '*'
@@ -3351,6 +3354,7 @@ packages:
       axios: 1.4.0
       focus-trap: 7.4.3
       fuse.js: 6.6.2
+      sortablejs: 1.15.0
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -9847,7 +9851,7 @@ packages:
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.5.2
     dev: true
 
   /safe-buffer@5.1.2:
@@ -10149,6 +10153,10 @@ packages:
     dependencies:
       ip: 2.0.0
       smart-buffer: 4.2.0
+    dev: true
+
+  /sortablejs@1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
     dev: true
 
   /source-map-js@1.0.2:
@@ -10604,10 +10612,6 @@ packages:
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
-
-  /tslib@2.5.0:
-    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
     dev: true
 
   /tslib@2.5.2:

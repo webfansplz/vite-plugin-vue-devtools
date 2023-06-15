@@ -92,7 +92,7 @@ function toggleClickOutside() {
           <div>
             <VDarkToggle v-slot="{ toggle, isDark }">
               <VButton n="primary" @click="toggle">
-                <div carbon-sun translate-y--1px dark:carbon-moon /> {{ isDark.value ? 'Dark' : 'Light' }}
+                <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
               </VButton>
             </VDarkToggle>
           </div>
