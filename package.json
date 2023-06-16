@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-vue-devtools",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "packageManager": "pnpm@8.4.0",
   "description": "A vite plugin for Vue Devtools",
   "author": "webfansplz",
@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
-    "@webfansplz/vuedoc-parser": "^0.0.2",
+    "@webfansplz/vuedoc-parser": "^0.0.3",
     "algoliasearch": "^4.17.1",
     "birpc": "^0.2.12",
     "execa": "^7.1.1",
