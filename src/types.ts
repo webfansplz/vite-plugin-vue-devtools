@@ -86,6 +86,7 @@ export interface BuiltinTab {
   title: string
   icon: string
   category?: string
+  hidden: boolean
   key: BuiltinTabKey
 }
 

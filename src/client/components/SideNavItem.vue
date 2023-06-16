@@ -10,7 +10,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <VTooltip placement="right">
+  <VTooltip v-if="!tab.hidden" placement="right">
     <Component
       :is="tab.path ? 'RouterLink' : 'button'"
       replace

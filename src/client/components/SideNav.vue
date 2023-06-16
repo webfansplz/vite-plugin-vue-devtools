@@ -5,6 +5,10 @@ import type { BuiltinTab } from '../../types'
 const categories = useCategorizedTabs()
 const sortList = reactive<HTMLElement[]>([])
 
+watch(categories, () => {
+  console.log(categories.value)
+})
+
 function initGroups() {
   const len = categories.value.length
   const MappingKeys = {
@@ -22,10 +26,10 @@ function initGroups() {
       categories: categories.value,
     }
 
-    const old = oldList.splice(evt.oldIndex, 1)[0] as BuiltinTab
-    old.category = MappingKeys[i]
+    const old = (oldList.splice(evt.oldIndex, 1)[0] as BuiltinTab)
 
     newList.splice(evt.newIndex, 0, old)
+    old.category = MappingKeys[i]
 
     useSortCategories(innerMove);
 
@@ -70,7 +74,9 @@ onMounted(() => {
             sortList[idx] = el as HTMLElement
           }" :class="[`sortEl${idx}`]"
         >
-          <SideNavItem v-for="tab of tabs" :key="tab.key" :data-key="`${name}-${tab.key}`" :tab="tab" />
+          <div v-for="tab of tabs" :key="tab.key" :data-key="`${name}-${tab.key}`">
+            <SideNavItem v-show="!tab.hidden" :tab="tab" />
+          </div>
         </div>
       </template>
       <div flex-auto />

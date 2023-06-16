@@ -26,6 +26,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Overview',
     icon: 'i-carbon-information',
     category: 'app',
+    hidden: false,
     key: BuiltinTabKey.OVERVIEW_KEY,
   },
   {
@@ -33,6 +34,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Pages',
     category: 'app',
     icon: 'i-carbon-tree-view-alt',
+    hidden: false,
     key: BuiltinTabKey.PAGES_KEY,
   },
   {
@@ -40,6 +42,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Components',
     category: 'app',
     icon: 'i-carbon-assembly-cluster',
+    hidden: false,
     key: BuiltinTabKey.COMPONENTS_KEY,
   },
   {
@@ -47,6 +50,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Assets',
     category: 'app',
     icon: 'i-carbon-image-copy',
+    hidden: false,
     key: BuiltinTabKey.ASSETS_KEY,
   },
 
@@ -55,6 +59,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Timeline',
     category: 'app',
     icon: 'i-icon-park-outline:vertical-timeline',
+    hidden: false,
     key: BuiltinTabKey.TIMELINE_KEY,
   },
   {
@@ -62,6 +67,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Pinia',
     icon: 'icon-park-outline:pineapple',
     category: 'modules',
+    hidden: false,
     key: BuiltinTabKey.PINIA_KEY,
   },
   {
@@ -69,6 +75,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Routes',
     icon: 'gis:map-route',
     category: 'modules',
+    hidden: false,
     key: BuiltinTabKey.ROUTES_KEY,
   },
   {
@@ -79,6 +86,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
       router.replace('/__inspecting')
       client?.inspector?.enable()
     },
+    hidden: false,
     key: BuiltinTabKey.INSPECTORE_KEY,
   },
   {
@@ -89,6 +97,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
       router.replace('/__eyedropper')
       client.panel?.toggleViewMode('xs')
     },
+    hidden: false,
     key: BuiltinTabKey.EyeDropper_KEY,
   },
   {
@@ -103,6 +112,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Search packages',
     icon: 'i-teenyicons:npm-outline',
     category: 'advanced',
+    hidden: false,
     key: BuiltinTabKey.NPM_KEY,
   },
   {
@@ -110,6 +120,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     path: 'graph',
     icon: 'i-carbon-network-4',
     category: 'advanced',
+    hidden: false,
     key: BuiltinTabKey.GRAPH_KEY,
   },
   {
@@ -117,6 +128,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Inspect',
     icon: 'i-carbon-ibm-watson-discovery',
     category: 'advanced',
+    hidden: false,
     key: BuiltinTabKey.INSPECT_KEY,
   },
   {
@@ -124,6 +136,7 @@ const builtinTabs: BuiltinTab[] = ((localBuiltinTabs && JSON.parse(localBuiltinT
     title: 'Documentations',
     icon: 'i-carbon-document',
     category: 'advanced',
+    hidden: false,
     key: BuiltinTabKey.DOCUMENTATIONS_KEY,
   },
 ])
@@ -133,7 +146,14 @@ export function useTabs() {
   const settings = useDevToolsSettings()
   return {
     enabled: computed(() => {
-      return builtinTabs.filter(tab => !settings.hiddenTabs.value.includes(tab.title ?? ''))
+      return builtinTabs.map((tab) => {
+        if (settings.hiddenTabs.value.includes(tab.title))
+          tab.hidden = true
+        else
+          tab.hidden = false
+
+        return tab
+      })
     }),
     all: computed(() => builtinTabsSettings),
   }
