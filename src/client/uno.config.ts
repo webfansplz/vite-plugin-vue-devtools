@@ -72,7 +72,7 @@ export default defineConfig({
     'i-carbon-tree-view-alt',
     'i-carbon-assembly-cluster',
     'i-carbon-image-copy',
-    'gis:map-route',
+    'mdi:location-path',
     'icon-park-outline:pineapple',
     'i-icon-park-outline:vertical-timeline',
     'i-carbon-network-4',

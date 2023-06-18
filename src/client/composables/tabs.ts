@@ -25,7 +25,7 @@ const builtinTabs: BuiltinTab[] = [
   {
     path: 'routes',
     title: 'Routes',
-    icon: 'gis:map-route',
+    icon: 'mdi:location-path',
     category: 'modules',
   },
   {
