@@ -9,6 +9,10 @@ const client = useDevtoolsClient()
 
 const dockButton = [
   {
+    position: 'popup',
+    icon: 'i-carbon-launch',
+  },
+  {
     position: 'bottom',
     icon: 'i-carbon-open-panel-filled-bottom',
   },
@@ -28,6 +32,9 @@ const dockButton = [
 
 function toggle(position: string) {
   client.value?.panel?.togglePosition(position)
+  if (position === 'popup')
+    return
+
   _position.value = position
 }
 </script>
@@ -35,8 +42,7 @@ function toggle(position: string) {
 <template>
   <div flex="~ gap-1" text-lg>
     <button
-      v-for="item in dockButton"
-      :key="item.position"
+      v-for="item in dockButton" :key="item.position"
       :class="[frameState.position === item.position ? 'text-primary' : 'op50', item.icon]"
       @click="toggle(item.position)"
     />

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 
 // Reuse @vuejs/devtools instance first
@@ -28,11 +28,15 @@ const PANEL_MIN = 15
 const PANEL_MAX = 100
 const PANEL_PADDING = 10
 
-const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools/`
+const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools__/`
 const iframe = ref()
+const isDragging = ref(false)
+const modalRef = ref(null)
+const isInPopup = ref(false)
 
 const hookBuffer = []
 let isAppCreated = false
+let innerIframe = null
 
 /** -----panel start-----**/
 const panelVisible = ref(false)
@@ -150,8 +154,70 @@ function initPanelPosition() {
   }
 }
 
+function getIframe() {
+  iframe.value = document.createElement('iframe')
+  iframe.value.id = 'vue-devtools-iframe'
+  iframe.value.src = clientUrl
+  iframe.value.setAttribute('data-v-inspector-ignore', 'true')
+  iframe.value.onload = async () => {
+    await waitForClientInjection()
+    setupClient()
+  }
+  return iframe.value
+}
+
+watchEffect(() => {
+  if (!modalRef.value || isInPopup.value)
+    return
+
+  if (panelVisible.value) {
+    const iframe = getIframe()
+    iframe.style.pointerEvents = isDragging.value ? 'none' : 'auto'
+
+    if (!innerIframe && Array.from(modalRef.value.children).every(el => el !== iframe))
+      modalRef.value.appendChild(iframe)
+
+    innerIframe = iframe
+  }
+})
+
+// Experimental: Picture-in-Picture mode
+// https://developer.chrome.com/docs/web-platform/document-picture-in-picture/
+const documentPictureInPicture = window.documentPictureInPicture
+// if (documentPictureInPicture?.requestWindow) {
+async function popup() {
+  const iframe = getIframe()
+  const pip = await documentPictureInPicture.requestWindow({
+    width: Math.round(window.innerWidth * 80 / 100),
+    height: Math.round(window.innerHeight * 60 / 100),
+  })
+  const style = pip.document.createElement('style')
+  style.innerHTML = `
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        iframe {
+          width: 100vw;
+          height: 100vh;
+          border: none;
+          outline: none;
+        }
+      `
+  pip.__VUE_DEVTOOLS_GLOBAL_HOOK__ = props.hook
+  pip.document.title = 'Vue DevTools'
+  pip.document.head.appendChild(style)
+  pip.document.body.appendChild(iframe)
+  pip.addEventListener('resize', () => {
+  })
+  pip.addEventListener('pagehide', () => {
+    pip.close()
+    isInPopup.value = false
+  })
+}
+// }
+
 /** -----resize start-----**/
-const isDragging = ref(false)
 const resizeBaseClassName = 'vue-devtools-resize-handle'
 const resizeVerticalClassName = [resizeBaseClassName, `${resizeBaseClassName}-vertical`]
 const resizeHorizontalClassName = [resizeBaseClassName, `${resizeBaseClassName}-horizontal`]
@@ -266,6 +332,11 @@ function setupClient() {
       toggleViewMode,
       toggle: togglePanel,
       togglePosition(position) {
+        if (position === 'popup') {
+          isInPopup.value = true
+          popup()
+          return
+        }
         panelState.value.position = position
       },
     },
@@ -380,11 +451,6 @@ function collectHookBuffer() {
 collectHookBuffer()
 initPanelPosition()
 
-async function onLoad() {
-  await waitForClientInjection()
-  setupClient()
-}
-
 onMounted(() => {
   window.addEventListener('keydown', (e) => {
     if (e.code === 'KeyD' && e.altKey && e.shiftKey)
@@ -393,7 +459,6 @@ onMounted(() => {
 })
 
 const toggleButtonRef = ref(null)
-const modalRef = ref(null)
 
 window.addEventListener('click', (event) => {
   const modalEl = modalRef.value
@@ -410,13 +475,7 @@ window.addEventListener('click', (event) => {
 </script>
 
 <template>
-  <div ref="modalRef" class="vue-devtools-panel" :style="panelPosition">
-    <!-- client -->
-    <iframe
-      ref="iframe" :src="clientUrl" :style="{
-        'pointer-events': isDragging ? 'none' : 'auto',
-      }" @load="onLoad"
-    />
+  <div v-show="!isInPopup" ref="modalRef" class="vue-devtools-panel" :style="panelPosition">
     <!-- resize -->
     <template v-if="panelState.viewMode === 'default'">
       <template v-if="panelState.position !== 'top'">
@@ -458,7 +517,7 @@ window.addEventListener('click', (event) => {
   </div>
   <!-- toggle button -->
   <button
-    ref="toggleButtonRef" class="vue-devtools-toggle" aria-label="Toggle devtools panel"
+    v-show="!isInPopup" ref="toggleButtonRef" class="vue-devtools-toggle" aria-label="Toggle devtools panel"
     :style="toggleButtonPosition" @click.prevent="togglePanel"
   >
     <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -477,7 +536,7 @@ window.addEventListener('click', (event) => {
   height: calc(60vh - 20px);
 }
 
-.vue-devtools-panel iframe {
+.vue-devtools-panel :deep(iframe) {
   width: 100%;
   height: 100%;
   outline: 0;
