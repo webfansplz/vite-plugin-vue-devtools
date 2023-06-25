@@ -1,10 +1,14 @@
+<script setup lang="ts">
+import { isInPopup } from '../logic/state'
+</script>
+
 <template>
   <div>
-    <div px3 py2 border="b base" flex="~ col gap-1">
+    <div v-if="!isInPopup" px3 py2 border="b base" flex="~ col gap-1">
       <div text-sm op50>
         Dock devtools to
       </div>
-      <VPanelPosition />
+      <PanelPosition />
     </div>
     <div px3 py2 border="b base" flex="~ gap-2">
       <VDarkToggle v-slot="{ toggle, isDark }">

@@ -169,3 +169,15 @@ textarea {
 .dark::view-transition-new(root) {
   z-index: 1;
 }
+
+.popup-dialog a {
+  --uno: hover:text-primary;
+}
+
+.popup-dialog h1 {
+  --uno: my-4 font-bold;
+}
+
+.popup-dialog p {
+  --uno: my-4;
+}

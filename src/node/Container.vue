@@ -184,7 +184,6 @@ watchEffect(() => {
 // Experimental: Picture-in-Picture mode
 // https://developer.chrome.com/docs/web-platform/document-picture-in-picture/
 const documentPictureInPicture = window.documentPictureInPicture
-// if (documentPictureInPicture?.requestWindow) {
 async function popup() {
   const iframe = getIframe()
   const pip = await documentPictureInPicture.requestWindow({
@@ -205,6 +204,7 @@ async function popup() {
         }
       `
   pip.__VUE_DEVTOOLS_GLOBAL_HOOK__ = props.hook
+  pip.__VUE_DEVTOOLS_IS_POPUP__ = true
   pip.document.title = 'Vue DevTools'
   pip.document.head.appendChild(style)
   pip.document.body.appendChild(iframe)
@@ -215,7 +215,6 @@ async function popup() {
     isInPopup.value = false
   })
 }
-// }
 
 /** -----resize start-----**/
 const resizeBaseClassName = 'vue-devtools-resize-handle'
@@ -461,6 +460,8 @@ onMounted(() => {
 const toggleButtonRef = ref(null)
 
 window.addEventListener('click', (event) => {
+  if (isInPopup.value)
+    return
   const modalEl = modalRef.value
   const toggleButtonEl = toggleButtonRef.value
   if (!modalEl || !toggleButtonEl || event.composedPath().includes(modalEl) || event.composedPath().includes(toggleButtonEl))

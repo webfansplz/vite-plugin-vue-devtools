@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { isInPopup } from '../logic/state'
+
 const {
   scale,
   hiddenTabs,
@@ -77,12 +79,12 @@ function toggleClickOutside() {
         </template>
       </div>
       <div>
-        <div py3 flex="~ col gap-1" border="b base">
+        <div v-if="!isInPopup" py3 flex="~ col gap-1" border="b base">
           <h3 mb1 text-lg>
             Position
           </h3>
           <div>
-            <VPanelPosition />
+            <PanelPosition />
           </div>
         </div>
         <div py3 flex="~ col gap-1" border="b base">
@@ -111,7 +113,10 @@ function toggleClickOutside() {
           <h3 mb1 text-lg>
             Close DevTools when clicking outside
           </h3>
-          <VSwitch flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick" @update:model-value="toggleClickOutside" />
+          <VSwitch
+            flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick"
+            @update:model-value="toggleClickOutside"
+          />
         </div>
       </div>
     </div>

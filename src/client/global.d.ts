@@ -19,6 +19,7 @@ declare interface PerformanceTimeline {
 interface Window {
   __VUE_DEVTOOLS_GET_PERFORMANCE_TIMELINE__: () => PerformanceTimeline[]
   __VUE_DEVTOOLS_GLOBAL_HOOK__: any
+  __VUE_DEVTOOLS_IS_POPUP__: boolean
   __VUE_DEVTOOLS_VIEW__: Record<'setClient', unknown>
 }
 
