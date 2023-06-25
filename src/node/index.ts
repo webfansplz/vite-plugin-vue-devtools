@@ -36,7 +36,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
 
   function configureServer(server: ViteDevServer) {
     const base = (server.config.base) || '/'
-    server.middlewares.use(`${base}__devtools`, sirv(DIR_CLIENT, {
+    server.middlewares.use(`${base}__devtools__`, sirv(DIR_CLIENT, {
       single: true,
       dev: true,
     }))
