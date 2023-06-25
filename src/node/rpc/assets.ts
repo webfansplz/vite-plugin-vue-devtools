@@ -28,7 +28,7 @@ export async function getStaticAssets(config: ResolvedConfig): Promise<AssetInfo
 
   const files = await fg([
     // image
-    '**/*.(a?png|jpe?g|gif|svg|webp|avif|ico|bmp|tiff)',
+    '**/*.(png|jpg|jpeg|gif|svg|webp|avif|ico|bmp|tiff)',
     // video
     '**/*.(mp4|webm|ogv|mov|avi|flv|wmv|mpg|mpeg|mkv|3gp|3g2|m2ts|vob|ogm|ogx|rm|rmvb|asf|amv|divx|m4v|svi|viv|f4v|f4p|f4a|f4b)',
     // audio
