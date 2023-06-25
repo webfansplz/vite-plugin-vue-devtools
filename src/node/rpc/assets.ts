@@ -36,7 +36,7 @@ export async function getStaticAssets(config: ResolvedConfig): Promise<AssetInfo
     // font
     '**/*.(woff2?|eot|ttf|otf|ttc|pfa|pfb|pfm|afm)',
     // text
-    '**/*.(json[5c]?|te?xt|[mc]?[jt]sx?|md[cx]?|markdown)',
+    '**/*.(json|json5|jsonc|txt|text|tsx|jsx|md|mdx|mdc|markdown)',
   ], {
     cwd: dir,
     onlyFiles: true,
