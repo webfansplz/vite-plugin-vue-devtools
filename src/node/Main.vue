@@ -326,7 +326,7 @@ function setupClient() {
     },
     panel: {
       toggleViewMode,
-      toggle: togglePanel,
+      toggle: togglePanelVisible,
       togglePosition(position) {
         if (position === 'popup') {
           isInPopup.value = true
