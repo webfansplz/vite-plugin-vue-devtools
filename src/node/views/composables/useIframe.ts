@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 export function useIframe(clientUrl: string, onLoad: () => void) {
   const iframe = ref<HTMLIFrameElement>()
   function getIframe() {
@@ -11,5 +13,6 @@ export function useIframe(clientUrl: string, onLoad: () => void) {
 
   return {
     getIframe,
+    iframe,
   }
 }

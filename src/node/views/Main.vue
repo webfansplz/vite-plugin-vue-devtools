@@ -1,13 +1,116 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+
+// @ts-expect-error virtual module
+import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import Frame from './FrameBox.vue'
-import { state, usePanelVisible, usePosition } from './composables'
+import { state, usePanelVisible, usePiPMode, usePosition } from './composables'
 import { checkIsSafari } from './utils'
+import { useIframe } from './composables/useIframe'
 
 const props = defineProps({
   hook: {
     type: Object,
+    required: true,
   },
+})
+
+const hook = props.hook
+
+const DevToolsHooks = {
+  APP_INIT: 'app:init',
+  COMPONENT_UPDATED: 'component:updated',
+  COMPONENT_ADDED: 'component:added',
+  COMPONENT_REMOVED: 'component:removed',
+  COMPONENT_EMIT: 'component:emit',
+  PERF_START: 'perf:start',
+  PERF_END: 'perf:end',
+  ADD_ROUTE: 'router:add-route',
+  REMOVE_ROUTE: 'router:remove-route',
+}
+
+const hookBuffer = []
+
+const isAppCreated = false
+const isInPopup = ref(false)
+
+function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout = 200): Promise<void> | void {
+  const test = () => !!iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__ && isAppCreated
+
+  if (test())
+    return
+
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (test()) {
+        clearInterval(interval)
+        resolve()
+      }
+      else if (retry-- <= 0) {
+        clearInterval(interval)
+        reject(Error('Vue Devtools client injection failed'))
+      }
+    }, timeout)
+  })
+}
+
+function enableComponentInspector() {
+  window.__VUE_INSPECTOR__?.enable()
+  // FIXME: inspector
+  // panelState.value.viewMode = 'xs'
+}
+
+function disableComponentInspector() {
+  window.__VUE_INSPECTOR__?.disable()
+  hook.emit('host:inspector:close')
+  // FIXME: inspector
+  // if (panelState.value.viewMode === 'xs')
+  //   panelState.value.viewMode = 'default'
+}
+
+function setupClient(iframe: HTMLIFrameElement) {
+  const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+  const componentInspector = window.__VUE_INSPECTOR__
+  if (componentInspector) {
+    const _openInEditor = componentInspector.openInEditor
+    componentInspector.openInEditor = async (...params: any[]) => {
+      disableComponentInspector()
+      _openInEditor(...params)
+    }
+  }
+  injection.setClient({
+    hook,
+    hookBuffer,
+    inspector: {
+      enable: enableComponentInspector,
+      disable: disableComponentInspector,
+    },
+    // FIXME: injection code
+    panel: {
+      // toggleViewMode,
+      // toggle: togglePanel,
+      // togglePosition(position) {
+      //   if (position === 'popup') {
+      //     isInPopup.value = true
+      //     popup()
+      //     return
+      //   }
+      //   panelState.value.position = position
+      // },
+    },
+  })
+}
+
+const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools__/`
+const { iframe, getIframe } = useIframe(clientUrl, async () => {
+  const iframe = getIframe()
+  await waitForClientInjection(iframe)
+  setupClient(iframe)
+})
+
+// Picture-in-Picture mode
+const { popup } = usePiPMode(iframe.value!, hook, () => {
+  isInPopup.value = false
 })
 
 const { togglePanelVisible } = usePanelVisible()
