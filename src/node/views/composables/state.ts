@@ -1,6 +1,6 @@
-import type { DevToolsFrameState } from '../../client/composables/state'
+import type { DevToolsFrameState } from '../../../client/composables/state'
 import { useObjectStorage } from '../utils'
-import { FRAME_STATE_STORAGE_KEY } from '../../client/constants'
+import { FRAME_STATE_STORAGE_KEY } from '../../../client/constants'
 
 export const state = useObjectStorage<DevToolsFrameState>(FRAME_STATE_STORAGE_KEY, {
   width: 80,

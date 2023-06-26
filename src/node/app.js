@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue'
-import App from 'virtual:vue-devtools-path:Main.vue'
+import App from 'virtual:vue-devtools-path:views/Main.vue'
 
 const hook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
   events: new Map(),
