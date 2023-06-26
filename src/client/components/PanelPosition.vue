@@ -7,6 +7,7 @@ const frameState = computed(() => ({ position: _position.value }))
 
 const client = useDevtoolsClient()
 const showPopupUnsupported = ref(false)
+const copy = useCopy()
 
 const dockButton = [
   {
@@ -76,7 +77,12 @@ function toggle(position: string) {
       <code>#document-picture-in-picture-api</code>.
     </p>
     <p>
-      You currently browser seems not supporting the API or the flag is not enabled yet.
+      Your current browser does not seem to support the API, or the flag is not enabled yet.
+      You can try enabling the flag by visiting
+      <VButton n="xs primary" title="Click to Copy" @click="copy('chrome://flags/#document-picture-in-picture-api')">
+        chrome://flags/#document-picture-in-picture-api
+      </VButton>
+      and restart the browser.
     </p>
     <div>
       <VButton @click="showPopupUnsupported = false">
