@@ -3,6 +3,8 @@ import { ref } from 'vue'
 export function useIframe(clientUrl: string, onLoad: () => void) {
   const iframe = ref<HTMLIFrameElement>()
   function getIframe() {
+    if (iframe.value)
+      return iframe.value
     iframe.value = document.createElement('iframe')
     iframe.value.id = 'vue-devtools-iframe'
     iframe.value.src = clientUrl

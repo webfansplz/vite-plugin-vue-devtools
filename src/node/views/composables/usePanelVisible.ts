@@ -9,6 +9,11 @@ export function usePanelVisible() {
     visible.value = !visible.value
     state.value.open = visible.value
   }
+
+  const closePanel = () => {
+    visible.value = false
+    state.value.open = false
+  }
   onMounted(() => {
     useWindowEventListener('keydown', (e) => {
       // cmd + shift + D in <macOS>
@@ -21,5 +26,6 @@ export function usePanelVisible() {
   return {
     panelVisible: visible,
     togglePanelVisible: toggleVisible,
+    closePanel,
   }
 }
