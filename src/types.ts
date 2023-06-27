@@ -61,10 +61,6 @@ export interface ModulesList {
 
 export interface VueDevtoolsHostClient {
   markClientLoaded: () => void
-  inspector?: {
-    enable: () => void
-    disable: () => void
-  }
   panel?: {
     toggleViewMode: (mode?: 'xs' | 'default') => void
     togglePosition: (position: string) => void

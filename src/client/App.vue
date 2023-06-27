@@ -13,7 +13,6 @@ useColorMode()
 
 hookApi.hook.on('init:vue:app', () => {
   const client = useDevtoolsClient()
-  const frameState = useFrameState()
   const categorizedHookBuffer = client.value.categorizedHookBuffer
   // mark client as loaded
   client.value.markClientLoaded()
@@ -28,10 +27,6 @@ hookApi.hook.on('init:vue:app', () => {
   initRoutes(categorizedHookBuffer.router ?? [])
   // init pinia
   initPinia()
-  hookApi.hook.on('host:inspector:close', () => {
-    if (route.path === '/__inspecting')
-      router.replace(frameState.route.value)
-  })
 })
 
 router.beforeEach((to, _, next) => {

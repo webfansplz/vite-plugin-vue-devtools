@@ -54,8 +54,10 @@ watch(keywords, () => {
       <Pane border="r base">
         <div h-full select-none overflow-scroll p-2 class="no-scrollbar">
           <ul v-if="list.length">
-            <li v-for="(file, index) in list" :key="index" :class="[activeFileIndex === index ? 'op100' : 'op60']"
-              hover="op100" h-8 cursor-pointer of-hidden text-ellipsis lh-8 @click="toggle(index)">
+            <li
+              v-for="(file, index) in list" :key="index" :class="[activeFileIndex === index ? 'op100' : 'op60']"
+              hover="op100" h-8 cursor-pointer of-hidden text-ellipsis lh-8 @click="toggle(index)"
+            >
               {{ file }}
             </li>
           </ul>
@@ -70,10 +72,12 @@ watch(keywords, () => {
       </Pane>
       <Pane>
         <div h-full select-none overflow-scroll p-2 class="no-scrollbar">
-          <JsonEditorVue v-show="list.length" v-model="content" h-full class="json-editor-vue" :class="[
-            colorMode === 'dark' ? 'jse-theme-dark' : '',
-          ]" :main-menu-bar="false" :navigation-bar="false" :status-bar="false" :read-only="true" :indentation="2"
-            :tab-size="2" />
+          <JsonEditorVue
+            v-show="list.length" v-model="content" h-full class="json-editor-vue" :class="[
+              colorMode === 'dark' ? 'jse-theme-dark' : '',
+            ]" :main-menu-bar="false" :navigation-bar="false" :status-bar="false" :read-only="true" :indentation="2"
+            :tab-size="2"
+          />
           <div v-show="!list.length" h-full flex items-center justify-center>
             <VCard flex="~ col gap2" min-w-30 items-center p3>
               <h1 text-sm italic op50>
