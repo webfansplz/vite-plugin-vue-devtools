@@ -258,7 +258,7 @@ collectHookBuffer()
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          style="height: 1.2em; width: 1.2em; opacity:0.5;"
+          style="height: 1.1em; width: 1.1em; opacity:0.5;"
           :style="inspectorEnabled ? 'opacity:1;color:#00dc82' : ''"
           viewBox="0 0 24 24"
         >
@@ -331,8 +331,8 @@ collectHookBuffer()
 }
 
 #vue-devtools-anchor .vue-devtools-icon-button svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 #vue-devtools-anchor:hover .vue-devtools-glowing {
@@ -348,7 +348,7 @@ collectHookBuffer()
   justify-content: center;
   align-items: center;
   gap: 2px;
-  height: 30px;
+  height: 20px;
   padding: 4px 4px 4px 5px;
   border: 1px solid var(--vue-devtools-widget-border);
   border-radius: 20px;
