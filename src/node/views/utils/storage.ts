@@ -45,7 +45,7 @@ export function useStorage<T>(key: string, initial: T, readonly = false) {
     watch(data, (value) => {
       if (updating)
         return
-      wrote = JSON.stringify(value)
+      wrote = `${value}`
       localStorage.setItem(key, wrote)
     }, { deep: true, flush: 'post' })
   }
