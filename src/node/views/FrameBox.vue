@@ -15,6 +15,7 @@ const props = defineProps<{
     } | undefined
   }
 
+  viewMode: 'default' | 'xs'
 }>()
 
 const container = ref<HTMLElement>()
@@ -106,6 +107,7 @@ useWindowEventListener('mouseleave', () => {
     v-show="state.open && !client.inspector?.isEnabled.value && !popupWindow"
     ref="container"
     class="vue-devtools-frame"
+    :class="{ 'view-mode-xs': props.viewMode === 'xs' }"
   >
     <!-- Handlers -->
     <div
@@ -201,5 +203,10 @@ useWindowEventListener('mouseleave', () => {
 }
 .vue-devtools-resize-handle:hover {
   background: rgba(125,125,125,0.1);
+}
+
+.vue-devtools-frame.view-mode-xs {
+  width: 400px !important;
+  height: 80px !important;
 }
 </style>

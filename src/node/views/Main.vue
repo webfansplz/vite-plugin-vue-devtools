@@ -33,7 +33,9 @@ const DevToolsHooks = {
 const hookBuffer: [string, { args: any[] }][] = []
 
 let isAppCreated = false
-const panelState = ref({
+const panelState = ref<{
+  viewMode: 'default' | 'xs'
+}>({
   viewMode: 'default',
 })
 
@@ -277,6 +279,7 @@ collectHookBuffer()
         },
         getIFrame: getIframe,
       }"
+      :view-mode="panelState.viewMode"
     />
   </div>
 </template>
