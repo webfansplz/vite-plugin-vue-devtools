@@ -1,8 +1,196 @@
+import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
 import type { CSSProperties, Ref } from 'vue'
-import { computed, onMounted, reactive, ref, watchEffect } from 'vue'
-import { clamp, useScreenSafeArea, useWindowEventListener } from '../utils'
-import { state } from './state'
+import type { DevToolsFrameState } from '../../client/composables/state'
+import { FRAME_STATE_STORAGE_KEY } from '../../client/constants'
+import { clamp, useObjectStorage, useScreenSafeArea, useWindowEventListener } from './utils'
 
+// ---- state ----
+export const PANEL_PADDING = 10
+export const PANEL_MIN = 20
+export const PANEL_MAX = 100
+
+export const popupWindow = shallowRef<Window | null>(null)
+
+export const state = useObjectStorage<DevToolsFrameState>(FRAME_STATE_STORAGE_KEY, {
+  width: 80,
+  height: 60,
+  top: 0,
+  left: 50,
+  open: false,
+  route: '/',
+  position: 'bottom',
+  isFirstVisit: true,
+  closeOnOutsideClick: false,
+})
+
+// ---- useIframe ----
+export function useIframe(clientUrl: string, onLoad: () => void) {
+  const iframe = ref<HTMLIFrameElement>()
+  function getIframe() {
+    if (iframe.value)
+      return iframe.value
+    iframe.value = document.createElement('iframe')
+    iframe.value.id = 'vue-devtools-iframe'
+    iframe.value.src = clientUrl
+    iframe.value.setAttribute('data-v-inspector-ignore', 'true')
+    iframe.value.onload = onLoad
+    return iframe.value
+  }
+
+  return {
+    getIframe,
+    iframe,
+  }
+}
+
+// ---- useInspector ----
+export function useInspector() {
+  const inspectorEnabled = ref(false)
+  const inspectorLoaded = ref(false)
+
+  const enable = () => {
+    window.__VUE_INSPECTOR__?.enable()
+    inspectorEnabled.value = true
+  }
+
+  const disable = () => {
+    window.__VUE_INSPECTOR__?.disable()
+    inspectorEnabled.value = false
+  }
+
+  const setupInspector = () => {
+    const componentInspector = window.__VUE_INSPECTOR__
+    if (componentInspector) {
+      const _openInEditor = componentInspector.openInEditor
+      componentInspector.openInEditor = async (...params: any[]) => {
+        disable()
+        _openInEditor(...params)
+      }
+    }
+  }
+
+  const waitForInspectorInit = () => {
+    const timer = setInterval(() => {
+      if (window.__VUE_INSPECTOR__) {
+        clearInterval(timer)
+        inspectorLoaded.value = true
+        setupInspector()
+      }
+    }, 30)
+  }
+
+  useWindowEventListener('keydown', (e: KeyboardEvent) => {
+    if (!inspectorEnabled.value || !inspectorLoaded.value)
+      return
+    if (e.key === 'Escape')
+      disable()
+  })
+
+  waitForInspectorInit()
+
+  return {
+    toggleInspector() {
+      if (!inspectorLoaded.value)
+        return
+      inspectorEnabled.value ? disable() : enable()
+    },
+    inspectorEnabled,
+    enableInspector: enable,
+    disableInspector: disable,
+    setupInspector,
+    inspectorLoaded,
+  }
+}
+
+// ---- usePanelVisible ----
+export function usePanelVisible() {
+  const visible = computed({
+    get() {
+      return state.value.open
+    },
+    set(value) {
+      state.value.open = value
+    },
+  })
+
+  const toggleVisible = () => {
+    visible.value = !visible.value
+  }
+
+  const closePanel = () => {
+    if (!visible.value)
+      return
+    visible.value = false
+    if (popupWindow.value) {
+      try {
+        popupWindow.value.close()
+      }
+      catch { }
+      popupWindow.value = null
+    }
+  }
+
+  onMounted(() => {
+    useWindowEventListener('keydown', (e) => {
+      // cmd + shift + D in <macOS>
+      // alt + shift + D in <Windows>
+      if (e.code === 'KeyD' && e.altKey && e.shiftKey)
+        toggleVisible()
+    })
+  })
+
+  return {
+    panelVisible: visible,
+    togglePanelVisible: toggleVisible,
+    closePanel,
+  }
+}
+
+// ---- usePipMode ----
+export function usePiPMode(iframeGetter: () => HTMLIFrameElement | undefined, hook: object) {
+  // Experimental: Picture-in-Picture mode
+  // https://developer.chrome.com/docs/web-platform/document-picture-in-picture/
+  // @ts-expect-error experimental API
+  const documentPictureInPicture = window.documentPictureInPicture
+  async function popup() {
+    const iframe = iframeGetter()
+    const pip = popupWindow.value = await documentPictureInPicture.requestWindow({
+      width: Math.round(window.innerWidth * state.value.width / 100),
+      height: Math.round(window.innerHeight * state.value.height / 100),
+    })
+    const style = pip.document.createElement('style')
+    style.innerHTML = `
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        iframe {
+          width: 100vw;
+          height: 100vh;
+          border: none;
+          outline: none;
+        }
+      `
+    pip.__VUE_DEVTOOLS_GLOBAL_HOOK__ = hook
+    pip.__VUE_DEVTOOLS_IS_POPUP__ = true
+    pip.document.title = 'Vue DevTools'
+    pip.document.head.appendChild(style)
+    pip.document.body.appendChild(iframe)
+    pip.addEventListener('resize', () => {
+      state.value.width = Math.round(pip.innerWidth / window.innerWidth * 100)
+      state.value.height = Math.round(pip.innerHeight / window.innerHeight * 100)
+    })
+    pip.addEventListener('pagehide', () => {
+      popupWindow.value = null
+      pip.close()
+    })
+  }
+  return {
+    popup,
+  }
+}
+
+// ---- usePosition ----
 const SNAP_THRESHOLD = 2
 
 function snapToPoints(value: number) {
@@ -132,7 +320,7 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
   const anchorStyle = computed(() => ({ left: `${anchorPos.value.left}px`, top: `${anchorPos.value.top}px` }))
 
   const iframeStyle = computed(() => {
-  // eslint-disable-next-line no-unused-expressions, no-sequences
+    // eslint-disable-next-line no-unused-expressions, no-sequences
     mousePosition.x, mousePosition.y
 
     const halfHeight = (panelEl.value?.clientHeight || 0) / 2
