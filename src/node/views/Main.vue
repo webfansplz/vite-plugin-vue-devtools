@@ -76,23 +76,13 @@ function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout =
 const {
   toggleInspector, inspectorLoaded,
   inspectorEnabled, disableInspector,
-  enableInspector, setupInspector,
-} = useInspector({
-  onEnable() {
-    panelState.value.viewMode = 'xs'
-  },
-  onDisable() {
-    if (panelState.value.viewMode === 'xs')
-      panelState.value.viewMode = 'default'
-    hook.emit('host:inspector:close')
-  },
-})
+  enableInspector,
+} = useInspector()
 
 const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools__/`
 const { iframe, getIframe } = useIframe(clientUrl, async () => {
   const iframe = getIframe()
   await waitForClientInjection(iframe)
-  setupInspector()
   setupClient(iframe)
 })
 
@@ -254,7 +244,8 @@ collectHookBuffer()
       </button>
       <div style="border-left: 1px solid #8883;width:1px;height:10px;" />
       <button
-        class="vue-devtools-icon-button"
+        class="vue-devtools-icon-button vue-devtools-inspector-button"
+        :class="{ disabled: !inspectorLoaded }"
         :disabled="!inspectorLoaded"
         title="Toggle Component Inspector" @click="toggleInspector"
       >
@@ -370,5 +361,23 @@ collectHookBuffer()
 #vue-devtools-anchor.vue-devtools-vertical .vue-devtools-button-panel {
   transform: translate(-50%, -50%) rotate(90deg);
   box-shadow: 2px -2px 8px var(--nuxt-devtools-widget-shadow);
+}
+
+#vue-devtools-anchor .vue-devtools-inspector-button.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.2;
+  }
 }
 </style>

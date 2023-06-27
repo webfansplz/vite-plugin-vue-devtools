@@ -1,22 +1,17 @@
 import { ref } from 'vue'
 
-export function useInspector({ onEnable, onDisable }: {
-  onEnable: () => void
-  onDisable: () => void
-}) {
+export function useInspector() {
   const inspectorEnabled = ref(false)
   const inspectorLoaded = ref(false)
 
   const enable = () => {
     window.__VUE_INSPECTOR__?.enable()
     inspectorEnabled.value = true
-    onEnable()
   }
 
   const disable = () => {
     window.__VUE_INSPECTOR__?.disable()
     inspectorEnabled.value = false
-    onDisable()
   }
 
   const setupInspector = () => {
@@ -27,9 +22,20 @@ export function useInspector({ onEnable, onDisable }: {
         disable()
         _openInEditor(...params)
       }
-      inspectorLoaded.value = true
     }
   }
+
+  const waitForInspectorInit = () => {
+    const timer = setInterval(() => {
+      if (window.__VUE_INSPECTOR__) {
+        clearInterval(timer)
+        inspectorLoaded.value = true
+        setupInspector()
+      }
+    }, 30)
+  }
+
+  waitForInspectorInit()
 
   return {
     toggleInspector() {
