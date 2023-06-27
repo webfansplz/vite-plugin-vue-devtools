@@ -13,22 +13,6 @@ const dockButton = [
     position: 'popup',
     icon: 'i-carbon-launch',
   },
-  {
-    position: 'bottom',
-    icon: 'i-carbon-open-panel-filled-bottom',
-  },
-  {
-    position: 'right',
-    icon: 'i-carbon-open-panel-filled-right',
-  },
-  {
-    position: 'left',
-    icon: 'i-carbon-open-panel-filled-left',
-  },
-  {
-    position: 'top',
-    icon: 'i-carbon-open-panel-filled-top',
-  },
 ]
 
 function toggle(position: string) {
