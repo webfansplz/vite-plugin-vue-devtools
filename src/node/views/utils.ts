@@ -1,8 +1,6 @@
 import { getCurrentScope, onScopeDispose, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 
-// ---- screen ----
-
 // ---- storage ----
 export function useObjectStorage<T>(key: string, initial: T, readonly = false): Ref<T> {
   const raw = localStorage.getItem(key)
@@ -89,6 +87,7 @@ export function useWindowEventListener<K extends keyof WindowEventMap>(
   useEventListener(window, type as keyof WindowEventHandlersEventMap, listener as EventListener, options)
 }
 
+// ---- screen ----
 const topVarName = '--vite-plugin-vue-devtools-safe-area-top'
 const rightVarName = '--vite-plugin-vue-devtools-devtools-safe-area-right'
 const bottomVarName = '--vite-plugin-vue-devtools-safe-area-bottom'

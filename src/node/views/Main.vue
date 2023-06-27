@@ -4,10 +4,8 @@ import { computed, ref } from 'vue'
 // @ts-expect-error virtual module
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import Frame from './FrameBox.vue'
-import { usePanelVisible, usePiPMode, usePosition } from './composables'
+import { useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
 import { checkIsSafari, useColorScheme } from './utils'
-import { useIframe } from './composables/useIframe'
-import { useInspector } from './composables/useInspector'
 
 const props = defineProps({
   hook: {
