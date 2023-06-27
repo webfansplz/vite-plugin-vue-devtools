@@ -1,5 +1,5 @@
 import {
-  computed, getCurrentScope, onScopeDispose, ref, toRef, watch, watchEffect,
+  computed, getCurrentScope, onScopeDispose, ref, watch, watchEffect,
 } from 'vue'
 import type { Ref } from 'vue'
 
@@ -173,7 +173,7 @@ export function useMediaQuery(query: string) {
 
     cleanup()
 
-    mediaQuery = window!.matchMedia(toRef(query).value)
+    mediaQuery = window!.matchMedia(ref(query).value)
     matches.value = !!mediaQuery?.matches
 
     if (!mediaQuery)
