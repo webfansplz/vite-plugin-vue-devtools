@@ -1,5 +1,13 @@
-import { getCurrentScope, onScopeDispose, ref, watch } from 'vue'
+import {
+  computed, getCurrentScope, onScopeDispose, ref, toRef, watch, watchEffect,
+} from 'vue'
 import type { Ref } from 'vue'
+
+export function tryOnScopeDispose(fn: () => void) {
+  const scope = getCurrentScope()
+  if (scope)
+    onScopeDispose(fn)
+}
 
 // ---- storage ----
 export function useObjectStorage<T>(key: string, initial: T, readonly = false): Ref<T> {
@@ -66,7 +74,6 @@ export const checkIsSafari = () => navigator.userAgent.includes('Safari') && !na
 export function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)
 }
-export const useColorScheme = () => useStorage('vueuse-color-scheme', 'auto', true)
 
 // ---- event ----
 export function useEventListener(
@@ -76,7 +83,7 @@ export function useEventListener(
   options?: boolean | AddEventListenerOptions,
 ) {
   target.addEventListener(type, listener, options)
-  getCurrentScope() && onScopeDispose(() => target.removeEventListener(type, listener, options))
+  tryOnScopeDispose(() => target.removeEventListener(type, listener, options))
 }
 
 export function useWindowEventListener<K extends keyof WindowEventMap>(
@@ -130,4 +137,68 @@ export function useScreenSafeArea() {
     left,
     update,
   }
+}
+
+// color-scheme
+export const useColorScheme = () => useStorage('vueuse-color-scheme', 'auto', true)
+
+/**
+ * Reactive Media Query.
+ *
+ * @see https://vueuse.org/useMediaQuery
+ * @param query
+ * @param options
+ */
+export function useMediaQuery(query: string) {
+  const isSupported = () => window && 'matchMedia' in window && typeof window.matchMedia === 'function'
+
+  let mediaQuery: MediaQueryList | undefined
+  const matches = ref(false)
+
+  const cleanup = () => {
+    if (!mediaQuery)
+      return
+    if ('removeEventListener' in mediaQuery)
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      mediaQuery.removeEventListener('change', update)
+    else
+      // @ts-expect-error deprecated API
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      mediaQuery.removeListener(update)
+  }
+
+  const update = () => {
+    if (!isSupported)
+      return
+
+    cleanup()
+
+    mediaQuery = window!.matchMedia(toRef(query).value)
+    matches.value = !!mediaQuery?.matches
+
+    if (!mediaQuery)
+      return
+
+    if ('addEventListener' in mediaQuery)
+      mediaQuery.addEventListener('change', update)
+    else
+      // @ts-expect-error deprecated API
+      mediaQuery.addListener(update)
+  }
+  watchEffect(update)
+
+  tryOnScopeDispose(() => cleanup())
+
+  return matches
+}
+/**
+ * Reactive prefers-color-scheme media query.
+ *
+ * @see https://vueuse.org/usePreferredColorScheme
+ * @param [options]
+ */
+export function usePreferredColorScheme() {
+  const isDark = useMediaQuery('(prefers-color-scheme: dark)')
+
+  return computed(() => isDark.value ? 'dark' : 'light')
 }

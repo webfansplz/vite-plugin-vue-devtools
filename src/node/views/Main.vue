@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import Frame from './FrameBox.vue'
 import { useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
-import { checkIsSafari, useColorScheme } from './utils'
+import { checkIsSafari, useColorScheme, usePreferredColorScheme } from './utils'
 
 const props = defineProps({
   hook: {
@@ -42,7 +42,9 @@ const panelEl = ref<HTMLDivElement>()
 const { onPointerDown, anchorStyle, iframeStyle, isDragging, isVertical } = usePosition(panelEl)
 const vars = computed(() => {
   const colorScheme = useColorScheme()
-  const dark = colorScheme.value === 'dark'
+  const dark = colorScheme.value === 'auto'
+    ? usePreferredColorScheme().value === 'dark'
+    : colorScheme.value === 'dark'
   return {
     '--vue-devtools-widget-bg': dark ? '#111' : '#ffffff',
     '--vue-devtools-widget-fg': dark ? '#F5F5F5' : '#111',
