@@ -1,8 +1,18 @@
 import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
 import type { CSSProperties, Ref } from 'vue'
-import type { DevToolsFrameState } from '../../client/composables/state'
-import { FRAME_STATE_STORAGE_KEY } from '../../client/constants'
 import { clamp, useObjectStorage, useScreenSafeArea, useWindowEventListener } from './utils'
+
+interface DevToolsFrameState {
+  width: number
+  height: number
+  top: number
+  left: number
+  open: boolean
+  route: string
+  position: string
+  isFirstVisit: boolean
+  closeOnOutsideClick: boolean
+}
 
 // ---- state ----
 export const PANEL_PADDING = 10
@@ -11,7 +21,7 @@ export const PANEL_MAX = 100
 
 export const popupWindow = shallowRef<Window | null>(null)
 
-export const state = useObjectStorage<DevToolsFrameState>(FRAME_STATE_STORAGE_KEY, {
+export const state = useObjectStorage<DevToolsFrameState>('__vue-devtools-frame-state__', {
   width: 80,
   height: 60,
   top: 0,
