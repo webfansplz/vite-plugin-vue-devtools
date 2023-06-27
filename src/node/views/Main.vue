@@ -341,7 +341,7 @@ collectHookBuffer()
   justify-content: center;
   align-items: center;
   gap: 2px;
-  height: 20px;
+  height: 30px;
   padding: 4px 4px 4px 5px;
   box-sizing: border-box;
   border: 1px solid var(--vue-devtools-widget-border);
