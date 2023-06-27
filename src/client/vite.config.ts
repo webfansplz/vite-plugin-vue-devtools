@@ -7,7 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 
 export default defineConfig({
-  base: '/__devtools__/',
+  base: './',
 
   resolve: {
     alias: {
