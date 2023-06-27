@@ -31,12 +31,22 @@ export function useObjectStorage<T>(key: string, initial: T, readonly = false): 
     }, { deep: true, flush: 'post' })
   }
 
+  const storageChanged = (newValue: string) => {
+    updating = true
+    data.value = JSON.parse(newValue)
+    updating = false
+  }
+
   useWindowEventListener('storage', (e: StorageEvent) => {
-    if (e.key === key && e.newValue && e.newValue !== wrote) {
-      updating = true
-      data.value = JSON.parse(e.newValue)
-      updating = false
-    }
+    if (e.key === key && e.newValue && e.newValue !== wrote)
+      storageChanged(e.newValue)
+  })
+
+  // @ts-expect-error custom event
+  useWindowEventListener('vueuse-storage', (e: CustomEvent) => {
+    const event = e.detail as StorageEvent
+    if (event.key === key && event.newValue && event.newValue !== wrote)
+      storageChanged(event.newValue)
   })
 
   return data
@@ -58,12 +68,22 @@ export function useStorage<T>(key: string, initial: T, readonly = false) {
     }, { deep: true, flush: 'post' })
   }
 
+  const storageChanged = (newValue: string) => {
+    updating = true
+    data.value = newValue
+    updating = false
+  }
+
   useWindowEventListener('storage', (e: StorageEvent) => {
-    if (e.key === key && e.newValue && e.newValue !== wrote) {
-      updating = true
-      data.value = e.newValue
-      updating = false
-    }
+    if (e.key === key && e.newValue && e.newValue !== wrote)
+      storageChanged(e.newValue)
+  })
+
+  // @ts-expect-error custom event
+  useWindowEventListener('vueuse-storage', (e: CustomEvent) => {
+    const event = e.detail as StorageEvent
+    if (event.key === key && event.newValue && event.newValue !== wrote)
+      storageChanged(event.newValue)
   })
 
   return data
