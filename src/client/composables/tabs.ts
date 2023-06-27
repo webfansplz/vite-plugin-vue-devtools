@@ -39,15 +39,16 @@ const builtinTabs: BuiltinTab[] = [
     title: 'Timeline',
     icon: 'i-icon-park-outline:vertical-timeline',
   },
-  {
-    title: 'Inspector',
-    icon: 'i-carbon-select-window',
-    category: 'advanced',
-    event: (client, router) => {
-      router.replace('/__inspecting')
-      client?.inspector?.enable()
-    },
-  },
+  // migrate to inspector button
+  // {
+  //   title: 'Inspector',
+  //   icon: 'i-carbon-select-window',
+  //   category: 'advanced',
+  //   event: (client, router) => {
+  //     router.replace('/__inspecting')
+  //     client?.inspector?.enable()
+  //   },
+  // },
   {
     title: 'EyeDropper',
     icon: 'i-mdi:eyedropper',
