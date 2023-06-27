@@ -1,12 +1,15 @@
-export function usePiPMode(iframe: HTMLIFrameElement, hook: object, hideCb: () => void) {
+import { popupWindow, state } from './state'
+
+export function usePiPMode(iframeGetter: () => HTMLIFrameElement | undefined, hook: object) {
   // Experimental: Picture-in-Picture mode
   // https://developer.chrome.com/docs/web-platform/document-picture-in-picture/
   // @ts-expect-error experimental API
   const documentPictureInPicture = window.documentPictureInPicture
   async function popup() {
-    const pip = await documentPictureInPicture.requestWindow({
-      width: Math.round(window.innerWidth * 80 / 100),
-      height: Math.round(window.innerHeight * 60 / 100),
+    const iframe = iframeGetter()
+    const pip = popupWindow.value = await documentPictureInPicture.requestWindow({
+      width: Math.round(window.innerWidth * state.value.width / 100),
+      height: Math.round(window.innerHeight * state.value.height / 100),
     })
     const style = pip.document.createElement('style')
     style.innerHTML = `
@@ -27,11 +30,12 @@ export function usePiPMode(iframe: HTMLIFrameElement, hook: object, hideCb: () =
     pip.document.head.appendChild(style)
     pip.document.body.appendChild(iframe)
     pip.addEventListener('resize', () => {
+      state.value.width = Math.round(pip.innerWidth / window.innerWidth * 100)
+      state.value.height = Math.round(pip.innerHeight / window.innerHeight * 100)
     })
     pip.addEventListener('pagehide', () => {
+      popupWindow.value = null
       pip.close()
-      hideCb()
-      isInPopup.value = false
     })
   }
   return {

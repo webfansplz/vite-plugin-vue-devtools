@@ -30,14 +30,11 @@ const DevToolsHooks = {
   REMOVE_ROUTE: 'router:remove-route',
 }
 
-const hookBuffer = []
+const hookBuffer: [string, { args: any[] }][] = []
 
 let isAppCreated = false
-const isInPopup = ref(false)
 const panelState = ref({
   viewMode: 'default',
-  width: 80,
-  height: 60,
 })
 
 const { togglePanelVisible, closePanel, panelVisible } = usePanelVisible()
@@ -73,7 +70,11 @@ function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout =
   })
 }
 
-const { toggleInspector, inspectorEnabled, disableInspector, enableInspector } = useInspector({
+const {
+  toggleInspector, inspectorLoaded,
+  inspectorEnabled, disableInspector,
+  enableInspector, setupInspector,
+} = useInspector({
   onEnable() {
     panelState.value.viewMode = 'xs'
   },
@@ -88,27 +89,15 @@ const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools__/`
 const { iframe, getIframe } = useIframe(clientUrl, async () => {
   const iframe = getIframe()
   await waitForClientInjection(iframe)
+  setupInspector()
   setupClient(iframe)
 })
 
 // Picture-in-Picture mode
-const { popup } = usePiPMode(iframe.value!, hook, () => {
-  isInPopup.value = false
-})
+const { popup } = usePiPMode(getIframe, hook)
 
 function setupClient(iframe: HTMLIFrameElement) {
   const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
-  const componentInspector = window.__VUE_INSPECTOR__
-  if (componentInspector) {
-    const _openInEditor = componentInspector.openInEditor
-    componentInspector.openInEditor = async (...params: any[]) => {
-      disableInspector()
-      console.log({
-        ...params,
-      })
-      _openInEditor(...params)
-    }
-  }
   injection.setClient({
     hook,
     hookBuffer,
@@ -125,11 +114,8 @@ function setupClient(iframe: HTMLIFrameElement) {
       },
       toggle: togglePanelVisible,
       togglePosition(position) {
-        if (position === 'popup') {
-          isInPopup.value = true
+        if (position === 'popup')
           popup()
-        }
-        // panelState.value.position = position
       },
     },
   })
@@ -264,7 +250,11 @@ collectHookBuffer()
         </svg>
       </button>
       <div style="border-left: 1px solid #8883;width:1px;height:10px;" />
-      <button class="vue-devtools-icon-button" title="Toggle Component Inspector" @click="toggleInspector">
+      <button
+        class="vue-devtools-icon-button"
+        :disabled="!inspectorLoaded"
+        title="Toggle Component Inspector" @click="toggleInspector"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           style="height: 1.2em; width: 1.2em; opacity:0.5;"

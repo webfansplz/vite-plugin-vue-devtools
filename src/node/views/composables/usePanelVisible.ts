@@ -1,19 +1,34 @@
-import { onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useWindowEventListener } from '../utils'
-import { state } from './state'
+import { popupWindow, state } from './state'
 
 export function usePanelVisible() {
-  const visible = ref(false)
+  const visible = computed({
+    get() {
+      return state.value.open
+    },
+    set(value) {
+      state.value.open = value
+    },
+  })
 
   const toggleVisible = () => {
     visible.value = !visible.value
-    state.value.open = visible.value
   }
 
   const closePanel = () => {
+    if (!visible.value)
+      return
     visible.value = false
-    state.value.open = false
+    if (popupWindow.value) {
+      try {
+        popupWindow.value.close()
+      }
+      catch {}
+      popupWindow.value = null
+    }
   }
+
   onMounted(() => {
     useWindowEventListener('keydown', (e) => {
       // cmd + shift + D in <macOS>

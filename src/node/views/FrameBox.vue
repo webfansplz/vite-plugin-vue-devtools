@@ -17,7 +17,6 @@ const props = defineProps<{
 
 }>()
 
-let innerIframe: HTMLIFrameElement
 const container = ref<HTMLElement>()
 const isResizing = ref<false | { top?: boolean; left?: boolean; right?: boolean; bottom?: boolean }>(false)
 
@@ -28,10 +27,9 @@ watchEffect(() => {
     const iframe = props.client.getIFrame()
     iframe.style.pointerEvents = (isResizing.value || props.isDragging) ? 'none' : 'auto'
 
-    if (!popupWindow.value && !innerIframe) {
+    if (!popupWindow.value) {
       if (Array.from(container.value.children).every(el => el !== iframe))
         container.value.appendChild(iframe)
-      innerIframe = iframe
     }
   }
 })
@@ -71,11 +69,6 @@ useWindowEventListener('mousemove', (e) => {
   const iframe = props.client.getIFrame()
   const box = iframe.getBoundingClientRect()
 
-  console.log({
-    box,
-    iframe,
-  })
-
   if (isResizing.value.right) {
     const widthPx = Math.abs(e.clientX - (box?.left || 0))
     const width = widthPx / window.innerWidth * 100
@@ -91,10 +84,6 @@ useWindowEventListener('mousemove', (e) => {
     const heightPx = Math.abs((box?.bottom || 0) - e.clientY)
     const height = heightPx / window.innerHeight * 100
     state.value.height = Math.min(PANEL_MAX, Math.max(PANEL_MIN, height))
-    console.log({
-      box: box.bottom,
-      e: e.clientY,
-    })
   }
   else if (isResizing.value.bottom) {
     const heightPx = Math.abs(e.clientY - (box?.top || 0))
