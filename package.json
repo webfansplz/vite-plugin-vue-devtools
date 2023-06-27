@@ -32,6 +32,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
+    "src/node/views/*",
     "src/node/app.js",
     "src/node/Container.vue",
     "*.d.ts"
