@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { useWindowEventListener } from '../utils'
 
 export function useInspector() {
   const inspectorEnabled = ref(false)
@@ -34,6 +35,13 @@ export function useInspector() {
       }
     }, 30)
   }
+
+  useWindowEventListener('keydown', (e: KeyboardEvent) => {
+    if (!inspectorEnabled.value || !inspectorLoaded.value)
+      return
+    if (e.key === 'Escape')
+      disable()
+  })
 
   waitForInspectorInit()
 

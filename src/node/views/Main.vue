@@ -94,10 +94,10 @@ function setupClient(iframe: HTMLIFrameElement) {
   injection.setClient({
     hook,
     hookBuffer,
-    inspector: {
-      enable: enableInspector,
-      disable: disableInspector,
-    },
+    // inspector: {
+    //   enable: enableInspector,
+    //   disable: disableInspector,
+    // },
     panel: {
       toggleViewMode: () => {
         if (panelState.value.viewMode === 'xs')

@@ -28,10 +28,6 @@ hookApi.hook.on('init:vue:app', () => {
   initRoutes(categorizedHookBuffer.router ?? [])
   // init pinia
   initPinia()
-  hookApi.hook.on('host:inspector:close', () => {
-    if (route.path === '/__inspecting')
-      router.replace(frameState.route.value)
-  })
 })
 
 router.beforeEach((to, _, next) => {
