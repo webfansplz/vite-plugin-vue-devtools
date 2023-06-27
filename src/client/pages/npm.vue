@@ -124,8 +124,10 @@ useInfiniteScroll(
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>
-    <VSectionBlock v-model:open="projectDepsVisible" text="Project dependencies"
-      :description="`found ${toThousands(projectDeps.length)} packages`" padding="0">
+    <VSectionBlock
+      v-model:open="projectDepsVisible" text="Project dependencies"
+      :description="`found ${toThousands(projectDeps.length)} packages`" padding="0"
+    >
       <div max-h="80%" of-hidden px-4>
         <table w-full>
           <thead border="b base">
@@ -145,8 +147,10 @@ useInfiniteScroll(
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in projectDeps" :key="index" class="group" h-7
-              border="b dashed transparent hover:base">
+            <tr
+              v-for="(item, index) in projectDeps" :key="index" class="group" h-7
+              border="b dashed transparent hover:base"
+            >
               <td text-sm op70>
                 <div flex="inline gap3" items-center>
                   {{ item.name }}
@@ -180,8 +184,10 @@ useInfiniteScroll(
         </table>
       </div>
     </VSectionBlock>
-    <VSectionBlock v-model:open="packageListVisible" text="Search Results"
-      :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0">
+    <VSectionBlock
+      v-model:open="packageListVisible" text="Search Results"
+      :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0"
+    >
       <div max-h="80%" of-hidden px-4>
         <table w-full>
           <thead border="b base">
@@ -218,16 +224,20 @@ useInfiniteScroll(
                 </div>
               </td>
               <VDropdown max-w="10" placement="bottom-start" :distance="5">
-                <td hover="text-primary" h-7 cursor-pointer ws-nowrap pr-1 text-left font-mono text-sm lh-7 underline
-                  op70>
+                <td
+                  hover="text-primary" h-7 cursor-pointer ws-nowrap pr-1 text-left font-mono text-sm lh-7 underline
+                  op70
+                >
                   {{ item.activeVersion ?? item.version }}
                 </td>
                 <template #popper>
                   <ul max-h="35" of-scroll py-3>
-                    <li v-for="(version) in Object.keys(item.versions).reverse()" :key="version" v-close-popper
+                    <li
+                      v-for="(version) in Object.keys(item.versions).reverse()" :key="version" v-close-popper
                       border="b dashed transparent" class="group" hover="bg-active"
                       :class="String(item.activeVersion ?? item.version) === version ? 'text-primary' : ''" h-7
-                      cursor-pointer px-3 text-center lh-7 @click="toggleVersion(item, version)">
+                      cursor-pointer px-3 text-center lh-7 @click="toggleVersion(item, version)"
+                    >
                       {{ version }}
                     </li>
                   </ul>
