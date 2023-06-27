@@ -33,3 +33,30 @@ export function useObjectStorage<T>(key: string, initial: T, readonly = false): 
 
   return data
 }
+
+export function useStorage<T>(key: string, initial: T, readonly = false) {
+  const raw = localStorage.getItem(key)
+  const data = ref(raw || initial)
+
+  let updating = false
+  let wrote = ''
+
+  if (!readonly) {
+    watch(data, (value) => {
+      if (updating)
+        return
+      wrote = JSON.stringify(value)
+      localStorage.setItem(key, wrote)
+    }, { deep: true, flush: 'post' })
+  }
+
+  useWindowEventListener('storage', (e: StorageEvent) => {
+    if (e.key === key && e.newValue && e.newValue !== wrote) {
+      updating = true
+      data.value = e.newValue
+      updating = false
+    }
+  })
+
+  return data
+}
