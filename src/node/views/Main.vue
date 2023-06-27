@@ -76,7 +76,6 @@ function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout =
 const {
   toggleInspector, inspectorLoaded,
   inspectorEnabled, disableInspector,
-  enableInspector,
 } = useInspector()
 
 const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools__/`

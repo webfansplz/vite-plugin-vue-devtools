@@ -13,7 +13,6 @@ useColorMode()
 
 hookApi.hook.on('init:vue:app', () => {
   const client = useDevtoolsClient()
-  const frameState = useFrameState()
   const categorizedHookBuffer = client.value.categorizedHookBuffer
   // mark client as loaded
   client.value.markClientLoaded()
