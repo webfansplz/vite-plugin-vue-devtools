@@ -1,5 +1,7 @@
 import type { Router } from 'vue-router'
 
+type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
 export interface ComponentRelationship {
   id: string
   deps: string[]
@@ -75,14 +77,23 @@ export interface VueDevtoolsHostClient {
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
 }
 
-export interface BuiltinTab {
+export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'
+export type AllTabGroup = BuiltinTabGroup | 'ungrouped'
+
+export interface Tab {
   event?: (client: VueDevtoolsHostClient, router: Router) => void
   path?: string
+  // temporal use title as unique id
   title: string
   icon: string
-  group?: string
+  // use by settings, show/hide tab
+  disabled: boolean
+  // use by group
+  group: AllTabGroup
+  groupIndex: number
 }
 
+export type BuiltinTab = WithOptional<Tab, 'group' | 'groupIndex' | 'disabled'>
 export interface DocumentInfo {
   id: string
   name: string
