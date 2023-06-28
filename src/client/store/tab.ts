@@ -89,13 +89,17 @@ export const builtinTabs: BuiltinTab[] = [
 const DEFAULT_TAB_GROUP: AllTabGroup = 'ungrouped'
 const settings = useDevToolsSettings()
 
+function getInitialTabs() {
+  return builtinTabs.map(tab => ({
+    ...tab,
+    disabled: settings.hiddenTabs.value.includes(tab.title),
+    group: tab.group || DEFAULT_TAB_GROUP,
+    groupIndex: -1,
+  }))
+}
+
 // ---- States ----
-const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, builtinTabs.map(tab => ({
-  ...tab,
-  disabled: settings.hiddenTabs.value.includes(tab.title),
-  group: tab.group || DEFAULT_TAB_GROUP,
-  groupIndex: -1,
-})))
+const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, getInitialTabs())
 
 const enabledTabs = computed(() => allTabs.value.filter(item => !item.disabled))
 
@@ -180,4 +184,17 @@ export function getSortedTabs(sourceTabs: Tab[]) {
   const tabs = sourceTabs.slice()
   tabs.sort((a, b) => a.groupIndex - b.groupIndex)
   return tabs
+}
+
+export function ungroupAllTabs() {
+  const tabs = allTabs.value
+  tabs.forEach((tab) => {
+    tab.group = DEFAULT_TAB_GROUP
+    tab.groupIndex = -1
+  })
+  allTabs.value = tabs
+}
+
+export function resetAllTabs() {
+  allTabs.value = getInitialTabs()
 }

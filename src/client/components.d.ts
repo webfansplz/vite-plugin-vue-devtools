@@ -41,6 +41,7 @@ declare module '@vue/runtime-core' {
     VBadge: typeof import('./ui-kit/VBadge.vue')['default']
     VButton: typeof import('./ui-kit/VButton.vue')['default']
     VCard: typeof import('./ui-kit/VCard.vue')['default']
+    VConfirm: typeof import('./ui-kit/VConfirm.vue')['default']
     VDarkToggle: typeof import('./ui-kit/VDarkToggle.vue')['default']
     VDialog: typeof import('./ui-kit/VDialog.vue')['default']
     VExpandIcon: typeof import('./ui-kit/VExpandIcon.vue')['default']
