@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const groupTabs = useGroupedTabs()
 </script>
 
 <template>
@@ -9,4 +9,5 @@
       Reset group
     </VButton>
   </div>
+  <TabGroupItem v-for="[name, tabs] in groupTabs" :key="name" :group-name="name" :tabs="tabs" />
 </template>

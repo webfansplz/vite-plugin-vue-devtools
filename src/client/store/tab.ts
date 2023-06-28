@@ -26,13 +26,13 @@ export const builtinTabs: BuiltinTab[] = [
     path: 'routes',
     title: 'Routes',
     icon: 'mdi:location-path',
-    category: 'modules',
+    group: 'modules',
   },
   {
     path: 'pinia',
     title: 'Pinia',
     icon: 'icon-park-outline:pineapple',
-    category: 'modules',
+    group: 'modules',
   },
   {
     path: 'timeline',
@@ -52,7 +52,7 @@ export const builtinTabs: BuiltinTab[] = [
   {
     title: 'EyeDropper',
     icon: 'i-mdi:eyedropper',
-    category: 'advanced',
+    group: 'advanced',
     event: (client, router) => {
       router.replace('/__eyedropper')
       client.panel?.toggleViewMode('xs')
@@ -62,31 +62,31 @@ export const builtinTabs: BuiltinTab[] = [
     path: 'component-docs',
     title: 'Component docs',
     icon: 'i-carbon-document-preliminary',
-    category: 'advanced',
+    group: 'advanced',
   },
   {
     path: 'npm',
     title: 'Search packages',
     icon: 'i-teenyicons:npm-outline',
-    category: 'advanced',
+    group: 'advanced',
   },
   {
     path: 'graph',
     title: 'Graph',
     icon: 'i-carbon-network-4',
-    category: 'advanced',
+    group: 'advanced',
   },
   {
     path: 'inspect',
     title: 'Inspect',
     icon: 'i-carbon-ibm-watson-discovery',
-    category: 'advanced',
+    group: 'advanced',
   },
   {
     path: 'documentations',
     title: 'Documentations',
     icon: 'i-carbon-document',
-    category: 'advanced',
+    group: 'advanced',
   },
 ]
 
@@ -96,23 +96,23 @@ const DEFAULT_TAB_GROUP = 'app'
 const settings = useDevToolsSettings()
 
 function getGroupedTab(dataSource: BuiltinTab[], enabledOnly = false) {
-  const categories: Record<BuiltinTabGroup, typeof builtinTabs> = {
+  const groups: Record<BuiltinTabGroup, typeof builtinTabs> = {
     app: [],
     modules: [],
     advanced: [],
   }
 
   for (const tab of dataSource) {
-    const category = tab?.category || DEFAULT_TAB_GROUP
-    if (enabledOnly && settings.hiddenTabCategories.value.includes(category))
+    const group = tab?.group || DEFAULT_TAB_GROUP
+    if (enabledOnly && settings.hiddenTabGroups.value.includes(group))
       continue
-    if (!categories[category])
-      console.warn(`Unknown tab category: ${category}`)
+    if (!groups[group])
+      console.warn(`Unknown tab group: ${group}`)
     else
-      categories[category].push(tab)
+      groups[group].push(tab)
   }
 
-  return Object.entries(categories)
+  return Object.entries(groups)
 }
 
 // ---- States ----

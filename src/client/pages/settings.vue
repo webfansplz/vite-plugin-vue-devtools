@@ -4,7 +4,7 @@ import { isInPopup } from '../logic/state'
 const {
   scale,
   hiddenTabs,
-  hiddenTabCategories,
+  hiddenTabGroups,
 } = useDevToolsSettings()
 
 const { closeOnOutsideClick } = useFrameState()
@@ -28,16 +28,16 @@ function toggleTab(name: string, v: boolean) {
 
 function toggleTabCategory(name: string, v: boolean) {
   if (v)
-    hiddenTabCategories.value = hiddenTabCategories.value.filter(i => i !== name)
+    hiddenTabGroups.value = hiddenTabGroups.value.filter(i => i !== name)
   else
-    hiddenTabCategories.value.push(name)
+    hiddenTabGroups.value.push(name)
 }
 
 function toggleClickOutside() {
   closeOnOutsideClick.value = !closeOnOutsideClick.value
 }
 
-const showNavGroup = ref(true)
+const showTabGroup = ref(true)
 </script>
 
 <template>
@@ -50,10 +50,10 @@ const showNavGroup = ref(true)
             Tabs
           </h3>
           <VTooltip placement="top">
-            <button aria-label="Nav group" @click="showNavGroup = !showNavGroup">
+            <button aria-label="Nav group" @click="showTabGroup = !showTabGroup">
               <div
                 material-symbols-tab-group-outline transition-colors hover:text-primary
-                :class="{ 'text-primary': showNavGroup }"
+                :class="{ 'text-primary': showTabGroup }"
               />
             </button>
             <template #popper>
@@ -61,14 +61,14 @@ const showNavGroup = ref(true)
             </template>
           </VTooltip>
         </div>
-        <div v-if="!showNavGroup">
+        <div v-if="!showTabGroup">
           <template v-for="[name, tabs] of groupedTabs" :key="name">
             <div
               v-if="tabs.length" flex="~ col gap-1" mx--1
-              :class="hiddenTabCategories.includes(name) ? 'op50 grayscale' : ''" pt-2
+              :class="hiddenTabGroups.includes(name) ? 'op50 grayscale' : ''" pt-2
             >
               <VSwitch
-                flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabCategories.includes(name)"
+                flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabGroups.includes(name)"
                 @update:model-value="v => toggleTabCategory(name, v)"
               >
                 <div flex="~ gap-2" flex-auto items-center justify-start>
@@ -94,7 +94,7 @@ const showNavGroup = ref(true)
             </div>
           </template>
         </div>
-        <NavGroup v-else />
+        <TabGroup v-else />
       </div>
       <div>
         <div v-if="!isInPopup" py3 flex="~ col gap-1" border="b base">

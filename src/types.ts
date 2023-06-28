@@ -80,7 +80,7 @@ export interface BuiltinTab {
   path?: string
   title: string
   icon: string
-  category?: string
+  group?: string
 }
 
 export interface DocumentInfo {
