@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAppStore } from './stores'
 
 const appStore = useAppStore()
-const count = ref(100)
+// const count = ref(100)
 
-const map = new Map([['a', 1], ['b', 2]])
-function add(x: number, y: number) {
-}
+// const map = new Map([['a', 1], ['b', 2]])
+// function add(x: number, y: number) {
+// }
 
-const doubleCount = computed(() => {
-  return count.value * 3
-})
+// const doubleCount = computed(() => {
+//   return count.value * 3
+// })
 
-const list = ref<any[]>([0, 1, 2, 3, 4, ref([1, 2, 3, 4, 5])])
+// const list = ref<any[]>([0, 1, 2, 3, 4, ref([1, 2, 3, 4, 5])])
 
-const info = ref({
-  name: 'webfansplz',
-  age: 18,
-})
+// const info = ref({
+//   name: 'webfansplz',
+//   age: 18,
+// })
 
 const router = useRouter()
 </script>
