@@ -54,12 +54,12 @@ const copy = useCopy()
 <template>
   <!-- eslint-disable-next-line vue/valid-v-for -->
   <code v-for="(item, index) in list" :key="nanoid()" block select-none pl-2 text-sm>
-    <p flex items-center :class="[item?.recursive && 'cursor-pointer']" @click="item?.recursive ? toggleExpand(`${id}-${depth}-${index}`) : () => { }">
-      <VExpandIcon v-if="item?.recursive" :value="expandedId.includes(`${id}-${depth}-${index}`)" />
+    <p flex items-center :class="[item?.recursive && 'cursor-pointer']">
+      <VExpandIcon v-if="item?.recursive" :value="expandedId.includes(`${id}-${depth}-${index}`)" @click="item?.recursive && toggleExpand(`${id}-${depth}-${index}`)" />
       <i v-else inline-block h-6 w-6 />
-      <span text-purple-700 dark:text-purple-300>{{ index }}</span>
+      <span select-text text-purple-700 dark:text-purple-300 @dblclick="copy(String(index))">{{ index }}</span>
       <span px-1 op-60>:</span>
-      <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate v-html="item?.rawDisplay" />
+      <span v-if="item?.recursive" :class="rawTypeStyles[item.rawType]" max-w="[75%]" truncate @click="item?.recursive && toggleExpand(`${id}-${depth}-${index}`)" v-html="item?.rawDisplay" />
       <span
         v-else
         :class="rawTypeStyles[item.rawType]"
