@@ -141,6 +141,13 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
     return groups
   }, {})
 
+  if (!groupsKeys.includes(DEFAULT_TAB_GROUP)) {
+    groups[DEFAULT_TAB_GROUP] = {
+      show: true,
+      tabs: [],
+    }
+  }
+
   for (const tab of dataSource) {
     if (enabledOnly && tab.disabled)
       continue
@@ -211,16 +218,20 @@ export function getSortedTabs(sourceTabs: Tab[]) {
 }
 
 export function ungroupAllTabs() {
-  const tabs = allTabs.value
+  const tabs = allTabs.value.slice()
+  const names: string[] = []
   tabs.forEach((tab) => {
     tab.group = DEFAULT_TAB_GROUP
     tab.groupIndex = -1
+    names.push(tab.title)
   })
   allTabs.value = tabs
+  groupsData.value[DEFAULT_TAB_GROUP].data = names.map(name => ({ name, index: -1 }))
 }
 
 export function resetAllTabs() {
   allTabs.value = getInitialTabs()
+  groupsData.value = initGroupData(allTabs.value)
 }
 
 export function shouldHideTabGroup(groupName: string, tabLength: number) {
@@ -229,14 +240,17 @@ export function shouldHideTabGroup(groupName: string, tabLength: number) {
 
 export function removeTabGroup(group: AllTabGroup) {
   const tabs = allTabs.value
+  const tabNames: string[] = []
   tabs.forEach((item) => {
     if (item.group === group) {
       item.group = DEFAULT_TAB_GROUP
       item.groupIndex = -1
+      tabNames.push(item.title)
     }
   })
   allTabs.value = tabs
   Reflect.deleteProperty(groupsData.value, group)
+  groupsData.value[DEFAULT_TAB_GROUP].data.push(...tabNames.map(name => ({ name, index: -1 })))
 }
 
 export function checkGroupExist(groupName: string) {
