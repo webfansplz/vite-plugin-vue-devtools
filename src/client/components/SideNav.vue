@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getSortedTabs } from '../store'
+
 const groupedTabs = useGroupedTabs()
 </script>
 
@@ -23,7 +25,7 @@ const groupedTabs = useGroupedTabs()
         <template v-if="tabs.length">
           <div v-if="idx" my1 h-1px w-8 border="b base" />
           <SideNavItem
-            v-for="tab of tabs"
+            v-for="tab of getSortedTabs(tabs)"
             :key="tab.path"
             :tab="tab"
           />

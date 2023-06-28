@@ -11,8 +11,5 @@ const groupTabs = useGroupedTabs()
   </div>
   <TabGroupItem
     v-for="[name, tabs] in groupTabs" :key="name" :tabs="tabs" :group-name="name"
-    @update:tabs="t => {
-      groupTabs.find(i => i[0] === name)![1] = t
-    }"
   />
 </template>

@@ -102,9 +102,8 @@ const enabledTabs = computed(() => allTabs.value.filter(item => !item.disabled))
 const groupsData = useLocalStorage(TABS_GROUP_STORAGE_KEY,
   initGroupData(allTabs.value),
 )
-// FIXME: should be computed
-const allGroupedTabs = ref(getGroupedTab(allTabs.value))
-const groupedEnabledTabs = ref(getGroupedTab(allTabs.value, true))
+const allGroupedTabs = computed(() => getGroupedTab(allTabs.value))
+const enabledGroupedTabs = computed(() => getGroupedTab(allTabs.value, true))
 
 // ---- Watchers ----
 watch(settings.hiddenTabs, (tabsNames) => {
@@ -122,7 +121,7 @@ export function useTabStore() {
   }
 }
 export function useGroupedTabStore(enabledOnly: boolean) {
-  return enabledOnly ? groupedEnabledTabs : allGroupedTabs
+  return enabledOnly ? enabledGroupedTabs : allGroupedTabs
 }
 
 // ---- Utils ----
@@ -162,4 +161,23 @@ function updateDisabledTabs(disabledTabNames: string[]) {
     tab.disabled = disabledTabNames.includes(tab.title)
   })
   groupsData.value = initGroupData(allTabs.value)
+}
+
+export function updateTabsPosition(newTabs: Tab[]) {
+  const currentTabs = allTabs.value
+  currentTabs.forEach((tab) => {
+    const newTab = newTabs.find(item => item.title === tab.title)
+    if (newTab) {
+      // Use index as groupIndex
+      const index = newTabs.indexOf(newTab)
+      tab.groupIndex = index
+    }
+  })
+  allTabs.value = currentTabs
+}
+
+export function getSortedTabs(sourceTabs: Tab[]) {
+  const tabs = sourceTabs.slice()
+  tabs.sort((a, b) => a.groupIndex - b.groupIndex)
+  return tabs
 }

@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
 import type { AllTabGroup, Tab } from '../../types'
+import { getSortedTabs, updateTabsPosition } from '../store'
 
 const props = defineProps<{
   groupName: AllTabGroup
   tabs: Tab[]
 }>()
 
-const emit = defineEmits<{
-  (e: 'update:tabs', v: Tab[]): void
-}>()
-
-const dragTabs = useVModel(props, 'tabs', emit, { passive: true, deep: true })
-
 const dragging = ref(false)
 
 const shouldHide = computed(() => props.groupName === 'ungrouped' && (!props.tabs.length))
+
+const dragTabs = computed(() => getSortedTabs(props.tabs))
 </script>
 
 <template>
@@ -25,8 +22,12 @@ const shouldHide = computed(() => props.groupName === 'ungrouped' && (!props.tab
     </div>
     <template v-if="tabs.length">
       <Draggable
-        v-model="dragTabs" item-key="title" scope="col" :animation="200"
-        class="flex-wrap gap3 p2 container"
+        :model-value="dragTabs"
+        item-key="title"
+        scope="col" :animation="200" class="flex-wrap gap3 p2 container"
+        @update:model-value="tabs => {
+          updateTabsPosition(tabs)
+        }"
         @start="dragging = true" @end="dragging = false"
       >
         <template #item="{ element }: { element: Tab }">
