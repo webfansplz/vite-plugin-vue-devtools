@@ -22,6 +22,7 @@ declare module '@vue/runtime-core' {
     IframeView: typeof import('./components/IframeView.vue')['default']
     Logo: typeof import('./components/Logo.vue')['default']
     Navbar: typeof import('./components/Navbar.vue')['default']
+    NavGroup: typeof import('./components/NavGroup.vue')['default']
     Notification: typeof import('./components/Notification.vue')['default']
     PanelPosition: typeof import('./components/PanelPosition.vue')['default']
     RoutePathItem: typeof import('./components/RoutePathItem.vue')['default']
