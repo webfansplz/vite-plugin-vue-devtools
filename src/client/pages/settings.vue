@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { isInPopup } from '../logic/state'
+import { getSortedTabs } from '../store'
 
 const {
   scale,
@@ -37,7 +38,7 @@ function toggleClickOutside() {
   closeOnOutsideClick.value = !closeOnOutsideClick.value
 }
 
-const showTabGroup = ref(true)
+const showTabGroup = ref(false)
 </script>
 
 <template>
@@ -62,7 +63,7 @@ const showTabGroup = ref(true)
           </VTooltip>
         </div>
         <div v-if="!showTabGroup">
-          <template v-for="[name, tabs] of groupedTabs" :key="name">
+          <template v-for="[name, { tabs }] of groupedTabs" :key="name">
             <div
               v-if="tabs.length" flex="~ col gap-1" mx--1
               :class="hiddenTabGroups.includes(name) ? 'op50 grayscale' : ''" pt-2
@@ -76,7 +77,7 @@ const showTabGroup = ref(true)
                 </div>
               </VSwitch>
               <div flex="~ col gap-1" border="~ base rounded" py3 pl4 pr2>
-                <template v-for="tab of tabs" :key="tab.name">
+                <template v-for="tab of getSortedTabs(tabs)" :key="tab.name">
                   <VSwitch
                     flex="~ row-reverse" py1 n-primary :model-value="!hiddenTabs.includes(tab.title)"
                     @update:model-value="v => toggleTab(tab.title, v)"

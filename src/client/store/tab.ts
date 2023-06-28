@@ -99,26 +99,21 @@ function getInitialTabs() {
 }
 
 // ---- States ----
-const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, getInitialTabs())
+const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, getInitialTabs(), {
+  shallow: true,
+})
 
 const enabledTabs = computed(() => allTabs.value.filter(item => !item.disabled))
 
-const groupsData = useLocalStorage(TABS_GROUP_STORAGE_KEY,
-  initGroupData(allTabs.value),
-)
+const groupsData = useLocalStorage(TABS_GROUP_STORAGE_KEY, initGroupData(allTabs.value))
 const allGroupedTabs = computed(() => getGroupedTab(allTabs.value))
 const enabledGroupedTabs = computed(() => getGroupedTab(allTabs.value, true))
 
 // ---- Watchers ----
-watch(settings.hiddenTabs, (tabsNames) => {
-  updateDisabledTabs(tabsNames)
+watch([settings.hiddenTabs, settings.hiddenTabGroups], ([tabsNames, groupNames]) => {
+  const allTabsNames = [...tabsNames, ...groupNames.flatMap(name => groupsData.value[name].data.map((item: { name: string }) => item.name))]
+  updateDisabledTabs(allTabsNames, groupNames)
 })
-watch(settings.hiddenTabGroups, (groupNames) => {
-  updateDisabledTabs(groupNames.flatMap(name => groupsData.value[name]))
-})
-watch(allTabs, (tabs) => {
-  groupsData.value = initGroupData(tabs)
-}, { deep: true })
 // ---- Composables ----
 export function useTabStore() {
   return {
@@ -138,8 +133,11 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
     groupsKeys.splice(groupsKeys.indexOf(DEFAULT_TAB_GROUP), 1)
     groupsKeys.push(DEFAULT_TAB_GROUP)
   }
-  const groups: Record<string, typeof builtinTabs> = groupsKeys.reduce((groups, key) => {
-    groups[key] = []
+  const groups: Record<string, { show: boolean; tabs: typeof builtinTabs }> = groupsKeys.reduce((groups, key) => {
+    groups[key] = {
+      show: groupsData.value[key].show,
+      tabs: [],
+    }
     return groups
   }, {})
 
@@ -150,27 +148,41 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
     if (!groups[group])
       console.warn(`Unknown tab group: ${group}`)
     else
-      groups[group].push(tab)
+      groups[group].tabs.push(tab)
   }
 
-  return Object.entries(groups) as [AllTabGroup, Tab[]][]
+  return Object.entries(groups) as [AllTabGroup, { show: boolean; tabs: Tab[] } ][]
 }
 
 function initGroupData(tabs: Tab[]) {
   return tabs.reduce((groups, tab) => {
     const group = tab.group
-    if (!groups[group])
-      groups[group] = []
-    groups[group].push({ name: tab.title, index: tab.groupIndex })
+    if (!groups[group]) {
+      groups[group] = {
+        show: true,
+        data: [],
+      }
+    }
+    groups[group].data.push({
+      name: tab.title, index: tab.groupIndex,
+    })
     return groups
-  }, {} as Record<AllTabGroup, { name: string; index: number }[]>)
+  }, {} as Record<AllTabGroup, { data: { name: string; index: number }[]; show: boolean }>)
 }
 
-function updateDisabledTabs(disabledTabNames: string[]) {
-  allTabs.value.forEach((tab) => {
+function updateDisabledTabs(disabledTabNames: string[], disabledGroups: string[] = []) {
+  const currentTabs = allTabs.value.slice()
+  currentTabs.forEach((tab) => {
     tab.disabled = disabledTabNames.includes(tab.title)
   })
-  groupsData.value = initGroupData(allTabs.value)
+  allTabs.value = currentTabs
+  // reset all groups to show: true
+  for (const group of Object.values(groupsData.value))
+    group.show = true
+  if (disabledGroups.length) {
+    for (const group of disabledGroups)
+      groupsData.value[group].show = false
+  }
 }
 
 export function updateTabsPosition(groupName: AllTabGroup, newTabs: Tab[]) {
@@ -186,6 +198,10 @@ export function updateTabsPosition(groupName: AllTabGroup, newTabs: Tab[]) {
     }
   })
   allTabs.value = currentTabs
+
+  groupsData.value[groupName].data = newTabs.map(item => ({
+    name: item.title, index: item.groupIndex,
+  }))
 }
 
 export function getSortedTabs(sourceTabs: Tab[]) {
@@ -224,6 +240,10 @@ export function removeTabGroup(group: AllTabGroup) {
 }
 
 export function createGroup(groupName: string) {
-  if (!groupsData.value[groupName])
-    groupsData.value[groupName] = []
+  if (!groupsData.value[groupName]) {
+    groupsData.value[groupName] = {
+      show: true,
+      data: [],
+    }
+  }
 }

@@ -55,8 +55,8 @@ const groupName = ref('')
     </div>
   </div>
   <VConfirm v-model="showConfirm" :message="currentConfirmHandlers.message" @confirm="currentConfirmHandlers.handler" />
-  <template v-for="[name, tabs] in groupTabs" :key="name">
-    <div v-if="!shouldHideTabGroup(name, tabs.length)" mt-3>
+  <template v-for="[name, { show, tabs }] in groupTabs" :key="name">
+    <div v-if="!shouldHideTabGroup(name, tabs.length) && show" mt-3>
       <div flex="~ gap-2" flex-auto items-center justify-between>
         <span capitalize op75>{{ name }}</span>
         <VIconButton
