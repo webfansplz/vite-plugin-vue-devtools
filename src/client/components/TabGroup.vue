@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AllTabGroup } from '../../types'
-import { DEFAULT_TAB_GROUP, removeTabGroup, resetAllTabs, shouldHideTabGroup, ungroupAllTabs } from '../store'
+import { DEFAULT_TAB_GROUP, createGroup, removeTabGroup, resetAllTabs, shouldHideTabGroup, ungroupAllTabs } from '../store'
 
 const groupTabs = useGroupedTabs()
 
@@ -28,10 +28,12 @@ function handleShowConfirm(confirmType: keyof typeof confirmHandlers) {
   currentConfirm.value = confirmType
   toggleConfirm(true)
 }
+
+const groupName = ref('')
 </script>
 
 <template>
-  <div flex items-center gap-12px>
+  <div flex flex-wrap items-center gap-12px>
     <VButton n="primary" @click.prevent="handleShowConfirm('reset')">
       <div i-material-symbols:360 />
       Reset group
@@ -42,6 +44,15 @@ function handleShowConfirm(confirmType: keyof typeof confirmHandlers) {
       <div i-material-symbols-ungroup />
       Ungroup all tabs
     </VButton>
+    <div flex>
+      <VTextInput v-model="groupName" class="w-120px" />
+      <VButton
+        border-none bg-primary text-white hover:text-white
+        :disabled="!groupName.trim().length" @click="createGroup(groupName); groupName = ''"
+      >
+        Create
+      </VButton>
+    </div>
   </div>
   <VConfirm v-model="showConfirm" :message="currentConfirmHandlers.message" @confirm="currentConfirmHandlers.handler" />
   <template v-for="[name, tabs] in groupTabs" :key="name">

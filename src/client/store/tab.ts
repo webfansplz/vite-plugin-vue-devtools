@@ -220,4 +220,10 @@ export function removeTabGroup(group: AllTabGroup) {
     }
   })
   allTabs.value = tabs
+  Reflect.deleteProperty(groupsData.value, group)
+}
+
+export function createGroup(groupName: string) {
+  if (!groupsData.value[groupName])
+    groupsData.value[groupName] = []
 }
