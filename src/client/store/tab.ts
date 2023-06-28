@@ -193,7 +193,7 @@ function updateDisabledTabs(disabledTabNames: string[], disabledGroups: string[]
 }
 
 export function updateTabsPosition(groupName: AllTabGroup, newTabs: Tab[]) {
-  const currentTabs = allTabs.value
+  const currentTabs = allTabs.value.slice()
   currentTabs.forEach((tab) => {
     const newTab = newTabs.find(item => item.title === tab.title)
     if (newTab) {
