@@ -263,3 +263,7 @@ export function createGroup(groupName: string) {
     data: [],
   }
 }
+
+export function getMappedBuiltinTabs(tab: Tab) {
+  return builtinTabs.find(item => item.title === tab.title)
+}
