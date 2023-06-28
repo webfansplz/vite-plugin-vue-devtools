@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const categories = useCategorizedTabs()
+const groupedTabs = useGroupedTabs()
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const categories = useCategorizedTabs()
     </div>
 
     <div flex="~ auto col gap-0.5 items-center" of-auto class="no-scrollbar" py1>
-      <template v-for="[name, tabs], idx of categories" :key="name">
+      <template v-for="[name, tabs], idx of groupedTabs" :key="name">
         <template v-if="tabs.length">
           <div v-if="idx" my1 h-1px w-8 border="b base" />
           <SideNavItem

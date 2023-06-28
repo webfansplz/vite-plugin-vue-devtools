@@ -90,20 +90,20 @@ export const builtinTabs: BuiltinTab[] = [
   },
 ]
 
-type BuiltinTabCategory = 'app' | 'modules' | 'advanced'
-const DEFAULT_TAB_CATEGORY = 'app'
+type BuiltinTabGroup = 'app' | 'modules' | 'advanced'
+const DEFAULT_TAB_GROUP = 'app'
 
 const settings = useDevToolsSettings()
 
-function getCategorizedTabs(dataSource: BuiltinTab[], enabledOnly = false) {
-  const categories: Record<BuiltinTabCategory, typeof builtinTabs> = {
+function getGroupedTab(dataSource: BuiltinTab[], enabledOnly = false) {
+  const categories: Record<BuiltinTabGroup, typeof builtinTabs> = {
     app: [],
     modules: [],
     advanced: [],
   }
 
   for (const tab of dataSource) {
-    const category = tab?.category || DEFAULT_TAB_CATEGORY
+    const category = tab?.category || DEFAULT_TAB_GROUP
     if (enabledOnly && settings.hiddenTabCategories.value.includes(category))
       continue
     if (!categories[category])
@@ -120,8 +120,8 @@ const enabledTabs = computed(() => {
   return builtinTabs.filter(tab => !settings.hiddenTabs.value.includes(tab.title ?? ''))
 })
 const allTabs = computed(() => builtinTabs)
-const allCategorizedTabs = computed(() => getCategorizedTabs(builtinTabs))
-const enabledCategorizedTabs = computed(() => getCategorizedTabs(enabledTabs.value, true))
+const allGroupedTab = computed(() => getGroupedTab(builtinTabs))
+const enabledGroupedTab = computed(() => getGroupedTab(enabledTabs.value, true))
 // ---- End ----
 
 export function useTabStore() {
@@ -131,6 +131,6 @@ export function useTabStore() {
   }
 }
 
-export function useCategorizedTabsStore(enabledOnly = true) {
-  return enabledOnly ? enabledCategorizedTabs : allCategorizedTabs
+export function useGroupedTabStore(enabledOnly = true) {
+  return enabledOnly ? enabledGroupedTab : allGroupedTab
 }

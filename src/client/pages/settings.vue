@@ -17,7 +17,7 @@ const scaleOptions = [
   ['Huge', 18 / 15],
 ]
 
-const categories = useCategorizedTabs(false)
+const groupedTabs = useGroupedTabs(false)
 
 function toggleTab(name: string, v: boolean) {
   if (v)
@@ -62,7 +62,7 @@ const showNavGroup = ref(true)
           </VTooltip>
         </div>
         <div v-if="!showNavGroup">
-          <template v-for="[name, tabs] of categories" :key="name">
+          <template v-for="[name, tabs] of groupedTabs" :key="name">
             <div
               v-if="tabs.length" flex="~ col gap-1" mx--1
               :class="hiddenTabCategories.includes(name) ? 'op50 grayscale' : ''" pt-2

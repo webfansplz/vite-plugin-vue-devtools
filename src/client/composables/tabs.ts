@@ -1,9 +1,9 @@
-import { useCategorizedTabsStore, useTabStore } from '../store'
+import { useGroupedTabStore, useTabStore } from '../store'
 
 export function useTabs() {
   return useTabStore()
 }
 
-export function useCategorizedTabs(enabledOnly = true) {
-  return useCategorizedTabsStore(enabledOnly)
+export function useGroupedTabs(enabledOnly = true) {
+  return useGroupedTabStore(enabledOnly)
 }
