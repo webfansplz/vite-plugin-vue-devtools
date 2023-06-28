@@ -93,7 +93,7 @@ function getInitialTabs() {
   return builtinTabs.map(tab => ({
     ...tab,
     disabled: settings.hiddenTabs.value.includes(tab.title),
-    group: tab.group || DEFAULT_TAB_GROUP,
+    group: tab.group ?? DEFAULT_TAB_GROUP,
     groupIndex: -1,
   }))
 }
@@ -167,7 +167,7 @@ function updateDisabledTabs(disabledTabNames: string[]) {
   groupsData.value = initGroupData(allTabs.value)
 }
 
-export function updateTabsPosition(newTabs: Tab[]) {
+export function updateTabsPosition(groupName: AllTabGroup, newTabs: Tab[]) {
   const currentTabs = allTabs.value
   currentTabs.forEach((tab) => {
     const newTab = newTabs.find(item => item.title === tab.title)
@@ -175,6 +175,8 @@ export function updateTabsPosition(newTabs: Tab[]) {
       // Use index as groupIndex
       const index = newTabs.indexOf(newTab)
       tab.groupIndex = index
+      if (tab.group !== groupName)
+        tab.group = groupName
     }
   })
   allTabs.value = currentTabs

@@ -8,7 +8,7 @@ const [showConfirm, toggleConfirm] = useToggle(false)
 const confirmHandlers = {
   ungroup: {
     message: 'Are you sure you want to ungroup all tabs?',
-    handler: ungroupAllTabs(),
+    handler: ungroupAllTabs,
   },
   reset: {
     message: 'Are you sure you want to reset group?',

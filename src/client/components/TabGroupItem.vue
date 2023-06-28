@@ -20,32 +20,36 @@ const dragTabs = computed(() => getSortedTabs(props.tabs))
     <div flex="~ gap-2" flex-auto items-center justify-start>
       <span capitalize op75>{{ groupName }}</span>
     </div>
-    <template v-if="tabs.length">
-      <Draggable
-        :model-value="dragTabs"
-        item-key="title"
-        scope="col" :animation="200" class="flex-wrap gap3 p2 container"
-        @update:model-value="tabs => {
-          updateTabsPosition(tabs)
-        }"
-        @start="dragging = true" @end="dragging = false"
-      >
-        <template #item="{ element }: { element: Tab }">
-          <div :class="{ 'hover:color-primary hover:bg-gray-2/20': !dragging }" y cursor-pointer rounded px2 py1 transition-colors>
-            <VIcon :icon="element.icon" />
-            {{ element.title }}
-          </div>
-        </template>
-      </Draggable>
-    </template>
-    <div v-else class="container" items-center justify-center p4 text-gray-3>
-      Empty group
-    </div>
+    <Draggable
+      :model-value="dragTabs"
+      item-key="title"
+      group="tab" :animation="200" class="min-h-40px flex-wrap gap3 p2 container"
+      @update:model-value="tabs => {
+        updateTabsPosition(groupName, tabs)
+      }"
+      @start="dragging = true" @end="dragging = false"
+    >
+      <template #item="{ element }: { element: Tab }">
+        <div :class="{ 'hover:color-primary hover:bg-gray-2/20': !dragging }" y cursor-pointer rounded px2 py1 transition-colors>
+          <VIcon :icon="element.icon" />
+          {{ element.title }}
+        </div>
+      </template>
+    </Draggable>
   </div>
 </template>
 
 <style scoped>
 .container {
   --at-apply: "mt2 flex border-1 border-base rounded-3";
+}
+
+.container:empty {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.container:empty:before {
+  content: 'Empty group';
 }
 </style>
