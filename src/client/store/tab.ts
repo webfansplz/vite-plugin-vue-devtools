@@ -120,8 +120,8 @@ const enabledTabs = computed(() => {
   return builtinTabs.filter(tab => !settings.hiddenTabs.value.includes(tab.title ?? ''))
 })
 const allTabs = computed(() => builtinTabs)
-const allGroupedTab = computed(() => getGroupedTab(builtinTabs))
-const enabledGroupedTab = computed(() => getGroupedTab(enabledTabs.value, true))
+const allGroupedTab = ref(getGroupedTab(builtinTabs))
+const enabledGroupedTab = ref(getGroupedTab(enabledTabs.value, true))
 // ---- End ----
 
 export function useTabStore() {

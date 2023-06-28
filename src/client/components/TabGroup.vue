@@ -4,10 +4,15 @@ const groupTabs = useGroupedTabs()
 
 <template>
   <div flex items-center gap-12px>
-    <VButton>
+    <VButton n="primary">
       <div i-material-symbols-ungroup />
       Reset group
     </VButton>
   </div>
-  <TabGroupItem v-for="[name, tabs] in groupTabs" :key="name" :group-name="name" :tabs="tabs" />
+  <TabGroupItem
+    v-for="[name, tabs] in groupTabs" :key="name" :tabs="tabs" :group-name="name"
+    @update:tabs="t => {
+      groupTabs.find(i => i[0] === name)![1] = t
+    }"
+  />
 </template>
