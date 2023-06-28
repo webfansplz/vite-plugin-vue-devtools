@@ -86,7 +86,7 @@ export const builtinTabs: BuiltinTab[] = [
   },
 ]
 
-const DEFAULT_TAB_GROUP: AllTabGroup = 'ungrouped'
+export const DEFAULT_TAB_GROUP: AllTabGroup = 'ungrouped'
 const settings = useDevToolsSettings()
 
 function getInitialTabs() {
@@ -116,7 +116,9 @@ watch(settings.hiddenTabs, (tabsNames) => {
 watch(settings.hiddenTabGroups, (groupNames) => {
   updateDisabledTabs(groupNames.flatMap(name => groupsData.value[name]))
 })
-
+watch(allTabs, (tabs) => {
+  groupsData.value = initGroupData(tabs)
+}, { deep: true })
 // ---- Composables ----
 export function useTabStore() {
   return {
@@ -130,12 +132,16 @@ export function useGroupedTabStore(enabledOnly: boolean) {
 
 // ---- Utils ----
 function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
-  const groups: Record<AllTabGroup, typeof builtinTabs> = {
-    app: [],
-    modules: [],
-    advanced: [],
-    ungrouped: [],
+  const groupsKeys = Object.keys(groupsData.value)
+  if (groupsKeys.includes(DEFAULT_TAB_GROUP)) {
+    // DEFAULT_TAB_GROUP should always be the last one
+    groupsKeys.splice(groupsKeys.indexOf(DEFAULT_TAB_GROUP), 1)
+    groupsKeys.push(DEFAULT_TAB_GROUP)
   }
+  const groups: Record<string, typeof builtinTabs> = groupsKeys.reduce((groups, key) => {
+    groups[key] = []
+    return groups
+  }, {})
 
   for (const tab of dataSource) {
     if (enabledOnly && tab.disabled)
@@ -199,4 +205,19 @@ export function ungroupAllTabs() {
 
 export function resetAllTabs() {
   allTabs.value = getInitialTabs()
+}
+
+export function shouldHideTabGroup(groupName: string, tabLength: number) {
+  return groupName === DEFAULT_TAB_GROUP && tabLength === 0
+}
+
+export function removeTabGroup(group: AllTabGroup) {
+  const tabs = allTabs.value
+  tabs.forEach((item) => {
+    if (item.group === group) {
+      item.group = DEFAULT_TAB_GROUP
+      item.groupIndex = -1
+    }
+  })
+  allTabs.value = tabs
 }

@@ -10,33 +10,26 @@ const props = defineProps<{
 
 const dragging = ref(false)
 
-const shouldHide = computed(() => props.groupName === 'ungrouped' && (!props.tabs.length))
-
 const dragTabs = computed(() => getSortedTabs(props.tabs))
 </script>
 
 <template>
-  <div v-if="!shouldHide" mt-3>
-    <div flex="~ gap-2" flex-auto items-center justify-start>
-      <span capitalize op75>{{ groupName }}</span>
-    </div>
-    <Draggable
-      :model-value="dragTabs"
-      item-key="title"
-      group="tab" :animation="200" class="min-h-40px flex-wrap gap3 p2 container"
-      @update:model-value="tabs => {
-        updateTabsPosition(groupName, tabs)
-      }"
-      @start="dragging = true" @end="dragging = false"
-    >
-      <template #item="{ element }: { element: Tab }">
-        <div :class="{ 'hover:color-primary hover:bg-gray-2/20': !dragging }" y cursor-pointer rounded px2 py1 transition-colors>
-          <VIcon :icon="element.icon" />
-          {{ element.title }}
-        </div>
-      </template>
-    </Draggable>
-  </div>
+  <Draggable
+    :model-value="dragTabs"
+    item-key="title"
+    group="tab" :animation="200" class="min-h-40px flex-wrap gap3 p2 container"
+    @update:model-value="tabs => {
+      updateTabsPosition(groupName, tabs)
+    }"
+    @start="dragging = true" @end="dragging = false"
+  >
+    <template #item="{ element }: { element: Tab }">
+      <div :class="{ 'hover:color-primary hover:bg-gray-2/20': !dragging }" y cursor-pointer rounded px2 py1 transition-colors>
+        <VIcon :icon="element.icon" />
+        {{ element.title }}
+      </div>
+    </template>
+  </Draggable>
 </template>
 
 <style scoped>

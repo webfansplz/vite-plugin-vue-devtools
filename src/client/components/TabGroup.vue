@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { resetAllTabs, ungroupAllTabs } from '../store'
+import type { AllTabGroup } from '../../types'
+import { DEFAULT_TAB_GROUP, removeTabGroup, resetAllTabs, shouldHideTabGroup, ungroupAllTabs } from '../store'
 
 const groupTabs = useGroupedTabs()
 
 const [showConfirm, toggleConfirm] = useToggle(false)
 
+const currentRemovedGroup = ref<AllTabGroup | null>(null)
 const confirmHandlers = {
   ungroup: {
     message: 'Are you sure you want to ungroup all tabs?',
@@ -13,6 +15,10 @@ const confirmHandlers = {
   reset: {
     message: 'Are you sure you want to reset group?',
     handler: resetAllTabs,
+  },
+  remove: {
+    message: 'Are you sure you want to remove this group?',
+    handler: () => currentRemovedGroup.value && removeTabGroup(currentRemovedGroup.value),
   },
 }
 const currentConfirm = ref<keyof typeof confirmHandlers>('reset')
@@ -38,7 +44,19 @@ function handleShowConfirm(confirmType: keyof typeof confirmHandlers) {
     </VButton>
   </div>
   <VConfirm v-model="showConfirm" :message="currentConfirmHandlers.message" @confirm="currentConfirmHandlers.handler" />
-  <TabGroupItem
-    v-for="[name, tabs] in groupTabs" :key="name" :tabs="tabs" :group-name="name"
-  />
+  <template v-for="[name, tabs] in groupTabs" :key="name">
+    <div v-if="!shouldHideTabGroup(name, tabs.length)" mt-3>
+      <div flex="~ gap-2" flex-auto items-center justify-between>
+        <span capitalize op75>{{ name }}</span>
+        <VIconButton
+          v-if="name !== DEFAULT_TAB_GROUP"
+          icon="material-symbols:delete" class="hover:color-red"
+          @click="currentRemovedGroup = name; handleShowConfirm('remove')"
+        />
+      </div>
+      <TabGroupItem
+        :tabs="tabs" :group-name="name"
+      />
+    </div>
+  </template>
 </template>
