@@ -239,11 +239,13 @@ export function removeTabGroup(group: AllTabGroup) {
   Reflect.deleteProperty(groupsData.value, group)
 }
 
+export function checkGroupExist(groupName: string) {
+  return groupsData.value[groupName]
+}
+
 export function createGroup(groupName: string) {
-  if (!groupsData.value[groupName]) {
-    groupsData.value[groupName] = {
-      show: true,
-      data: [],
-    }
+  groupsData.value[groupName] = {
+    show: true,
+    data: [],
   }
 }

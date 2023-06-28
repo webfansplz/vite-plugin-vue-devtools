@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { AllTabGroup } from '../../types'
 import { DEFAULT_TAB_GROUP, createGroup, removeTabGroup, resetAllTabs, shouldHideTabGroup, ungroupAllTabs } from '../store'
+import { checkGroupExist } from '../store/tab'
 
 const groupTabs = useGroupedTabs()
 
@@ -30,6 +31,16 @@ function handleShowConfirm(confirmType: keyof typeof confirmHandlers) {
 }
 
 const groupName = ref('')
+
+function handleCreateGroup() {
+  const name = groupName.value.trim()
+  if (checkGroupExist(name))
+    // eslint-disable-next-line no-alert
+    return alert('[Vue-Devtools] Group already exist')
+
+  createGroup(name)
+  groupName.value = ''
+}
 </script>
 
 <template>
@@ -48,7 +59,7 @@ const groupName = ref('')
       <VTextInput v-model="groupName" class="w-120px" />
       <VButton
         border-none bg-primary text-white hover:text-white
-        :disabled="!groupName.trim().length" @click="createGroup(groupName); groupName = ''"
+        :disabled="!groupName.trim().length" @click="handleCreateGroup()"
       >
         Create
       </VButton>
