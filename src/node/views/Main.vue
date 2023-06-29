@@ -229,7 +229,7 @@ collectHookBuffer()
     <!-- toggle button -->
     <div v-if="!checkIsSafari()" class="vue-devtools-glowing" :style="isDragging ? 'opacity: 0.6 !important' : ''" />
     <div ref="panelEl" class="vue-devtools-button-panel" @pointerdown="onPointerDown">
-      <button
+      <div
         class="vue-devtools-icon-button vue-devtools-vue-button"
         title="Toggle Vue DevTools" aria-label="Toggle devtools panel"
         :style="panelVisible ? '' : 'filter:saturate(0)'"
@@ -240,9 +240,9 @@ collectHookBuffer()
           <path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0Z" />
           <path fill="#35495E" d="M50.56 0L128 133.12L204.8 0h-47.36L128 51.2L97.92 0H50.56Z" />
         </svg>
-      </button>
+      </div>
       <div style="border-left: 1px solid #8883;width:1px;height:10px;" />
-      <button
+      <div
         class="vue-devtools-icon-button vue-devtools-inspector-button"
         :class="{ disabled: !inspectorLoaded }"
         :disabled="!inspectorLoaded"
@@ -256,7 +256,7 @@ collectHookBuffer()
         >
           <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r=".5" fill="currentColor" /><path d="M5 12a7 7 0 1 0 14 0a7 7 0 1 0-14 0m7-9v2m-9 7h2m7 7v2m7-9h2" /></g>
         </svg>
-      </button>
+      </div>
     </div>
     <!-- iframe -->
     <Frame
@@ -282,7 +282,7 @@ collectHookBuffer()
   transform: translate(-50%, -50%) rotate(0);
 }
 
-#vue-devtools-anchor button {
+#vue-devtools-anchor .vue-devtools-icon-button {
   border: none;
   background: none;
   padding: 0;
