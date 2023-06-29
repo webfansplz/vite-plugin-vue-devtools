@@ -251,6 +251,10 @@ export function removeTabGroup(group: AllTabGroup) {
   })
   allTabs.value = tabs
   Reflect.deleteProperty(groupsData.value, group)
+
+  if (!groupsData.value[DEFAULT_TAB_GROUP])
+    createGroup(DEFAULT_TAB_GROUP)
+
   groupsData.value[DEFAULT_TAB_GROUP].data.push(...tabNames.map(name => ({ name, index: -1 })))
 }
 
