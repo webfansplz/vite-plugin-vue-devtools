@@ -159,7 +159,7 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
       groups[group].tabs.push(tab)
   }
 
-  return Object.entries(groups) as [AllTabGroup, { show: boolean; tabs: Tab[] } ][]
+  return Object.entries(groups) as [AllTabGroup, { show: boolean; tabs: Tab[] }][]
 }
 
 function initGroupData(tabs: Tab[]) {
@@ -193,6 +193,13 @@ function updateDisabledTabs(disabledTabNames: string[], disabledGroups: string[]
   }
 }
 
+export function removeTabItem(groupName: AllTabGroup, tabName: string) {
+  const currentTabs = allTabs.value.slice()
+  currentTabs.splice(currentTabs.findIndex(item => item.title === tabName), 1)
+  allTabs.value = currentTabs
+  groupsData.value[groupName].data = groupsData.value[groupName].data.splice(groupsData.value[groupName].data.findIndex(item => item.name === tabName), 1)
+}
+
 export function updateTabsPosition(groupName: AllTabGroup, newTabs: Tab[]) {
   const currentTabs = allTabs.value.slice()
   currentTabs.forEach((tab) => {
@@ -210,6 +217,7 @@ export function updateTabsPosition(groupName: AllTabGroup, newTabs: Tab[]) {
   groupsData.value[groupName].data = newTabs.map(item => ({
     name: item.title, index: item.groupIndex,
   }))
+  return groupsData.value[groupName].data
 }
 
 export function getSortedTabs(sourceTabs: Tab[]) {

@@ -22,7 +22,9 @@ const confirmHandlers = {
   },
   remove: {
     message: 'Are you sure you want to remove this group?',
-    handler: () => currentRemovedGroup.value && removeTabGroup(currentRemovedGroup.value),
+    handler: () => {
+      currentRemovedGroup.value && removeTabGroup(currentRemovedGroup.value)
+    },
   },
 }
 const currentConfirm = ref<keyof typeof confirmHandlers>('reset')
@@ -44,6 +46,12 @@ function handleCreateGroup() {
   createGroup(name)
   groupName.value = ''
 }
+
+const edit = ref(false)
+
+function handleEdit() {
+  edit.value = !edit.value
+}
 </script>
 
 <template>
@@ -52,17 +60,22 @@ function handleCreateGroup() {
       <div i-material-symbols:360 />
       Reset group
     </VButton>
-    <VButton
-      n="primary" @click.prevent="handleShowConfirm('ungroup')"
-    >
+    <VButton n="primary" @click.prevent="handleShowConfirm('ungroup')">
       <div i-material-symbols-ungroup />
       Ungroup all tabs
+    </VButton>
+    <VButton
+      n="primary" :class="{ 'color-primary border-color-primary': edit }"
+      @click.prevent="handleEdit"
+    >
+      <div i-uil-edit />
+      Edit
     </VButton>
     <div flex gap-2>
       <VTextInput v-model="groupName" class="w-120px" />
       <VButton
-        border-none bg-primary text-white hover:text-white
-        :disabled="!groupName.trim().length" @click="handleCreateGroup()"
+        border-none bg-primary text-white hover:text-white :disabled="!groupName.trim().length"
+        @click="handleCreateGroup()"
       >
         Create
       </VButton>
@@ -74,14 +87,11 @@ function handleCreateGroup() {
       <div flex="~ gap-2" flex-auto items-center justify-between>
         <span capitalize op75>{{ name }}</span>
         <VIconButton
-          v-if="name !== DEFAULT_TAB_GROUP"
-          icon="material-symbols:delete" class="hover:color-red"
+          v-if="name !== DEFAULT_TAB_GROUP && edit" icon="material-symbols:delete" class="hover:color-red"
           @click="currentRemovedGroup = name; handleShowConfirm('remove')"
         />
       </div>
-      <TabGroupItem
-        :tabs="tabs" :group-name="name"
-      />
+      <TabGroupItem :edit="edit" :tabs="tabs" :group-name="name" />
     </div>
   </template>
 </template>
