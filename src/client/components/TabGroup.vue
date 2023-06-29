@@ -22,9 +22,7 @@ const confirmHandlers = {
   },
   remove: {
     message: 'Are you sure you want to remove this group?',
-    handler: () => {
-      currentRemovedGroup.value && removeTabGroup(currentRemovedGroup.value)
-    },
+    handler: () => currentRemovedGroup.value && removeTabGroup(currentRemovedGroup.value),
   },
 }
 const currentConfirm = ref<keyof typeof confirmHandlers>('reset')

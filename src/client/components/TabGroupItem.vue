@@ -15,19 +15,19 @@ const dragTabs = computed(() => getSortedTabs(props.tabs))
 
 const removeTabItemConfirm = ref(false)
 
-let groupName: AllTabGroup = 'app'
+let fromGroupName: AllTabGroup = 'app'
 let tabName = ''
 const confirmRemoveHandlers = {
   message: '',
   handler: () => {
-    removeTabItem(groupName, tabName)
+    removeTabItem(fromGroupName, tabName)
   },
 }
 
 function handleRemoveTabItem(_groupName: AllTabGroup, _tabName: string) {
-  groupName = _groupName
+  fromGroupName = _groupName
   tabName = _tabName
-  confirmRemoveHandlers.message = `Are you sure you want to remove ${tabName} from ${groupName}?`
+  confirmRemoveHandlers.message = `Are you sure you want to remove ${tabName} from ${fromGroupName}?`
   removeTabItemConfirm.value = true
 }
 </script>
