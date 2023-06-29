@@ -21,7 +21,7 @@ function hide() {
     <div flex="~ col" min-w-100px w-25vw gap-15px p4>
       <div>{{ message }}</div>
       <div w-full flex items-center justify-end gap-10px>
-        <VButton border-none bg-gray-100 @click.prevent="$emit('cancel'); hide()">
+        <VButton border-none bg="gray-300/30" @click.prevent="$emit('cancel'); hide()">
           cancel
         </VButton>
         <VButton border-none bg-primary text-white hover:text-white @click.prevent="$emit('confirm');hide()">
