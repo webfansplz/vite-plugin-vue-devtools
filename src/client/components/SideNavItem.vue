@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import type { BuiltinTab } from '../../types'
+import type { Tab } from '../../types'
 import { useDevtoolsClient } from '../logic/client'
+import { getMappedBuiltinTabs } from '../store'
 
 defineProps<{
-  tab: BuiltinTab
+  tab: Tab
 }>()
 const client = useDevtoolsClient()
 const router = useRouter()
+
+function handleClick(tab: Tab) {
+  const builtinTab = getMappedBuiltinTabs(tab)
+  if (builtinTab)
+    builtinTab.event?.(client.value, router)
+}
 </script>
 
 <template>
@@ -19,7 +26,7 @@ const router = useRouter()
       hover="bg-active"
       h-10 w-10 select-none items-center justify-center rounded-xl p1 text-secondary
       exact-active-class="!text-primary bg-active"
-      @click="tab.event?.(client, router)"
+      @click="() => handleClick(tab)"
     >
       <TabIcon
         text-xl

@@ -3,13 +3,13 @@ import { toRefs } from '@vueuse/core'
 export interface DevToolsUISettings {
   scale: number
   hiddenTabs: string[]
-  hiddenTabCategories: string[]
+  hiddenTabGroups: string[]
 }
 
 const devToolsSettings = useLocalStorage<DevToolsUISettings>('__vue-devtools-settings__', {
   scale: 1,
   hiddenTabs: [],
-  hiddenTabCategories: [],
+  hiddenTabGroups: [],
 }, { mergeDefaults: true })
 
 const devToolsSettingsRefs = toRefs(devToolsSettings)

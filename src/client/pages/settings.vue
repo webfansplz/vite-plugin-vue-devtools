@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { isInPopup } from '../logic/state'
+import { getSortedTabs } from '../store'
 
 const {
   scale,
   hiddenTabs,
-  hiddenTabCategories,
+  hiddenTabGroups,
 } = useDevToolsSettings()
 
 const { closeOnOutsideClick } = useFrameState()
@@ -17,7 +18,7 @@ const scaleOptions = [
   ['Huge', 18 / 15],
 ]
 
-const categories = useCategorizedTabs(false)
+const groupedTabs = useGroupedTabs(false)
 
 function toggleTab(name: string, v: boolean) {
   if (v)
@@ -28,14 +29,16 @@ function toggleTab(name: string, v: boolean) {
 
 function toggleTabCategory(name: string, v: boolean) {
   if (v)
-    hiddenTabCategories.value = hiddenTabCategories.value.filter(i => i !== name)
+    hiddenTabGroups.value = hiddenTabGroups.value.filter(i => i !== name)
   else
-    hiddenTabCategories.value.push(name)
+    hiddenTabGroups.value.push(name)
 }
 
 function toggleClickOutside() {
   closeOnOutsideClick.value = !closeOnOutsideClick.value
 }
+
+const showTabGroup = ref(false)
 </script>
 
 <template>
@@ -43,40 +46,56 @@ function toggleClickOutside() {
     <VIconTitle class="mb-5 text-xl op75" icon="i-carbon-settings" text="DevTools Settings" />
     <div grid="~ md:cols-2 gap-x-10 gap-y-3" max-w-300>
       <div flex="~ col gap-1" py3>
-        <h3 mb1 text-lg>
-          Tabs
-        </h3>
-        <template v-for="[name, tabs] of categories" :key="name">
-          <div
-            v-if="tabs.length" flex="~ col gap-1" mx--1
-            :class="hiddenTabCategories.includes(name) ? 'op50 grayscale' : ''" pt-2
-          >
-            <VSwitch
-              flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabCategories.includes(name)"
-              @update:model-value="v => toggleTabCategory(name, v)"
+        <div flex items-center justify-between>
+          <h3 mb1 text-lg>
+            Tabs
+          </h3>
+          <VTooltip placement="top">
+            <button aria-label="Nav group" @click="showTabGroup = !showTabGroup">
+              <div
+                material-symbols-tab-group-outline transition-colors hover:text-primary
+                :class="{ 'text-primary': showTabGroup }"
+              />
+            </button>
+            <template #popper>
+              <div>Nav group</div>
+            </template>
+          </VTooltip>
+        </div>
+        <div v-if="!showTabGroup">
+          <template v-for="[name, { tabs }] of groupedTabs" :key="name">
+            <div
+              v-if="tabs.length" flex="~ col gap-1" mx--1
+              :class="hiddenTabGroups.includes(name) ? 'op50 grayscale' : ''" pt-2
             >
-              <div flex="~ gap-2" flex-auto items-center justify-start>
-                <span capitalize op75>{{ name }}</span>
-              </div>
-            </VSwitch>
-            <div flex="~ col gap-1" border="~ base rounded" py3 pl4 pr2>
-              <template v-for="tab of tabs" :key="tab.name">
-                <VSwitch
-                  flex="~ row-reverse" py1 n-primary :model-value="!hiddenTabs.includes(tab.title)"
-                  @update:model-value="v => toggleTab(tab.title, v)"
-                >
-                  <div
-                    flex="~ gap-2" flex-auto items-center justify-start
-                    :class="hiddenTabs.includes(tab.title) ? 'op25' : ''"
+              <VSwitch
+                flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabGroups.includes(name)"
+                @update:model-value="v => toggleTabCategory(name, v)"
+              >
+                <div flex="~ gap-2" flex-auto items-center justify-start>
+                  <span capitalize op75>{{ name }}</span>
+                </div>
+              </VSwitch>
+              <div flex="~ col gap-1" border="~ base rounded" py3 pl4 pr2>
+                <template v-for="tab of getSortedTabs(tabs)" :key="tab.name">
+                  <VSwitch
+                    flex="~ row-reverse" py1 n-primary :model-value="!hiddenTabs.includes(tab.title)"
+                    @update:model-value="v => toggleTab(tab.title, v)"
                   >
-                    <TabIcon text-xl :icon="tab.icon" :title="tab.title" />
-                    <span>{{ tab.title }}</span>
-                  </div>
-                </VSwitch>
-              </template>
+                    <div
+                      flex="~ gap-2" flex-auto items-center justify-start
+                      :class="hiddenTabs.includes(tab.title) ? 'op25' : ''"
+                    >
+                      <TabIcon text-xl :icon="tab.icon" :title="tab.title" />
+                      <span>{{ tab.title }}</span>
+                    </div>
+                  </VSwitch>
+                </template>
+              </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </div>
+        <TabGroup v-else />
       </div>
       <div>
         <div v-if="!isInPopup" py3 flex="~ col gap-1" border="b base">
