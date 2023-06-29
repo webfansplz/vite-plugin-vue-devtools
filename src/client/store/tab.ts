@@ -85,6 +85,12 @@ export const builtinTabs: BuiltinTab[] = [
     icon: 'i-carbon-document',
     group: 'advanced',
   },
+  {
+    path:'log',
+    title:'Log',
+    icon:'i-carbon-template',
+    group:'advanced'
+  }
 ]
 
 export const DEFAULT_TAB_GROUP: AllTabGroup = 'ungrouped'

@@ -21,6 +21,10 @@ const appStore = useAppStore()
 // })
 
 const router = useRouter()
+
+function handleConsole() {
+  console.log('hello world')
+}
 </script>
 
 <template>
@@ -35,5 +39,9 @@ const router = useRouter()
   </button>
   <button @click="appStore.increment()">
     increment
+  </button>
+
+  <button @click="handleConsole">
+    console
   </button>
 </template>
