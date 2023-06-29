@@ -159,11 +159,14 @@ export class ComponentWalker {
       instance: null,
     }
 
+    const uids: number[] = []
+
     // capture children
     if (depth < this.maxDepth || (instance.type as any).__isKeepAlive || parents.some(parent => (parent.type as any).__isKeepAlive)) {
       treeNode.children = await Promise.all(children
         .map((child, index, list) => this.capture(child, list, depth + 1))
         .filter(Boolean))
+      uids.push(...treeNode.children.map((child: any) => child.uid))
     }
 
     // keep-alive
@@ -171,7 +174,8 @@ export class ComponentWalker {
       const cachedComponents = this.getKeepAliveCachedInstances(instance)
       for (const cachedChild of cachedComponents) {
         const node = await this.capture({ ...cachedChild, isDeactivated: true }, [], depth + 1)
-        if (node)
+        const uid = node.uid
+        if (node && !uids.includes(uid))
           treeNode.children.push(node)
       }
     }
