@@ -55,7 +55,7 @@ function handleCreateGroup() {
       <div i-material-symbols-ungroup />
       Ungroup all tabs
     </VButton>
-    <div flex>
+    <div flex gap-2>
       <VTextInput v-model="groupName" class="w-120px" />
       <VButton
         border-none bg-primary text-white hover:text-white
