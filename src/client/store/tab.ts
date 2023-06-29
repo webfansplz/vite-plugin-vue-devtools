@@ -1,3 +1,4 @@
+import type { ComputedRef, Ref } from 'vue'
 import type { AllTabGroup, BuiltinTab, Tab } from '../../types'
 import { useDevToolsSettings } from '../composables/settings'
 import { TABS_GROUP_STORAGE_KEY, TABS_STORAGE_KEY } from '../constants'
@@ -115,7 +116,7 @@ watch([settings.hiddenTabs, settings.hiddenTabGroups], ([tabsNames, groupNames])
   updateDisabledTabs(allTabsNames, groupNames)
 })
 // ---- Composables ----
-export function useTabStore() {
+export function useTabStore(): ({ enabled: ComputedRef<Tab[]>; all: Ref<Tab[]> }) {
   return {
     enabled: enabledTabs,
     all: allTabs,
