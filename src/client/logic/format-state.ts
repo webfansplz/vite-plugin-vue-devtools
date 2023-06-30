@@ -92,14 +92,14 @@ export function formatStateType(value: unknown): StateType {
       value: 'NaN',
     }
   }
-  else if (value === Infinity) {
+  else if (value === Number.POSITIVE_INFINITY) {
     return {
       rawType: 'literal',
       recursive: false,
       value: 'Infinity',
     }
   }
-  else if (value === -Infinity) {
+  else if (value === Number.NEGATIVE_INFINITY) {
     return {
       rawType: 'literal',
       recursive: false,

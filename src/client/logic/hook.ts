@@ -2,7 +2,7 @@ import { updatePinia } from './pinia'
 import { instance, updateApp, app as vueApp } from './app'
 import { useDevtoolsClient } from './client'
 
-const enum DevtoolsHooks {
+enum DevtoolsHooks {
   APP_INIT = 'app:init',
   COMPONENT_UPDATED = 'component:updated',
   COMPONENT_ADDED = 'component:added',
