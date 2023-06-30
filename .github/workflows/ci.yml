@@ -10,25 +10,22 @@ on:
       - main
 
 jobs:
-  lint:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Set node
+      - name: Enable pnpm
+        run: corepack enable
+      - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: pnpm
-
-      - name: Setup
+      - name: Setup ni
         run: npm i -g @antfu/ni
-
       - name: Install
         run: nci
-
       - name: Lint
         run: nr lint
+      - name: Build
+        run: nr build
