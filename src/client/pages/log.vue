@@ -1,8 +1,12 @@
 <script setup lang="ts">
-const logger = ref('')
+const logger = ref<any[]>([])
 
 console.log = function(message){
-  logger.value += message + '<br />'
+  logger.value.push(message)
+}
+
+window.top.console.log = function(message){
+  logger.value.push(message)
 }
 
 function handleOne(){
@@ -10,7 +14,8 @@ function handleOne(){
 }
 
 function handleClear(){
-  logger.value = ''
+  logger.value = []
+  console.clear()
 }
 </script>
 
@@ -18,6 +23,6 @@ function handleClear(){
   <div>
     <button class="px-5 bg-sky" @click="handleOne">console.log('one')</button>
     <button class="bg-sky px-5 ml-3" @click="handleClear">clear</button>
-    <div v-html="logger" />
+    <div>{{ logger }}</div>
   </div>
 </template>
