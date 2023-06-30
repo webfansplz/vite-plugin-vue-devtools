@@ -22,7 +22,7 @@ jobs:
           node-version: 18.x
           cache: pnpm
       - name: Setup ni
-        run: pnpm i -g @antfu/ni
+        run: pnpm setup && pnpm i -g @antfu/ni
       - name: Install
         run: nci
       - name: Lint
