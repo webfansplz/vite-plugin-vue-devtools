@@ -88,8 +88,8 @@ export const builtinTabs: BuiltinTab[] = [
   {
     path:'log',
     title:'Log',
-    icon:'i-carbon-template',
-    group:'advanced'
+    icon:'i-carbon-content-view',
+    group:'app'
   }
 ]
 

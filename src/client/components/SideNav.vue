@@ -38,23 +38,6 @@ const groupedTabs = useGroupedTabs()
       <div h-1px w-8 border="b base" />
       <RouterLink
         replace
-        to="/log"
-        flex="~ items-center justify-center"
-        hover="bg-active"
-        relative my1 block h-10 w-10 select-none rounded-xl p1 text-secondary
-        exact-active-class="!text-primary bg-active"
-      >
-        <TabIcon
-          text-xl
-          icon="i-carbon-template" title="Log" :show-title="false"
-        />
-      </RouterLink>
-    </div>
-
-    <div flex="~ none col items-center">
-      <div h-1px w-8 border="b base" />
-      <RouterLink
-        replace
         to="/settings"
         flex="~ items-center justify-center"
         hover="bg-active"

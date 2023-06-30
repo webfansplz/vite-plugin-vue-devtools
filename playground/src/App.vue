@@ -25,6 +25,10 @@ const router = useRouter()
 function handleConsole() {
   console.log('hello world')
 }
+
+function handleDeBugConsole(){
+  console.debug('hello debug')
+}
 </script>
 
 <template>
@@ -40,8 +44,17 @@ function handleConsole() {
   <button @click="appStore.increment()">
     increment
   </button>
+  <div style="margin-top: 5px;">
+    <button @click="handleConsole">
+      console.log('hello world')
+    </button>
+    <button @click="handleDeBugConsole">
+      console.debug('hello world')
+    </button>
+    <button @click="handleDeBugConsole">
+      console.error('hello world')
+    </button>
+  </div>
 
-  <button @click="handleConsole">
-    console
-  </button>
+
 </template>
