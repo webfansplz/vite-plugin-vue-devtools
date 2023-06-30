@@ -162,6 +162,8 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
   return Object.entries(groups) as [AllTabGroup, { show: boolean; tabs: Tab[] } ][]
 }
 
+interface GroupData { name: string; index: number }
+
 function initGroupData(tabs: Tab[]) {
   return tabs.reduce((groups, tab) => {
     const group = tab.group
@@ -175,7 +177,7 @@ function initGroupData(tabs: Tab[]) {
       name: tab.title, index: tab.groupIndex,
     })
     return groups
-  }, {} as Record<AllTabGroup, { data: { name: string; index: number }[]; show: boolean }>)
+  }, {} as Record<AllTabGroup, { data: GroupData[]; show: boolean }>)
 }
 
 function updateDisabledTabs(disabledTabNames: string[], disabledGroups: string[] = []) {
@@ -218,6 +220,12 @@ export function getSortedTabs(sourceTabs: Tab[]) {
   return tabs
 }
 
+function updateUngroupedData(data: GroupData[]) {
+  if (!groupsData.value[DEFAULT_TAB_GROUP])
+    createGroup(DEFAULT_TAB_GROUP)
+  groupsData.value[DEFAULT_TAB_GROUP].data = data
+}
+
 export function ungroupAllTabs() {
   const tabs = allTabs.value.slice()
   const names: string[] = []
@@ -227,7 +235,7 @@ export function ungroupAllTabs() {
     names.push(tab.title)
   })
   allTabs.value = tabs
-  groupsData.value[DEFAULT_TAB_GROUP].data = names.map(name => ({ name, index: -1 }))
+  updateUngroupedData(names.map(name => ({ name, index: -1 })))
 }
 
 export function resetAllTabs() {
@@ -240,7 +248,7 @@ export function shouldHideTabGroup(groupName: string, tabLength: number) {
 }
 
 export function removeTabGroup(group: AllTabGroup) {
-  const tabs = allTabs.value
+  const tabs = allTabs.value.slice()
   const tabNames: string[] = []
   tabs.forEach((item) => {
     if (item.group === group) {
@@ -252,10 +260,7 @@ export function removeTabGroup(group: AllTabGroup) {
   allTabs.value = tabs
   Reflect.deleteProperty(groupsData.value, group)
 
-  if (!groupsData.value[DEFAULT_TAB_GROUP])
-    createGroup(DEFAULT_TAB_GROUP)
-
-  groupsData.value[DEFAULT_TAB_GROUP].data.push(...tabNames.map(name => ({ name, index: -1 })))
+  updateUngroupedData(tabNames.map(name => ({ name, index: -1 })))
 }
 
 export function checkGroupExist(groupName: string) {
