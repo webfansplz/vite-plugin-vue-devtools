@@ -28,5 +28,13 @@ import { includeNodeModules, includeVirtual, searchText, userCustomGlobPattern }
       class="w-300px border border-base rounded bg-transparent px-3 py-1 !outline-none"
       placeholder="Your custom glob pattern"
     >
+    <VTooltip placement="top-center">
+      <template #popper>
+        <div>
+          <span class="text-yellow-500">Warning:</span> Use it before you really know what is <span class="text-blue-300">glob</span>.<br>Use <span class="text-blue-300">,&nbsp;(dot + space)</span> to separate multiple patterns.
+        </div>
+      </template>
+      <div i-material-symbols-info />
+    </VTooltip>
   </nav>
 </template>
