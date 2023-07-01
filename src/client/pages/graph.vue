@@ -13,6 +13,7 @@ const data = computed<Data>(() => {
     return {
       id: mod.id,
       label: path.split('/').splice(-1)[0],
+      title: path.split('/').splice(-4).join('/'),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
       font: { color: isDark.value ? 'white' : 'black' },
