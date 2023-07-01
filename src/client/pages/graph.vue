@@ -4,6 +4,7 @@ import { Network } from 'vis-network'
 import { searchResults as modules, rootPath } from '../logic/graph'
 import type { GraphSettings } from '../composables/settings'
 import { useDevToolsSettings } from '../composables/settings'
+import { useDevtoolsClient } from '../logic/client'
 
 const isDark = useDark()
 const container = ref<HTMLDivElement | null>()
@@ -14,6 +15,7 @@ const { meta: metaKeyPressed } = useMagicKeys({
 })
 const isHoveringNode = ref(false)
 const lastSelectedNode = ref<string>()
+const client = useDevtoolsClient()
 
 function getHoverPath(level: GraphSettings['hoverPathLevel'], fullPath: string, rootPath: string) {
   switch (level) {
@@ -151,7 +153,7 @@ onMounted(() => {
     if (!nodeId)
       return resetNodeStyle()
     if (settings.graph.value.clickOpenInEditor && metaKeyPressed.value)
-      return openInEditor(modulesMap.value.get(nodeId)!.filePath)
+      return client.value.openInEditor(modulesMap.value.get(nodeId)!.filePath)
     if (lastSelectedNode.value && lastSelectedNode.value !== nodeId)
       resetNodeStyle()
     if (!settings.graph.value.highlightSelection)

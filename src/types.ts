@@ -62,6 +62,8 @@ export interface ModulesList {
   ssrModules: ModuleInfo[]
 }
 
+export type OpenInEditorFn = (filePath: string, line?: number, column?: number) => any
+
 export interface VueDevtoolsHostClient {
   markClientLoaded: () => void
   panel?: {
@@ -76,6 +78,7 @@ export interface VueDevtoolsHostClient {
   }
   hookBuffer: [string, Record<string, any>][]
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
+  openInEditor: OpenInEditorFn
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'

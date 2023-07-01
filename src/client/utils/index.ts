@@ -62,13 +62,3 @@ export function isMacOS() {
 
 // eslint-disable-next-line no-sequences
 export const pick = <T extends object, K extends keyof T>(obj: T, keys: K[]): T => keys.reduce((pre: T, cur: K) => (cur in obj && (pre[cur] = obj[cur]), pre), <T>({}))
-
-export function openInEditor(file: string, line?: number, column?: number) {
-  const { protocol, hostname, port } = window.location
-  const url = `${protocol}//${hostname}:${port}/__open-in-editor?file=${encodeURIComponent(file)}${line ? `&line=${line}` : ''}${column ? `&column=${column}` : ''}`
-  /**
-  * Vite built-in support
-  * https://github.com/vitejs/vite/blob/d59e1acc2efc0307488364e9f2fad528ec57f204/packages/vite/src/node/server/index.ts#L569-L570
-  * */
-  return fetch(url)
-}

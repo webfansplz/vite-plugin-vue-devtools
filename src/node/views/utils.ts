@@ -9,6 +9,10 @@ export function tryOnScopeDispose(fn: () => void) {
     onScopeDispose(fn)
 }
 
+export function warn(message: string) {
+  console.warn(`[vite-plugin-vue-devtools] ${message}`)
+}
+
 // ---- storage ----
 export function useObjectStorage<T>(key: string, initial: T, readonly = false): Ref<T> {
   const raw = localStorage.getItem(key)
