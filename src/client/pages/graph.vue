@@ -28,7 +28,10 @@ function getHoverPath(level: GraphSettings['hoverPathLevel'], fullPath: string, 
 }
 
 const data = computed<Data>(() => {
-  const nodes: Data['nodes'] = modules.value?.map((mod) => {
+  const { data, main } = modules.value
+  if (!data)
+    return { node: [], edges: [] }
+  const nodes: Data['nodes'] = data.map((mod) => {
     const path = mod.id.replace(/\?.*$/, '').replace(/\#.*$/, '')
     const pathSegments = path.split('/')
     const id = mod.id
@@ -37,14 +40,20 @@ const data = computed<Data>(() => {
       modulesMap.value.set(id, { filePath: path })
     else
       modulesMap.value.get(id)!.filePath = path
+    const isInMain = !!main.find(i => i.id === id)
 
     return {
       id,
-      label: pathSegments.at(-1),
+      label: isInMain ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
       title: getHoverPath(settings.graph.value.hoverPathLevel, path, rootPath.value),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
-      font: { color: isDark.value ? 'white' : 'black' },
+      font: {
+        color: isInMain
+          ? '#cff536' // a bit lighter than yellow that conspicuous in both dark/light mode
+          : isDark.value ? 'white' : 'black',
+        multi: 'html',
+      },
       shape: mod.id.includes('/node_modules/')
         ? 'hexagon'
         : mod.virtual
@@ -52,7 +61,7 @@ const data = computed<Data>(() => {
           : 'dot',
     }
   })
-  const edges: Data['edges'] = modules.value?.flatMap(mod => mod.deps.map(dep => ({
+  const edges: Data['edges'] = data.flatMap(mod => mod.deps.map(dep => ({
     from: mod.id,
     to: dep,
     arrows: {
