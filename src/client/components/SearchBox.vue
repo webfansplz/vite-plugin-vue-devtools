@@ -34,7 +34,7 @@ import { includeNodeModules, includeVirtual, searchText, userCustomGlobPattern }
           <span class="text-yellow-500">Warning:</span> Use it before you really know what is <span class="text-blue-300">glob</span>.<br>Use <span class="text-blue-300">,&nbsp;(dot + space)</span> to separate multiple patterns.
         </div>
       </template>
-      <div i-material-symbols-info />
+      <div i-material-symbols-info cursor-pointer />
     </VTooltip>
   </nav>
 </template>
