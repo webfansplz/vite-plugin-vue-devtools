@@ -185,8 +185,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div h-screen w-full flex flex-col n-panel-grids>
+  <div relative h-screen w-full flex flex-col n-panel-grids>
     <SearchBox />
+    <div absolute right-10px top-64px z-2000 cursor-pointer opacity-70>
+      <VTooltip placement="left">
+        <template #popper>
+          <div>Press cmd/alt + left click to opening node in editor.</div>
+        </template>
+        <div i-material-symbols-info />
+      </VTooltip>
+    </div>
     <div ref="container" flex="1" :class="[isHoveringNode && metaKeyPressed ? 'cursor-pointer' : '']" />
   </div>
 </template>
