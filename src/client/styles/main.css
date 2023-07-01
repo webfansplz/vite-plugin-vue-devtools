@@ -51,13 +51,7 @@ html.dark {
 
 /** vis-network */
 .vis-tooltip {
-  --at-apply: text-black dark:text-white bg-white dark:bg-black;
-  position: absolute;
-  border-width: 1px;
-  border-color: rgba(156,163,175,0.2);
-  border-radius: 4px;
-  box-shadow: 0 6px 30px #0000001a;
-  padding: 4px 8px;
+  --at-apply: n-card-base px-2 py-1 absolute;
 }
 
 /* Markdown */
