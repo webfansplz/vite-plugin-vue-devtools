@@ -13,6 +13,7 @@ const { meta: metaKeyPressed } = useMagicKeys({
   passive: true,
 })
 const isHoveringNode = ref(false)
+const lastSelectedNode = ref<string>()
 
 function getHoverPath(level: GraphSettings['hoverPathLevel'], fullPath: string, rootPath: string) {
   switch (level) {
@@ -119,10 +120,39 @@ onMounted(() => {
 
   const network = new Network(container.value!, data.value, options)
 
-  network.on('click', (data) => {
-    const nodeId = data.nodes?.[0]
-    if (nodeId && settings.graph.value.clickOpenInEditor && metaKeyPressed.value)
-      openInEditor(modulesMap.value.get(nodeId)!.filePath)
+  const resetNodeStyle = () => {
+    // @ts-expect-error network body typing error
+    network.body.data.nodes.update(network.body.data.nodes.getIds().map(id => ({ id, size: 16 })))
+    // @ts-expect-error network body typing error
+    network.body.data.edges.update(network.body.data.edges.getIds().map((id) => {
+      // @ts-expect-error network body typing error
+      const group = network.body.data.nodes.get(network.body.data.edges.get(id)!.from)!.group
+      return {
+        id,
+        color: options.groups[group].color,
+      }
+    }))
+  }
+
+  network.on('click', (params) => {
+    const nodeId = params.nodes?.[0]
+    if (!nodeId)
+      return resetNodeStyle()
+    if (settings.graph.value.clickOpenInEditor && metaKeyPressed.value)
+      return openInEditor(modulesMap.value.get(nodeId)!.filePath)
+    if (lastSelectedNode.value && lastSelectedNode.value !== nodeId)
+      resetNodeStyle()
+    // @ts-expect-error network body typing error
+    const nonConnectedNodes = network.body.data.nodes.getIds().filter(id => !network.getConnectedNodes(nodeId).includes(id) && nodeId !== id)
+    // @ts-expect-error network body typing error
+    const nonConnectedEdges = network.body.data.edges.getIds().filter(id => !network.getConnectedEdges(nodeId).includes(id))
+    // @ts-expect-error network body typing error
+    network.body.data.nodes.update(nonConnectedNodes.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
+    // @ts-expect-error network body typing error
+    network.body.data.edges.update(nonConnectedEdges.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
+    // @ts-expect-error network body typing error
+    network.body.data.nodes.update([{ id: nodeId, color: options.groups[network.body.data.nodes.get(nodeId)!.group].color, size: 26 }])
+    lastSelectedNode.value = nodeId
   })
 
   network.on('hoverNode', () => {
