@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { includeNodeModules, includeVirtual, searchText } from '../logic/graph'
+import { includeNodeModules, includeVirtual, searchText, userCustomGlobPattern } from '../logic/graph'
 </script>
 
 <template>
@@ -21,5 +21,12 @@ import { includeNodeModules, includeVirtual, searchText } from '../logic/graph'
         <div class="ml-1">virtual</div>
       </label>
     </div>
+    <div i-mdi-regex title="Glob pattern" text-xl />
+    <input
+      v-model="userCustomGlobPattern"
+      type="text"
+      class="w-300px border border-base rounded bg-transparent px-3 py-1 !outline-none"
+      placeholder="Your custom glob pattern"
+    >
   </nav>
 </template>

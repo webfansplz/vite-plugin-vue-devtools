@@ -1,5 +1,6 @@
 import { useStorage } from '@vueuse/core'
 import Fuse from 'fuse.js'
+import { Minimatch } from 'minimatch'
 import type { ModuleInfo } from '../../types'
 import { rpc } from './rpc'
 
@@ -8,6 +9,7 @@ export const searchText = useStorage('vite-inspect-search-text', '')
 export const includeNodeModules = useStorage('vite-inspect-include-node-modules', false)
 export const includeVirtual = useStorage('vite-inspect-include-virtual', false)
 export const rootPath = ref(await rpc.root())
+export const userCustomGlobPattern = useStorage('vite-inspect-user-custom-glob-pattern', '')
 
 function getDepsByExtractId(data: typeof list.value, searchId: string) {
   const result = new Set<typeof list.value[number]>()
@@ -83,10 +85,22 @@ function fuzzySearchDeps(data: typeof list.value, id: string) {
   }
 }
 
+function filterByUserDefinedGlob(data: typeof list.value) {
+  if (!userCustomGlobPattern.value.trim().length)
+    return data
+  const globPattern = userCustomGlobPattern.value.trim().split(', ')
+  const globInstances = new Map(globPattern.map(pattern => [pattern, new Minimatch(pattern, { matchBase: true })]))
+  return data.filter(item => globPattern.every(pattern =>
+    globInstances.get(pattern)!.match(item.id),
+  ))
+}
+
 export const searchResults = computed(() => {
   let data = (
     list.value
   ) || []
+
+  data = filterByUserDefinedGlob(data)
 
   if (!includeNodeModules.value)
     data = data.filter(item => !item.id.includes('/node_modules/'))
