@@ -121,6 +121,8 @@ onMounted(() => {
   const network = new Network(container.value!, data.value, options)
 
   const resetNodeStyle = () => {
+    if (!settings.graph.value.highlightSelection)
+      return
     // @ts-expect-error network body typing error
     network.body.data.nodes.update(network.body.data.nodes.getIds().map(id => ({ id, size: 16 })))
     // @ts-expect-error network body typing error
@@ -142,6 +144,8 @@ onMounted(() => {
       return openInEditor(modulesMap.value.get(nodeId)!.filePath)
     if (lastSelectedNode.value && lastSelectedNode.value !== nodeId)
       resetNodeStyle()
+    if (!settings.graph.value.highlightSelection)
+      return
     // @ts-expect-error network body typing error
     const nonConnectedNodes = network.body.data.nodes.getIds().filter(id => !network.getConnectedNodes(nodeId).includes(id) && nodeId !== id)
     // @ts-expect-error network body typing error

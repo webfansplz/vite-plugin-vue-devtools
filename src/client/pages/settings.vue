@@ -173,6 +173,10 @@ const showTabGroup = ref(false)
             Cmd/Alt + Click to opening in editor:
             <VSwitch v-model="graph.clickOpenInEditor" n="primary" />
           </div>
+          <div flex items-center gap-3>
+            Highlight current selected node and related nodes:
+            <VSwitch v-model="graph.highlightSelection" n="primary" />
+          </div>
         </div>
       </div>
     </div>

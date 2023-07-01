@@ -4,6 +4,7 @@ export interface GraphSettings {
   hoverPathLevel: 'custom' | 'absolute' | 'root'
   hoverPathLevelCustom: number
   clickOpenInEditor: boolean
+  highlightSelection: boolean
 }
 
 export interface DevToolsUISettings {
@@ -21,6 +22,7 @@ const devToolsSettings = useLocalStorage<DevToolsUISettings>('__vue-devtools-set
     hoverPathLevel: 'root',
     hoverPathLevelCustom: 4,
     clickOpenInEditor: true,
+    highlightSelection: true,
   },
 }, { mergeDefaults: true })
 
