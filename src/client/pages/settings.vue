@@ -174,7 +174,7 @@ const showTabGroup = ref(false)
             <VSwitch v-model="graph.clickOpenInEditor" n="primary" />
           </div>
           <div flex items-center gap-3>
-            Highlight current selected node and related nodes:
+            Highlight the currently selected node and related nodes:
             <VSwitch v-model="graph.highlightSelection" n="primary" />
           </div>
         </div>
