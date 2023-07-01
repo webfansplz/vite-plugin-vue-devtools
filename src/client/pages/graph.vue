@@ -128,10 +128,11 @@ onMounted(() => {
     // @ts-expect-error network body typing error
     network.body.data.edges.update(network.body.data.edges.getIds().map((id) => {
       // @ts-expect-error network body typing error
-      const group = network.body.data.nodes.get(network.body.data.edges.get(id)!.from)!.group
+      const group = network.body.data.nodes.get(network.body.data.edges.get(id)!.from).group
       return {
         id,
-        color: options.groups[group].color,
+        // default unknown group color
+        color: options.groups[group]?.color ?? '#97C2FC',
       }
     }))
   }
@@ -155,7 +156,7 @@ onMounted(() => {
     // @ts-expect-error network body typing error
     network.body.data.edges.update(nonConnectedEdges.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
     // @ts-expect-error network body typing error
-    network.body.data.nodes.update([{ id: nodeId, color: options.groups[network.body.data.nodes.get(nodeId)!.group].color, size: 26 }])
+    network.body.data.nodes.update([{ id: nodeId, color: options.groups[network.body.data.nodes.get(nodeId).group]?.color, size: 26 }])
     lastSelectedNode.value = nodeId
   })
 
