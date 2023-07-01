@@ -9,6 +9,7 @@ import { createRPCServer } from '../vite-dev-rpc'
 import { DIR_CLIENT } from '../dir'
 import type { ExecNpmScriptOptions, RPCFunctions } from '../types'
 import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './rpc'
+import { launchEditorHandler } from './middlewares/launchEditor'
 
 const NAME = 'vite-plugin-vue-devtools'
 
@@ -40,6 +41,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       single: true,
       dev: true,
     }))
+    server.middlewares.use(`${base}__open-in-editor`, launchEditorHandler)
 
     const rpc = createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
       componentGraph: () => getComponentsRelationships(inspect.api.rpc),

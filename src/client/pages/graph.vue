@@ -7,9 +7,12 @@ const isDark = useDark()
 // const modules = ref<ModuleInfo[]>()
 const container = ref<HTMLDivElement | null>()
 
-const data = computed<Data>(() => {
+const nodeInfo = computed(() => {
+  const pathMap: Record<string, string> = {}
   const nodes: Data['nodes'] = modules.value?.map((mod) => {
     const path = mod.id.replace(/\?.*$/, '').replace(/\#.*$/, '')
+    pathMap[mod.id] = path
+
     return {
       id: mod.id,
       label: path.split('/').splice(-1)[0],
@@ -24,6 +27,14 @@ const data = computed<Data>(() => {
           : 'dot',
     }
   })
+
+  return {
+    nodes,
+    pathMap,
+  }
+})
+
+const data = computed<Data>(() => {
   const edges: Data['edges'] = modules.value?.flatMap(mod => mod.deps.map(dep => ({
     from: mod.id,
     to: dep,
@@ -36,7 +47,7 @@ const data = computed<Data>(() => {
   })))
 
   return {
-    nodes,
+    nodes: nodeInfo.value.nodes,
     edges,
   }
 })
@@ -94,6 +105,11 @@ onMounted(() => {
   //   // if (node)
   //   //   router.push(`/module?id=${encodeURIComponent(node)}`)
   // })
+
+  network.on('selectNode', (data) => {
+    const file = nodeInfo.value.pathMap[data.nodes?.[0]]
+    fetch(`${location.origin}/__open-in-editor?file=${file}`, { mode: 'no-cors' })
+  })
 
   watch(data, () => {
     network.setData(data.value)
