@@ -76,7 +76,6 @@ export interface VueDevtoolsHostClient {
   }
   hookBuffer: [string, Record<string, any>][]
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
-  cwd: string
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'
