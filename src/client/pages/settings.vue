@@ -155,27 +155,28 @@ const showTabGroup = ref(false)
           <h3 mb1 text-lg>
             Graph
           </h3>
-          <div flex="~ col" gap-3 />
-          <div flex items-center gap-3>
-            Hover path level:
-            <VSelect v-model="graph.hoverPathLevel" n="primary">
-              <option v-for="i of graphHoverPathLevel" :key="i[0]" :value="i[1]">
-                {{ i[0] }}
-              </option>
-            </VSelect>
-            <VSelect v-if="graph.hoverPathLevel === 'custom'" v-model="graph.hoverPathLevelCustom" n="primary">
-              <option v-for="i of graphHoverPathLevelCustom" :key="i[0]" :value="i[1]">
-                {{ i[0] }}
-              </option>
-            </VSelect>
-          </div>
-          <div flex items-center gap-3>
-            Cmd/Alt + Click to opening in editor:
-            <VSwitch v-model="graph.clickOpenInEditor" n="primary" />
-          </div>
-          <div flex items-center gap-3>
-            Highlight the currently selected node and related nodes:
-            <VSwitch v-model="graph.highlightSelection" n="primary" />
+          <div flex="~ col" gap-3>
+            <div flex items-center gap-3>
+              Hover path level:
+              <VSelect v-model="graph.hoverPathLevel" n="primary">
+                <option v-for="i of graphHoverPathLevel" :key="i[0]" :value="i[1]">
+                  {{ i[0] }}
+                </option>
+              </VSelect>
+              <VSelect v-if="graph.hoverPathLevel === 'custom'" v-model="graph.hoverPathLevelCustom" n="primary">
+                <option v-for="i of graphHoverPathLevelCustom" :key="i[0]" :value="i[1]">
+                  {{ i[0] }}
+                </option>
+              </VSelect>
+            </div>
+            <div flex items-center gap-3>
+              Cmd/Alt + Click to opening in editor:
+              <VSwitch v-model="graph.clickOpenInEditor" n="primary" />
+            </div>
+            <div flex items-center gap-3>
+              Highlight the currently selected node and related nodes:
+              <VSwitch v-model="graph.highlightSelection" n="primary" />
+            </div>
           </div>
         </div>
       </div>
