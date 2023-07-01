@@ -1,19 +1,46 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { searchResults as modules } from '../logic/graph'
+import { searchResults as modules, rootPath } from '../logic/graph'
+import type { GraphSettings } from '../composables/settings'
+import { useDevToolsSettings } from '../composables/settings'
 
 const isDark = useDark()
-// const modules = ref<ModuleInfo[]>()
 const container = ref<HTMLDivElement | null>()
+const modulesMap = shallowRef<Map<string, { filePath: string }>>(new Map())
+const settings = useDevToolsSettings()
+const { meta: metaKeyPressed } = useMagicKeys({
+  passive: true,
+})
+const isHoveringNode = ref(false)
+
+function getHoverPath(level: GraphSettings['hoverPathLevel'], fullPath: string, rootPath: string) {
+  switch (level) {
+    case 'absolute':
+      return fullPath
+    case 'custom':
+      return fullPath.split('/').slice(-settings.graph.value.hoverPathLevelCustom).join('/')
+    case 'root':
+    default:
+      return fullPath.replace(rootPath, '')
+  }
+}
 
 const data = computed<Data>(() => {
   const nodes: Data['nodes'] = modules.value?.map((mod) => {
     const path = mod.id.replace(/\?.*$/, '').replace(/\#.*$/, '')
+    const pathSegments = path.split('/')
+    const id = mod.id
+
+    if (!modulesMap.value.has(id))
+      modulesMap.value.set(id, { filePath: path })
+    else
+      modulesMap.value.get(id)!.filePath = path
+
     return {
-      id: mod.id,
-      label: path.split('/').splice(-1)[0],
-      title: path.split('/').splice(-4).join('/'),
+      id,
+      label: pathSegments.at(-1),
+      title: getHoverPath(settings.graph.value.hoverPathLevel, path, rootPath.value),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
       font: { color: isDark.value ? 'white' : 'black' },
@@ -46,6 +73,9 @@ onMounted(() => {
     nodes: {
       shape: 'dot',
       size: 16,
+    },
+    interaction: {
+      hover: true,
     },
     physics: {
       maxVelocity: 146,
@@ -89,11 +119,18 @@ onMounted(() => {
 
   const network = new Network(container.value!, data.value, options)
 
-  // network.on('click', (data) => {
-  //   const node = data.nodes?.[0]
-  //   // if (node)
-  //   //   router.push(`/module?id=${encodeURIComponent(node)}`)
-  // })
+  network.on('click', (data) => {
+    const nodeId = data.nodes?.[0]
+    if (nodeId && settings.graph.value.clickOpenInEditor && metaKeyPressed.value)
+      openInEditor(modulesMap.value.get(nodeId)!.filePath)
+  })
+
+  network.on('hoverNode', () => {
+    isHoveringNode.value = true
+  })
+  network.on('blurNode', () => {
+    isHoveringNode.value = false
+  })
 
   watch(data, () => {
     network.setData(data.value)
@@ -104,6 +141,6 @@ onMounted(() => {
 <template>
   <div h-screen w-full flex flex-col n-panel-grids>
     <SearchBox />
-    <div ref="container" flex="1" />
+    <div ref="container" flex="1" :class="[isHoveringNode && metaKeyPressed ? 'cursor-pointer' : '']" />
   </div>
 </template>

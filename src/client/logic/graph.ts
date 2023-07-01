@@ -8,6 +8,7 @@ export const searchText = useStorage('vite-inspect-search-text', '')
 export const includeNodeModules = useStorage('vite-inspect-include-node-modules', false)
 export const includeVirtual = useStorage('vite-inspect-include-virtual', false)
 export const exactSearch = useStorage('vite-inspect-exact-search', false)
+export const rootPath = ref(await rpc.root())
 
 export const searchResults = computed(() => {
   let data = (
