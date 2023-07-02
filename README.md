@@ -153,6 +153,13 @@ interface VitePluginVueDevToolsOptions {
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
 
+
+## 👨‍💻 Contributors
+
+<a href="https://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=webfansplz/vite-plugin-vue-devtools" />   
+</a>    
+
 ## 📄 License
 
 [MIT LICENSE](./LICENSE)
