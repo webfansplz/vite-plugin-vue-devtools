@@ -8,9 +8,8 @@ import VueInspector from 'vite-plugin-vue-inspector'
 import { createRPCServer } from '../vite-dev-rpc'
 import { DIR_CLIENT } from '../dir'
 import type { ExecNpmScriptOptions, RPCFunctions } from '../types'
+import { NAME, VIRTUAL_NAME } from '../constant'
 import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './rpc'
-
-const NAME = 'vite-plugin-vue-devtools'
 
 function getVueDevtoolsPath() {
   const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
@@ -41,7 +40,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       dev: true,
     }))
 
-    const rpc = createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
+    const rpc = createRPCServer<RPCFunctions>(NAME, server.ws, {
       componentGraph: () => getComponentsRelationships(inspect.api.rpc),
       inspectClientUrl: () => `${config.base || '/'}__inspect/`,
       staticAssets: () => getStaticAssets(config),
@@ -87,16 +86,16 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       configureServer(server)
     },
     async resolveId(importee: string) {
-      if (importee.startsWith('virtual:vue-devtools-options')) {
+      if (importee.startsWith(`${VIRTUAL_NAME}-options`)) {
         return importee
       }
-      else if (importee.startsWith('virtual:vue-devtools-path:')) {
-        const resolved = importee.replace('virtual:vue-devtools-path:', `${vueDevtoolsPath}/`)
+      else if (importee.startsWith(`${VIRTUAL_NAME}-path:`)) {
+        const resolved = importee.replace(`${VIRTUAL_NAME}-path:`, `${vueDevtoolsPath}/`)
         return resolved
       }
     },
     async load(id) {
-      if (id === 'virtual:vue-devtools-options')
+      if (id === `${VIRTUAL_NAME}-options`)
         return `export default ${JSON.stringify({ base: config.base })}`
     },
     transform(code, id) {
@@ -108,7 +107,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       const [filename] = id.split('?', 2)
       if ((typeof appendTo === 'string' && filename.endsWith(appendTo))
         || (appendTo instanceof RegExp && appendTo.test(filename)))
-        return { code: `${code}\nimport 'virtual:vue-devtools-path:app.js'` }
+        return { code: `${code}\nimport '${VIRTUAL_NAME}-path:app.js'` }
     },
     transformIndexHtml(html) {
       if (options.appendTo)
@@ -122,7 +121,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
             injectTo: 'head',
             attrs: {
               type: 'module',
-              src: '/@id/virtual:vue-devtools-path:app.js',
+              src: `/@id/${VIRTUAL_NAME}-path:app.js`,
             },
           },
         ],
