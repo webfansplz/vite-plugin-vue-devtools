@@ -169,9 +169,9 @@ export const useColorScheme = () => useStorage('vueuse-color-scheme', 'auto', tr
  * @param query
  * @param options
  */
-export function useMediaQuery(query: string) {
-  const isSupported = () => window && 'matchMedia' in window && typeof window.matchMedia === 'function'
+const isSupported = (() => window && 'matchMedia' in window && typeof window.matchMedia === 'function')()
 
+export function useMediaQuery(query: string) {
   let mediaQuery: MediaQueryList | undefined
   const matches = ref(false)
 
