@@ -53,6 +53,7 @@ export interface RPCFunctions {
   onTerminalExit(_: { id?: string; data?: string }): void
   installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
+  root(): Promise<string>
 }
 
 export interface ModulesList {
@@ -60,6 +61,8 @@ export interface ModulesList {
   modules: ModuleInfo[]
   ssrModules: ModuleInfo[]
 }
+
+export type OpenInEditorFn = (filePath: string, line?: number, column?: number) => any
 
 export interface VueDevtoolsHostClient {
   markClientLoaded: () => void
@@ -75,6 +78,7 @@ export interface VueDevtoolsHostClient {
   }
   hookBuffer: [string, Record<string, any>][]
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
+  openInEditor: OpenInEditorFn
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'

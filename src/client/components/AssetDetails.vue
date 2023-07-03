@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AssetInfo } from '../../types'
+import { useDevtoolsClient } from '../logic/client'
 import { rpc } from '../logic/rpc'
 
 const props = defineProps<{
@@ -53,6 +54,8 @@ const supportsPreview = computed(() => {
     'font',
   ].includes(props.asset.type)
 })
+
+const client = useDevtoolsClient()
 </script>
 
 <template>
@@ -92,12 +95,12 @@ const supportsPreview = computed(() => {
           <td>
             <div flex="~ gap-1" w-full items-center>
               <FilepathItem :filepath="asset.filePath" text-left />
-              <!-- <VIconButton
+              <VIconButton
                 flex-none
                 title="Open in Editor"
                 icon="carbon-launch"
-                @click="openInEditor(asset.filePath)"
-              /> -->
+                @click="client.openInEditor(asset.filePath)"
+              />
             </div>
           </td>
         </tr>

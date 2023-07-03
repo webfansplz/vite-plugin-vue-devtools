@@ -5,6 +5,7 @@ const client = ref<VueDevtoolsHostClient>({
   markClientLoaded: () => { },
   hookBuffer: [],
   categorizedHookBuffer: {},
+  openInEditor: () => {},
 })
 
 export function useDevtoolsClient() {
