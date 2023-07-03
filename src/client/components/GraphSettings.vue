@@ -52,7 +52,7 @@ const settings = [
   },
   {
     name: 'Enable glob pattern',
-    description: 'Enable glob pattern to pre-filtered modules',
+    description: 'Enable glob pattern to pre-filter modules. Use , (dot + space) to separate multiple patterns.',
     comp: () => <VSwitch v-model={graphSettings.value.enableUserDefinedGlob} class="n-primary" />,
   },
 ] satisfies Settings[]
