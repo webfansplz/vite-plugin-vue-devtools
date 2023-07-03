@@ -26,8 +26,8 @@ interface Settings {
 
 const settings = [
   {
-    name: 'Hover path',
-    description: 'The showing path level when hovering a node',
+    name: 'Path level',
+    description: 'Display the path level of the hovered node',
     comp: () => <>
       <VSelect v-model={graphSettings.value.hoverPathLevel} class="n-primary">
         {graphHoverPathLevel.map(([key, value]) => <option key={key}>{ value }</option>) }
@@ -42,17 +42,17 @@ const settings = [
   },
   {
     name: 'Open in editor',
-    description: 'Alt/cmd + click node will opening this file in editor',
+    description: 'Press Alt/Cmd + click on a node to open the file in editor',
     comp: () => <VSwitch v-model={graphSettings.value.clickOpenInEditor} class="n-primary" />,
   },
   {
     name: 'Highlight related node',
-    description: 'Highlight direct related node when clicking a node',
+    description: 'Highlight the directly related node when clicking on a node',
     comp: () => <VSwitch v-model={graphSettings.value.highlightSelection} class="n-primary" />,
   },
   {
-    name: 'Enable glob pattern',
-    description: 'Enable glob pattern to pre-filter modules. Use , (dot + space) to separate multiple patterns.',
+    name: 'Glob pattern',
+    description: 'Enable glob pattern to pre-filter modules. Use dot + space(", ") to separate multiple patterns.',
     comp: () => <VSwitch v-model={graphSettings.value.enableUserDefinedGlob} class="n-primary" />,
   },
 ] satisfies Settings[]
