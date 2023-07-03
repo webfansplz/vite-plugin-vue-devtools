@@ -11,7 +11,7 @@ export const includeVirtual = useStorage('vite-inspect-include-virtual', false)
 export const rootPath = ref(await rpc.root())
 export const userCustomGlobPattern = useStorage('__vue-devtools-graph-glob__', '')
 
-function getDepsByExtractId(data: typeof list.value, searchId: string) {
+function getDepsByExactId(data: typeof list.value, searchId: string) {
   const result = new Set<typeof list.value[number]>()
   const queue: string[] = []
   const idToDepsMap: Record<string, string[]> = {}
@@ -81,7 +81,7 @@ function fuzzySearchDeps(data: typeof list.value, id: string) {
   }
   return {
     main: result,
-    allWithDeps: uniqById(result.flatMap(item => getDepsByExtractId(data, item.id))),
+    allWithDeps: uniqById(result.flatMap(item => getDepsByExactId(data, item.id))),
   }
 }
 
