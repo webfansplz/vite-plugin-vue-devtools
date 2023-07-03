@@ -4,7 +4,7 @@ import { Network } from 'vis-network'
 import { searchResults as modules, rootPath } from '../logic/graph'
 import { useDevtoolsClient } from '../logic/client'
 import { useGraphSettings } from '../composables/graph'
-import type { GraphSettings as GraphSettingsType } from '../composables/graph'
+import type { GraphSettingsType } from '../composables/graph'
 
 const isDark = useDark()
 const container = ref<HTMLDivElement | null>()

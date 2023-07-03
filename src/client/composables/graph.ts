@@ -1,6 +1,6 @@
 const showGraphSetting = ref(false)
 
-export interface GraphSettings {
+export interface GraphSettingsType {
   hoverPathLevel: 'custom' | 'absolute' | 'root'
   hoverPathLevelCustom: number
   clickOpenInEditor: boolean
@@ -8,7 +8,7 @@ export interface GraphSettings {
   enableUserDefinedGlob: boolean
 }
 
-const graphSettings = useLocalStorage<GraphSettings>('__vue-devtools-graph-settings__', {
+const graphSettings = useLocalStorage<GraphSettingsType>('__vue-devtools-graph-settings__', {
   hoverPathLevel: 'root',
   hoverPathLevelCustom: 4,
   clickOpenInEditor: true,
