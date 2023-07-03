@@ -8,8 +8,8 @@ Vue DevTools <sup>Preview</sup>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-vue-devtools" alt="NPM Version" /></a>
-  <!-- <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-vue-devtools" alt="NPM Downloads" /></a> -->
-  <!-- <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/webfansplz/vite-plugin-vue-devtools" alt="License" /></a> -->
+  <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-vue-devtools" alt="NPM Downloads" /></a>
+ <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/webfansplz/vite-plugin-vue-devtools" alt="License" /></a>
 </p>
 
 <p align="center">
@@ -152,6 +152,13 @@ interface VitePluginVueDevToolsOptions {
 - This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
+
+
+## 👨‍💻 Contributors
+
+<a href="https://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=webfansplz/vite-plugin-vue-devtools" />   
+</a>    
 
 ## 📄 License
 
