@@ -5,10 +5,10 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { createRPCServer } from '../vite-dev-rpc'
-import { DIR_CLIENT } from '../dir'
-import type { ExecNpmScriptOptions, RPCFunctions } from '../types'
-import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './rpc'
+import createDevtools from 'vite-plugin-devtools'
+
+// import { createRPCServer } from '../vite-dev-rpc'
+import { DIR_CLIENT, ICON } from '../dir'
 
 const NAME = 'vite-plugin-vue-devtools'
 
@@ -34,6 +34,13 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
   })
   let config: ResolvedConfig
 
+  const { plugin } = createDevtools(NAME, {
+    clientDir: DIR_CLIENT,
+    icon: ICON,
+  })
+
+  return plugin
+
   function configureServer(server: ViteDevServer) {
     const base = (server.config.base) || '/'
     server.middlewares.use(`${base}__devtools__`, sirv(DIR_CLIENT, {
@@ -41,7 +48,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       dev: true,
     }))
 
-    const rpc = createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
+    /* const rpc = createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
       componentGraph: () => getComponentsRelationships(inspect.api.rpc),
       inspectClientUrl: () => `${config.base || '/'}__inspect/`,
       staticAssets: () => getStaticAssets(config),
@@ -74,9 +81,9 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
             rpc.onTerminalExit({ data })
         },
       }),
-    })
+    }) */
   }
-  const plugin = <PluginOption>{
+  const plugin2 = <PluginOption>{
     name: NAME,
     enforce: 'pre',
     apply: 'serve',
@@ -133,7 +140,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
   }
 
   return [
-    plugin,
+    plugin2,
     inspect,
     VueInspector({
       toggleComboKey: '',

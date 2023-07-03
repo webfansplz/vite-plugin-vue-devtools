@@ -10,6 +10,7 @@ export default defineBuildConfig({
     'vite',
     'vite-plugin-inspect',
     'vite-plugin-vue-inspector',
+    'vite-plugin-devtools',
     'execa',
     '@webfansplz/vuedoc-parser',
   ],
