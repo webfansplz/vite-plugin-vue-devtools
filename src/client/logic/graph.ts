@@ -9,7 +9,7 @@ export const searchText = useStorage('vite-inspect-search-text', '')
 export const includeNodeModules = useStorage('vite-inspect-include-node-modules', false)
 export const includeVirtual = useStorage('vite-inspect-include-virtual', false)
 export const rootPath = ref(await rpc.root())
-export const userCustomGlobPattern = useStorage('vite-inspect-user-custom-glob-pattern', '')
+export const userCustomGlobPattern = useStorage('__vue-devtools-graph-glob__', '')
 
 function getDepsByExtractId(data: typeof list.value, searchId: string) {
   const result = new Set<typeof list.value[number]>()
