@@ -1,4 +1,4 @@
-const showGraphSetting = ref(true)
+const showGraphSetting = ref(false)
 
 export interface GraphSettings {
   hoverPathLevel: 'custom' | 'absolute' | 'root'
@@ -18,7 +18,7 @@ const graphSettings = useLocalStorage<GraphSettings>('__vue-devtools-graph-setti
 
 export function useGraphSettings() {
   onDeactivated(() => showGraphSetting.value = false)
-  onBeforeMount(() => showGraphSetting.value = false)
+  onBeforeUnmount(() => showGraphSetting.value = false)
 
   return {
     showGraphSetting,
