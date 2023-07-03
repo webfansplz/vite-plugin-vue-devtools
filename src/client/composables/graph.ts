@@ -8,13 +8,16 @@ export interface GraphSettingsType {
   enableUserDefinedGlob: boolean
 }
 
-const graphSettings = useLocalStorage<GraphSettingsType>('__vue-devtools-graph-settings__', {
+const graphSettingsInStorage = useLocalStorage<GraphSettingsType>('__vue-devtools-graph-settings__', {
   hoverPathLevel: 'root',
   hoverPathLevelCustom: 4,
   clickOpenInEditor: true,
   highlightSelection: true,
   enableUserDefinedGlob: false,
 }, { mergeDefaults: true })
+
+// Avoid TS known issue: https://github.com/microsoft/TypeScript/issues/47663 when running build command
+const graphSettings = computed(() => graphSettingsInStorage.value)
 
 export function useGraphSettings() {
   onDeactivated(() => showGraphSetting.value = false)
