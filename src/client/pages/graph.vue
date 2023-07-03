@@ -2,14 +2,14 @@
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
 import { searchResults as modules, rootPath } from '../logic/graph'
-import type { GraphSettings } from '../composables/settings'
-import { useDevToolsSettings } from '../composables/settings'
 import { useDevtoolsClient } from '../logic/client'
+import { useGraphSettings } from '../composables/graph'
+import type { GraphSettings as GraphSettingsType } from '../composables/graph'
 
 const isDark = useDark()
 const container = ref<HTMLDivElement | null>()
 const modulesMap = shallowRef<Map<string, { filePath: string }>>(new Map())
-const settings = useDevToolsSettings()
+const settings = useGraphSettings()
 const { meta: metaKeyPressed } = useMagicKeys({
   passive: true,
 })
@@ -17,12 +17,12 @@ const isHoveringNode = ref(false)
 const lastSelectedNode = ref<string>()
 const client = useDevtoolsClient()
 
-function getHoverPath(level: GraphSettings['hoverPathLevel'], fullPath: string, rootPath: string) {
+function getHoverPath(level: GraphSettingsType['hoverPathLevel'], fullPath: string, rootPath: string) {
   switch (level) {
     case 'absolute':
       return fullPath
     case 'custom':
-      return fullPath.split('/').slice(-settings.graph.value.hoverPathLevelCustom).join('/')
+      return fullPath.split('/').slice(-settings.graphSettings.value.hoverPathLevelCustom).join('/')
     case 'root':
     default:
       return fullPath.replace(rootPath, '')
@@ -47,12 +47,12 @@ const data = computed<Data>(() => {
     return {
       id,
       label: isInMain ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
-      title: getHoverPath(settings.graph.value.hoverPathLevel, path, rootPath.value),
+      title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath.value),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
       font: {
         color: isInMain
-          ? '#cff536' // a bit lighter than yellow that conspicuous in both dark/light mode
+          ? '#F19B4A'
           : isDark.value ? 'white' : 'black',
         multi: 'html',
       },
@@ -132,7 +132,7 @@ onMounted(() => {
   const network = new Network(container.value!, data.value, options)
 
   const resetNodeStyle = () => {
-    if (!settings.graph.value.highlightSelection)
+    if (!settings.graphSettings.value.highlightSelection)
       return
     // @ts-expect-error network body typing error
     network.body.data.nodes.update(network.body.data.nodes.getIds().map(id => ({ id, size: 16 })))
@@ -152,11 +152,11 @@ onMounted(() => {
     const nodeId = params.nodes?.[0]
     if (!nodeId)
       return resetNodeStyle()
-    if (settings.graph.value.clickOpenInEditor && metaKeyPressed.value)
+    if (settings.graphSettings.value.clickOpenInEditor && metaKeyPressed.value)
       return client.value.openInEditor(modulesMap.value.get(nodeId)!.filePath)
     if (lastSelectedNode.value && lastSelectedNode.value !== nodeId)
       resetNodeStyle()
-    if (!settings.graph.value.highlightSelection)
+    if (!settings.graphSettings.value.highlightSelection)
       return
     // @ts-expect-error network body typing error
     const nonConnectedNodes = network.body.data.nodes.getIds().filter(id => !network.getConnectedNodes(nodeId).includes(id) && nodeId !== id)
@@ -182,11 +182,18 @@ onMounted(() => {
     network.setData(data.value)
   })
 })
+const { showGraphSetting } = useGraphSettings()
 </script>
 
 <template>
   <div relative h-screen w-full flex flex-col n-panel-grids>
-    <SearchBox />
+    <SearchBox>
+      <template #right>
+        <button aria-label="Open graph settings" @click="showGraphSetting = true">
+          <div i-carbon-settings />
+        </button>
+      </template>
+    </SearchBox>
     <div absolute right-10px top-64px z-2000 cursor-pointer opacity-70>
       <VTooltip placement="left">
         <template #popper>
@@ -196,5 +203,6 @@ onMounted(() => {
       </VTooltip>
     </div>
     <div ref="container" flex="1" :class="[isHoveringNode && metaKeyPressed ? 'cursor-pointer' : '']" />
+    <GraphSettings />
   </div>
 </template>

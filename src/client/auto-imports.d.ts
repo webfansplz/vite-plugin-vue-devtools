@@ -196,6 +196,7 @@ declare global {
   const useFullscreen: typeof import('@vueuse/core')['useFullscreen']
   const useGamepad: typeof import('@vueuse/core')['useGamepad']
   const useGeolocation: typeof import('@vueuse/core')['useGeolocation']
+  const useGraphSettings: typeof import('./composables/graph')['useGraphSettings']
   const useGroupedTabStore: typeof import('./composables/tabs')['useGroupedTabStore']
   const useGroupedTabs: typeof import('./composables/tabs')['useGroupedTabs']
   const useIdle: typeof import('@vueuse/core')['useIdle']

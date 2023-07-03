@@ -95,18 +95,20 @@ function filterByUserDefinedGlob(data: typeof list.value) {
   ))
 }
 
+const { graphSettings } = useGraphSettings()
+
 export const searchResults = computed(() => {
   let data = (
     list.value
   ) || []
 
-  data = filterByUserDefinedGlob(data)
-
   if (!includeNodeModules.value)
     data = data.filter(item => !item.id.includes('/node_modules/'))
-
   if (!includeVirtual.value)
     data = data.filter(item => !item.virtual)
+
+  if (graphSettings.value.enableUserDefinedGlob)
+    data = filterByUserDefinedGlob(data)
 
   if (!searchText.value) {
     return {

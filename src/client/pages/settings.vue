@@ -6,7 +6,6 @@ const {
   scale,
   hiddenTabs,
   hiddenTabGroups,
-  graph,
 } = useDevToolsSettings()
 
 const { closeOnOutsideClick } = useFrameState()
@@ -17,19 +16,6 @@ const scaleOptions = [
   ['Normal', 1],
   ['Large', 16 / 15],
   ['Huge', 18 / 15],
-]
-
-const graphHoverPathLevel = [
-  ['Root in vite config', 'root'],
-  ['Custom level', 'custom'],
-  ['Absolute', 'absolute'],
-]
-const graphHoverPathLevelCustom = [
-  ['2', 2],
-  ['3', 3],
-  ['4', 4],
-  ['5', 5],
-  ['6', 6],
 ]
 
 const groupedTabs = useGroupedTabs(false)
@@ -150,34 +136,6 @@ const showTabGroup = ref(false)
             flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick"
             @update:model-value="toggleClickOutside"
           />
-        </div>
-        <div py3 flex="~ col gap-1">
-          <h3 mb1 text-lg>
-            Graph
-          </h3>
-          <div flex="~ col" gap-3>
-            <div flex items-center gap-3>
-              Hover path level:
-              <VSelect v-model="graph.hoverPathLevel" n="primary">
-                <option v-for="i of graphHoverPathLevel" :key="i[0]" :value="i[1]">
-                  {{ i[0] }}
-                </option>
-              </VSelect>
-              <VSelect v-if="graph.hoverPathLevel === 'custom'" v-model="graph.hoverPathLevelCustom" n="primary">
-                <option v-for="i of graphHoverPathLevelCustom" :key="i[0]" :value="i[1]">
-                  {{ i[0] }}
-                </option>
-              </VSelect>
-            </div>
-            <div flex items-center gap-3>
-              Cmd/Alt + Click to opening in editor:
-              <VSwitch v-model="graph.clickOpenInEditor" n="primary" />
-            </div>
-            <div flex items-center gap-3>
-              Highlight the currently selected node and related nodes:
-              <VSwitch v-model="graph.highlightSelection" n="primary" />
-            </div>
-          </div>
         </div>
       </div>
     </div>
