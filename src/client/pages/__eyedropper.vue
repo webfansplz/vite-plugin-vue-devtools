@@ -16,7 +16,7 @@ function close() {
   router.replace(frameState.route.value)
 }
 
-const inSecurityContext = checkInSecurityContext()
+const inSecurityContext = checkIsSecurityContext()
 // @ts-expect-error missing types
 const supportEyeDropper = !!window.EyeDropper
 const isSupported = inSecurityContext && supportEyeDropper

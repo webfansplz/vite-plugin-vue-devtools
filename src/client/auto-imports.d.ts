@@ -7,7 +7,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
-  const checkInSecurityContext: typeof import('./utils/index')['checkInSecurityContext']
+  const checkIsSecurityContext: typeof import('./utils/index')['checkIsSecurityContext']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']

@@ -61,7 +61,7 @@ export function isMacOS() {
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts
-export function checkInSecurityContext() {
+export function checkIsSecurityContext() {
   return !!window.isSecureContext
 }
 
