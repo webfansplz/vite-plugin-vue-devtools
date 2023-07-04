@@ -1,5 +1,6 @@
 import { join, resolve } from 'node:path'
 import { defineConfig } from 'vite'
+import { getBase } from 'vite-plugin-devtools'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
@@ -7,7 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 
 export default defineConfig({
-  base: './',
+  base: getBase('vite-plugin-vue-devtools'),
 
   resolve: {
     alias: {

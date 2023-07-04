@@ -40,19 +40,25 @@ export interface ImageMeta {
   mimeType?: string
 }
 
-export interface RPCFunctions {
-  componentGraph(): Promise<ModuleInfo[]>
-  inspectClientUrl(): Promise<string>
-  staticAssets(): Promise<AssetInfo[]>
-  getImageMeta(path: string): Promise<ImageMeta>
-  getTextAssetContent(path: string): Promise<string>
-  getPackages(): Promise<Record<string, string>>
-  getVueSFCList(): Promise<string[]>
-  getComponentInfo(filename: string): Promise<Record<string, unknown>>
-  onTerminalData(_: { id?: string; data: string }): void
-  onTerminalExit(_: { id?: string; data?: string }): void
-  installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
-  uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
+declare module 'vite-plugin-devtools/dist/server' {
+  export interface ClientFunctions {
+    onTerminalData(_: { id?: string; data: string }): void
+    onTerminalExit(_: { id?: string; data: string }): void
+  }
+  export interface ServerFunctions {
+    componentGraph(): Promise<ModuleInfo[]>
+    inspectClientUrl(): string
+    staticAssets(): Promise<AssetInfo[]>
+    getImageMeta(path: string): Promise<ImageMeta | undefined>
+    getTextAssetContent(path: string): Promise<string | undefined>
+    getPackages(): Promise<{ packages: Record<string, Omit<PackageMeta, 'name'>> }>
+    getVueSFCList(): Promise<string[]>
+    getComponentInfo(filename: string): Promise<Record<string, unknown>>
+    /* onTerminalData(_: { id?: string; data: string }): void
+    onTerminalExit(_: { id?: string; data?: string }): void */
+    installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
+    uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
+  }
 }
 
 export interface ModulesList {

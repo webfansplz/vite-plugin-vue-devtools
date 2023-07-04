@@ -1,9 +1,4 @@
-import type { ChannelOptions } from 'birpc'
-import { cachedMap, createBirpc, createBirpcGroup } from 'birpc'
-import type { WebSocketClient, WebSocketServer } from 'vite'
-import type { ViteHotContext } from 'vite-hot-client'
-
-export function createRPCServer<ClientFunction = {}, ServerFunctions = {}>(
+/* export function createRPCServer<ClientFunction = {}, ServerFunctions = {}>(
   name: string,
   ws: WebSocketServer,
   functions: ServerFunctions,
@@ -58,4 +53,4 @@ export function createRPCClient<ServerFunctions = {}, ClientFunctions = {}>(
       timeout: -1,
     },
   )
-}
+} */
