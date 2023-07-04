@@ -19,10 +19,10 @@ function close() {
 const inSecurityContext = checkInSecurityContext()
 // @ts-expect-error missing types
 const supportEyeDropper = !!window.EyeDropper
-const isSupport = inSecurityContext && supportEyeDropper
+const isSupported = inSecurityContext && supportEyeDropper
 
 async function open() {
-  if (!isSupport)
+  if (!isSupported)
     return
   // @ts-expect-error missing types?
   const eyeDropper = new EyeDropper()
@@ -66,7 +66,7 @@ function ErrorBoundary() {
     <div absolute right-0 top-0 p2>
       <button carbon-close ma text-xl op50 hover:op100 @click="close" />
     </div>
-    <div v-if="isSupport">
+    <div v-if="isSupported">
       <div v-if="!color">
         Launching EyeDropper
       </div>
