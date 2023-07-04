@@ -51,7 +51,7 @@ function ErrorBoundary() {
   }
   else if (!supportEyeDropper) {
     content = <p>
-      Your browser does't support&nbsp;
+      Your browser doesn't support&nbsp;
        <a class="text-primary transition-colors hover:text-primary/80" href="https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper#browser_compatibility" target='_blank'>EyeDropper</a>.
     </p>
   }
