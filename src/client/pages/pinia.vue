@@ -31,21 +31,21 @@ const data = computed(() => {
 <template>
   <div h-screen n-panel-grids>
     <Splitpanes>
-      <Pane border="r base">
+      <Pane border="r base" :size="40">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <div
             v-for="(item, index) in piniaStoresCategory" :key="index" vue-block
             :class="[activeIndex === index ? 'vue-block-active' : 'vue-block-hover']" @click="select(index)"
           >
             <h3 vue-block-title>
-              <span :class="[activeIndex === index ? 'text-white' : 'vue-block-text']">
+              <span :class="[activeIndex === index && 'text-white']">
                 {{ item }}
               </span>
             </h3>
           </div>
         </div>
       </Pane>
-      <Pane>
+      <Pane :size="60">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in data" :id="index" :key="index" :data="item" />
         </div>
