@@ -68,7 +68,7 @@ export interface VueDevtoolsHostClient {
   markClientLoaded: () => void
   panel?: {
     toggleViewMode: (mode?: 'xs' | 'default') => void
-    togglePosition: (position: string) => void
+    popup: () => void
     toggle: () => void
   }
   hook: {

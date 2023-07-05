@@ -1,44 +1,26 @@
 <script setup lang="ts">
 import { useDevtoolsClient } from '../logic/client'
 
-const { position: _position } = useFrameState()
-
-const frameState = computed(() => ({ position: _position.value }))
-
 const client = useDevtoolsClient()
 const showPopupUnsupported = ref(false)
 const copy = useCopy()
 
-const dockButton = [
-  {
-    position: 'popup',
-    icon: 'i-carbon-launch',
-  },
-]
-
-function toggle(position: string) {
-  if (position === 'popup') {
-    // @ts-expect-error missing type
-    if (!window.parent.documentPictureInPicture?.requestWindow) {
-      showPopupUnsupported.value = true
-      return
-    }
-  }
-  else {
-    _position.value = position
+function popup() {
+  // @ts-expect-error missing type
+  if (!window.parent.documentPictureInPicture?.requestWindow) {
+    showPopupUnsupported.value = true
+    return
   }
 
-  client.value?.panel?.togglePosition(position)
+  client.value?.panel?.popup()
 }
 </script>
 
 <template>
-  <div flex="~ gap-1" text-lg>
-    <button
-      v-for="item in dockButton" :key="item.position"
-      :class="[frameState.position === item.position ? 'text-primary' : 'op50', item.icon]"
-      @click="toggle(item.position)"
-    />
+  <div flex="~ gap-1">
+    <VButton n="sm primary" @click="popup">
+      <div carbon-launch /> Popup
+    </VButton>
   </div>
 
   <!-- popup mode not supported message -->

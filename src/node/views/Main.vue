@@ -109,10 +109,7 @@ async function setupClient(iframe: HTMLIFrameElement) {
           panelState.value.viewMode = 'xs'
       },
       toggle: togglePanelVisible,
-      togglePosition(position) {
-        if (position === 'popup')
-          popup()
-      },
+      popup,
     },
     openInEditor: openInEditor.value ?? (() => {
       warn('Unable to load inspector, open-in-editor is not available.')

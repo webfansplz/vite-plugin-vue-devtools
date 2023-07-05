@@ -22,7 +22,7 @@ declare module 'vue' {
     Logo: typeof import('./components/Logo.vue')['default']
     Navbar: typeof import('./components/Navbar.vue')['default']
     Notification: typeof import('./components/Notification.vue')['default']
-    PanelPosition: typeof import('./components/PanelPosition.vue')['default']
+    PopupButton: typeof import('./components/PopupButton.vue')['default']
     RoutePathItem: typeof import('./components/RoutePathItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

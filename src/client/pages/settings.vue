@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { isInPopup } from '../logic/state'
 import { getSortedTabs } from '../store'
 
 const {
@@ -98,14 +97,6 @@ const showTabGroup = ref(false)
         <TabGroup v-else />
       </div>
       <div>
-        <div v-if="!isInPopup" py3 flex="~ col gap-1" border="b base">
-          <h3 mb1 text-lg>
-            Position
-          </h3>
-          <div>
-            <PanelPosition />
-          </div>
-        </div>
         <div py3 flex="~ col gap-1" border="b base">
           <h3 mb1 text-lg>
             Appearance
