@@ -5,9 +5,9 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
-  const FRAME_STATE_STORAGE_KEY: typeof import('./composables/state')['FRAME_STATE_STORAGE_KEY']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const checkIsSecurityContext: typeof import('./utils/index')['checkIsSecurityContext']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -195,7 +195,7 @@ declare global {
   const useFullscreen: typeof import('@vueuse/core')['useFullscreen']
   const useGamepad: typeof import('@vueuse/core')['useGamepad']
   const useGeolocation: typeof import('@vueuse/core')['useGeolocation']
-  const useGroupedTabStore: typeof import('./composables/tabs')['useGroupedTabStore']
+  const useGraphSettings: typeof import('./composables/graph')['useGraphSettings']
   const useGroupedTabs: typeof import('./composables/tabs')['useGroupedTabs']
   const useIdle: typeof import('@vueuse/core')['useIdle']
   const useImage: typeof import('@vueuse/core')['useImage']

@@ -1,22 +1,61 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { searchResults as modules } from '../logic/graph'
+import { searchResults as modules, rootPath } from '../logic/graph'
+import { useDevtoolsClient } from '../logic/client'
+import { useGraphSettings } from '../composables/graph'
+import type { GraphSettingsType } from '../composables/graph'
 
 const isDark = useDark()
-// const modules = ref<ModuleInfo[]>()
 const container = ref<HTMLDivElement | null>()
+const modulesMap = shallowRef<Map<string, { filePath: string }>>(new Map())
+const settings = useGraphSettings()
+const { meta: metaKeyPressed } = useMagicKeys({
+  passive: true,
+})
+const isHoveringNode = ref(false)
+const lastSelectedNode = ref<string>()
+const client = useDevtoolsClient()
+
+function getHoverPath(level: GraphSettingsType['hoverPathLevel'], fullPath: string, rootPath: string) {
+  switch (level) {
+    case 'absolute':
+      return fullPath
+    case 'custom':
+      return fullPath.split('/').slice(-settings.graphSettings.value.hoverPathLevelCustom).join('/')
+    case 'root':
+    default:
+      return fullPath.replace(rootPath, '')
+  }
+}
 
 const data = computed<Data>(() => {
-  const nodes: Data['nodes'] = modules.value?.map((mod) => {
+  const { data, main } = modules.value
+  if (!data)
+    return { node: [], edges: [] }
+  const nodes: Data['nodes'] = data.map((mod) => {
     const path = mod.id.replace(/\?.*$/, '').replace(/\#.*$/, '')
+    const pathSegments = path.split('/')
+    const id = mod.id
+
+    if (!modulesMap.value.has(id))
+      modulesMap.value.set(id, { filePath: path })
+    else
+      modulesMap.value.get(id)!.filePath = path
+    const isInMain = !!main.find(i => i.id === id)
+
     return {
-      id: mod.id,
-      label: path.split('/').splice(-1)[0],
-      title: path.split('/').splice(-4).join('/'),
+      id,
+      label: isInMain ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
+      title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath.value),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
-      font: { color: isDark.value ? 'white' : 'black' },
+      font: {
+        color: isInMain
+          ? '#F19B4A'
+          : isDark.value ? 'white' : 'black',
+        multi: 'html',
+      },
       shape: mod.id.includes('/node_modules/')
         ? 'hexagon'
         : mod.virtual
@@ -24,7 +63,7 @@ const data = computed<Data>(() => {
           : 'dot',
     }
   })
-  const edges: Data['edges'] = modules.value?.flatMap(mod => mod.deps.map(dep => ({
+  const edges: Data['edges'] = data.flatMap(mod => mod.deps.map(dep => ({
     from: mod.id,
     to: dep,
     arrows: {
@@ -46,6 +85,9 @@ onMounted(() => {
     nodes: {
       shape: 'dot',
       size: 16,
+    },
+    interaction: {
+      hover: true,
     },
     physics: {
       maxVelocity: 146,
@@ -89,21 +131,70 @@ onMounted(() => {
 
   const network = new Network(container.value!, data.value, options)
 
-  // network.on('click', (data) => {
-  //   const node = data.nodes?.[0]
-  //   // if (node)
-  //   //   router.push(`/module?id=${encodeURIComponent(node)}`)
-  // })
+  const resetNodeStyle = () => {
+    if (!settings.graphSettings.value.highlightSelection)
+      return
+    // @ts-expect-error network body typing error
+    network.body.data.nodes.update(network.body.data.nodes.getIds().map(id => ({ id, size: 16 })))
+    // @ts-expect-error network body typing error
+    network.body.data.edges.update(network.body.data.edges.getIds().map((id) => {
+      // @ts-expect-error network body typing error
+      const group = network.body.data.nodes.get(network.body.data.edges.get(id)!.from).group
+      return {
+        id,
+        // default unknown group color
+        color: options.groups[group]?.color ?? '#97C2FC',
+      }
+    }))
+  }
+
+  network.on('click', (params) => {
+    const nodeId = params.nodes?.[0]
+    if (!nodeId)
+      return resetNodeStyle()
+    if (settings.graphSettings.value.clickOpenInEditor && metaKeyPressed.value)
+      return client.value.openInEditor(modulesMap.value.get(nodeId)!.filePath)
+    if (lastSelectedNode.value && lastSelectedNode.value !== nodeId)
+      resetNodeStyle()
+    if (!settings.graphSettings.value.highlightSelection)
+      return
+    // @ts-expect-error network body typing error
+    const nonConnectedNodes = network.body.data.nodes.getIds().filter(id => !network.getConnectedNodes(nodeId).includes(id) && nodeId !== id)
+    // @ts-expect-error network body typing error
+    const nonConnectedEdges = network.body.data.edges.getIds().filter(id => !network.getConnectedEdges(nodeId).includes(id))
+    // @ts-expect-error network body typing error
+    network.body.data.nodes.update(nonConnectedNodes.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
+    // @ts-expect-error network body typing error
+    network.body.data.edges.update(nonConnectedEdges.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
+    // @ts-expect-error network body typing error
+    network.body.data.nodes.update([{ id: nodeId, color: options.groups[network.body.data.nodes.get(nodeId).group]?.color, size: 26 }])
+    lastSelectedNode.value = nodeId
+  })
+
+  network.on('hoverNode', () => {
+    isHoveringNode.value = true
+  })
+  network.on('blurNode', () => {
+    isHoveringNode.value = false
+  })
 
   watch(data, () => {
     network.setData(data.value)
   })
 })
+const { showGraphSetting } = useGraphSettings()
 </script>
 
 <template>
-  <div h-screen w-full flex flex-col n-panel-grids>
-    <SearchBox />
-    <div ref="container" flex="1" />
+  <div relative h-screen w-full flex flex-col n-panel-grids>
+    <SearchBox>
+      <template #right>
+        <button aria-label="Open graph settings" @click="showGraphSetting = true">
+          <div i-carbon-settings />
+        </button>
+      </template>
+    </SearchBox>
+    <div ref="container" flex="1" :class="[isHoveringNode && metaKeyPressed ? 'cursor-pointer' : '']" />
+    <GraphSettings />
   </div>
 </template>

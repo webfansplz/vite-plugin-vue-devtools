@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import Frame from './FrameBox.vue'
 import { useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
-import { checkIsSafari, useColorScheme, usePreferredColorScheme } from './utils'
+import { checkIsSafari, useColorScheme, usePreferredColorScheme, warn } from './utils'
 
 const props = defineProps({
   hook: {
@@ -76,6 +76,7 @@ function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout =
 const {
   toggleInspector, inspectorLoaded,
   inspectorEnabled, disableInspector,
+  openInEditor, waitForInspectorInit,
 } = useInspector()
 
 const clientUrl = `${vueDevToolsOptions.base || '/'}__devtools__/`
@@ -88,8 +89,11 @@ const { iframe, getIframe } = useIframe(clientUrl, async () => {
 // Picture-in-Picture mode
 const { popup } = usePiPMode(getIframe, hook)
 
-function setupClient(iframe: HTMLIFrameElement) {
+async function setupClient(iframe: HTMLIFrameElement) {
   const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
+  if (!inspectorLoaded.value)
+    waitForInspectorInit()
+
   injection.setClient({
     hook,
     hookBuffer,
@@ -105,11 +109,11 @@ function setupClient(iframe: HTMLIFrameElement) {
           panelState.value.viewMode = 'xs'
       },
       toggle: togglePanelVisible,
-      togglePosition(position) {
-        if (position === 'popup')
-          popup()
-      },
+      popup,
     },
+    openInEditor: openInEditor.value ?? (() => {
+      warn('Unable to load inspector, open-in-editor is not available.')
+    }),
   })
 }
 

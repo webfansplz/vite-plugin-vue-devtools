@@ -54,10 +54,9 @@ declare module 'vite-plugin-devtools/dist/server' {
     getPackages(): Promise<{ packages: Record<string, Omit<PackageMeta, 'name'>> }>
     getVueSFCList(): Promise<string[]>
     getComponentInfo(filename: string): Promise<Record<string, unknown>>
-    /* onTerminalData(_: { id?: string; data: string }): void
-    onTerminalExit(_: { id?: string; data?: string }): void */
     installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
     uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
+    root(): Promise<string>
   }
 }
 
@@ -67,11 +66,13 @@ export interface ModulesList {
   ssrModules: ModuleInfo[]
 }
 
+export type OpenInEditorFn = (filePath: string, line?: number, column?: number) => any
+
 export interface VueDevtoolsHostClient {
   markClientLoaded: () => void
   panel?: {
     toggleViewMode: (mode?: 'xs' | 'default') => void
-    togglePosition: (position: string) => void
+    popup: () => void
     toggle: () => void
   }
   hook: {
@@ -81,6 +82,7 @@ export interface VueDevtoolsHostClient {
   }
   hookBuffer: [string, Record<string, any>][]
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
+  openInEditor: OpenInEditorFn
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'

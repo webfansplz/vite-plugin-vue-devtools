@@ -1,6 +1,7 @@
 import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
 import type { CSSProperties, Ref } from 'vue'
-import { clamp, useObjectStorage, useScreenSafeArea, useWindowEventListener } from './utils'
+import type { OpenInEditorFn } from '../../types'
+import { clamp, useObjectStorage, useScreenSafeArea, useWindowEventListener, warn } from './utils'
 
 interface DevToolsFrameState {
   width: number
@@ -54,6 +55,8 @@ export function useIframe(clientUrl: string, onLoad: () => void) {
 }
 
 // ---- useInspector ----
+type OpenInEditorFnFromPlugin = (baseUrl: string, filePath: string, line?: number, column?: number) => any
+
 export function useInspector() {
   const inspectorEnabled = ref(false)
   const inspectorLoaded = ref(false)
@@ -68,6 +71,19 @@ export function useInspector() {
     inspectorEnabled.value = false
   }
 
+  const openInEditor = ref<OpenInEditorFn>()
+
+  const getBaseUrl = () => {
+    const { protocol, hostname, port } = window.location
+    return `${protocol}//${hostname}:${port}`
+  }
+
+  const registerOpenInEditor = (openInEditorFn: OpenInEditorFnFromPlugin) => {
+    openInEditor.value = (filePath: string, line?: number, column?: number) => {
+      openInEditorFn(getBaseUrl(), filePath, line ?? 1, column ?? 1)
+    }
+  }
+
   const setupInspector = () => {
     const componentInspector = window.__VUE_INSPECTOR__
     if (componentInspector) {
@@ -76,15 +92,22 @@ export function useInspector() {
         disable()
         _openInEditor(...params)
       }
+      registerOpenInEditor(_openInEditor)
     }
   }
 
   const waitForInspectorInit = () => {
+    let total = 0
     const timer = setInterval(() => {
       if (window.__VUE_INSPECTOR__) {
         clearInterval(timer)
         inspectorLoaded.value = true
         setupInspector()
+        total += 30
+      }
+      if (total >=/* 2s */ 2000) {
+        clearInterval(timer)
+        warn('Unable to load inspector')
       }
     }, 30)
   }
@@ -109,6 +132,8 @@ export function useInspector() {
     disableInspector: disable,
     setupInspector,
     inspectorLoaded,
+    openInEditor,
+    waitForInspectorInit,
   }
 }
 

@@ -7,7 +7,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
 <template>
   <div v-if="router" h-screen n-panel-grids>
     <Splitpanes>
-      <Pane border="r base">
+      <Pane border="r base" size="40">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <div
             v-for="(item, index) in routeRecordMatcherState"
@@ -17,7 +17,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
             @click="toggleRouteRecordMatcher(index)"
           >
             <h3 vue-block-title>
-              <span :class="[activeRouteRecordIndex === index ? 'text-white' : 'vue-block-text']">
+              <span :class="[activeRouteRecordIndex === index && 'text-white']">
                 {{ item.path }}
                 <template
                   v-for="(tag, childIndex) in item.tags"
@@ -25,7 +25,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
                   <VBadge
                     v-if="tag.label"
                     :key="childIndex"
-                    text-black
+                    color="white/90 dark:black/90"
                     :style="{
                       backgroundColor: `#${tag.bgColor.toString(16)}`,
                     }"
@@ -38,7 +38,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
           </div>
         </div>
       </Pane>
-      <Pane>
+      <Pane size="60">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields :data="activeRouteRecordMatcherState" />
         </div>

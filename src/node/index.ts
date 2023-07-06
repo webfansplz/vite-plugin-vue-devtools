@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { normalizePath } from 'vite'
-import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
+import type { PluginOption, ResolvedConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 import createDevtools from 'vite-plugin-devtools/dist/server'
 import type { ServerFunctions } from 'vite-plugin-devtools/dist/server'
@@ -74,6 +74,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
           serverRPC.onTerminalExit({ data })
       },
     }),
+    root: () => config.root,
   }
 
   for (const name in rpcFunctions)
@@ -86,15 +87,6 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       return plugin?.configureServer(server)
     },
   }]
-
-  function configureServer(server: ViteDevServer) {
-    /* const base = (server.config.base) || '/'
-    server.middlewares.use(`${base}__devtools__`, sirv(DIR_CLIENT, {
-      single: true,
-      dev: true,
-    })) */
-
-  }
 
   /* const plugin2 = <PluginOption>{
     name: NAME,
