@@ -2,12 +2,13 @@
 import { useDevtoolsClient } from '../logic/client'
 
 const client = useDevtoolsClient()
+// @ts-expect-error missing type
+const isSupported = typeof window !== 'undefined' && window.parent.documentPictureInPicture?.requestWindow
 const showPopupUnsupported = ref(false)
 const copy = useCopy()
 
 function popup() {
-  // @ts-expect-error missing type
-  if (!window.parent.documentPictureInPicture?.requestWindow) {
+  if (!isSupported) {
     showPopupUnsupported.value = true
     return
   }
@@ -19,7 +20,7 @@ function popup() {
 <template>
   <div flex="~ gap-1">
     <VButton n="sm primary" @click="popup">
-      <div carbon-launch /> Popup
+      <i carbon-launch /> Popup <span v-if="!isSupported" op50>(not supported)</span>
     </VButton>
   </div>
 
