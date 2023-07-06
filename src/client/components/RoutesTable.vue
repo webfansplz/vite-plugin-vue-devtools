@@ -57,7 +57,7 @@ const sorted = computed(() => {
               />
             </div>
           </td>
-          <td w-30 ws-nowrap pr-1 text-left font-mono text-sm op50>
+          <td w-30 ws-nowrap pr-1 text-left text-sm font-mono op50>
             {{ item.name ?? '-' }}
           </td>
         </tr>

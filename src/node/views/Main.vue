@@ -4,7 +4,8 @@ import { computed, ref } from 'vue'
 // @ts-expect-error virtual module
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import Frame from './FrameBox.vue'
-import { useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
+import ComponentInspector from './ComponentInspector.vue'
+import { useHighlightComponent, useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
 import { checkIsSafari, useColorScheme, usePreferredColorScheme, warn } from './utils'
 
 const props = defineProps({
@@ -88,6 +89,7 @@ const { iframe, getIframe } = useIframe(clientUrl, async () => {
 
 // Picture-in-Picture mode
 const { popup } = usePiPMode(getIframe, hook)
+const { overlayVisible, name: componentName, bounds, highlight, unHighlight } = useHighlightComponent()
 
 async function setupClient(iframe: HTMLIFrameElement) {
   const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
@@ -114,6 +116,10 @@ async function setupClient(iframe: HTMLIFrameElement) {
     openInEditor: openInEditor.value ?? (() => {
       warn('Unable to load inspector, open-in-editor is not available.')
     }),
+    componentInspector: {
+      highlight,
+      unHighlight,
+    },
   })
 }
 
@@ -276,6 +282,8 @@ collectHookBuffer()
       :view-mode="panelState.viewMode"
     />
   </div>
+  <!-- component inspector -->
+  <ComponentInspector v-if="overlayVisible" :bounds="bounds" :name="componentName" />
 </template>
 
 <style scoped>

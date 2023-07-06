@@ -48,7 +48,7 @@ function navigate() {
             <div px2 text-sm op50>
               Fill params and navigate:
             </div>
-            <div flex="~" items-center p2 font-mono text-sm>
+            <div flex="~" items-center p2 text-sm font-mono>
               <template v-for="part, idx of parts" :key="idx">
                 <VTextInput
                   v-if="part[0] === ':'"
