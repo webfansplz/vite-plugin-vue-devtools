@@ -49,6 +49,7 @@
     "stub": "unbuild --stub",
     "lint": "eslint .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "lint:fix": "eslint --fix .",
     "prepublishOnly": "npm run build",
     "release": "bumpp && nr changelog && npm publish",
     "dep:up": "taze -I major"

@@ -105,8 +105,8 @@ export interface DocumentInfo {
   website: string
   github: string
   icon: string
-  tips: string
-  openInBlank: boolean
+  tips?: string
+  openInBlank?: boolean
 }
 
 export interface PackageInfo {

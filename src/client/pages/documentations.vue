@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFuse } from '@vueuse/integrations/useFuse'
 import { rpc } from '../logic/rpc'
 import type { DocumentInfo } from '../../types'
 import { data } from '../logic/documentations'
@@ -21,9 +22,12 @@ function navigate(data: DocumentInfo) {
 }
 
 const keywords = ref('')
+const { results: filterDocuments } = useFuse(keywords, rawItems.map(i => i.name), {
+  matchAllWhenSearchEmpty: true,
+})
 
-watch(keywords, () => {
-  items.value = rawItems.filter(item => packagesName.includes(item.id) && (item.id.includes(keywords.value) || keywords.value.length === 0))
+watch(filterDocuments, () => {
+  items.value = rawItems.filter(item => (filterDocuments.value.map(i => i.item).includes(item.name) && packagesName.includes(item.id)))
 })
 
 function back() {
