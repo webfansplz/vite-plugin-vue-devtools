@@ -4,14 +4,15 @@ import { rpc } from '../logic/rpc'
 import type { DocumentInfo } from '../../types'
 import { data } from '../logic/documentations'
 
-const rawItems = data
-const items = ref(data)
-const iframeViewUrl = ref('')
+let localItems = data.value
 let packagesName
+
+const items = ref(localItems)
+const iframeViewUrl = ref('')
 
 rpc.getPackages().then((res) => {
   packagesName = Object.keys(res.packages)
-  items.value = rawItems.filter(item => packagesName.includes(item.id))
+  items.value = localItems.filter(item => packagesName.includes(item.id))
 })
 
 function navigate(data: DocumentInfo) {
@@ -22,12 +23,27 @@ function navigate(data: DocumentInfo) {
 }
 
 const keywords = ref('')
-const { results: filterDocuments } = useFuse(keywords, rawItems.map(i => i.name), {
+const { results: filterDocuments } = useFuse(keywords, localItems.map(i => i.name), {
   matchAllWhenSearchEmpty: true,
 })
 
+function handleFilterDoc() {
+  items.value = localItems.filter(item => (filterDocuments.value.map(i => i.item).includes(item.name) && packagesName.includes(item.id)))
+}
+
+// when remove the doc item from groups, need to update
+watch(data, () => {
+  localItems = data.value
+  handleFilterDoc()
+})
+
+/**
+ * Why listen to filterDocuments instead of keywords,
+ * because the final filtering is based on filterDocuments,
+ * and its change is less than keywords
+ */
 watch(filterDocuments, () => {
-  items.value = rawItems.filter(item => (filterDocuments.value.map(i => i.item).includes(item.name) && packagesName.includes(item.id)))
+  handleFilterDoc()
 })
 
 function back() {

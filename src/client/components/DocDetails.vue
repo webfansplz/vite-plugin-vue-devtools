@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { DocumentInfo } from '../../types'
+import { removeDoc } from '../logic/documentations'
 
-defineProps<{
+const props = defineProps<{
   data: DocumentInfo
 }>()
 const emit = defineEmits<{
@@ -10,6 +11,17 @@ const emit = defineEmits<{
 
 function navigate(path: string) {
   window.open(path, '_blank')
+}
+
+const showConfirm = ref(false)
+const message = ref('')
+function handleShowConfirm() {
+  message.value = `Are you sure you want to remove the document of ${props.data.name} ?`
+  showConfirm.value = true
+}
+
+function confirmHandler() {
+  removeDoc(props.data.name)
 }
 </script>
 
@@ -29,13 +41,10 @@ function navigate(path: string) {
           </VTooltip>
         </span>
       </div>
-
       <div v-if="data.description" class="line-clamp-2" mt--1 text-sm op50>
         {{ data.description }}
       </div>
-
       <div flex-auto />
-
       <div v-if="data.website" flex="~ gap-2" title="Documentation">
         <span i-carbon-link text-lg op50 />
         <span
@@ -54,13 +63,16 @@ function navigate(path: string) {
           {{ data.github.replace(/^https?:\/\/github.com\//, "") }}
         </span>
       </div>
-
       <slot name="items" />
     </div>
-    <div flex="~ col">
+    <div flex="~ col" justify-between>
       <div v-if="data.icon" h-20 w-20 flex flex-none rounded bg-gray:3 p4>
         <img v-if="data.icon" :src="data.icon" :alt="data.name" ma h-full>
       </div>
+      <div flex justify-end>
+        <VIconButton icon="material-symbols:delete" class="hover:color-red" @click.stop="handleShowConfirm" />
+      </div>
     </div>
+    <VConfirm v-model="showConfirm" :message="message" @confirm="confirmHandler" />
   </VCard>
 </template>

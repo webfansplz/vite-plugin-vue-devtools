@@ -119,6 +119,12 @@ const showTabGroup = ref(false)
             </option>
           </VSelect>
         </div>
+        <div py3 flex="~ col gap-1" border="b base">
+          <h3 mb1 text-lg>
+            Documentions
+          </h3>
+          <DocSetting />
+        </div>
         <div py3 flex="~ justify-between gap-1">
           <h3 mb1 text-lg>
             Close DevTools when clicking outside

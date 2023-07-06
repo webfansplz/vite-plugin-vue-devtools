@@ -101,10 +101,10 @@ export type BuiltinTab = WithOptional<Tab, 'group' | 'groupIndex' | 'disabled'>
 export interface DocumentInfo {
   id: string
   name: string
-  description: string
   website: string
-  github: string
-  icon: string
+  description?: string
+  github?: string
+  icon?: string
   tips?: string
   openInBlank?: boolean
 }
