@@ -26,7 +26,7 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
           isSelected ? 'vue-tag-symbol-active' : 'vue-tag-symbol',
         ]"
       >&lt;</span>
-      <span :class="[isSelected ? 'text-white' : 'vue-block-text']">
+      <span :class="[isSelected && 'text-white']">
         {{ data.name }}
       </span>
       <span

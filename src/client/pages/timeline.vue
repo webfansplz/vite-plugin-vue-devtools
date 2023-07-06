@@ -26,7 +26,7 @@ import {
             @click="toggleTimelineLayer(item.id)"
           >
             <h3 vue-block-title>
-              <span truncate :class="[activeLayerId === item.id ? 'text-white' : 'vue-block-text']">
+              <span truncate :class="[activeLayerId === item.id && 'text-white']">
                 {{ item.label }}
               </span>
             </h3>

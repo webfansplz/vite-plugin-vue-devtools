@@ -27,7 +27,7 @@ type RouteRecordTags = {
 const CYAN_400 = 0x22D3EE
 const ORANGE_400 = 0xFB923C
 // const GRAY_100 = 0xf4f4f5
-const DARK = 0x666666
+const GRAY_300 = 0xC4C4C4
 
 const LAYER_ID = 'router'
 // export const router = ref<Router>()
@@ -52,7 +52,7 @@ export const activeRouteRecordMatcherState = computed(() => {
   const state = routeRecordMatcherState.value?.[activeRouteRecordIndex.value]?.state
   return {
     key: 'options',
-    value: state,
+    value: state!,
   }
 })
 
@@ -112,7 +112,7 @@ function formatRouteRecordForInspector(
         typeof record.redirect === 'string'
           ? `redirect: ${record.redirect}`
           : 'redirects',
-      bgColor: DARK,
+      bgColor: GRAY_300,
     })
   }
 
