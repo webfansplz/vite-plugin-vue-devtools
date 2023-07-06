@@ -13,6 +13,7 @@ declare module 'vue' {
     AssetListItem: typeof import('./components/AssetListItem.vue')['default']
     AssetPreview: typeof import('./components/AssetPreview.vue')['default']
     ComponentTreeNode: typeof import('./components/ComponentTreeNode.vue')['default']
+    DocAdd: typeof import('./components/DocAdd.vue')['default']
     DocDetails: typeof import('./components/DocDetails.vue')['default']
     DockingPanel: typeof import('./components/DockingPanel.vue')['default']
     DrawerRight: typeof import('./components/DrawerRight.vue')['default']

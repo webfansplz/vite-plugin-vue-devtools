@@ -1,8 +1,8 @@
 import VueIcon from '../assets/icons/vue.svg'
 import PiniaIcon from '../assets/icons/pinia.svg'
 import VueUseIcon from '../assets/icons/vueuse.svg'
-
-export const data = [
+import type { DocumentInfo } from '../../types'
+export const data: DocumentInfo[] = reactive([
   {
     id: 'vue',
     name: 'Vue.js',
@@ -37,4 +37,13 @@ export const data = [
     github: 'https://github.com/vueuse/vueuse',
     icon: VueUseIcon,
   },
-]
+])
+
+
+export function addDoc(docInfo?) {
+  data.push({
+    id: 'hh',
+    name: 'hahha',
+    website: 'https://element-plus.org/zh-CN/component/button.html'
+  })
+}
