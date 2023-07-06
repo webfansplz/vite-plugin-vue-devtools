@@ -4,16 +4,11 @@ import { isInPopup } from '../logic/state'
 
 <template>
   <div>
-    <div v-if="!isInPopup" px3 py2 border="b base" flex="~ col gap-1">
-      <div text-sm op50>
-        Dock devtools to
-      </div>
-      <PanelPosition />
-    </div>
     <div px3 py2 border="b base" flex="~ gap-2">
+      <PopupButton v-if="!isInPopup" />
       <VDarkToggle v-slot="{ toggle, isDark }">
         <VButton n="sm primary" @click="toggle">
-          <div carbon-sun translate-y--1px dark:carbon-moon />
+          <div carbon-sun dark:carbon-moon translate-y--1px />
           {{ isDark.value ? "Dark" : "Light" }}
         </VButton>
       </VDarkToggle>
