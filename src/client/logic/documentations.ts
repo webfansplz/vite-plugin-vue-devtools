@@ -50,7 +50,7 @@ export function addDoc(docInfo: DocumentInfo) {
 }
 
 export function removeDoc(id: string) {
-  const idx = data.value.findIndex(i => i.id === id)
+  const idx = data.value.findIndex(i => i.name === id)
   data.value.splice(idx, 1)
 }
 
