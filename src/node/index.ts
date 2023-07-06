@@ -7,7 +7,7 @@ import createDevtools from 'vite-plugin-devtools/dist/server'
 import type { ServerFunctions } from 'vite-plugin-devtools/dist/server'
 
 // import { createRPCServer } from '../vite-dev-rpc'
-import { DIR_CLIENT, ICON } from '../dir'
+import { DIR_CLIENT, ICON, IFRAME_HOOK } from '../dir'
 import type { ExecNpmScriptOptions } from '../types'
 import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './rpc'
 
@@ -38,6 +38,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
   const { plugin, addServerFunction, serverRPC } = createDevtools(NAME, {
     clientDir: DIR_CLIENT,
     icon: ICON,
+    onIframe: IFRAME_HOOK,
   })
 
   const rpcFunctions: ServerFunctions = {

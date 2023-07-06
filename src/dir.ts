@@ -6,6 +6,7 @@ export const DIR_DIST = typeof __dirname !== 'undefined'
   : dirname(fileURLToPath(import.meta.url))
 
 export const DIR_CLIENT = resolve(DIR_DIST, '../dist/client')
+export const IFRAME_HOOK = resolve(DIR_DIST, '../dist/client/onIframe.mjs')
 
 export const ICON = `
 <svg viewBox="0 0 256 198" fill="none" xmlns="http://www.w3.org/2000/svg">

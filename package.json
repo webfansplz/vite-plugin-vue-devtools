@@ -43,6 +43,7 @@
   "scripts": {
     "build": "rimraf dist && run-s build:*",
     "build:client": "vite build src/client",
+    "build:hook": "vite build src/client -c src/client/vite.lib.config.ts",
     "build:js": "unbuild",
     "dev": "nr stub && pnpm dev:client",
     "dev:client": "vite build src/client --watch",
