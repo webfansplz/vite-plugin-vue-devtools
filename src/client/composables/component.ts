@@ -26,7 +26,10 @@ export function useComponent(instance: ComponentTreeNode & { instance?: Componen
   return { isSelected, select, isExpanded, toggleExpand }
 }
 
-export function useHighlightComponent(node: ComponentTreeNode) {
+export function useHighlightComponent(node: ComponentTreeNode): {
+  highlight: () => void
+  unhighlight: () => void
+} {
   const client = useDevtoolsClient()
 
   const highlight = useThrottleFn(() => {
