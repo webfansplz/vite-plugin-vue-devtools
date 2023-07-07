@@ -2,14 +2,21 @@
 const show = ref(false)
 const icon = ref<string | undefined>()
 const text = ref<string | undefined>()
+const type = ref<'primary' | 'error' | undefined>()
 
-provideNotification((_text, _icon, duration = 1500) => {
-  text.value = _text
-  icon.value = _icon
+provideNotification((opt: {
+  text: string
+  icon?: string
+  type?: 'primary' | 'error'
+  duration?: number
+}) => {
+  text.value = opt.text
+  icon.value = opt.icon
   show.value = true
+  type.value = opt.type
   setTimeout(() => {
     show.value = false
-  }, duration)
+  }, opt.duration || 1500)
 })
 </script>
 
@@ -19,6 +26,18 @@ provideNotification((_text, _icon, duration = 1500) => {
     :class="show ? '' : 'pointer-events-none overflow-hidden'"
   >
     <div
+      v-if="type === 'error'"
+      border="~ base"
+      flex="~ inline gap2"
+      m-3 inline-block items-center rounded px-4 py-1 text-red transition-all duration-300 bg-base
+      :style="show ? {} : { transform: 'translateY(-300%)' }"
+      :class="show ? 'shadow' : 'shadow-none'"
+    >
+      <div v-if="icon" :class="`i-${icon}`" />
+      <div>{{ text }}</div>
+    </div>
+    <div
+      v-else
       border="~ base"
       flex="~ inline gap2"
       m-3 inline-block items-center rounded px-4 py-1 text-primary transition-all duration-300 bg-base

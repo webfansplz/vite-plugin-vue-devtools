@@ -72,7 +72,7 @@ onMounted(() => {
       </Pane>
       <Pane>
         <div v-if="normalizedComponentState.length" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
-          <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.value" :data="item" />
+          <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.key" :data="item" />
         </div>
         <VPanelGrids v-else px5>
           <VCard flex="~ col gap2" min-w-30 items-center p3>

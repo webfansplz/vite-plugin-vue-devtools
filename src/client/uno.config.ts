@@ -81,5 +81,7 @@ export default defineConfig({
     'i-teenyicons:npm-outline',
     'i-carbon-document-preliminary',
     'i-mdi:eyedropper',
+    'i-carbon-close-outline',
+    'i-carbon:checkmark',
   ],
 })
