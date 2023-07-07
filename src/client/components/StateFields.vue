@@ -27,17 +27,18 @@ function updateExpandedIdCache(id: string) {
     expandedIdCache.value.push(id)
 }
 
-function copyContent (value: Record<string, unknown>) {
+function copyContent(value: Record<string, unknown>) {
   try {
     copy(JSON.stringify(value))
-  } catch (e: any) {
+  }
+  catch (e: any) {
     showNotification(
       {
         text: e.message,
         type: 'error',
         icon: 'carbon-close-outline',
         duration: 5000,
-      }
+      },
     )
   }
 }
