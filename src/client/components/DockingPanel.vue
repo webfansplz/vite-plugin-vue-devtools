@@ -8,7 +8,7 @@ import { isInPopup } from '../logic/state'
       <PopupButton v-if="!isInPopup" />
       <VDarkToggle v-slot="{ toggle, isDark }">
         <VButton n="sm primary" @click="toggle">
-          <div carbon-sun dark:carbon-moon translate-y--1px />
+          <div carbon-sun translate-y--1px dark:carbon-moon />
           {{ isDark.value ? "Dark" : "Light" }}
         </VButton>
       </VDarkToggle>

@@ -5,6 +5,7 @@
   ],
   "rules": {
     "vue/no-v-text-v-html-on-component": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "@typescript-eslint/ban-types": "off"
   }
 }

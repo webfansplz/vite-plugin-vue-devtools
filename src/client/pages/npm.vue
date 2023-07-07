@@ -225,8 +225,8 @@ useInfiniteScroll(
               </td>
               <VDropdown max-w="10" placement="bottom-start" :distance="5">
                 <td
-                  hover="text-primary" h-7 cursor-pointer ws-nowrap pr-1 text-left font-mono text-sm lh-7 underline
-                  op70
+                  hover="text-primary"
+                  h-7 cursor-pointer ws-nowrap pr-1 text-left text-sm lh-7 font-mono underline op70
                 >
                   {{ item.activeVersion ?? item.version }}
                 </td>
@@ -243,12 +243,12 @@ useInfiniteScroll(
                   </ul>
                 </template>
               </VDropdown>
-              <td w-30 ws-nowrap pr-1 text-left font-mono text-sm underline op70 hover="text-primary">
+              <td w-30 ws-nowrap pr-1 text-left text-sm font-mono underline op70 hover="text-primary">
                 <a :href="item?.owner?.link" target="_blank">
                   {{ item?.owner?.name ?? '-' }}
                 </a>
               </td>
-              <td w-30 ws-nowrap pr-1 text-left font-mono text-sm op70>
+              <td w-30 ws-nowrap pr-1 text-left text-sm font-mono op70>
                 {{ item.humanDownloadsLast30Days }}
               </td>
               <td w-30 text-center>
