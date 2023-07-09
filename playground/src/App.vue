@@ -37,3 +37,9 @@ const router = useRouter()
     increment
   </button>
 </template>
+
+<style>
+button{
+  margin: 0 5px;
+}
+</style>
