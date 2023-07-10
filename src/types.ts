@@ -2,7 +2,7 @@ import type { Router } from 'vue-router'
 
 type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
-interface ComponentInspectorBounds {
+export interface ComponentInspectorBounds {
   width: number
   height: number
   top: number
