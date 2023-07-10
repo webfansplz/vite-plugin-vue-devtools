@@ -34,7 +34,7 @@ const inspectorCardStyle = computed(() => ({ top: props.bounds.top < 35 ? 0 : '-
 
 <style scoped>
 .vue-devtools-component-inspector {
-  z-index: 2147483646;
+  z-index: 2147483640;
   position: fixed;
   background-color:#42b88325;
   border: 1px solid #42b88350;

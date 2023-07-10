@@ -119,6 +119,21 @@ async function setupClient(iframe: HTMLIFrameElement) {
     componentInspector: {
       highlight,
       unHighlight,
+      scrollToComponent(bounds) {
+        const scrollTarget = document.createElement('div')
+        scrollTarget.style.position = 'absolute'
+        scrollTarget.style.width = `${Math.round(bounds.width * 100) / 100}px`
+        scrollTarget.style.height = `${Math.round(bounds.height * 100) / 100}px`
+        scrollTarget.style.top = `${Math.round(bounds.top * 100) / 100}px`
+        scrollTarget.style.left = `${Math.round(bounds.left * 100) / 100}px`
+        document.body.appendChild(scrollTarget)
+        scrollTarget.scrollIntoView({
+          behavior: 'smooth',
+        })
+        setTimeout(() => {
+          document.body.removeChild(scrollTarget)
+        }, 2000)
+      },
     },
   })
 }

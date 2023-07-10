@@ -3,7 +3,7 @@ import { Pane, Splitpanes } from 'splitpanes'
 
 import { ComponentWalker, getInstanceState } from '../logic/components'
 import { instance, onVueInstanceUpdate } from '../logic/app'
-import { selected } from '../composables/component'
+import { scrollToComponent, selected, selectedComponentName, selectedComponentNode } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])
 
@@ -49,6 +49,8 @@ function init() {
   selectedComponentState.value = getInstanceState(instance.value!)
   walker.getComponentTree(instance.value!).then((res) => {
     componentTree.value = res
+    selectedComponentName.value = res?.[0]?.name ?? ''
+    selectedComponentNode.value = res?.[0]
   })
 }
 
@@ -71,6 +73,20 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
+        <div border="b base" flex justify-between p-2>
+          <span v-if="selectedComponentName" text-sm text-primary op90>&lt;{{ selectedComponentName }}&gt;</span>
+          <span>
+            <VTooltip placement="bottom">
+              <i gg:scroll-h cursor-pointer text-xl hover="text-primary" @click="scrollToComponent" />
+              <template #popper>
+                <p text-xs op-50>
+                  Scroll to component
+                </p>
+              </template>
+            </VTooltip>
+
+          </span>
+        </div>
         <div v-if="normalizedComponentState.length" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.key" :data="item" />
         </div>
