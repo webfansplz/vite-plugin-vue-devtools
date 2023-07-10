@@ -8,12 +8,7 @@ export const router = computed(() => app.value?.config?.globalProperties?.$route
 export const currentRoute = computed(() => unref(router.value?.currentRoute))
 export const routes = computed(() => {
   const routesMap = new Map()
-  return (router.value?.getRoutes() || [])
-    .map((i) => {
-      return {
-        ...i,
-      }
-    }).filter(i => !routesMap.has(i.path) && routesMap.set(i.path, 1))
+  return (router.value?.getRoutes() || []).filter(i => !routesMap.has(i.path) && routesMap.set(i.path, 1))
 })
 
 export function initApp(params) {
