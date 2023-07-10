@@ -14,10 +14,10 @@ const props = defineProps<{
 const inspectorStyle = computed(() => {
   const { width, height, top, left } = props.bounds
   return {
-    width: `${width}px`,
-    height: `${height}px`,
-    top: `${top}px`,
-    left: `${left}px`,
+    width: `${Math.round(width)}px`,
+    height: `${Math.round(height)}px`,
+    top: `${Math.round(top)}px`,
+    left: `${Math.round(left)}px`,
   }
 })
 const inspectorCardStyle = computed(() => ({ top: props.bounds.top < 35 ? 0 : '-35px' }))
@@ -27,7 +27,7 @@ const inspectorCardStyle = computed(() => ({ top: props.bounds.top < 35 ? 0 : '-
   <div class="vue-devtools-component-inspector" :style="inspectorStyle">
     <span class="vue-devtools-component-inspector-card" :style="inspectorCardStyle">
       &lt;{{ name }}&gt;
-      <i>{{ bounds.width }} x {{ bounds.height }}</i>
+      <i>{{ Math.round(bounds.width * 100) / 100 }} x {{ Math.round(bounds.height * 100) / 100 }}</i>
     </span>
   </div>
 </template>
