@@ -9,6 +9,5 @@
       "depTypeList": ["peerDependencies"],
       "enabled": false
     }
-  ],
-  "ignoreDeps": ["node"]
+  ]
 }
