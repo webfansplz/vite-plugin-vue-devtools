@@ -20,11 +20,13 @@ const inspectorStyle = computed(() => {
     left: `${left}px`,
   }
 })
+const inspectorCardStyle = computed(() => ({top: props.bounds.top < 35 ? 0 : '-35px'}))
+
 </script>
 
 <template>
   <div class="vue-devtools-component-inspector" :style="inspectorStyle">
-    <span class="vue-devtools-component-inspector-card">
+    <span class="vue-devtools-component-inspector-card" :style="inspectorCardStyle">
       &lt;{{ name }}&gt;
       <i>{{ bounds.width }} x {{ bounds.height }}</i>
     </span>
@@ -49,7 +51,6 @@ const inspectorStyle = computed(() => {
   text-align: left;
   position: absolute;
   left: 0;
-  top: 0;
   color:#e9e9e9;
   font-size: 14px;
   font-weight: 600;
