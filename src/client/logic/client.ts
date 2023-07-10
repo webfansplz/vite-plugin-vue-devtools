@@ -6,6 +6,10 @@ const client = ref<VueDevtoolsHostClient>({
   hookBuffer: [],
   categorizedHookBuffer: {},
   openInEditor: () => {},
+  componentInspector: {
+    highlight: () => {},
+    unHighlight: () => {},
+  },
 })
 
 export function useDevtoolsClient() {

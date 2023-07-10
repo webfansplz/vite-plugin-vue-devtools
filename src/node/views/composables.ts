@@ -15,6 +15,13 @@ interface DevToolsFrameState {
   closeOnOutsideClick: boolean
 }
 
+interface ComponentInspectorBounds {
+  width: number
+  height: number
+  top: number
+  left: number
+}
+
 // ---- state ----
 export const PANEL_PADDING = 10
 export const PANEL_MIN = 20
@@ -433,5 +440,38 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
     isVertical,
     anchorStyle,
     iframeStyle,
+  }
+}
+
+// ---- useHighlightComponent ----
+
+export function useHighlightComponent() {
+  const name = ref('')
+  const overlayVisible = ref(false)
+  const initialBounds = {
+    width: 0,
+    height: 0,
+    left: 0,
+    top: 0,
+  }
+  const bounds = ref<ComponentInspectorBounds>(initialBounds)
+
+  function highlight(_name: string, _bounds: ComponentInspectorBounds) {
+    name.value = _name
+    bounds.value = _bounds
+    overlayVisible.value = true
+  }
+
+  function unHighlight() {
+    bounds.value = initialBounds
+    overlayVisible.value = false
+  }
+
+  return {
+    name,
+    overlayVisible,
+    bounds,
+    highlight,
+    unHighlight,
   }
 }

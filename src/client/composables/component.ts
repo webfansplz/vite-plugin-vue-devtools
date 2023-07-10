@@ -1,6 +1,7 @@
 import type { ComponentInternalInstance } from 'vue'
 
-import { InstanceMap } from '../logic/components'
+import { InstanceMap, getInstanceName, getInstanceOrVnodeRect } from '../logic/components'
+import { useDevtoolsClient } from '../logic/client'
 
 export const selected = ref('vue-devtools:root')
 const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
@@ -23,4 +24,27 @@ export function useComponent(instance: ComponentTreeNode & { instance?: Componen
   const isExpanded = computed(() => expandedMap.value[instance.id])
 
   return { isSelected, select, isExpanded, toggleExpand }
+}
+
+export function useHighlightComponent(node: ComponentTreeNode): {
+  highlight: () => void
+  unhighlight: () => void
+} {
+  const client = useDevtoolsClient()
+
+  const highlight = useThrottleFn(() => {
+    const instance = node.instance
+    const bounds = getInstanceOrVnodeRect(instance)
+    const name = getInstanceName(instance)
+    client.value?.componentInspector.highlight(name, bounds)
+  }, 300)
+
+  const unhighlight = () => {
+    client.value?.componentInspector.unHighlight()
+  }
+
+  return {
+    highlight,
+    unhighlight,
+  }
 }

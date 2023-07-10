@@ -197,6 +197,7 @@ declare global {
   const useGeolocation: typeof import('@vueuse/core')['useGeolocation']
   const useGraphSettings: typeof import('./composables/graph')['useGraphSettings']
   const useGroupedTabs: typeof import('./composables/tabs')['useGroupedTabs']
+  const useHighlightComponent: typeof import('./composables/component')['useHighlightComponent']
   const useIdle: typeof import('@vueuse/core')['useIdle']
   const useImage: typeof import('@vueuse/core')['useImage']
   const useInfiniteScroll: typeof import('@vueuse/core')['useInfiniteScroll']

@@ -79,6 +79,15 @@ export interface VueDevtoolsHostClient {
   hookBuffer: [string, Record<string, any>][]
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
   openInEditor: OpenInEditorFn
+  componentInspector: {
+    highlight: (_name: string, _bounds: {
+      top: number
+      left: number
+      width: number
+      height: number
+    }) => void
+    unHighlight: () => void
+  }
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'
