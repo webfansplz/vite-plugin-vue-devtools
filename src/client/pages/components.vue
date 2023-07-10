@@ -2,8 +2,9 @@
 import { Pane, Splitpanes } from 'splitpanes'
 
 import { ComponentWalker, getInstanceState } from '../logic/components'
+import { useDevtoolsClient } from '../logic/client'
 import { instance, onVueInstanceUpdate } from '../logic/app'
-import { scrollToComponent, selected, selectedComponentName, selectedComponentNode } from '../composables/component'
+import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])
 
@@ -62,6 +63,11 @@ onMounted(() => {
     }
   })
 })
+
+function openInEditor() {
+  const client = useDevtoolsClient()
+  client.value.openInEditor(selectedComponentNodeFilePath.value)
+}
 </script>
 
 <template>
@@ -73,19 +79,31 @@ onMounted(() => {
         </div>
       </Pane>
       <Pane>
-        <div border="b base" flex justify-between p-2>
+        <div v-if="normalizedComponentState.length" border="b base" flex justify-between px-4 py-2>
           <span v-if="selectedComponentName" text-sm text-primary op90>&lt;{{ selectedComponentName }}&gt;</span>
-          <span>
-            <VTooltip placement="bottom">
-              <i gg:scroll-h cursor-pointer text-xl hover="text-primary" @click="scrollToComponent" />
-              <template #popper>
-                <p text-xs op-50>
-                  Scroll to component
-                </p>
-              </template>
-            </VTooltip>
+          <p flex>
+            <span>
+              <VTooltip placement="bottom">
+                <i gg:scroll-h cursor-pointer text-xl op70 hover="op100" @click="scrollToComponent" />
+                <template #popper>
+                  <p text-xs op-50>
+                    Scroll to component
+                  </p>
+                </template>
+              </VTooltip>
 
-          </span>
+            </span>
+            <span v-if="selectedComponentNodeFilePath" pl-2>
+              <VTooltip placement="bottom">
+                <i carbon-launch cursor-pointer text-sm op70 hover="op100" @click="openInEditor" />
+                <template #popper>
+                  <p text-xs op-50>
+                    Open component in editor
+                  </p>
+                </template>
+              </VTooltip>
+            </span>
+          </p>
         </div>
         <div v-if="normalizedComponentState.length" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.key" :data="item" />

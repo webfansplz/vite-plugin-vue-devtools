@@ -1,11 +1,12 @@
 import type { ComponentInternalInstance } from 'vue'
 
-import { InstanceMap, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '../logic/components'
+import { InstanceMap, getInstanceDetails, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '../logic/components'
 import { useDevtoolsClient } from '../logic/client'
 
 export const selected = ref('vue-devtools:root')
 export const selectedComponentName = ref('')
 export const selectedComponentNode = ref<ComponentTreeNode>()
+export const selectedComponentNodeFilePath = computed(() => getInstanceDetails(selectedComponentNode.value?.instance)?.file)
 const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
   'vue-devtools:root': true,
 })

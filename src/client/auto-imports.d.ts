@@ -104,6 +104,7 @@ declare global {
   const selectedComponent: typeof import('./composables/component')['selectedComponent']
   const selectedComponentName: typeof import('./composables/component')['selectedComponentName']
   const selectedComponentNode: typeof import('./composables/component')['selectedComponentNode']
+  const selectedComponentNodeFilePath: typeof import('./composables/component')['selectedComponentNodeFilePath']
   const selectedComponentState: typeof import('./composables/component')['selectedComponentState']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
