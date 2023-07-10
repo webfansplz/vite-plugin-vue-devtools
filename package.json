@@ -37,7 +37,7 @@
     "*.d.ts"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=v18.16.1"
   },
   "scripts": {
     "build": "rimraf dist && run-s build:*",
