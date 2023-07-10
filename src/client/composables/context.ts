@@ -14,7 +14,12 @@ export function useSingleton<T>() {
 const [
   provideNotification,
   useNotification,
-] = useSingleton<(text: string, icon?: string, duration?: number) => void>()
+] = useSingleton<(opt: {
+  text: string
+  icon?: string
+  type?: 'primary' | 'error'
+  duration?: number
+}) => void>()
 
 export {
   provideNotification,
