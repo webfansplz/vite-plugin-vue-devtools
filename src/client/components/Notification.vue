@@ -4,7 +4,7 @@ const icon = ref<string | undefined>()
 const text = ref<string | undefined>()
 const type = ref<'primary' | 'error' | undefined>()
 const duration = ref<number>()
-let timer: ReturnType<typeof setTimeout> | undefined 
+let timer: ReturnType<typeof setTimeout> | undefined
 
 provideNotification((opt: {
   text: string
