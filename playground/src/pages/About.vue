@@ -9,12 +9,12 @@ const userStore = useUserStore()
 
 <template>
   <div>
-    About1
+    About Page
   </div>
-  <h3 @click="userStore.increment">
-    {{ userStore.age }}
+  <h3>
+    name: {{ userStore.name }}
   </h3>
-  <p>
-    {{ userStore.name }}
-  </p>
+  <h3 @click="userStore.increment">
+    age: {{ userStore.age }}
+  </h3>
 </template>
