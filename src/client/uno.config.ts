@@ -35,6 +35,9 @@ export default defineConfig({
       // Vue tag
       'vue-tag-symbol': 'text-gray-400 dark:text-gray-600',
       'vue-tag-symbol-active': 'text-white/60',
+
+      // Vue Doc
+      'vue-doc-required': 'after:content-["*"] after:color-primary after:ml-4px',
     },
     [/^theme-card-(\w+)$/, $ => `p2 flex gap2 border border-base bg-base items-center rounded min-w-40 min-h-25 justify-center transition-all saturate-0 op50 shadow hover:(op100 bg-${$[1]}/10 text-${$[1]}6 saturate-100)`],
   ],

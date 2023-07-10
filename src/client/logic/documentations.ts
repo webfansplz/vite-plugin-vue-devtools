@@ -1,8 +1,10 @@
 import VueIcon from '../assets/icons/vue.svg'
 import PiniaIcon from '../assets/icons/pinia.svg'
 import VueUseIcon from '../assets/icons/vueuse.svg'
+import type { DocumentInfo } from '../../types'
+import { DOC_GROUP_KEY } from '../constants'
 
-export const data = [
+const normalData: DocumentInfo[] = [
   {
     id: 'vue',
     name: 'Vue.js',
@@ -38,3 +40,20 @@ export const data = [
     icon: VueUseIcon,
   },
 ]
+
+const localData = [...normalData]
+
+export const data = useLocalStorage(DOC_GROUP_KEY, localData)
+
+export function addDoc(docInfo: DocumentInfo) {
+  data.value.push(docInfo)
+}
+
+export function removeDoc(id: string) {
+  const idx = data.value.findIndex(i => i.name === id)
+  data.value.splice(idx, 1)
+}
+
+export function resetDoc() {
+  data.value = normalData
+}
