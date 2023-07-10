@@ -20,8 +20,7 @@ const inspectorStyle = computed(() => {
     left: `${left}px`,
   }
 })
-const inspectorCardStyle = computed(() => ({top: props.bounds.top < 35 ? 0 : '-35px'}))
-
+const inspectorCardStyle = computed(() => ({ top: props.bounds.top < 35 ? 0 : '-35px' }))
 </script>
 
 <template>
