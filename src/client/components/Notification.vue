@@ -3,6 +3,8 @@ const show = ref(false)
 const icon = ref<string | undefined>()
 const text = ref<string | undefined>()
 const type = ref<'primary' | 'error' | undefined>()
+const duration = ref<number>()
+let timer: ReturnType<typeof setTimeout> | undefined 
 
 provideNotification((opt: {
   text: string
@@ -14,10 +16,22 @@ provideNotification((opt: {
   icon.value = opt.icon
   show.value = true
   type.value = opt.type
-  setTimeout(() => {
-    show.value = false
-  }, opt.duration || 1500)
+  duration.value = opt.duration || 1500
+  createTimer()
 })
+
+function clearTimer() {
+  if (timer) {
+    clearTimeout(timer)
+    timer = undefined
+  }
+}
+function createTimer() {
+  timer = setTimeout(() => {
+    show.value = false
+    timer = undefined
+  }, duration.value)
+}
 </script>
 
 <template>
@@ -27,6 +41,8 @@ provideNotification((opt: {
   >
     <div
       v-if="type === 'error'"
+      @mouseenter="clearTimer"
+      @mouseleave="createTimer"
       border="~ base"
       flex="~ inline gap2"
       m-3 inline-block items-center rounded px-4 py-1 text-red transition-all duration-300 bg-base
@@ -38,6 +54,8 @@ provideNotification((opt: {
     </div>
     <div
       v-else
+      @mouseenter="clearTimer"
+      @mouseleave="createTimer"
       border="~ base"
       flex="~ inline gap2"
       m-3 inline-block items-center rounded px-4 py-1 text-primary transition-all duration-300 bg-base
