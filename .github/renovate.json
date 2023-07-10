@@ -3,7 +3,6 @@
   "labels": ["dependencies"],
   "pin": false,
   "rangeStrategy": "bump",
-  "node": false,
   "packageRules": [
     {
       "depTypeList": ["peerDependencies"],
