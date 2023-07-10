@@ -38,8 +38,8 @@ const router = useRouter()
   </button>
 </template>
 
-<style>
-button{
+<style scoped>
+button {
   margin: 0 5px;
 }
 </style>
