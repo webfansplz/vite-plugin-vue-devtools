@@ -17,7 +17,7 @@ const { highlight, unhighlight } = useHighlightComponent(props.data)
     }"
     vue-block
     :class="[isSelected ? 'vue-block-active' : 'vue-block-hover']"
-    @click="select(data.id)"
+    @click="select(data)"
     @mouseover="highlight"
     @mouseleave="unhighlight"
   >
