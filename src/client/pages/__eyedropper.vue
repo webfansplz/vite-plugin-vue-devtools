@@ -50,6 +50,8 @@ async function restart() {
 onMounted(() => {
   open().then((res) => {
     hexColor.value = res.sRGBHex
+  }).catch(() => {
+    close()
   })
 })
 
