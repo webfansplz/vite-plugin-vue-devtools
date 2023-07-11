@@ -81,3 +81,6 @@ dist
 .idea
 
 .vite-inspect
+auto-imports.d.ts
+components.d.ts
+
