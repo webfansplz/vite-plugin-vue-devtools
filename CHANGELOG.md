@@ -1,3 +1,13 @@
+## [0.5.1](https://github.com/webfansplz/vite-plugin-vue-devtools/compare/v0.5.0...v0.5.1) (2023-07-11)
+
+
+### Features
+
+* **components:** keep notification visible when hovering ([#129](https://github.com/webfansplz/vite-plugin-vue-devtools/issues/129)) ([16cd1c0](https://github.com/webfansplz/vite-plugin-vue-devtools/commit/16cd1c0b7611764f3562581bda9105b165acd1bf))
+* enhance components ([#131](https://github.com/webfansplz/vite-plugin-vue-devtools/issues/131)) ([6ffc228](https://github.com/webfansplz/vite-plugin-vue-devtools/commit/6ffc2287f74ca9d06b37de9304bec2ead4d91422))
+
+
+
 ## [0.5.0](https://github.com/webfansplz/vite-plugin-vue-devtools/compare/v0.4.14...v0.5.0) (2023-07-10)
 
 
