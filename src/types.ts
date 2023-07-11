@@ -56,7 +56,7 @@ declare module 'vite-plugin-devtools/dist/server' {
     getComponentInfo(filename: string): Promise<Record<string, unknown>>
     installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
     uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
-    root(): Promise<string>
+    root(): string
   }
 }
 
