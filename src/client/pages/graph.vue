@@ -2,7 +2,7 @@
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
 import { searchResults as modules, rootPath } from '../logic/graph'
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 import { useGraphSettings } from '../composables/graph'
 import type { GraphSettingsType } from '../composables/graph'
 
@@ -15,7 +15,7 @@ const { meta: metaKeyPressed } = useMagicKeys({
 })
 const isHoveringNode = ref(false)
 const lastSelectedNode = ref<string>()
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 
 function getHoverPath(level: GraphSettingsType['hoverPathLevel'], fullPath: string, rootPath: string) {
   switch (level) {

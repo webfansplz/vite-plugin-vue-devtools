@@ -2,7 +2,7 @@
 import { Pane, Splitpanes } from 'splitpanes'
 
 import { ComponentWalker, getInstanceState } from '../logic/components'
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 import { instance, onVueInstanceUpdate } from '../logic/app'
 import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
 
@@ -65,7 +65,7 @@ onMounted(() => {
 })
 
 function openInEditor() {
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
   client.value.openInEditor(selectedComponentNodeFilePath.value)
 }
 </script>

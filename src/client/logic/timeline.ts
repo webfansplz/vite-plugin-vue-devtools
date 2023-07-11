@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 import { getComponentFileName } from './components/util'
-import { useDevtoolsClient } from './client'
+import { useDevToolsClient } from './client'
 
 interface TimelineLayer {
   id: string
@@ -104,7 +104,7 @@ export function initPerfTimeline(events: [string, Record<string, any>][]) {
   timelineEvent.value
     = timelineEvent.value.sort((a, b) => a.sortId! - b.sortId!).sort((a, b) => performTimelineSortKey[a.event.data.measure] - performTimelineSortKey[b.event.data.measure])
 
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
   let sortId = timelineEvent.value.length
   client.value?.hook?.on('perf:start', (app, uid, component, type, time) => {
     if (component?.root.type?.devtools?.hide)

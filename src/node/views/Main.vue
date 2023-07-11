@@ -68,7 +68,7 @@ function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout =
       }
       else if (retry-- <= 0) {
         clearInterval(interval)
-        reject(Error('Vue Devtools client injection failed'))
+        reject(Error('Vue DevTools client injection failed'))
       }
     }, timeout)
   })

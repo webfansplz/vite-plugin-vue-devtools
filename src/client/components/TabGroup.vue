@@ -39,7 +39,7 @@ function handleCreateGroup() {
   const name = groupName.value.trim()
   if (checkGroupExist(name))
     // eslint-disable-next-line no-alert
-    return alert('[Vue-Devtools] Group already exist')
+    return alert('[Vue-DevTools] Group already exist')
 
   createGroup(name)
   groupName.value = ''

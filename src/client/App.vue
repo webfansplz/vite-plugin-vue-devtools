@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDevtoolsClient } from './logic/client'
+import { useDevToolsClient } from './logic/client'
 import { hookApi } from './logic/hook'
 import { initRoutes } from './logic/routes'
 import { initPinia } from './logic/pinia'
@@ -12,7 +12,7 @@ const { route: _route, isFirstVisit } = useFrameState()
 useColorMode()
 
 hookApi.hook.on('init:vue:app', () => {
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
   const categorizedHookBuffer = client.value.categorizedHookBuffer
   // mark client as loaded
   client.value.markClientLoaded()
@@ -52,7 +52,7 @@ onMounted(() => {
 
 useEventListener('keydown', (e) => {
   if (e.code === 'KeyD' && e.altKey && e.shiftKey) {
-    const client = useDevtoolsClient()
+    const client = useDevToolsClient()
     client.value?.panel?.toggle()
   }
 })

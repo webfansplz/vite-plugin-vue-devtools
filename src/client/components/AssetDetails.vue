@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AssetInfo } from '../../types'
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 import { rpc } from '../logic/rpc'
 
 const props = defineProps<{
@@ -55,7 +55,7 @@ const supportsPreview = computed(() => {
   ].includes(props.asset.type)
 })
 
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 </script>
 
 <template>

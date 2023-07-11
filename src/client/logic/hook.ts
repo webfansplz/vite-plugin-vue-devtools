@@ -1,6 +1,6 @@
 import { updatePinia } from './pinia'
 import { instance, updateApp, app as vueApp } from './app'
-import { useDevtoolsClient } from './client'
+import { useDevToolsClient } from './client'
 
 enum DevtoolsHooks {
   APP_INIT = 'app:init',
@@ -14,10 +14,10 @@ function hideInDevtools(component) {
   return component?.root?.type?.devtools?.hide
 }
 
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 
 function produceHook() {
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
   const hook = client.value.hook
   hook.on(DevtoolsHooks.APP_INIT, (app) => {
     if (app?._vueDevtools_hidden_)

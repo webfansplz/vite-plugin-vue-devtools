@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 // @ts-expect-error missing type
 const isSupported = typeof window !== 'undefined' && window.parent.documentPictureInPicture?.requestWindow
 const showPopupUnsupported = ref(false)

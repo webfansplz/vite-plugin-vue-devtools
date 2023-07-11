@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Tab } from '../../types'
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 import { getMappedBuiltinTabs } from '../store'
 
 defineProps<{
   tab: Tab
 }>()
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 const router = useRouter()
 
 function handleClick(tab: Tab) {

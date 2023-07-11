@@ -13,6 +13,6 @@ const client = ref<VueDevtoolsHostClient>({
   },
 })
 
-export function useDevtoolsClient() {
+export function useDevToolsClient() {
   return client
 }

@@ -2,7 +2,7 @@
   "name": "vite-plugin-vue-devtools",
   "version": "0.5.0",
   "packageManager": "pnpm@8.6.7",
-  "description": "A vite plugin for Vue Devtools",
+  "description": "A vite plugin for Vue DevTools",
   "author": "webfansplz",
   "license": "MIT",
   "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",

@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 const frameState = useFrameState()
 const router = useRouter()
 const hexColor = ref('')

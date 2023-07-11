@@ -1,12 +1,12 @@
 import type { ComponentInternalInstance } from 'vue'
 
 import { InstanceMap, getInstanceDetails, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '../logic/components'
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 
 export const selected = ref('vue-devtools:root')
 export const selectedComponentName = ref('')
 export const selectedComponentNode = ref<ComponentTreeNode>()
-export const selectedComponentNodeFilePath = computed(() => getInstanceDetails(selectedComponentNode.value?.instance)?.file)
+export const selectedComponentNodeFilePath = computed(() => selectedComponentNode.value?.instance ? getInstanceDetails(selectedComponentNode.value.instance)?.file : null)
 const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
   'vue-devtools:root': true,
 })
@@ -36,7 +36,7 @@ export function useHighlightComponent(node: ComponentTreeNode): {
   highlight: () => void
   unhighlight: () => void
 } {
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
 
   const highlight = useThrottleFn(() => {
     const instance = node.instance
@@ -60,7 +60,7 @@ export function scrollToComponent() {
   if (scrollToComponent.timer)
     clearTimeout(scrollToComponent.timer)
 
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
   const { highlight, unhighlight } = useHighlightComponent(selectedComponentNode.value!)
 
   const instance = selectedComponentNode.value!.instance

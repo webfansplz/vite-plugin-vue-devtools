@@ -1,5 +1,5 @@
 import type { VueDevtoolsHostClient } from '../../types'
-import { useDevtoolsClient } from './client'
+import { useDevToolsClient } from './client'
 import { initApp } from './app'
 
 export interface VueDevtoolsGlobal {
@@ -19,7 +19,7 @@ export function createDevToolsClient() {
   window.__VUE_DEVTOOLS_VIEW__ = <VueDevtoolsGlobal>{
     loaded: false,
     setClient(_client) {
-      const client = useDevtoolsClient()
+      const client = useDevToolsClient()
       client.value = _client
       client.value.markClientLoaded = () => {
         this.loaded = true
