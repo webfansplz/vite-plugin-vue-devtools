@@ -407,4 +407,10 @@ collectHookBuffer()
     opacity: 0.2;
   }
 }
+
+@media print {
+  #vue-devtools-anchor {
+    display: none;
+  }
+}
 </style>
