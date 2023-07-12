@@ -41,26 +41,26 @@ function createTimer() {
   >
     <div
       v-if="type === 'error'"
-      @mouseenter="clearTimer"
-      @mouseleave="createTimer"
       border="~ base"
       flex="~ inline gap2"
       m-3 inline-block items-center rounded px-4 py-1 text-red transition-all duration-300 bg-base
       :style="show ? {} : { transform: 'translateY(-300%)' }"
       :class="show ? 'shadow' : 'shadow-none'"
+      @mouseenter="clearTimer"
+      @mouseleave="createTimer"
     >
       <div v-if="icon" :class="`i-${icon}`" />
       <div>{{ text }}</div>
     </div>
     <div
       v-else
-      @mouseenter="clearTimer"
-      @mouseleave="createTimer"
       border="~ base"
       flex="~ inline gap2"
       m-3 inline-block items-center rounded px-4 py-1 text-primary transition-all duration-300 bg-base
       :style="show ? {} : { transform: 'translateY(-300%)' }"
       :class="show ? 'shadow' : 'shadow-none'"
+      @mouseenter="clearTimer"
+      @mouseleave="createTimer"
     >
       <div v-if="icon" :class="`i-${icon}`" />
       <div>{{ text }}</div>
