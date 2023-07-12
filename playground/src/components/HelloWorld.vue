@@ -18,9 +18,3 @@ const count = ref(10)
 
   <Child msg="123456" />
 </template>
-
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>

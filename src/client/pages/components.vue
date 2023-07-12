@@ -4,9 +4,12 @@ import { Pane, Splitpanes } from 'splitpanes'
 import { ComponentWalker, getInstanceState } from '../logic/components'
 import { useDevToolsClient } from '../logic/client'
 import { instance, onVueInstanceUpdate } from '../logic/app'
+import { rpc } from '../logic/rpc'
 import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])
+const rootPath = ref('')
+rpc.root().then(res => rootPath.value = res)
 
 function normalizeComponentState(value: unknown, type: string) {
   if (type === 'Reactive')
@@ -98,7 +101,7 @@ function openInEditor() {
                 <i carbon-launch cursor-pointer text-sm op70 hover="op100" @click="openInEditor" />
                 <template #popper>
                   <p text-xs op-50>
-                    Open component in editor
+                    Open {{ selectedComponentNodeFilePath.replace(rootPath, '') }} in editor
                   </p>
                 </template>
               </VTooltip>
