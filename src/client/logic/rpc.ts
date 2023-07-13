@@ -12,5 +12,3 @@ export const rpc
       hookApi.hook.emit('__vue-devtools:terminal:exit__', data)
     },
   })
-
-export const inspectClientUrl = await rpc.inspectClientUrl()

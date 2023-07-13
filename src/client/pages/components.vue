@@ -4,6 +4,8 @@ import { Pane, Splitpanes } from 'splitpanes'
 import { ComponentWalker, getInstanceState } from '../logic/components'
 import { useDevToolsClient } from '../logic/client'
 import { instance, onVueInstanceUpdate } from '../logic/app'
+import { rootPath } from '../logic/global'
+
 import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])
@@ -98,7 +100,7 @@ function openInEditor() {
                 <i carbon-launch cursor-pointer text-sm op70 hover="op100" @click="openInEditor" />
                 <template #popper>
                   <p text-xs op-50>
-                    Open component in editor
+                    Open {{ selectedComponentNodeFilePath.replace(rootPath, '') }} in editor
                   </p>
                 </template>
               </VTooltip>

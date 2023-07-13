@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { searchResults as modules, rootPath } from '../logic/graph'
+import { searchResults as modules } from '../logic/graph'
 import { useDevToolsClient } from '../logic/client'
+import { rootPath } from '../logic/global'
 import { useGraphSettings } from '../composables/graph'
 import type { GraphSettingsType } from '../composables/graph'
 
@@ -47,7 +48,7 @@ const data = computed<Data>(() => {
     return {
       id,
       label: isInMain ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
-      title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath.value),
+      title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
       font: {

@@ -1,6 +1,7 @@
 import type { VueDevtoolsHostClient } from '../../types'
 import { useDevToolsClient } from './client'
 import { initApp } from './app'
+import { rpc } from './rpc'
 
 export interface VueDevtoolsGlobal {
   loaded: boolean
@@ -29,3 +30,6 @@ export function createDevToolsClient() {
     },
   }
 }
+
+export const inspectClientUrl = await rpc.inspectClientUrl()
+export const rootPath = await rpc.root()
