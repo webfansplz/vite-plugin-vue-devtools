@@ -4,12 +4,11 @@ import { Pane, Splitpanes } from 'splitpanes'
 import { ComponentWalker, getInstanceState } from '../logic/components'
 import { useDevToolsClient } from '../logic/client'
 import { instance, onVueInstanceUpdate } from '../logic/app'
-import { rpc } from '../logic/rpc'
+import { rootPath } from '../logic/global'
+
 import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
 
 const componentTree = ref<ComponentTreeNode[]>([])
-const rootPath = ref('')
-rpc.root().then(res => rootPath.value = res)
 
 function normalizeComponentState(value: unknown, type: string) {
   if (type === 'Reactive')
