@@ -44,6 +44,8 @@ async function restart() {
   hexColor.value = ''
   open().then((res) => {
     hexColor.value = res.sRGBHex
+  }).catch(() => {
+    close()
   })
 }
 
