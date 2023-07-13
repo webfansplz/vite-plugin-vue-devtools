@@ -1,10 +1,21 @@
 <script setup lang="tsx">
-import { useDevtoolsClient } from '../logic/client'
+import { useDevToolsClient } from '../logic/client'
 
-const client = useDevtoolsClient()
+const client = useDevToolsClient()
 const frameState = useFrameState()
 const router = useRouter()
-const color = ref('')
+const hexColor = ref('')
+const showHex = ref(true)
+const color = computed(() => showHex.value ? hexColor.value : hexToRgb(hexColor.value))
+const copy = useCopy()
+
+function getDecimal(hex: string, start: number, end: number) {
+  return Number.parseInt(hex.slice(start, end), 16)
+}
+
+function hexToRgb(hex: string) {
+  return hex ? `rgb(${getDecimal(hex, 1, 3)},${getDecimal(hex, 3, 5)},${getDecimal(hex, 5, 7)})` : ''
+}
 
 useEventListener(window, 'keydown', (e) => {
   if (e.key === 'Escape')
@@ -30,15 +41,19 @@ async function open() {
 }
 
 async function restart() {
-  color.value = ''
+  hexColor.value = ''
   open().then((res) => {
-    color.value = res.sRGBHex
+    hexColor.value = res.sRGBHex
+  }).catch(() => {
+    close()
   })
 }
 
 onMounted(() => {
   open().then((res) => {
-    color.value = res.sRGBHex
+    hexColor.value = res.sRGBHex
+  }).catch(() => {
+    close()
   })
 })
 
@@ -72,9 +87,9 @@ function ErrorBoundary() {
       </div>
       <div v-else flex items-center>
         <span flex items-center>
-          <em mr-2 inline-block h-5 w-5 border border-base rounded :style="{ backgroundColor: color }" />
+          <em mr-2 inline-block h-5 w-5 border border-base rounded hover="cursor-pointer border-primary" :style="{ backgroundColor: color }" @click="showHex = !showHex" />
           :
-          {{ color }}
+          <span hover="underline underline-offset-3 cursor-pointer" @click="copy(color)">{{ color }}</span>
         </span>
         <span ml-2 flex cursor-pointer items-center border border-base rounded-10 p-2 hover="bg-active" @click="restart">
           <i class="i-mdi:eyedropper" text-3 />

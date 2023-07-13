@@ -6,8 +6,13 @@ const client = ref<VueDevtoolsHostClient>({
   hookBuffer: [],
   categorizedHookBuffer: {},
   openInEditor: () => {},
+  componentInspector: {
+    highlight: () => {},
+    unHighlight: () => {},
+    scrollToComponent: () => {},
+  },
 })
 
-export function useDevtoolsClient() {
+export function useDevToolsClient() {
   return client
 }

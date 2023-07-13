@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { toggleTheme } from 'vite-plugin-devtools/dist/client'
-import { useDevtoolsClient } from './logic/client'
 import { hookApi } from './logic/hook'
 import { initRoutes } from './logic/routes'
 import { initPinia } from './logic/pinia'
@@ -18,7 +17,7 @@ watchEffect(() => {
 })
 
 hookApi.hook.on('init:vue:app', () => {
-  const client = useDevtoolsClient()
+  const client = useDevToolsClient()
   const categorizedHookBuffer = client.value.categorizedHookBuffer
   // mark client as loaded
   client.value.markClientLoaded()
@@ -58,7 +57,7 @@ onMounted(() => {
 
 useWindowEventListener('keydown', (e) => {
   if (e.code === 'KeyD' && e.altKey && e.shiftKey) {
-    const client = useDevtoolsClient()
+    const client = useDevToolsClient()
     client.value?.panel?.toggle()
   }
 })

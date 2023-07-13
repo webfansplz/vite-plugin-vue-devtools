@@ -2,6 +2,12 @@ import type { Router } from 'vue-router'
 
 type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
+export interface ComponentInspectorBounds {
+  width: number
+  height: number
+  top: number
+  left: number
+}
 export interface ComponentRelationship {
   id: string
   deps: string[]
@@ -83,6 +89,11 @@ export interface VueDevtoolsHostClient {
   hookBuffer: [string, Record<string, any>][]
   categorizedHookBuffer: Record<string, [string, Record<string, any>][]>
   openInEditor: OpenInEditorFn
+  componentInspector: {
+    highlight: (_name: string, _bounds: ComponentInspectorBounds) => void
+    unHighlight: () => void
+    scrollToComponent: (_bounds: ComponentInspectorBounds) => void
+  }
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'

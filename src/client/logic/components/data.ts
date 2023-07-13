@@ -63,7 +63,7 @@ export function getInstanceDetails(instance: any): any {
   return {
     id: getUniqueComponentId(instance),
     name: getInstanceName(instance),
-    file: instance.type?.__file,
+    file: instance?.type?.__file,
     state: getInstanceState(instance),
   }
 }

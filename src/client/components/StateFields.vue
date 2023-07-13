@@ -14,6 +14,7 @@ withDefaults(
 
 const isExpanded = ref<boolean>(true)
 const copy = useCopy()
+const showNotification = useNotification()
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
@@ -24,6 +25,22 @@ function updateExpandedIdCache(id: string) {
     expandedIdCache.value = expandedIdCache.value.filter((i: string) => i !== id)
   else
     expandedIdCache.value.push(id)
+}
+
+function copyContent(value: Record<string, unknown>) {
+  try {
+    copy(JSON.stringify(value))
+  }
+  catch (e: any) {
+    showNotification(
+      {
+        text: e.message,
+        type: 'error',
+        icon: 'carbon-close-outline',
+        duration: 5000,
+      },
+    )
+  }
 }
 </script>
 
@@ -44,7 +61,7 @@ function updateExpandedIdCache(id: string) {
         flex-none
         :title="`Copy ${data.key} to clipboard`"
         icon="carbon-copy"
-        @click.stop="copy(JSON.stringify(data.value))"
+        @click.stop="copyContent(data.value)"
       />
     </h3>
     <div v-show="isExpanded" pl-3>

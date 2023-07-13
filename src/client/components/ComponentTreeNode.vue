@@ -7,6 +7,7 @@ const props = withDefaults(defineProps<{
 })
 
 const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data)
+const { highlight, unhighlight } = useHighlightComponent(props.data)
 </script>
 
 <template>
@@ -16,7 +17,9 @@ const { isSelected, select, isExpanded, toggleExpand } = useComponent(props.data
     }"
     vue-block
     :class="[isSelected ? 'vue-block-active' : 'vue-block-hover']"
-    @click="select(data.id)"
+    @click="select(data)"
+    @mouseover="highlight"
+    @mouseleave="unhighlight"
   >
     <h3 vue-block-title @click="data.hasChildren ? toggleExpand(data.id) : () => {}">
       <VExpandIcon v-if="data.hasChildren" :value="isExpanded" />

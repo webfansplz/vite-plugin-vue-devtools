@@ -28,6 +28,7 @@ interface Window {
 }
 
 declare interface ComponentTreeNode {
+  instance: any
   uid: number
   id: string
   name: string

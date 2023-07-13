@@ -4,7 +4,8 @@ import { computed, ref } from 'vue'
 // @ts-expect-error virtual module
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import Frame from './FrameBox.vue'
-import { useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
+import ComponentInspector from './ComponentInspector.vue'
+import { useHighlightComponent, useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
 import { checkIsSafari, useColorScheme, usePreferredColorScheme, warn } from './utils'
 
 const props = defineProps({
@@ -67,7 +68,7 @@ function waitForClientInjection(iframe: HTMLIFrameElement, retry = 50, timeout =
       }
       else if (retry-- <= 0) {
         clearInterval(interval)
-        reject(Error('Vue Devtools client injection failed'))
+        reject(Error('Vue DevTools client injection failed'))
       }
     }, timeout)
   })
@@ -88,6 +89,7 @@ const { iframe, getIframe } = useIframe(clientUrl, async () => {
 
 // Picture-in-Picture mode
 const { popup } = usePiPMode(getIframe, hook)
+const { overlayVisible, name: componentName, bounds, highlight, unHighlight } = useHighlightComponent()
 
 async function setupClient(iframe: HTMLIFrameElement) {
   const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
@@ -114,6 +116,25 @@ async function setupClient(iframe: HTMLIFrameElement) {
     openInEditor: openInEditor.value ?? (() => {
       warn('Unable to load inspector, open-in-editor is not available.')
     }),
+    componentInspector: {
+      highlight,
+      unHighlight,
+      scrollToComponent(bounds) {
+        const scrollTarget = document.createElement('div')
+        scrollTarget.style.position = 'absolute'
+        scrollTarget.style.width = `${Math.round(bounds.width * 100) / 100}px`
+        scrollTarget.style.height = `${Math.round(bounds.height * 100) / 100}px`
+        scrollTarget.style.top = `${Math.round(bounds.top * 100) / 100}px`
+        scrollTarget.style.left = `${Math.round(bounds.left * 100) / 100}px`
+        document.body.appendChild(scrollTarget)
+        scrollTarget.scrollIntoView({
+          behavior: 'smooth',
+        })
+        setTimeout(() => {
+          document.body.removeChild(scrollTarget)
+        }, 2000)
+      },
+    },
   })
 }
 
@@ -276,6 +297,8 @@ collectHookBuffer()
       :view-mode="panelState.viewMode"
     />
   </div>
+  <!-- component inspector -->
+  <ComponentInspector v-if="overlayVisible" :bounds="bounds" :name="componentName" />
 </template>
 
 <style scoped>
@@ -382,6 +405,12 @@ collectHookBuffer()
   }
   100% {
     opacity: 0.2;
+  }
+}
+
+@media print {
+  #vue-devtools-anchor {
+    display: none;
   }
 }
 </style>

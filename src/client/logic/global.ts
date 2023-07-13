@@ -1,6 +1,7 @@
 import type { VueDevtoolsHostClient } from '../../types'
-import { useDevtoolsClient } from './client'
+import { useDevToolsClient } from './client'
 import { initApp } from './app'
+import { rpc } from './rpc'
 
 export interface VueDevtoolsGlobal {
   loaded: boolean
@@ -19,7 +20,7 @@ export function createDevToolsClient() {
   window.__VUE_DEVTOOLS_VIEW__ = <VueDevtoolsGlobal>{
     loaded: false,
     setClient(_client) {
-      const client = useDevtoolsClient()
+      const client = useDevToolsClient()
       client.value = _client
       client.value.markClientLoaded = () => {
         this.loaded = true
@@ -29,3 +30,6 @@ export function createDevToolsClient() {
     },
   }
 }
+
+export const inspectClientUrl = await rpc.inspectClientUrl()
+export const rootPath = await rpc.root()

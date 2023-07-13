@@ -8,7 +8,6 @@ export const list = ref<ModuleInfo[]>(await rpc.componentGraph())
 export const searchText = useStorage('vite-inspect-search-text', '')
 export const includeNodeModules = useStorage('vite-inspect-include-node-modules', false)
 export const includeVirtual = useStorage('vite-inspect-include-virtual', false)
-export const rootPath = ref(await rpc.root())
 export const userCustomGlobPattern = useStorage('__vue-devtools-graph-glob__', '')
 
 function getDepsByExactId(data: typeof list.value, searchId: string) {
