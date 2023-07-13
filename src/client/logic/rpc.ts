@@ -1,14 +1,15 @@
-import { createHotContext } from 'vite-hot-client'
-import { createRPCClient } from '../../vite-dev-rpc'
-import type { RPCFunctions } from '../../types'
+import '../../types'
+import { addClientFunction, clientRPC } from 'vite-plugin-devtools/client'
 import { hookApi } from './hook'
 
-export const rpc
-  = createRPCClient<RPCFunctions>('vite-plugin-vue-devtools', (await createHotContext('/___', `${location.pathname.split('/__devtools__')[0] || ''}/`.replace(/\/\//g, '/')))!, {
-    onTerminalData({ data }: { id?: string; data: string }) {
-      hookApi.hook.emit('__vue-devtools:terminal:data__', data)
-    },
-    onTerminalExit({ data }: { id?: string; data: string }) {
-      hookApi.hook.emit('__vue-devtools:terminal:exit__', data)
-    },
-  })
+addClientFunction('onTerminalData', ({ data }) => {
+  hookApi.hook.emit('__vue-devtools:terminal:data__', data)
+})
+
+addClientFunction('onTerminalExit', ({ data }) => {
+  hookApi.hook.emit('__vue-devtools:terminal:exit__', data)
+})
+
+export const rpc = clientRPC
+
+export const inspectClientUrl = await rpc.inspectClientUrl()

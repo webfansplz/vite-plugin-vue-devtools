@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDevToolsClient } from './logic/client'
+import { toggleTheme } from 'vite-plugin-devtools/client'
 import { hookApi } from './logic/hook'
 import { initRoutes } from './logic/routes'
 import { initPinia } from './logic/pinia'
@@ -10,6 +10,11 @@ const { scale } = useDevToolsSettings()
 const { route: _route, isFirstVisit } = useFrameState()
 
 useColorMode()
+
+const isDark = useDark()
+watchEffect(() => {
+  toggleTheme(isDark.value ? 'dark' : 'auto')
+})
 
 hookApi.hook.on('init:vue:app', () => {
   const client = useDevToolsClient()

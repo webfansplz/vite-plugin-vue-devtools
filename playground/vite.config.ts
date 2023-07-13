@@ -4,6 +4,11 @@ import VueDevtools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    fs: {
+      strict: false,
+    },
+  },
   plugins: [
     VueDevtools(),
     vue(),
