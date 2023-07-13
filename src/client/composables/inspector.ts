@@ -1,25 +1,8 @@
-import { getCurrentScope, onScopeDispose, computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import type { OpenInEditorFn } from "../../types"
 
 export function warn(message: string) {
   console.warn(`[vite-plugin-vue-devtools] ${message}`)
-}
-
-export function tryOnScopeDispose(fn: () => void) {
-  const scope = getCurrentScope()
-  if (scope)
-    onScopeDispose(fn)
-}
-
-// ---- event ----
-export function useEventListener(
-  target: EventTarget,
-  type: keyof WindowEventHandlersEventMap,
-  listener: EventListenerOrEventListenerObject,
-  options?: boolean | AddEventListenerOptions,
-) {
-  target.addEventListener(type, listener, options)
-  tryOnScopeDispose(() => target.removeEventListener(type, listener, options))
 }
 
 export function useWindowEventListener<K extends keyof WindowEventMap>(

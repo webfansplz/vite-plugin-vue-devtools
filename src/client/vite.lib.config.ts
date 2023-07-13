@@ -29,14 +29,5 @@ export default defineConfig({
         onIframe: resolve(__dirname, 'onIframe.ts'),
       },
     },
-    /* minify: false, // 'esbuild',
-    rollupOptions: {
-      input: [resolve(__dirname, 'onIframe.ts')],
-      output: {
-        name: 'iframe',
-        preserveModules: false
-      }
-    }, */
   },
-
 })

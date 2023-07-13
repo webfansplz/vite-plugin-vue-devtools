@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toggleTheme } from 'vite-plugin-devtools/dist/client'
+import { toggleTheme } from 'vite-plugin-devtools/client'
 import { hookApi } from './logic/hook'
 import { initRoutes } from './logic/routes'
 import { initPinia } from './logic/pinia'
@@ -55,7 +55,7 @@ onMounted(() => {
   })
 })
 
-useWindowEventListener('keydown', (e) => {
+useEventListener('keydown', (e) => {
   if (e.code === 'KeyD' && e.altKey && e.shiftKey) {
     const client = useDevToolsClient()
     client.value?.panel?.toggle()
