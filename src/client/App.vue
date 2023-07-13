@@ -56,7 +56,7 @@ onMounted(() => {
   })
 })
 
-useEventListener('keydown', (e) => {
+useWindowEventListener('keydown', (e) => {
   if (e.code === 'KeyD' && e.altKey && e.shiftKey) {
     const client = useDevtoolsClient()
     client.value?.panel?.toggle()

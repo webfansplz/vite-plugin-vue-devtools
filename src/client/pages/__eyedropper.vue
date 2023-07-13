@@ -6,7 +6,7 @@ const frameState = useFrameState()
 const router = useRouter()
 const color = ref('')
 
-useEventListener('keydown', (e) => {
+useEventListener(window, 'keydown', (e) => {
   if (e.key === 'Escape')
     close()
 })

@@ -4,6 +4,7 @@ import { normalizePath } from 'vite'
 import type { PluginOption, ResolvedConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 import createDevtools from 'vite-plugin-devtools/dist/server'
+import VueInspector from 'vite-plugin-vue-inspector'
 import type { ServerFunctions } from 'vite-plugin-devtools/dist/server'
 
 // import { createRPCServer } from '../vite-dev-rpc'
@@ -39,6 +40,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
     clientDir: DIR_CLIENT,
     icon: ICON,
     onIframe: IFRAME_HOOK,
+    inspector: true
   })
 
   const rpcFunctions: ServerFunctions = {
@@ -86,7 +88,12 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
       config = server.config
       return plugin?.configureServer(server)
     },
-  }]
+  },
+    VueInspector({
+      toggleComboKey: '',
+      toggleButtonVisibility: 'never',
+    }),
+  ]
 
   /* const plugin2 = <PluginOption>{
     name: NAME,
