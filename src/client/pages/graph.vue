@@ -48,7 +48,7 @@ const data = computed<Data>(() => {
     return {
       id,
       label: isInMain ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
-      title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath.value),
+      title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
       font: {
