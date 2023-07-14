@@ -29,7 +29,8 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
     clientDir: DIR_CLIENT,
     icon: ICON,
     onIframe: IFRAME_HOOK,
-    inspector: true
+    inspector: true,
+    appendTo: options.appendTo,
   })
 
   const rpcFunctions: ServerFunctions = {

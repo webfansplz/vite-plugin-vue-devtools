@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { toggleTheme } from 'vite-plugin-devtools/client'
+import { useDevToolsClient } from './logic/client'
 import { hookApi } from './logic/hook'
 import { initRoutes } from './logic/routes'
 import { initPinia } from './logic/pinia'
@@ -13,7 +14,7 @@ useColorMode()
 
 const isDark = useDark()
 watchEffect(() => {
-  toggleTheme(isDark.value ? 'dark' : 'auto')
+  toggleTheme(isDark.value ? 'dark' : 'light')
 })
 
 hookApi.hook.on('init:vue:app', () => {

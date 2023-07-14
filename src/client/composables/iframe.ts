@@ -1,5 +1,6 @@
+import { ref } from 'vue'
 import { useEventListener } from '@vueuse/core'
-import type { OpenInEditorFn } from "../../types"
+import type { ComponentInspectorBounds, OpenInEditorFn } from "../../types"
 
 export function warn(message: string) {
   console.warn(`[vite-plugin-vue-devtools] ${message}`)
@@ -93,5 +94,38 @@ export function useInspector() {
     inspectorLoaded,
     openInEditor,
     waitForInspectorInit,
+  }
+}
+
+// ---- useHighlightComponent ----
+
+export function useHighlightComponent() {
+  const name = ref('')
+  const overlayVisible = ref(false)
+  const initialBounds = {
+    width: 0,
+    height: 0,
+    left: 0,
+    top: 0,
+  }
+  const bounds = ref<ComponentInspectorBounds>(initialBounds)
+
+  function highlight(_name: string, _bounds: ComponentInspectorBounds) {
+    name.value = _name
+    bounds.value = _bounds
+    overlayVisible.value = true
+  }
+
+  function unHighlight() {
+    bounds.value = initialBounds
+    overlayVisible.value = false
+  }
+
+  return {
+    name,
+    overlayVisible,
+    bounds,
+    highlight,
+    unHighlight,
   }
 }
