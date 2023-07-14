@@ -1,21 +1,13 @@
-import { fileURLToPath } from 'node:url'
-import path from 'node:path'
-import { normalizePath } from 'vite'
-import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
-import sirv from 'sirv'
+import type { PluginOption, ResolvedConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
+import createDevtools from 'vite-plugin-devtools/dist/server'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { createRPCServer } from '../vite-dev-rpc'
-import { DIR_CLIENT } from '../dir'
-import type { ExecNpmScriptOptions, RPCFunctions } from '../types'
+import type { ServerFunctions } from 'vite-plugin-devtools/dist/server'
+import { DIR_CLIENT, ICON, IFRAME_HOOK } from '../dir'
+import type { ExecNpmScriptOptions } from '../types'
 import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './rpc'
 
 const NAME = 'vite-plugin-vue-devtools'
-
-function getVueDevtoolsPath() {
-  const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
-  return pluginPath.replace(/\/dist$/, '/\/src/node')
-}
 
 export interface VitePluginVueDevToolsOptions {
   /**
@@ -28,114 +20,65 @@ export interface VitePluginVueDevToolsOptions {
 }
 
 export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions = { appendTo: '' }): PluginOption {
-  const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect({
     silent: true,
   })
   let config: ResolvedConfig
 
-  function configureServer(server: ViteDevServer) {
-    const base = (server.config.base) || '/'
-    server.middlewares.use(`${base}__devtools__`, sirv(DIR_CLIENT, {
-      single: true,
-      dev: true,
-    }))
+  const { plugin, addServerFunction, serverRPC } = createDevtools(NAME, {
+    clientDir: DIR_CLIENT,
+    icon: ICON,
+    onIframe: IFRAME_HOOK,
+    inspector: true,
+    appendTo: options.appendTo,
+  })
 
-    const rpc = createRPCServer<RPCFunctions>('vite-plugin-vue-devtools', server.ws, {
-      componentGraph: () => getComponentsRelationships(inspect.api.rpc),
-      inspectClientUrl: () => `${config.base || '/'}__inspect/`,
-      staticAssets: () => getStaticAssets(config),
-      getImageMeta,
-      getTextAssetContent,
-      getPackages: () => getPackages(config.root),
-      getVueSFCList: () => getVueSFCList(config.root),
-      getComponentInfo: (filename: string) => getComponentInfo(config.root, filename),
-      installPackage: (packages: string[], options: ExecNpmScriptOptions = {}) => execNpmScript(packages, {
-        ...options,
-        type: 'install',
-        cwd: config.root,
-        callback: (type: string, data: string) => {
-          if (type === 'data')
-            rpc.onTerminalData({ data })
+  const rpcFunctions: ServerFunctions = {
+    componentGraph: () => getComponentsRelationships(inspect.api.rpc),
+    inspectClientUrl: () => `${config.base || '/'}__inspect/`,
+    staticAssets: () => getStaticAssets(config),
+    getImageMeta,
+    getTextAssetContent,
+    getPackages: () => getPackages(config.root),
+    getVueSFCList: () => getVueSFCList(config.root),
+    getComponentInfo: (filename: string) => getComponentInfo(config.root, filename),
+    installPackage: (packages: string[], options: ExecNpmScriptOptions = {}) => execNpmScript(packages, {
+      ...options,
+      type: 'install',
+      cwd: config.root,
+      callback: (type: string, data: string) => {
+        if (type === 'data')
+          serverRPC.onTerminalData({ data })
 
-          else if (type === 'exit')
-            rpc.onTerminalExit({ data })
-        },
-      }),
-      uninstallPackage: (packages: string[], options: ExecNpmScriptOptions = {}) => execNpmScript(packages, {
-        ...options,
-        type: 'uninstall',
-        cwd: config.root,
-        callback: (type: string, data: string) => {
-          if (type === 'data')
-            rpc.onTerminalData({ data })
+        else if (type === 'exit')
+          serverRPC.onTerminalExit({ data })
+      },
+    }),
+    uninstallPackage: (packages: string[], options: ExecNpmScriptOptions = {}) => execNpmScript(packages, {
+      ...options,
+      type: 'uninstall',
+      cwd: config.root,
+      callback: (type: string, data: string) => {
+        if (type === 'data')
+          serverRPC.onTerminalData({ data })
 
-          else if (type === 'exit')
-            rpc.onTerminalExit({ data })
-        },
-      }),
-      root: () => config.root,
-    })
+        else if (type === 'exit')
+          serverRPC.onTerminalExit({ data })
+      },
+    }),
+    root: () => config.root,
   }
-  const plugin = <PluginOption>{
-    name: NAME,
-    enforce: 'pre',
-    apply: 'serve',
-    configResolved(resolvedConfig) {
-      config = resolvedConfig
-    },
+
+  for (const name in rpcFunctions)
+    addServerFunction(name as keyof typeof rpcFunctions, rpcFunctions[name])
+
+  return [inspect, {
+    ...plugin,
     configureServer(server) {
-      configureServer(server)
+      config = server.config
+      return plugin?.configureServer(server as any)
     },
-    async resolveId(importee: string) {
-      if (importee.startsWith('virtual:vue-devtools-options')) {
-        return importee
-      }
-      else if (importee.startsWith('virtual:vue-devtools-path:')) {
-        const resolved = importee.replace('virtual:vue-devtools-path:', `${vueDevtoolsPath}/`)
-        return resolved
-      }
-    },
-    async load(id) {
-      if (id === 'virtual:vue-devtools-options')
-        return `export default ${JSON.stringify({ base: config.base })}`
-    },
-    transform(code, id) {
-      const { appendTo } = options
-
-      if (!appendTo)
-        return
-
-      const [filename] = id.split('?', 2)
-      if ((typeof appendTo === 'string' && filename.endsWith(appendTo))
-        || (appendTo instanceof RegExp && appendTo.test(filename)))
-        return { code: `${code}\nimport 'virtual:vue-devtools-path:app.js'` }
-    },
-    transformIndexHtml(html) {
-      if (options.appendTo)
-        return
-
-      return {
-        html,
-        tags: [
-          {
-            tag: 'script',
-            injectTo: 'head',
-            attrs: {
-              type: 'module',
-              src: '/@id/virtual:vue-devtools-path:app.js',
-            },
-          },
-        ],
-      }
-    },
-    async buildEnd() {
-    },
-  }
-
-  return [
-    plugin,
-    inspect,
+  },
     VueInspector({
       toggleComboKey: '',
       toggleButtonVisibility: 'never',

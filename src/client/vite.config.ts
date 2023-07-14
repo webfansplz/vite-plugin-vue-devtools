@@ -1,5 +1,6 @@
 import { join, resolve } from 'node:path'
 import { defineConfig } from 'vite'
+import { getBase } from 'vite-plugin-devtools'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
@@ -8,7 +9,7 @@ import Unocss from 'unocss/vite'
 import VueJSX from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  base: './',
+  base: getBase('vite-plugin-vue-devtools'),
 
   resolve: {
     alias: {
@@ -62,6 +63,6 @@ export default defineConfig({
     target: 'esnext',
     outDir: resolve(__dirname, '../../dist/client'),
     minify: false, // 'esbuild',
-    emptyOutDir: true,
+    emptyOutDir: false,
   },
 })

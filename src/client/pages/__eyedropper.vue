@@ -17,7 +17,7 @@ function hexToRgb(hex: string) {
   return hex ? `rgb(${getDecimal(hex, 1, 3)},${getDecimal(hex, 3, 5)},${getDecimal(hex, 5, 7)})` : ''
 }
 
-useEventListener('keydown', (e) => {
+useEventListener(window, 'keydown', (e) => {
   if (e.key === 'Escape')
     close()
 })
