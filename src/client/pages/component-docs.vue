@@ -70,7 +70,7 @@ watch(keywords, () => {
           </div>
         </div>
       </Pane>
-      <Pane>
+      <Pane min-size="8">
         <div h-full select-none overflow-scroll p-2 class="no-scrollbar">
           <JsonEditorVue
             v-show="list.length" v-model="content" h-full class="json-editor-vue" :class="[

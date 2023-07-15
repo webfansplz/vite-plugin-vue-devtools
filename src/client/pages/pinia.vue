@@ -45,7 +45,7 @@ const data = computed(() => {
           </div>
         </div>
       </Pane>
-      <Pane :size="60">
+      <Pane min-size="8" :size="60">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in data" :id="index" :key="index" :data="item" />
         </div>
