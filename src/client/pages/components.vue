@@ -80,7 +80,7 @@ function openInEditor() {
           <ComponentTreeNode v-for="(item) in componentTree" :key="item.id" :data="item" />
         </div>
       </Pane>
-      <Pane>
+      <Pane min-size="8">
         <div v-if="normalizedComponentState.length" border="b base" flex justify-between px-4 py-2>
           <span v-if="selectedComponentName" text-sm text-primary op90>&lt;{{ selectedComponentName }}&gt;</span>
           <p flex>

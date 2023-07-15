@@ -33,12 +33,12 @@ import {
           </div>
         </div>
       </Pane>
-      <Pane border="r base" size="45">
+      <Pane border="r base" min-size="8" size="45">
         <div h-screen select-none overflow-scroll class="no-scrollbar">
           <TimelineEvent :data="activeTimelineEvents" :selected="activeTimelineEventIndex" @update-selected="toggleTimelineEventIndex" />
         </div>
       </Pane>
-      <Pane v-if="timelineEventDetails.value" size="35">
+      <Pane v-if="timelineEventDetails.value" min-size="8" size="35">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields :data="timelineEventDetails" />
         </div>
