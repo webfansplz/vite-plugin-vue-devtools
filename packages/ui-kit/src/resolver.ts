@@ -10,7 +10,7 @@ export interface ComponentResolverOption {
   prefix?: string
 }
 
-export default function ComponentsResolver(options: ComponentResolverOption = {}): ComponentResolver {
+export function ComponentsResolver(options: ComponentResolverOption = {}): ComponentResolver {
   return (name: string) => {
     const {
       prefix = options.prefix ?? 'VD',

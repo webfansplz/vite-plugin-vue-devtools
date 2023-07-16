@@ -10,10 +10,12 @@
       "import": "./dist/index.mjs"
     },
     "./resolver": {
+      "types": "./dist/resolver.d.ts",
       "require": "./dist/resolver.cjs",
       "import": "./dist/resolver.mjs"
     },
     "./unocss": {
+      "types": "./dist/unocss.d.ts",
       "require": "./dist/unocss.cjs",
       "import": "./dist/unocss.mjs"
     },
@@ -24,7 +26,8 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "*.d.ts"
   ],
   "scripts": {
     "build": "unbuild",

@@ -1,7 +1,7 @@
 import type { ComponentInternalInstance } from 'vue'
-
-import { InstanceMap, getInstanceDetails, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '../logic/components'
-import { useDevToolsClient } from '../logic/client'
+import { InstanceMap, getInstanceDetails, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '~/logic/components'
+import { useDevToolsClient } from '~/logic/client'
+import type { ComponentTreeNode } from '~/types'
 
 export const selected = ref('vue-devtools:root')
 export const selectedComponentName = ref('')

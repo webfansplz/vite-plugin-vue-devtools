@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { AssetInfo } from '../../types'
-
 const props = defineProps<{
   asset: AssetInfo
 }>()

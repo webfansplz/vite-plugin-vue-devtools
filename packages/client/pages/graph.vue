@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { searchResults as modules } from '../logic/graph'
-import { useDevToolsClient } from '../logic/client'
-import { rootPath } from '../logic/global'
-import { useGraphSettings } from '../composables/graph'
-import type { GraphSettingsType } from '../composables/graph'
+import { searchResults as modules } from '~/logic/graph'
+import { useDevToolsClient } from '~/logic/client'
+import { rootPath } from '~/logic/global'
+import type { GraphSettingsType } from '~/composables/graph'
 
 const isDark = useDark()
 const container = ref<HTMLDivElement | null>()
@@ -187,7 +186,7 @@ const { showGraphSetting } = useGraphSettings()
 </script>
 
 <template>
-  <div relative h-screen w-full flex flex-col n-panel-grids>
+  <div n-panel-grids relative h-screen w-full flex flex-col>
     <SearchBox>
       <template #right>
         <button aria-label="Open graph settings" @click="showGraphSetting = true">

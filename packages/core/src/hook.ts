@@ -9,19 +9,21 @@ export enum DevtoolsHooks {
   PERFORMANCE_END = 'perf:end',
 }
 
-export const devtoosHook = window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
-  events: new Map<DevtoolsHooks, () => void>(),
-  on(event: DevtoolsHooks, fn: () => void) {
-    if (!this.events.has(event))
-      this.events.set(event, [])
+export const devtoosHook = typeof window !== 'undefined'
+  ? window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
+    events: new Map<DevtoolsHooks, () => void>(),
+    on(event: DevtoolsHooks, fn: () => void) {
+      if (!this.events.has(event))
+        this.events.set(event, [])
 
-    this.events.get(event).push(fn)
-  },
-  emit(event: DevtoolsHooks, ...payload) {
-    if (this.events.has(event))
-      this.events.get(event).forEach(fn => fn(...payload))
-  },
-}
+      this.events.get(event).push(fn)
+    },
+    emit(event: DevtoolsHooks, ...payload) {
+      if (this.events.has(event))
+        this.events.get(event).forEach(fn => fn(...payload))
+    },
+  }
+  : {}
 
 export function collectDevToolsHookBuffer() {
   const hookBuffer: [string, { args: any[] }][] = []

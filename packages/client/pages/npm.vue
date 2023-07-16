@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import algoliasearch from 'algoliasearch'
 import type { SearchResponse } from '@algolia/client-search'
-import type { PackageInfo, PackageMeta } from '../../types'
-import { rpc } from '../logic/rpc'
-import { hookApi } from '../logic/hook'
+import type { PackageInfo } from '~/types'
+import { rpc } from '~/logic/rpc'
+import { hookApi } from '~/logic/hook'
 
 const algolia = {
   appId: 'OFCNCOG2CU',
@@ -120,7 +120,7 @@ useInfiniteScroll(
 </script>
 
 <template>
-  <div ref="el" relative h-full of-auto n-panel-grids>
+  <div ref="el" n-panel-grids relative h-full of-auto>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>

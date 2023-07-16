@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { AllTabGroup } from '../../types'
+import type { AllTabGroup } from '~/types'
 import {
   DEFAULT_TAB_GROUP, checkGroupExist,
   createGroup, removeTabGroup, resetAllTabs,
   shouldHideTabGroup, ungroupAllTabs,
-} from '../store'
+} from '~/store'
 
 const groupTabs = useGroupedTabs()
 

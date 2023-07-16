@@ -3,7 +3,7 @@ import { Pane, Splitpanes } from 'splitpanes'
 import Fuse from 'fuse.js'
 import JsonEditorVue from 'json-editor-vue'
 import 'vanilla-jsoneditor/themes/jse-theme-dark.css'
-import { rpc } from '../logic/rpc'
+import { rpc } from '~/logic/rpc'
 
 const colorMode = useColorMode()
 const keywords = ref('')
@@ -46,7 +46,7 @@ watch(keywords, () => {
 </script>
 
 <template>
-  <div relative h-full of-hidden n-panel-grids>
+  <div n-panel-grids relative h-full of-hidden>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Filter Files" op50 />
     </div>

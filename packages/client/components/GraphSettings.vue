@@ -1,7 +1,6 @@
 <script setup lang="tsx">
-import { useGraphSettings } from '../composables/graph'
-import VSelect from '../ui-kit/VSelect.vue'
-import VSwitch from '../ui-kit/VSwitch.vue'
+import VSelect from '~/ui-kit/VSelect.vue'
+import VSwitch from '~/ui-kit/VSwitch.vue'
 
 const { showGraphSetting, graphSettings } = useGraphSettings()
 

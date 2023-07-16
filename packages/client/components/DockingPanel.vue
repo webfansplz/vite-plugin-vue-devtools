@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { isInPopup } from '../logic/state'
+import { isInPopup } from '~/logic/state'
 </script>
 
 <template>
@@ -14,7 +14,7 @@ import { isInPopup } from '../logic/state'
       </VDarkToggle>
       <RouterLink
         replace
-        class="n-button-base active:n-button-active focus-visible:n-focus-base n-transition n-primary n-sm hover:n-button-hover n-disabled:n-disabled"
+        class="n-disabled:n-disabled n-button-base n-transition n-primary n-sm active:n-button-active focus-visible:n-focus-base hover:n-button-hover"
         to="/settings"
       >
         <div carbon-settings translate-y--1px />

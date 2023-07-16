@@ -1,6 +1,6 @@
-import VueIcon from '../assets/icons/vue.svg'
-import PiniaIcon from '../assets/icons/pinia.svg'
-import VueUseIcon from '../assets/icons/vueuse.svg'
+import VueIcon from '~/assets/icons/vue.svg'
+import PiniaIcon from '~/assets/icons/pinia.svg'
+import VueUseIcon from '~/assets/icons/vueuse.svg'
 
 export const data = [
   {

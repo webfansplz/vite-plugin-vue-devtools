@@ -53,7 +53,7 @@ function navigate() {
                 <VTextInput
                   v-if="part[0] === ':'"
                   v-model="partsInput[idx]"
-                  w-20 n-sm
+                  n-sm w-20
                   :placeholder="part.slice(1)"
                 />
                 <span v-else>{{ part }}</span>

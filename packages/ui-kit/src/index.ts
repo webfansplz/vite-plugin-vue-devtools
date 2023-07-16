@@ -1,2 +1,2 @@
-export * as Resolver from './resolver'
+export * from './resolver'
 export * from './unocss'

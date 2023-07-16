@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ComponentTreeNode } from '~/types'
+
 const props = withDefaults(defineProps<{
   data: ComponentTreeNode
   depth?: number

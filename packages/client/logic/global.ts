@@ -1,7 +1,7 @@
-import type { VueDevtoolsHostClient } from '../../types'
 import { useDevToolsClient } from './client'
 import { initApp } from './app'
 import { rpc } from './rpc'
+import type { VueDevtoolsHostClient } from '~/types'
 
 export interface VueDevtoolsGlobal {
   loaded: boolean

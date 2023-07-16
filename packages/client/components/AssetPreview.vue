@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { AssetInfo } from '../../types'
-
 defineProps<{
   asset: AssetInfo
   textContent?: string
@@ -8,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-  <div flex items-center justify-center of-hidden bg-active object-cover p1>
+  <div bg-active flex items-center justify-center of-hidden object-cover p1>
     <template v-if="asset.type === 'image'">
       <img :src="asset.publicPath">
     </template>

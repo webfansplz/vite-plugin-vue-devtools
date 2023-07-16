@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { rpc } from '../logic/rpc'
-import type { DocumentInfo } from '../../types'
-import { data } from '../logic/documentations'
+import { rpc } from '~/logic/rpc'
+import type { DocumentInfo } from '~/types'
+import { data } from '~/logic/documentations'
 
 const items = ref(data)
 const iframeViewUrl = ref('')
@@ -27,8 +27,8 @@ function back() {
     <IframeView :src="iframeViewUrl" />
     <teleport to="body">
       <span
-        fixed left-2 top-2 z-1000 h-8 w-8 flex cursor-pointer select-none items-center justify-center rounded-5
-        bg-base hover="text-primary" @click.prevent.stop="back"
+
+        bg-base fixed left-2 top-2 z-1000 h-8 w-8 flex cursor-pointer select-none items-center justify-center rounded-5 hover="text-primary" @click.prevent.stop="back"
       >
         <i tabler:arrow-back-up />
       </span>

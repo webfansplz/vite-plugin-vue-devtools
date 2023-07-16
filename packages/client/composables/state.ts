@@ -1,5 +1,5 @@
 import { toRefs } from '@vueuse/core'
-import { FRAME_STATE_STORAGE_KEY } from '../constants'
+import { FRAME_STATE_STORAGE_KEY } from '~/constants'
 
 export interface DevToolsFrameState {
   width: number

@@ -1,7 +1,6 @@
 import type { ComputedRef, Ref } from 'vue'
-import type { AllTabGroup, BuiltinTab, Tab } from '../../types'
-import { useDevToolsSettings } from '../composables/settings'
-import { TABS_GROUP_STORAGE_KEY, TABS_STORAGE_KEY } from '../constants'
+import { TABS_GROUP_STORAGE_KEY, TABS_STORAGE_KEY } from '~/constants'
+import type { AllTabGroup, BuiltinTab, Tab } from '~/types'
 
 export const builtinTabs: BuiltinTab[] = [
   {

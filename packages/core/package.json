@@ -13,11 +13,6 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
-    },
-    "./types": {
-      "types": "./types.d.ts",
-      "require": "./dist/types.cjs",
-      "import": "./dist/types.mjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -39,8 +34,5 @@
   "dependencies": {
     "birpc": "^0.2.12",
     "vite-hot-client": "^0.2.1"
-  },
-  "devDependencies": {
-    "unbuild": "^1.2.1"
   }
 }

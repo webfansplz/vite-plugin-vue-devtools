@@ -12,7 +12,6 @@
     "resolveJsonModule": true,
     "noImplicitAny": false,
     "types": [
-      "vite-plugin-pages/client",
       "vite/client"
     ]
   },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Tab } from '../../types'
-import { useDevToolsClient } from '../logic/client'
-import { getMappedBuiltinTabs } from '../store'
+import type { Tab } from '~/types'
+import { useDevToolsClient } from '~/logic/client'
+import { getMappedBuiltinTabs } from '~/store'
 
 defineProps<{
   tab: Tab

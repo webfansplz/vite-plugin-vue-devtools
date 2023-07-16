@@ -1,7 +1,6 @@
 import { useStorage } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { Minimatch } from 'minimatch'
-import type { ModuleInfo } from '../../types'
 import { rpc } from './rpc'
 
 export const list = ref<ModuleInfo[]>(await rpc.componentGraph())

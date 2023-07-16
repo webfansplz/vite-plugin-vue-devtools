@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inspectClientUrl } from '../logic/global'
+import { inspectClientUrl } from '~/logic/global'
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
-import type { AllTabGroup, Tab } from '../../types'
-import { getSortedTabs, updateTabsPosition } from '../store'
+import { getSortedTabs, updateTabsPosition } from '~/store'
+import type { AllTabGroup, Tab } from '~/types'
 
 const props = defineProps<{
   groupName: AllTabGroup

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { currentRoute, router, routes } from '../logic/app'
+import { currentRoute, router, routes } from '~/logic/app'
 
 const routeInput = ref('')
 
@@ -28,7 +28,7 @@ function navigateToRoute(path: string) {
 </script>
 
 <template>
-  <div h-full of-auto n-panel-grids>
+  <div n-panel-grids h-full of-auto>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <div>
         <template v-if="currentRoute?.path !== routeInput">

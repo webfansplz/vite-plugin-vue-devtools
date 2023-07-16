@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getSortedTabs } from '../store'
+import { getSortedTabs } from '~/store'
 
 const {
   scale,
@@ -68,7 +68,7 @@ const showTabGroup = ref(false)
               :class="hiddenTabGroups.includes(name) ? 'op50 grayscale' : ''" pt-2
             >
               <VSwitch
-                flex="~ row-reverse" px2 py1 n-lime :model-value="!hiddenTabGroups.includes(name)"
+                flex="~ row-reverse" n-lime px2 py1 :model-value="!hiddenTabGroups.includes(name)"
                 @update:model-value="v => toggleTabCategory(name, v)"
               >
                 <div flex="~ gap-2" flex-auto items-center justify-start>
@@ -78,7 +78,7 @@ const showTabGroup = ref(false)
               <div flex="~ col gap-1" border="~ base rounded" py3 pl4 pr2>
                 <template v-for="tab of getSortedTabs(tabs)" :key="tab.name">
                   <VSwitch
-                    flex="~ row-reverse" py1 n-primary :model-value="!hiddenTabs.includes(tab.title)"
+                    flex="~ row-reverse" n-primary py1 :model-value="!hiddenTabs.includes(tab.title)"
                     @update:model-value="v => toggleTab(tab.title, v)"
                   >
                     <div
@@ -124,7 +124,7 @@ const showTabGroup = ref(false)
             Close DevTools when clicking outside
           </h3>
           <VSwitch
-            flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick"
+            flex="~ row-reverse" n-primary py1 :model-value="closeOnOutsideClick"
             @update:model-value="toggleClickOutside"
           />
         </div>

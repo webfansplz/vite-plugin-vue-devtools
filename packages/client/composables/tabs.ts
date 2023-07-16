@@ -1,4 +1,4 @@
-import { useGroupedTabStore, useTabStore } from '../store'
+import { useGroupedTabStore, useTabStore } from '~/store'
 
 export function useTabs() {
   return useTabStore()

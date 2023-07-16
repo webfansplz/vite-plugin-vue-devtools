@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDevToolsClient } from '../logic/client'
+import { useDevToolsClient } from '~/logic/client'
 
 const client = useDevToolsClient()
 // @ts-expect-error missing type

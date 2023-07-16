@@ -8,13 +8,11 @@ import {
   timelineLayer,
   toggleTimelineEventIndex,
   toggleTimelineLayer,
-} from '../logic/timeline'
-
-// updatePerformanceTimeline()
+} from '~/logic/timeline'
 </script>
 
 <template>
-  <div h-screen n-panel-grids>
+  <div n-panel-grids h-screen>
     <Splitpanes>
       <Pane border="r base" size="20">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">

@@ -1,10 +1,13 @@
+import { createRPCClient } from '@vite-plugin-vue-devtools/core'
 import { createHotContext } from 'vite-hot-client'
-import { createRPCClient } from '../../vite-dev-rpc'
-import type { RPCFunctions } from '../../types'
+
+import type { RPCFunctions } from '../../../src/types'
 import { hookApi } from './hook'
 
+const viteHotCtx = (await createHotContext('/___', `${location.pathname.split('/__devtools__')[0] || ''}/`.replace(/\/\//g, '/')))!
+
 export const rpc
-  = createRPCClient<RPCFunctions>('vite-plugin-vue-devtools', (await createHotContext('/___', `${location.pathname.split('/__devtools__')[0] || ''}/`.replace(/\/\//g, '/')))!, {
+  = createRPCClient<RPCFunctions>(viteHotCtx, {
     onTerminalData({ data }: { id?: string; data: string }) {
       hookApi.hook.emit('__vue-devtools:terminal:data__', data)
     },

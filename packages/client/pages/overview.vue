@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { vueVersion } from '../logic/app'
-import { version } from '../../../package.json'
-import { componentCount, pageCount } from '../logic/overview'
-import { isMacOS } from '../utils'
+import { version } from '../package.json'
+import { vueVersion } from '~/logic/app'
+import { componentCount, pageCount } from '~/logic/overview'
+import { isMacOS } from '~/utils'
 </script>
 
 <template>

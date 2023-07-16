@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DocumentInfo } from '../../types'
+import type { DocumentInfo } from '~/types'
 
 defineProps<{
   data: DocumentInfo

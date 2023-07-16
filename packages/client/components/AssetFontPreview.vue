@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { hash } from 'ohash'
-import type { AssetInfo } from '../../types'
 
 const props = defineProps<{
   asset: AssetInfo

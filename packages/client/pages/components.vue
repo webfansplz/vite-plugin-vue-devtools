@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
-
-import { ComponentWalker, getInstanceState } from '../logic/components'
-import { useDevToolsClient } from '../logic/client'
-import { instance, onVueInstanceUpdate } from '../logic/app'
-import { rootPath } from '../logic/global'
-
 import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
+import type { ComponentTreeNode } from '~/types'
+import { ComponentWalker, getInstanceState } from '~/logic/components'
+import { useDevToolsClient } from '~/logic/client'
+import { instance, onVueInstanceUpdate } from '~/logic/app'
+import { rootPath } from '~/logic/global'
 
 const componentTree = ref<ComponentTreeNode[]>([])
 
@@ -73,7 +72,7 @@ function openInEditor() {
 </script>
 
 <template>
-  <div h-screen n-panel-grids>
+  <div n-panel-grids h-screen>
     <Splitpanes>
       <Pane border="r base">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">

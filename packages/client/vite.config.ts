@@ -6,14 +6,15 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import VueJSX from '@vitejs/plugin-vue-jsx'
-import DevToolsUiKitResolver from '../ui-kit/src/resolver'
+import { ComponentsResolver as DevToolsUiKitResolver } from '@vite-plugin-vue-devtools/ui-kit'
 
 export default defineConfig({
   base: './',
 
   resolve: {
     alias: {
-      '~/': __dirname,
+      '~/': `${resolve(__dirname)}/`,
+      '@vite-plugin-vue-devtools/core': resolve(__dirname, '../core/src/index'),
     },
   },
 
@@ -27,7 +28,6 @@ export default defineConfig({
         },
       },
     },
-
     Vue(),
     VueJSX(),
     Pages({
@@ -41,7 +41,6 @@ export default defineConfig({
     Unocss(),
     AutoImport({
       dirs: [
-        // './logic',
         './utils',
         './composables',
       ],
@@ -62,7 +61,7 @@ export default defineConfig({
 
   build: {
     target: 'esnext',
-    outDir: resolve(__dirname, '../../dist/client'),
+    outDir: resolve(__dirname, '../node/dist/client'),
     minify: false, // 'esbuild',
     emptyOutDir: true,
   },

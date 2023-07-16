@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { includeNodeModules, includeVirtual, searchText, userCustomGlobPattern } from '../logic/graph'
+import { includeNodeModules, includeVirtual, searchText, userCustomGlobPattern } from '~/logic/graph'
 
 const { graphSettings } = useGraphSettings()
 </script>
@@ -11,7 +11,7 @@ const { graphSettings } = useGraphSettings()
       <input
         v-model="searchText"
         type="text"
-        class="border border-base rounded bg-transparent px-3 py-1 !outline-none"
+        class="border-base border rounded bg-transparent px-3 py-1 !outline-none"
         placeholder="Search..."
       >
       <div class="h-min flex flex-col select-none text-xs">
@@ -29,7 +29,7 @@ const { graphSettings } = useGraphSettings()
         <input
           v-model="userCustomGlobPattern"
           type="text"
-          class="w-300px border border-base rounded bg-transparent px-3 py-1 !outline-none"
+          class="border-base w-300px border rounded bg-transparent px-3 py-1 !outline-none"
           placeholder="Your custom glob pattern"
         >
       </template>

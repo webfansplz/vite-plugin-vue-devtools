@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { onKeyDown } from '@vueuse/core'
 import Fuse from 'fuse.js'
-import { rpc } from '../logic/rpc'
-import type { AssetInfo } from '../../types'
+import { rpc } from '~/logic/rpc'
 
 const assets = ref<AssetInfo[]>([])
 
@@ -54,7 +53,7 @@ const navbar = ref<HTMLElement>()
 </script>
 
 <template>
-  <div v-if="assets?.length" h-full of-auto n-panel-grids>
+  <div v-if="assets?.length" n-panel-grids h-full of-auto>
     <Navbar ref="navbar" v-model:search="search" pb2>
       <template #actions>
         <div flex-none flex="~ gap4">

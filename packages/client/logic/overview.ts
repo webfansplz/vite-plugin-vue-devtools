@@ -1,4 +1,3 @@
-import type { ModuleInfo } from '../../types'
 import { rpc } from './rpc'
 import { routes } from './app'
 

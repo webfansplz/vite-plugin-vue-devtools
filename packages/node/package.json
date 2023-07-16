@@ -1,0 +1,75 @@
+{
+  "name": "vite-plugin-vue-devtools",
+  "type": "module",
+  "version": "1.0.0-beta.0",
+  "author": "webfansplz",
+  "license": "MIT",
+  "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webfansplz/vite-plugin-vue-devtools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webfansplz/vite-plugin-vue-devtools/issues"
+  },
+  "keywords": [
+    "vue-devtools",
+    "vite-plugin",
+    "vite-plugin-vue-devtools",
+    "dx"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/vite.d.ts",
+      "require": "./dist/vite.cjs",
+      "import": "./dist/vite.mjs"
+    },
+    "./*": "./*",
+    "./client": {
+      "types": "./client.d.ts"
+    }
+  },
+  "main": "dist/vite.cjs",
+  "module": "dist/vite.mjs",
+  "types": "dist/vite.d.ts",
+  "files": [
+    "dist",
+    "./src/views/*",
+    "./src/app.js",
+    "*.d.ts"
+  ],
+  "engines": {
+    "node": ">=v14"
+  },
+  "scripts": {
+    "build": "rimraf dist && run-s build:*",
+    "build:client": "vite build src/client",
+    "build:js": "unbuild",
+    "dev": "nr stub && pnpm dev:client",
+    "dev:client": "vite build src/client --watch",
+    "play": "nr -C playground dev",
+    "stub": "unbuild --stub",
+    "lint": "eslint .",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "prepublishOnly": "npm run build",
+    "release": "bumpp && nr changelog && npm publish",
+    "dep:up": "taze -I major"
+  },
+  "peerDependencies": {
+    "vite": "^3.1.0 || ^4.0.0-0"
+  },
+  "dependencies": {
+    "@vite-plugin-vue-devtools/core": "workspace:*",
+    "birpc": "^0.2.12",
+    "execa": "^7.1.1",
+    "sirv": "^2.0.3",
+    "vite-plugin-inspect": "^0.7.32",
+    "vite-plugin-vue-inspector": "^3.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "fast-glob": "^3.3.0",
+    "image-meta": "^0.1.1",
+    "pathe": "^1.1.1"
+  }
+}

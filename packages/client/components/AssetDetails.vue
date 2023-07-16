@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { AssetInfo } from '../../types'
-import { useDevToolsClient } from '../logic/client'
-import { rpc } from '../logic/rpc'
+import { useDevToolsClient } from '~/logic/client'
+import { rpc } from '~/logic/rpc'
 
 const props = defineProps<{
   asset: AssetInfo

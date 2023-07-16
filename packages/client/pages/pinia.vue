@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
-import { piniaGetters, piniaState, piniaStoresCategory } from '../logic/pinia'
+import { piniaGetters, piniaState, piniaStoresCategory } from '~/logic/pinia'
 
 const activeIndex = ref(0)
 const pickStoreId = computed(() => {
@@ -29,7 +29,7 @@ const data = computed(() => {
 </script>
 
 <template>
-  <div h-screen n-panel-grids>
+  <div n-panel-grids h-screen>
     <Splitpanes>
       <Pane border="r base" :size="40">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
