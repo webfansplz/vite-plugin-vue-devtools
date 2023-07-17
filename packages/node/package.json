@@ -40,7 +40,7 @@
     "*.d.ts"
   ],
   "engines": {
-    "node": ">=v14"
+    "node": ">=v14.21.3"
   },
   "scripts": {
     "build": "unbuild",
@@ -55,12 +55,12 @@
     "birpc": "^0.2.12",
     "execa": "^7.1.1",
     "sirv": "^2.0.3",
-    "vite-plugin-inspect": "^0.7.32",
+    "vite-plugin-inspect": "^0.7.33",
     "vite-plugin-vue-inspector": "^3.4.2"
 
   },
   "devDependencies": {
-    "@types/node": "^20.4.1",
+    "@types/node": "^20.4.2",
     "fast-glob": "^3.3.0",
     "image-meta": "^0.1.1",
     "pathe": "^1.1.1"
