@@ -22,7 +22,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
                 <template
                   v-for="(tag, childIndex) in item.tags"
                 >
-                  <VBadge
+                  <VDBadge
                     v-if="tag.label"
                     :key="childIndex"
                     color="white/90 dark:black/90"
@@ -31,7 +31,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
                     }"
                   >
                     {{ tag.label }}
-                  </VBadge>
+                  </VDBadge>
                 </template>
               </span>
             </h3>
@@ -45,8 +45,8 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
       </Pane>
     </Splitpanes>
   </div>
-  <VPanelGrids v-else px5>
-    <VCard flex="~ col gap2" min-w-30 items-center p3>
+  <VDPanelGrids v-else px5>
+    <VDCard flex="~ col gap2" min-w-30 items-center p3>
       <TabIcon mb2 text-5xl icon="i-logos-vue" title="Vue Router" />
       <h1 text-xl>
         Install Vue Router
@@ -54,6 +54,6 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
       <p text-sm op50>
         It seems you don't have vue-router installed.
       </p>
-    </VCard>
-  </VPanelGrids>
+    </VDCard>
+  </VDPanelGrids>
 </template>

@@ -45,7 +45,7 @@ export default {
       :style="{ top: `${top}px` }"
       v-bind="$attrs"
     >
-      <VIconButton absolute right-2 top-2 z-20 text-xl icon="carbon-close" @click="$emit('close')" />
+      <VDIconButton absolute right-2 top-2 z-20 text-xl icon="carbon-close" @click="$emit('close')" />
       <div relative h-full w-full of-auto>
         <slot />
       </div>

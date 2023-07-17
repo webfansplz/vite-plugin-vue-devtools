@@ -296,6 +296,9 @@ importers:
       '@unocss/reset':
         specifier: ^0.53.3
         version: 0.53.5
+      '@vueuse/components':
+        specifier: ^10.2.1
+        version: 10.2.1(vue@3.3.4)
       '@vueuse/core':
         specifier: ^10.2.0
         version: 10.2.1(vue@3.3.4)
@@ -303,7 +306,7 @@ importers:
         specifier: ^10.2.0
         version: 10.2.1(focus-trap@7.5.2)(vue@3.3.4)
       focus-trap:
-        specifier: ^7.4.3
+        specifier: ^7.5.2
         version: 7.5.2
       unocss:
         specifier: ^0.53.3
@@ -2149,6 +2152,17 @@ packages:
 
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
+
+  /@vueuse/components@10.2.1(vue@3.3.4):
+    resolution: {integrity: sha512-S21ZAfNSRouD/UokdGjBIrzvXH8WS7sz4t47ZWP+QRVWfsK9aIc5PmKMgkQrR5e8K3aNLiczqX8TuBa+l+CmDA==}
+    dependencies:
+      '@vueuse/core': 10.2.1(vue@3.3.4)
+      '@vueuse/shared': 10.2.1(vue@3.3.4)
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/core@10.2.1(vue@3.3.4):
     resolution: {integrity: sha512-c441bfMbkAwTNwVRHQ0zdYZNETK//P84rC01aP2Uy/aRFCiie9NE/k9KdIXbno0eDYP5NPUuWv0aA/I4Unr/7w==}

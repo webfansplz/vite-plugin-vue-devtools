@@ -40,9 +40,10 @@
     "@unocss/preset-mini": "^0.53.3",
     "@unocss/preset-uno": "^0.53.3",
     "@unocss/reset": "^0.53.3",
+    "@vueuse/components": "^10.2.1",
     "@vueuse/core": "^10.2.0",
     "@vueuse/integrations": "^10.2.0",
-    "focus-trap": "^7.4.3",
+    "focus-trap": "^7.5.2",
     "unocss": "^0.53.3"
   },
   "devDependencies": {

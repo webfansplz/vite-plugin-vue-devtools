@@ -94,7 +94,7 @@ const client = useDevToolsClient()
           <td>
             <div flex="~ gap-1" w-full items-center>
               <FilepathItem :filepath="asset.filePath" text-left />
-              <VIconButton
+              <VDIconButton
                 flex-none
                 title="Open in Editor"
                 icon="carbon-launch"
@@ -112,13 +112,13 @@ const client = useDevToolsClient()
               <div flex-auto of-hidden truncate ws-pre font-mono>
                 {{ asset.publicPath }}
               </div>
-              <VIconButton
+              <VDIconButton
                 flex-none
                 title="Copy public path"
                 icon="carbon-copy"
                 @click="copy(asset.publicPath)"
               />
-              <VIconButton
+              <VDIconButton
                 flex-none
                 :to="`${origin}${asset.publicPath}`"
                 icon="carbon-launch"
@@ -173,9 +173,9 @@ const client = useDevToolsClient()
       <div x-divider />
     </div>
     <div flex="~ gap2 wrap">
-      <VButton :to="`${origin}${asset.publicPath}`" download target="_blank" icon="carbon-download">
+      <VDButton :to="`${origin}${asset.publicPath}`" download target="_blank" icon="carbon-download">
         Download
-      </VButton>
+      </VDButton>
     </div>
 
     <div flex-auto />

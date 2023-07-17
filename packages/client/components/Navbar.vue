@@ -23,7 +23,7 @@ function update(event: any) {
   <div flex="~ col gap2" border="b base" flex-1 navbar-glass :class="[{ p4: !noPadding }]">
     <div flex="~ gap4">
       <slot name="search">
-        <VTextInput
+        <VDTextInput
           placeholder="Search..."
           icon="carbon-search"
           n="primary" flex-auto

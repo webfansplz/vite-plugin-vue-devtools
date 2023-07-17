@@ -122,9 +122,9 @@ useInfiniteScroll(
 <template>
   <div ref="el" relative h-full of-auto n-panel-grids>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
-      <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
+      <VDTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>
-    <VSectionBlock
+    <VDSectionBlock
       v-model:open="projectDepsVisible" text="Project dependencies"
       :description="`found ${toThousands(projectDeps.length)} packages`" padding="0"
     >
@@ -168,14 +168,14 @@ useInfiniteScroll(
               </td>
               <td w-30 text-center>
                 <VDropdown placement="bottom" :distance="5" text-center>
-                  <VButton icon="carbon:trash-can m0 text-xs" py-1 />
+                  <VDButton icon="carbon:trash-can m0 text-xs" py-1 />
                   <template #popper>
-                    <VButton v-close-popper py-1 @click="uninstall(item, item.type)">
+                    <VDButton v-close-popper py-1 @click="uninstall(item, item.type)">
                       Confirm
-                    </VButton>
-                    <VButton v-close-popper py-1>
+                    </VDButton>
+                    <VDButton v-close-popper py-1>
                       Cancel
-                    </VButton>
+                    </VDButton>
                   </template>
                 </VDropdown>
               </td>
@@ -183,8 +183,8 @@ useInfiniteScroll(
           </tbody>
         </table>
       </div>
-    </VSectionBlock>
-    <VSectionBlock
+    </VDSectionBlock>
+    <VDSectionBlock
       v-model:open="packageListVisible" text="Search Results"
       :description="`found ${toThousands(total)} packages in ${responseTime}ms`" padding="0"
     >
@@ -253,14 +253,14 @@ useInfiniteScroll(
               </td>
               <td w-30 text-center>
                 <VDropdown placement="bottom" :distance="5" text-center>
-                  <VButton icon="carbon-download m0 text-xs" py-1 />
+                  <VDButton icon="carbon-download m0 text-xs" py-1 />
                   <template #popper>
-                    <VButton v-close-popper py-1 @click="download(item, true)">
+                    <VDButton v-close-popper py-1 @click="download(item, true)">
                       Dev
-                    </VButton>
-                    <VButton v-close-popper py-1 @click="download(item, false)">
+                    </VDButton>
+                    <VDButton v-close-popper py-1 @click="download(item, false)">
                       Prod
-                    </VButton>
+                    </VDButton>
                   </template>
                 </VDropdown>
               </td>
@@ -268,7 +268,7 @@ useInfiniteScroll(
           </tbody>
         </table>
       </div>
-    </VSectionBlock>
+    </VDSectionBlock>
     <TerminalView v-if="terminalVisible" absolute left-0 top-0 z-1000 h-full w-full />
   </div>
 </template>

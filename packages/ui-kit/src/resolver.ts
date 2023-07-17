@@ -8,15 +8,21 @@ export interface ComponentResolverOption {
    * @default 'VD'
    */
   prefix?: string
+  /**
+   * Ignore components.
+   * @default []
+   */
+  ignore?: string[]
 }
 
 export function ComponentsResolver(options: ComponentResolverOption = {}): ComponentResolver {
   return (name: string) => {
     const {
       prefix = options.prefix ?? 'VD',
+      ignore = options.ignore ?? [],
     } = options
 
-    if (!name.startsWith(prefix))
+    if (!name.startsWith(prefix) || ignore.some(i => name.includes(i)))
       return
 
     return { from: `@vite-plugin-vue-devtools/ui-kit/components/${name.replace(prefix, '')}.vue` }

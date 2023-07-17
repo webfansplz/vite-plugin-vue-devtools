@@ -6,7 +6,7 @@ import { isMacOS } from '~/utils'
 </script>
 
 <template>
-  <VPanelGrids h-screen w-full flex of-auto>
+  <VDPanelGrids h-screen w-full flex of-auto>
     <div flex="~ col gap2" ma h-full max-w-300 w-full px20>
       <div flex-auto />
 
@@ -15,7 +15,7 @@ import { isMacOS } from '~/utils'
         <div flex="~" mt--10 items-center justify-center>
           <Logo h-18 />
           <button mr--16 mt--6>
-            <VBadge
+            <VDBadge
               bg-green-400:10 text-green-400
               title="preview"
               v-text="'preview'"
@@ -70,33 +70,33 @@ import { isMacOS } from '~/utils'
       <div flex="~ gap-1" cursor-default items-center justify-center pb-8 text-sm op40>
         Press
         <template v-if="isMacOS()">
-          <VButton n="xs" class="px2">
+          <VDButton n="xs" class="px2">
             ⇧ Shift
-          </VButton>
+          </VDButton>
           <span>+</span>
-          <VButton n="xs" class="px2">
+          <VDButton n="xs" class="px2">
             ⌥ Option
-          </VButton>
+          </VDButton>
           <span>+</span>
-          <VButton n="xs" class="px2">
+          <VDButton n="xs" class="px2">
             D
-          </VButton>
+          </VDButton>
         </template>
         <template v-else>
-          <VButton n="xs" class="px2">
+          <VDButton n="xs" class="px2">
             Shift
-          </VButton>
+          </VDButton>
           <span>+</span>
-          <VButton n="xs" class="px2">
+          <VDButton n="xs" class="px2">
             Alt
-          </VButton>
+          </VDButton>
           <span>+</span>
-          <VButton n="xs" class="px2">
+          <VDButton n="xs" class="px2">
             D
-          </VButton>
+          </VDButton>
         </template>
         to toggle DevTools
       </div>
     </div>
-  </VPanelGrids>
+  </VDPanelGrids>
 </template>

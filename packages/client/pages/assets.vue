@@ -61,8 +61,8 @@ const navbar = ref<HTMLElement>()
             title="Toggle view"
             @click="toggleView"
           >
-            <VIcon v-if="view === 'grid'" icon="i-carbon-list" />
-            <VIcon v-else icon="i-carbon-grid" />
+            <VDIcon v-if="view === 'grid'" icon="i-carbon-list" />
+            <VDIcon v-else icon="i-carbon-grid" />
           </button>
         </div>
       </template>
@@ -74,7 +74,7 @@ const navbar = ref<HTMLElement>()
 
     <template v-if="view === 'grid'">
       <template v-if="byFolders.length > 1">
-        <VSectionBlock
+        <VDSectionBlock
           v-for="[folder, items] of byFolders"
           :key="folder"
           :text="folder"
@@ -85,7 +85,7 @@ const navbar = ref<HTMLElement>()
           <div mt--4 px2 grid="~ cols-minmax-8rem">
             <AssetGridItem v-for="a of items" :key="a.path" :asset="a" :folder="folder" @click="selected = a" />
           </div>
-        </VSectionBlock>
+        </VDSectionBlock>
       </template>
       <div v-else p2 grid="~ cols-minmax-8rem">
         <AssetGridItem v-for="a of filtered" :key="a.path" :asset="a" @click="selected = a" />
@@ -103,11 +103,11 @@ const navbar = ref<HTMLElement>()
       <AssetDetails v-if="selected" :asset="selected" />
     </DrawerRight>
   </div>
-  <VPanelGrids v-else px5>
-    <VCard flex="~ col gap2" min-w-30 items-center p3>
+  <VDPanelGrids v-else px5>
+    <VDCard flex="~ col gap2" min-w-30 items-center p3>
       <h1 text-sm italic op50>
         No Assets
       </h1>
-    </VCard>
-  </VPanelGrids>
+    </VDCard>
+  </VDPanelGrids>
 </template>

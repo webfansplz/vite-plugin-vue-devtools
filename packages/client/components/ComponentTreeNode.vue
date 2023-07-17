@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import type { ComponentTreeNode } from '~/types'
 
 const props = withDefaults(defineProps<{
@@ -24,7 +25,7 @@ const { highlight, unhighlight } = useHighlightComponent(props.data)
     @mouseleave="unhighlight"
   >
     <h3 vue-block-title @click="data.hasChildren ? toggleExpand(data.id) : () => {}">
-      <VExpandIcon v-if="data.hasChildren" :value="isExpanded" />
+      <VDExpandIcon v-if="data.hasChildren" :value="isExpanded" />
       <i v-else inline-block h-6 w-6 />
       <span
         :class="[

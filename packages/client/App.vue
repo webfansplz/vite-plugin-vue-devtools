@@ -9,8 +9,6 @@ const router = useRouter()
 const { scale } = useDevToolsSettings()
 const { route: _route, isFirstVisit } = useFrameState()
 
-console.log('!!!')
-
 useColorMode()
 
 hookApi.hook.on('init:vue:app', () => {

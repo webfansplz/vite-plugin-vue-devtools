@@ -2,6 +2,7 @@
 import { computed, nextTick, ref, watchEffect } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
+import Card from './Card.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -61,9 +62,9 @@ export default {
           dim ? 'bg-black/50' : '',
         ]" @click="close()"
       />
-      <VCard v-bind="$attrs" ref="card" class="max-h-screen of-auto">
+      <Card v-bind="$attrs" ref="card" class="max-h-screen of-auto">
         <slot />
-      </VCard>
+      </Card>
     </div>
   </Teleport>
 </template>

@@ -55,7 +55,7 @@ const copy = useCopy()
   <!-- eslint-disable-next-line vue/valid-v-for -->
   <code v-for="(item, index) in list" :key="nanoid()" block select-none pl-2 text-sm>
     <p flex items-center :class="[item?.recursive && 'cursor-pointer']">
-      <VExpandIcon v-if="item?.recursive" :value="expandedId.includes(`${id}-${depth}-${index}`)" @click="item?.recursive && toggleExpand(`${id}-${depth}-${index}`)" />
+      <VDExpandIcon v-if="item?.recursive" :value="expandedId.includes(`${id}-${depth}-${index}`)" @click="item?.recursive && toggleExpand(`${id}-${depth}-${index}`)" />
       <i v-else inline-block h-6 w-6 />
       <span select-text text-purple-700 dark:text-purple-300 @dblclick="copy(String(index))">{{ index }}</span>
       <span px-1 op-60>:</span>

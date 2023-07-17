@@ -27,7 +27,7 @@ function onToggle(e: any) {
 <template>
   <details :open="open" @toggle="onToggle">
     <summary class="cursor-pointer select-none hover:bg-active p4" :class="collapse ? '' : 'pointer-events-none'">
-      <VIconTitle :icon="icon" :text="text" text-xl transition :class="open ? 'op100' : 'op60'">
+      <VDIconTitle :icon="icon" :text="text" text-xl transition :class="open ? 'op100' : 'op60'">
         <div>
           <div text-base>
             <slot name="text">
@@ -42,13 +42,13 @@ function onToggle(e: any) {
         </div>
         <div class="flex-auto" />
         <slot name="actions" />
-        <VIcon
+        <VDIcon
           v-if="collapse"
           icon="carbon-chevron-down"
           class="chevron"
           cursor-pointer place-self-start text-base op75 transition duration-500
         />
-      </VIconTitle>
+      </VDIconTitle>
     </summary>
     <div
       v-lazy-show="open"

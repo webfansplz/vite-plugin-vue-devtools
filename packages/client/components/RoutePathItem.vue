@@ -50,7 +50,7 @@ function navigate() {
             </div>
             <div flex="~" items-center p2 text-sm font-mono>
               <template v-for="part, idx of parts" :key="idx">
-                <VTextInput
+                <VDTextInput
                   v-if="part[0] === ':'"
                   v-model="partsInput[idx]"
                   w-20 n-sm
@@ -60,9 +60,9 @@ function navigate() {
               </template>
             </div>
           </template>
-          <VButton block n="primary">
+          <VDButton block n="primary">
             Navigate
-          </VButton>
+          </VDButton>
         </form>
       </div>
     </template>

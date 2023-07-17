@@ -25,7 +25,7 @@ const dragTabs = computed(() => getSortedTabs(props.tabs))
   >
     <template #item="{ element }: { element: Tab }">
       <div :class="{ 'hover:color-primary hover:bg-gray-2/20': !dragging }" y cursor-pointer rounded px2 py1 transition-colors>
-        <VIcon :icon="element.icon" />
+        <VDIcon :icon="element.icon" />
         {{ element.title }}
       </div>
     </template>

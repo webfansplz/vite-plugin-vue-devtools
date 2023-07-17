@@ -40,7 +40,7 @@ function navigateToRoute(path: string) {
           <span op50>Current route</span>
         </template>
       </div>
-      <VTextInput
+      <VDTextInput
         v-model="routeInput"
         font-mono
         icon="carbon-direction-right-01 scale-y--100"
@@ -57,7 +57,7 @@ function navigateToRoute(path: string) {
         </template>
       </div>
     </div>
-    <VSectionBlock
+    <VDSectionBlock
       icon="carbon-tree-view-alt"
       text="All Routes"
       :description="`${routes.length} routes registered in your application`"
@@ -69,6 +69,6 @@ function navigateToRoute(path: string) {
         :matched-pending="routeInputMatched"
         @navigate="navigateToRoute"
       />
-    </VSectionBlock>
+    </VDSectionBlock>
   </div>
 </template>

@@ -34,9 +34,9 @@ export default defineConfig({
       pagesDir: 'pages',
     }),
     Components({
-      dirs: ['components', 'ui-kit'],
+      dirs: ['components'],
       dts: join(__dirname, 'components.d.ts'),
-      resolvers: [DevToolsUiKitResolver({ prefix: 'N' })],
+      resolvers: [DevToolsUiKitResolver({ prefix: 'VD', ignore: ['VDropdown'] })],
     }),
     Unocss(),
     AutoImport({

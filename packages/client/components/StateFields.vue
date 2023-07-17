@@ -51,12 +51,12 @@ function copyContent(value: Record<string, unknown>) {
       @click="toggleExpanded"
     >
       <div>
-        <VExpandIcon :value="isExpanded" />
+        <VDExpandIcon :value="isExpanded" />
         <span text-primary>
           {{ data.key }}
         </span>
       </div>
-      <VIconButton
+      <VDIconButton
         mr2
         flex-none
         :title="`Copy ${data.key} to clipboard`"

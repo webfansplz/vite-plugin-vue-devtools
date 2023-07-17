@@ -14,7 +14,7 @@ function navigate(path: string) {
 </script>
 
 <template>
-  <VCard flex="~ gap2" max-h="50vh" cursor-pointer p4 hover="border-primary" @click="emit('navigate', data)">
+  <VDCard flex="~ gap2" max-h="50vh" cursor-pointer p4 hover="border-primary" @click="emit('navigate', data)">
     <div flex="~ col gap2" flex-auto of-hidden px1>
       <div of-hidden text-ellipsis ws-nowrap text-lg>
         <span flex items-center>
@@ -62,5 +62,5 @@ function navigate(path: string) {
         <img v-if="data.icon" :src="data.icon" :alt="data.name" ma h-full>
       </div>
     </div>
-  </VCard>
+  </VDCard>
 </template>

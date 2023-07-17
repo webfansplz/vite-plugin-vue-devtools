@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick } from 'vue'
 import { useColorMode } from '@vueuse/core'
+import { UsePreferredColorScheme as ColorScheme } from '@vueuse/components'
 
 const mode = useColorMode()
 const isDark = computed<boolean>({

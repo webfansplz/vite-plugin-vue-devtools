@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
 import { scrollToComponent, selected, selectedComponentName, selectedComponentNode, selectedComponentNodeFilePath } from '../composables/component'
+
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import type { ComponentTreeNode } from '~/types'
 import { ComponentWalker, getInstanceState } from '~/logic/components'
 import { useDevToolsClient } from '~/logic/client'
@@ -109,13 +111,13 @@ function openInEditor() {
         <div v-if="normalizedComponentState.length" h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <StateFields v-for="(item, index) in normalizedComponentState" :id="index" :key="item.key" :data="item" />
         </div>
-        <VPanelGrids v-else px5>
-          <VCard flex="~ col gap2" min-w-30 items-center p3>
+        <VDPanelGrids v-else px5>
+          <VDCard flex="~ col gap2" min-w-30 items-center p3>
             <h1 text-sm italic op50>
               No Data
             </h1>
-          </VCard>
-        </VPanelGrids>
+          </VDCard>
+        </VDPanelGrids>
       </Pane>
     </Splitpanes>
   </div>

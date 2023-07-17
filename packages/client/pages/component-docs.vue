@@ -48,7 +48,7 @@ watch(keywords, () => {
 <template>
   <div relative h-full of-hidden n-panel-grids>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
-      <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Filter Files" op50 />
+      <VDTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Filter Files" op50 />
     </div>
     <Splitpanes :style="{ height: 'calc(100% - 60px)' }">
       <Pane border="r base">
@@ -62,11 +62,11 @@ watch(keywords, () => {
             </li>
           </ul>
           <div v-else h-full flex items-center justify-center>
-            <VCard flex="~ col gap2" min-w-30 items-center p3>
+            <VDCard flex="~ col gap2" min-w-30 items-center p3>
               <h1 text-sm italic op50>
                 No Files
               </h1>
-            </VCard>
+            </VDCard>
           </div>
         </div>
       </Pane>
@@ -79,11 +79,11 @@ watch(keywords, () => {
             :tab-size="2"
           />
           <div v-show="!list.length" h-full flex items-center justify-center>
-            <VCard flex="~ col gap2" min-w-30 items-center p3>
+            <VDCard flex="~ col gap2" min-w-30 items-center p3>
               <h1 text-sm italic op50>
                 No Data
               </h1>
-            </VCard>
+            </VDCard>
           </div>
         </div>
       </Pane>

@@ -19,13 +19,13 @@ function popup() {
 
 <template>
   <div flex="~ gap-1">
-    <VButton n="sm primary" @click="popup">
+    <VDButton n="sm primary" @click="popup">
       <i carbon-launch /> Popup <span v-if="!isSupported" op50>(not supported)</span>
-    </VButton>
+    </VDButton>
   </div>
 
   <!-- popup mode not supported message -->
-  <VDialog
+  <VDDialog
     v-model="showPopupUnsupported" class="popup-dialog z-2000 max-w-150 p6 pt-2"
     @close="showPopupUnsupported = false"
   >
@@ -46,15 +46,15 @@ function popup() {
     <p>
       Your current browser does not seem to support the API, or the flag is not enabled yet.
       You can try enabling the flag by visiting
-      <VButton n="xs primary" title="Click to Copy" @click="copy('chrome://flags/#document-picture-in-picture-api')">
+      <VDButton n="xs primary" title="Click to Copy" @click="copy('chrome://flags/#document-picture-in-picture-api')">
         chrome://flags/#document-picture-in-picture-api
-      </VButton>
+      </VDButton>
       and restart the browser.
     </p>
     <div>
-      <VButton @click="showPopupUnsupported = false">
+      <VDButton @click="showPopupUnsupported = false">
         Close
-      </VButton>
+      </VDButton>
     </div>
-  </VDialog>
+  </VDDialog>
 </template>

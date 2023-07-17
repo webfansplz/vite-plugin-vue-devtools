@@ -51,11 +51,11 @@ const emits = defineEmits(['update-selected'])
       <span flex-none font-mono opacity-50>{{ dayjs(item.event.now).format('HH:mm:ss') }}</span>
     </li> -->
   </ul>
-  <VPanelGrids v-else px5>
-    <VCard flex="~ col gap2" min-w-30 items-center p3>
+  <VDPanelGrids v-else px5>
+    <VDCard flex="~ col gap2" min-w-30 items-center p3>
       <h1 text-sm italic op50>
         No Events
       </h1>
-    </VCard>
-  </VPanelGrids>
+    </VDCard>
+  </VDPanelGrids>
 </template>

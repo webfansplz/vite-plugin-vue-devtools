@@ -1,6 +1,9 @@
 <script setup lang="tsx">
-import VSelect from '~/ui-kit/VSelect.vue'
-import VSwitch from '~/ui-kit/VSwitch.vue'
+// @ts-expect-error missing type
+import VDSelect from '@vite-plugin-vue-devtools/ui-kit/components/Select.vue'
+
+// @ts-expect-error missing type
+import VDSwitch from '@vite-plugin-vue-devtools/ui-kit/components/Switch.vue'
 
 const { showGraphSetting, graphSettings } = useGraphSettings()
 
@@ -28,37 +31,37 @@ const settings = [
     name: 'Path level',
     description: 'Display the path level of the hovered node',
     comp: () => <>
-      <VSelect v-model={graphSettings.value.hoverPathLevel} class="n-primary">
+      <VDSelect v-model={graphSettings.value.hoverPathLevel} class="n-primary">
         {graphHoverPathLevel.map(([key, value]) => <option key={key}>{ value }</option>) }
-      </VSelect>
+      </VDSelect>
       {
         graphSettings.value.hoverPathLevel === 'custom'
-          && <VSelect v-model={graphSettings.value.hoverPathLevelCustom} class="n-primary">
+          && <VDSelect v-model={graphSettings.value.hoverPathLevelCustom} class="n-primary">
             { graphHoverPathLevelCustom.map(([key, value]) => <option key={key}>{ value }</option>) }
-            </VSelect>
+            </VDSelect>
       }
     </>,
   },
   {
     name: 'Open in editor',
     description: 'Press Alt/Cmd + click on a node to open the file in editor',
-    comp: () => <VSwitch v-model={graphSettings.value.clickOpenInEditor} class="n-primary" />,
+    comp: () => <VDSwitch v-model={graphSettings.value.clickOpenInEditor} class="n-primary" />,
   },
   {
     name: 'Highlight related node',
     description: 'Highlight the directly related node when clicking on a node',
-    comp: () => <VSwitch v-model={graphSettings.value.highlightSelection} class="n-primary" />,
+    comp: () => <VDSwitch v-model={graphSettings.value.highlightSelection} class="n-primary" />,
   },
   {
     name: 'Glob pattern',
     description: 'Enable glob pattern to pre-filter modules. Use dot + space(", ") to separate multiple patterns.',
-    comp: () => <VSwitch v-model={graphSettings.value.enableUserDefinedGlob} class="n-primary" />,
+    comp: () => <VDSwitch v-model={graphSettings.value.enableUserDefinedGlob} class="n-primary" />,
   },
 ] satisfies Settings[]
 </script>
 
 <template>
-  <VDialog
+  <VDDialog
     v-model="showGraphSetting" class="z-2000 min-w-500px w-50vw flex flex-col gap6 p6"
     @close="showGraphSetting = false"
   >
@@ -85,7 +88,7 @@ const settings = [
         </div>
       </div>
     </div>
-  </VDialog>
+  </VDDialog>
 </template>
 
 <style scoped></style>

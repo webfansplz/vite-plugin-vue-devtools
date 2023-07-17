@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore tsconfig
+import Icon from './Icon.vue'
 
 const props = defineProps<{
   to?: string
@@ -15,6 +16,6 @@ const props = defineProps<{
     v-bind="$attrs"
     class="n-transition n-icon-button"
   >
-    <VIcon :icon="props.icon" />
+    <Icon :icon="props.icon" />
   </Component>
 </template>
