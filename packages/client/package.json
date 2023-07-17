@@ -20,7 +20,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=v14"
+    "node": ">=v14.21.3"
   },
   "scripts": {
     "build": "vite build",
@@ -47,10 +47,10 @@
   },
   "devDependencies": {
     "@algolia/client-search": "^4.18.0",
-    "@iconify/json": "^2.2.88",
-    "@types/node": "^20.4.1",
+    "@iconify/json": "^2.2.91",
+    "@types/node": "^20.4.2",
     "@types/splitpanes": "^2.2.1",
-    "@unocss/core": "^0.53.3",
+    "@unocss/core": "^0.53.5",
     "@unocss/reset": "^0.53.5",
     "@vite-plugin-vue-devtools/core": "workspace:*",
     "@vite-plugin-vue-devtools/ui-kit": "workspace:*",
@@ -63,12 +63,12 @@
     "pinia": "^2.1.4",
     "simple-git-hooks": "^2.8.1",
     "unocss": "^0.53.5",
-    "unplugin": "^1.3.2",
+    "unplugin": "^1.4.0",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",
     "vis-data": "^7.1.6",
     "vis-network": "^9.1.6",
-    "vite": "^4.4.2",
+    "vite": "^4.4.4",
     "vite-plugin-pages": "^0.31.0",
     "vite-plugin-vue-devtools": "workspace:*",
     "vue": "^3.3.4",
