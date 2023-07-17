@@ -8,7 +8,8 @@
   "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webfansplz/vite-plugin-vue-devtools.git"
+    "url": "git+https://github.com/webfansplz/vite-plugin-vue-devtools.git",
+    "directory": "packages/node"
   },
   "bugs": {
     "url": "https://github.com/webfansplz/vite-plugin-vue-devtools/issues"

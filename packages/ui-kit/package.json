@@ -3,6 +3,16 @@
   "type": "module",
   "version": "1.0.0-alpha.0",
   "author": "webfansplz",
+  "license": "MIT",
+  "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webfansplz/vite-plugin-vue-devtools.git",
+    "directory": "packages/ui-kit"
+  },
+  "bugs": {
+    "url": "https://github.com/webfansplz/vite-plugin-vue-devtools/issues"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
