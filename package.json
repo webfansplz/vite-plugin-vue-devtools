@@ -1,5 +1,5 @@
 {
-  "version": "0.5.1",
+  "name": "@vite-plugin-vue-devtools/monorepo",
   "private": true,
   "packageManager": "pnpm@8.6.7",
   "description": "A vite plugin for Vue DevTools",
@@ -40,13 +40,14 @@
     "node": ">=v14"
   },
   "scripts": {
-    "build": "rimraf dist && run-s build:*",
     "dev:client": "nr -C packages/client dev",
-    "build:client": "nr -C packages/client build",
     "stub": "nr -C packages/node stub",
     "build:core": "nr -C packages/core build",
+    "build:node": "nr -C packages/node build",
     "build:ui-kit": "nr -C packages/ui-kit build",
+    "build:client": "nr -C packages/client build",
     "dev": "nr build:core && nr build:ui-kit && nr stub && nr dev:client",
+    "build": "nr build:core && nr build:ui-kit && nr build:client && nr build:node",
     "play": "nr -C packages/playground dev",
     "lint": "eslint .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
@@ -69,7 +70,6 @@
     "lint-staged": "^13.2.3",
     "npm-run-all": "^4.1.5",
     "pnpm": "^8.6.7",
-    "rimraf": "^5.0.1",
     "simple-git-hooks": "^2.8.1",
     "taze": "^0.11.2",
     "typescript": "^5.1.6",
