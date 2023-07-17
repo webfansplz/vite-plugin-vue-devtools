@@ -80,5 +80,6 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  }
+  },
+  "version": "1.0.0-alpha.1"
 }

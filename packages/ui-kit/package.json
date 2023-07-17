@@ -1,7 +1,7 @@
 {
   "name": "@vite-plugin-vue-devtools/ui-kit",
   "type": "module",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "author": "webfansplz",
   "license": "MIT",
   "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",
@@ -30,7 +30,6 @@
       "import": "./dist/unocss.mjs"
     },
     "./components/*": "./dist/components/*"
-
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
