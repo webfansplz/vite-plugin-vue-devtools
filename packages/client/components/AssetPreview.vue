@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-  <div bg-active flex items-center justify-center of-hidden object-cover p1>
+  <div flex items-center justify-center of-hidden bg-active object-cover p1>
     <template v-if="asset.type === 'image'">
       <img :src="asset.publicPath">
     </template>

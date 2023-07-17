@@ -87,11 +87,11 @@ function ErrorBoundary() {
       </div>
       <div v-else flex items-center>
         <span flex items-center>
-          <em border-base mr-2 inline-block h-5 w-5 border rounded hover="cursor-pointer border-primary" :style="{ backgroundColor: color }" @click="showHex = !showHex" />
+          <em mr-2 inline-block h-5 w-5 border border-base rounded hover="cursor-pointer border-primary" :style="{ backgroundColor: color }" @click="showHex = !showHex" />
           :
           <span hover="underline underline-offset-3 cursor-pointer" @click="copy(color)">{{ color }}</span>
         </span>
-        <span border-base ml-2 flex cursor-pointer items-center border rounded-10 p-2 hover="bg-active" @click="restart">
+        <span ml-2 flex cursor-pointer items-center border border-base rounded-10 p-2 hover="bg-active" @click="restart">
           <i class="i-mdi:eyedropper" text-3 />
         </span>
       </div>

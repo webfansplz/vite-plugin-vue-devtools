@@ -72,7 +72,7 @@ function openInEditor() {
 </script>
 
 <template>
-  <div n-panel-grids h-screen>
+  <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">

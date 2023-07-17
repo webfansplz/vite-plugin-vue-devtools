@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <VIcon
-    class="material-symbols:arrow-right" n-transition text-5 op-50
+    class="material-symbols:arrow-right" text-5 op-50 n-transition
     :class="{
       'transform rotate-90': value,
     }"

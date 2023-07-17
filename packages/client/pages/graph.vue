@@ -186,7 +186,7 @@ const { showGraphSetting } = useGraphSettings()
 </script>
 
 <template>
-  <div n-panel-grids relative h-screen w-full flex flex-col>
+  <div relative h-screen w-full flex flex-col n-panel-grids>
     <SearchBox>
       <template #right>
         <button aria-label="Open graph settings" @click="showGraphSetting = true">

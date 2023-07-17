@@ -28,7 +28,7 @@ function back() {
     <teleport to="body">
       <span
 
-        bg-base fixed left-2 top-2 z-1000 h-8 w-8 flex cursor-pointer select-none items-center justify-center rounded-5 hover="text-primary" @click.prevent.stop="back"
+        fixed left-2 top-2 z-1000 h-8 w-8 flex cursor-pointer select-none items-center justify-center rounded-5 bg-base hover="text-primary" @click.prevent.stop="back"
       >
         <i tabler:arrow-back-up />
       </span>

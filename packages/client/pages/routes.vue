@@ -5,7 +5,7 @@ import { activeRouteRecordIndex, activeRouteRecordMatcherState, routeRecordMatch
 </script>
 
 <template>
-  <div v-if="router" n-panel-grids h-screen>
+  <div v-if="router" h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base" size="40">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">

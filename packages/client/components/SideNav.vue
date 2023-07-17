@@ -5,8 +5,8 @@ const groupedTabs = useGroupedTabs()
 </script>
 
 <template>
-  <div border="r base" flex="~ col gap-0.5" bg-base z-100 h-full items-center class="no-scrollbar">
-    <div flex="~ col" bg-base sticky top-0 z-1 mb1 items-center pt3>
+  <div border="r base" flex="~ col gap-0.5" z-100 h-full items-center bg-base class="no-scrollbar">
+    <div flex="~ col" sticky top-0 z-1 mb1 items-center pt3 bg-base>
       <VDropdown placement="left-start" :distance="20">
         <button
           i-logos-vue h-6 w-6 text-lg

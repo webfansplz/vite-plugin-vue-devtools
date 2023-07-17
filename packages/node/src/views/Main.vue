@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 
 // @ts-expect-error virtual module
 import vueDevToolsOptions from 'virtual:vue-devtools-options'
+import { DevToolsHooks, collectDevToolsHookBuffer } from '@vite-plugin-vue-devtools/core'
 import Frame from './FrameBox.vue'
 import ComponentInspector from './ComponentInspector.vue'
 import { useHighlightComponent, useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
@@ -17,19 +18,7 @@ const props = defineProps({
 
 const hook = props.hook
 
-const DevToolsHooks = {
-  APP_INIT: 'app:init',
-  COMPONENT_UPDATED: 'component:updated',
-  COMPONENT_ADDED: 'component:added',
-  COMPONENT_REMOVED: 'component:removed',
-  COMPONENT_EMIT: 'component:emit',
-  PERF_START: 'perf:start',
-  PERF_END: 'perf:end',
-  ADD_ROUTE: 'router:add-route',
-  REMOVE_ROUTE: 'router:remove-route',
-}
-
-const hookBuffer: [string, { args: any[] }][] = []
+const { hookBuffer, collect } = collectDevToolsHookBuffer()
 
 let isAppCreated = false
 const panelState = ref<{
@@ -138,10 +127,6 @@ async function setupClient(iframe: HTMLIFrameElement) {
   })
 }
 
-function updateHookBuffer(type, args) {
-  hookBuffer.push([type, args])
-}
-
 function collectDynamicRoute(app) {
   const router = app?.config?.globalProperties?.$router
   if (!router)
@@ -152,7 +137,7 @@ function collectDynamicRoute(app) {
     const res = _addRoute(...args)
 
     if (!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded) {
-      updateHookBuffer(DevToolsHooks.ADD_ROUTE, {
+      collect(DevToolsHooks.ADD_ROUTE, {
         args: [...args],
       })
     }
@@ -165,7 +150,7 @@ function collectDynamicRoute(app) {
     const res = _removeRoute(...args)
 
     if (!iframe.value?.contentWindow?.__VUE_DEVTOOLS_VIEW__?.loaded) {
-      updateHookBuffer(DevToolsHooks.REMOVE_ROUTE, {
+      collect(DevToolsHooks.REMOVE_ROUTE, {
         args: [...args],
       })
     }
@@ -186,7 +171,7 @@ function collectHookBuffer() {
       return
 
     collectDynamicRoute(app)
-    updateHookBuffer(DevToolsHooks.APP_INIT, {
+    collect(DevToolsHooks.APP_INIT, {
       app,
     })
     setTimeout(() => {
@@ -199,7 +184,7 @@ function collectHookBuffer() {
   //   if (stopCollect(component))
   //     return
 
-  //   updateHookBuffer(DevToolsHooks.COMPONENT_EMIT, {
+  //   collect(DevToolsHooks.COMPONENT_EMIT, {
   //     now: Date.now(),
   //     app,
   //     uid,
@@ -213,7 +198,7 @@ function collectHookBuffer() {
   //   if (stopCollect(component))
   //     return
 
-  //   updateHookBuffer(DevToolsHooks.PERF_END, {
+  //   collect(DevToolsHooks.PERF_END, {
   //     now: Date.now(),
   //     app,
   //     uid,
@@ -234,7 +219,7 @@ function collectHookBuffer() {
       if (!app || (typeof uid !== 'number' && !uid) || !component || stopCollect(component))
         return
 
-      updateHookBuffer(item, {
+      collect(item, {
         app, uid, parentUid, component,
       })
     })

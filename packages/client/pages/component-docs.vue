@@ -46,7 +46,7 @@ watch(keywords, () => {
 </script>
 
 <template>
-  <div n-panel-grids relative h-full of-hidden>
+  <div relative h-full of-hidden n-panel-grids>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Filter Files" op50 />
     </div>

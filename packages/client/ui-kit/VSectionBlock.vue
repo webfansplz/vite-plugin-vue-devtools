@@ -26,7 +26,7 @@ function onToggle(e: any) {
 
 <template>
   <details :open="open" @toggle="onToggle">
-    <summary class="hover:bg-active cursor-pointer select-none p4" :class="collapse ? '' : 'pointer-events-none'">
+    <summary class="cursor-pointer select-none hover:bg-active p4" :class="collapse ? '' : 'pointer-events-none'">
       <VIconTitle :icon="icon" :text="text" text-xl transition :class="open ? 'op100' : 'op60'">
         <div>
           <div text-base>

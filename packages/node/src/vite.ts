@@ -5,12 +5,19 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { createRPCServer } from '@vite-plugin-vue-devtools/core'
+import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
 
 import { DIR_CLIENT } from './dir'
-import { execNpmScript, getComponentInfo, getComponentsRelationships, getImageMeta, getPackages, getStaticAssets, getTextAssetContent, getVueSFCList } from './features'
-
-const NAME = 'vite-plugin-vue-devtools'
+import {
+  execNpmScript,
+  getComponentInfo,
+  getComponentsRelationships,
+  getImageMeta,
+  getPackages,
+  getStaticAssets,
+  getTextAssetContent,
+  getVueSFCList,
+} from './features'
 
 function getVueDevtoolsPath() {
   const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
@@ -42,8 +49,9 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
     }))
 
     const rpc = createRPCServer<RPCFunctions>(server.ws, {
-      componentGraph: () => getComponentsRelationships(inspect.api.rpc),
+      root: () => config.root,
       inspectClientUrl: () => `${config.base || '/'}__inspect/`,
+      componentGraph: () => getComponentsRelationships(inspect.api.rpc),
       staticAssets: () => getStaticAssets(config),
       getImageMeta,
       getTextAssetContent,
@@ -74,11 +82,10 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
             rpc.onTerminalExit({ data })
         },
       }),
-      root: () => config.root,
     })
   }
   const plugin = <PluginOption>{
-    name: NAME,
+    name: PLUGIN_NAME,
     enforce: 'pre',
     apply: 'serve',
     configResolved(resolvedConfig) {

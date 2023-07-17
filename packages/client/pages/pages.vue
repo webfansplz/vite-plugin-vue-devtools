@@ -28,7 +28,7 @@ function navigateToRoute(path: string) {
 </script>
 
 <template>
-  <div n-panel-grids h-full of-auto>
+  <div h-full of-auto n-panel-grids>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <div>
         <template v-if="currentRoute?.path !== routeInput">

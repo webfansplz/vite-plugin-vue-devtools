@@ -43,7 +43,7 @@ function createTimer() {
       v-if="type === 'error'"
       border="~ base"
       flex="~ inline gap2"
-      bg-base m-3 inline-block items-center rounded px-4 py-1 text-red transition-all duration-300
+      m-3 inline-block items-center rounded px-4 py-1 text-red transition-all duration-300 bg-base
       :style="show ? {} : { transform: 'translateY(-300%)' }"
       :class="show ? 'shadow' : 'shadow-none'"
       @mouseenter="clearTimer"
@@ -56,7 +56,7 @@ function createTimer() {
       v-else
       border="~ base"
       flex="~ inline gap2"
-      bg-base m-3 inline-block items-center rounded px-4 py-1 text-primary transition-all duration-300
+      m-3 inline-block items-center rounded px-4 py-1 text-primary transition-all duration-300 bg-base
       :style="show ? {} : { transform: 'translateY(-300%)' }"
       :class="show ? 'shadow' : 'shadow-none'"
       @mouseenter="clearTimer"

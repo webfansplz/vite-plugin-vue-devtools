@@ -12,7 +12,7 @@ import {
 </script>
 
 <template>
-  <div n-panel-grids h-screen>
+  <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base" size="20">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">

@@ -120,7 +120,7 @@ useInfiniteScroll(
 </script>
 
 <template>
-  <div ref="el" n-panel-grids relative h-full of-auto>
+  <div ref="el" relative h-full of-auto n-panel-grids>
     <div border="b base" flex="~ col gap1" px4 py3 navbar-glass>
       <VTextInput v-model="keywords" font-mono icon="carbon:search" placeholder="Search packages" op50 />
     </div>

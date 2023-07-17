@@ -1,4 +1,4 @@
-export enum DevtoolsHooks {
+export enum DevToolsHooks {
   APP_INIT = 'app:init',
   APP_UNMOUNT = 'app:unmount',
   COMPONENT_UPDATED = 'component:updated',
@@ -7,18 +7,20 @@ export enum DevtoolsHooks {
   COMPONENT_EMIT = 'component:emit',
   PERFORMANCE_START = 'perf:start',
   PERFORMANCE_END = 'perf:end',
+  ADD_ROUTE = 'router:add-route',
+  REMOVE_ROUTE = 'router:remove-route',
 }
 
 export const devtoosHook = typeof window !== 'undefined'
   ? window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
-    events: new Map<DevtoolsHooks, () => void>(),
-    on(event: DevtoolsHooks, fn: () => void) {
+    events: new Map<DevToolsHooks, () => void>(),
+    on(event: DevToolsHooks, fn: () => void) {
       if (!this.events.has(event))
         this.events.set(event, [])
 
       this.events.get(event).push(fn)
     },
-    emit(event: DevtoolsHooks, ...payload) {
+    emit(event: DevToolsHooks, ...payload) {
       if (this.events.has(event))
         this.events.get(event).forEach(fn => fn(...payload))
     },
@@ -26,8 +28,8 @@ export const devtoosHook = typeof window !== 'undefined'
   : {}
 
 export function collectDevToolsHookBuffer() {
-  const hookBuffer: [string, { args: any[] }][] = []
-  function collect(type: DevtoolsHooks, args: { args: any[] }) {
+  const hookBuffer: [string, Record<string, unknown>][] = []
+  function collect(type: DevToolsHooks, args: Record<string, unknown>) {
     hookBuffer.push([type, args])
   }
   return {

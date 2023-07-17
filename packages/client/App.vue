@@ -65,7 +65,7 @@ router.replace(_route.value)
 <template>
   <main fixed inset-0 h-screen w-screen>
     <Notification />
-    <div grid="~ cols-[50px_1fr]" bg-base h-full h-screen of-hidden font-sans>
+    <div grid="~ cols-[50px_1fr]" h-full h-screen of-hidden font-sans bg-base>
       <SideNav v-if="!route.path.startsWith('/__')" of-x-hidden of-y-auto />
       <RouterView />
     </div>

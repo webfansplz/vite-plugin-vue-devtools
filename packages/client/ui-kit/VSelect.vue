@@ -21,12 +21,12 @@ const input = useVModel(props, 'modelValue', emit, { passive: true })
 
 <template>
   <div
-    class="n-text-input n-border-base n-bg-base focus-within:n-focus-base focus-within:border-context flex flex items-center border rounded px-2 py-1"
+    class="n-text-input flex flex items-center border n-border-base rounded px-2 py-1 focus-within:n-focus-base focus-within:border-context n-bg-base"
   >
     <slot name="icon">
       <VIcon v-if="icon" :icon="icon" class="mr-0.4em text-1.1em op50" />
     </slot>
-    <select v-model="input" :disabled="disabled" class="n-bg-base w-full flex-auto !outline-none">
+    <select v-model="input" :disabled="disabled" class="w-full flex-auto n-bg-base !outline-none">
       <option v-if="placeholder" value="" disabled hidden>
         {{ placeholder }}
       </option>

@@ -53,7 +53,7 @@ const navbar = ref<HTMLElement>()
 </script>
 
 <template>
-  <div v-if="assets?.length" n-panel-grids h-full of-auto>
+  <div v-if="assets?.length" h-full of-auto n-panel-grids>
     <Navbar ref="navbar" v-model:search="search" pb2>
       <template #actions>
         <div flex-none flex="~ gap4">

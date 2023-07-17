@@ -61,6 +61,7 @@
     "@antfu/eslint-config": "^0.39.7",
     "@antfu/ni": "^0.21.4",
     "@types/node": "^20.4.1",
+    "@unocss/eslint-config": "^0.53.5",
     "@vite-plugin-vue-devtools/ui-kit": "workspace:*",
     "bumpp": "^9.1.1",
     "conventional-changelog-cli": "^3.0.0",

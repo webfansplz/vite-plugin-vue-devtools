@@ -14,7 +14,7 @@ import { isInPopup } from '~/logic/state'
       </VDarkToggle>
       <RouterLink
         replace
-        class="n-disabled:n-disabled n-button-base n-transition n-primary n-sm active:n-button-active focus-visible:n-focus-base hover:n-button-hover"
+        class="n-button-base active:n-button-active focus-visible:n-focus-base n-transition n-primary n-sm hover:n-button-hover n-disabled:n-disabled"
         to="/settings"
       >
         <div carbon-settings translate-y--1px />
