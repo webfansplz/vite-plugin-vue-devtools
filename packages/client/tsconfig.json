@@ -12,8 +12,13 @@
     "resolveJsonModule": true,
     "noImplicitAny": false,
     "types": [
-      "vite/client"
-    ]
+      "vite-plugin-pages/client",
+      "vite/client",
+      "vite-plugin-vue-devtools/client"
+    ],
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
-  "exclude": ["node_modules", "dist", "src/node/app.js"]
+  "exclude": ["node_modules", "dist"]
 }

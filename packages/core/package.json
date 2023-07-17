@@ -1,0 +1,38 @@
+{
+  "name": "@vite-plugin-vue-devtools/core",
+  "type": "module",
+  "version": "1.0.0-alpha.0",
+  "author": "webfansplz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webfansplz/vite-plugin-vue-devtools.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "*.d.ts",
+    "*.cjs",
+    "*.mjs"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "vite": "^3.1.0 || ^4.0.0-0"
+  },
+  "dependencies": {
+    "birpc": "^0.2.12",
+    "vite-hot-client": "^0.2.1"
+  }
+}

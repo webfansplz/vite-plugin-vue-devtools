@@ -1,1 +1,1 @@
-export { default } from './src/client/uno.config'
+export { default } from './packages/client/uno.config'
