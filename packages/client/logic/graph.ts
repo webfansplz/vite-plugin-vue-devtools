@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import { Minimatch } from 'minimatch'
 import { rpc } from './rpc'
 
-export const list = ref<ModuleInfo[]>(await rpc.componentGraph())
+const list = ref<ModuleInfo[]>(await rpc.componentGraph())
 export const searchText = useStorage('vite-inspect-search-text', '')
 export const includeNodeModules = useStorage('vite-inspect-include-node-modules', false)
 export const includeVirtual = useStorage('vite-inspect-include-virtual', false)
@@ -63,61 +63,86 @@ function uniqById(data: typeof list.value) {
   return uniqueArray
 }
 
-function fuzzySearchDeps(data: typeof list.value, id: string) {
+function fuzzySearchDeps(data: ModuleInfo[], text: string) {
   const fuzzySearcher = new Fuse(data, {
     ignoreLocation: true,
     keys: ['id'],
     shouldSort: true,
     threshold: 0.1,
   })
-  const result = fuzzySearcher.search(id).map(i => i.item)
-  if (!result) {
+  const ids = fuzzySearcher.search(text).map(i => i.item.id)
+  if (!ids.length) {
     return {
-      main: [],
-      allWithDeps: [],
+      matchedKeys: [],
+      data: [],
     }
   }
   return {
-    main: result,
-    allWithDeps: uniqById(result.flatMap(item => getDepsByExactId(data, item.id))),
+    matchedKeys: ids,
+    data: uniqById(ids.flatMap(id => getDepsByExactId(data, id))),
   }
 }
 
-function filterByUserDefinedGlob(data: typeof list.value) {
-  if (!userCustomGlobPattern.value.trim().length)
+function filterByUserDefinedGlob(data: ModuleInfo[], pattern: string) {
+  if (!pattern.trim().length)
     return data
-  const globPattern = userCustomGlobPattern.value.trim().split(', ')
-  const globInstances = new Map(globPattern.map(pattern => [pattern, new Minimatch(pattern, { matchBase: true })]))
-  return data.filter(item => globPattern.every(pattern =>
+  const globPatterns = pattern.trim().split(', ')
+  const globInstances = new Map(globPatterns.map(pattern => [pattern, new Minimatch(pattern, { matchBase: true, dot: true, partial: true })]))
+  return data.filter(item => globPatterns.every(pattern =>
     globInstances.get(pattern)!.match(item.id),
   ))
 }
 
 const { graphSettings } = useGraphSettings()
 
-export const searchResults = computed(() => {
-  let data = (
-    list.value
-  ) || []
+const getDebounceTime = (len: number) => len > 85 ? 350 : 150
+export const searchResults = ref<ModuleInfo[]>([])
+export const matchedKeys = ref<string[]>([])
 
-  if (!includeNodeModules.value)
-    data = data.filter(item => !item.id.includes('/node_modules/'))
-  if (!includeVirtual.value)
-    data = data.filter(item => !item.virtual)
-
-  if (graphSettings.value.enableUserDefinedGlob)
-    data = filterByUserDefinedGlob(data)
-
-  if (!searchText.value) {
-    return {
-      main: [],
-      data,
+const filterer = {
+  excludeNodeModules: (data: ModuleInfo[]) => {
+    return includeNodeModules.value ? data : data.filter(item => !item.id.includes('/node_modules/'))
+  },
+  excludeVirtual: (data: ModuleInfo[]) => {
+    return includeVirtual.value ? data : data.filter(item => !item.virtual)
+  },
+  userCustomGlobPattern: (data: ModuleInfo[], pattern: string) => {
+    if (!graphSettings.value.enableUserDefinedGlob || !pattern.trim().length)
+      return data
+    return filterByUserDefinedGlob(data, pattern)
+  },
+  searchText: (data: ModuleInfo[], text: string) => {
+    if (!text.trim().length) {
+      matchedKeys.value = []
+      return data
     }
-  }
+    const { data: searchData, matchedKeys: searchMatchedKeys } = fuzzySearchDeps(data, searchText.value.trim())
+    matchedKeys.value = searchMatchedKeys
+    return searchData
+  },
+}
 
-  const { main, allWithDeps } = fuzzySearchDeps(data, searchText.value.trim())
-  return {
-    main,
-    data: allWithDeps,
-  }
+const allDataCanBeSearched = computed(() => {
+  return filterer.excludeVirtual(
+    filterer.excludeNodeModules(list.value),
+  )
 })
+
+debouncedWatch([searchText, userCustomGlobPattern, allDataCanBeSearched], ([,,list]) => {
+  filterData(false, list)
+}, { debounce: computed(() => getDebounceTime(searchResults.value.length)) })
+
+async function filterData(isInit = false, givenData?: ModuleInfo[]) {
+  let data: ModuleInfo[] = givenData ?? []
+  if (isInit)
+    data = list.value = await rpc.componentGraph()
+  data = filterer.searchText(
+    filterer.userCustomGlobPattern(
+      filterer.excludeVirtual(
+        filterer.excludeNodeModules(data),
+      ), userCustomGlobPattern.value)
+    , searchText.value)
+  searchResults.value = data
+}
+
+await filterData(true)

@@ -53,7 +53,8 @@
     "lint": "eslint .",
     "prepublishOnly": "npm run build",
     "release": "bumpp -r",
-    "dep:up": "taze -I major"
+    "dep:up": "taze -I major",
+    "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
     "vite": "^3.1.0 || ^4.0.0-0"
