@@ -1,6 +1,5 @@
 import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
 import type { CSSProperties, Ref } from 'vue'
-import type { OpenInEditorFn } from '../../types'
 import { clamp, useObjectStorage, useScreenSafeArea, useWindowEventListener, warn } from './utils'
 
 interface DevToolsFrameState {
@@ -62,7 +61,7 @@ export function useIframe(clientUrl: string, onLoad: () => void) {
 }
 
 // ---- useInspector ----
-type OpenInEditorFnFromPlugin = (baseUrl: string, filePath: string, line?: number, column?: number) => any
+type OpenInEditorFnFromPlugin = (baseUrl: string, filePath: string, line?: number, column?: number) => void
 
 export function useInspector() {
   const inspectorEnabled = ref(false)
@@ -78,7 +77,7 @@ export function useInspector() {
     inspectorEnabled.value = false
   }
 
-  const openInEditor = ref<OpenInEditorFn>()
+  const openInEditor = ref< (filePath: string, line?: number, column?: number) => void>()
 
   const getBaseUrl = () => {
     const { protocol, hostname, port } = window.location
