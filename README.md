@@ -13,8 +13,8 @@ Vue DevTools <sup>Preview</sup>
 </p>
 
 <p align="center">
-  <a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 Ideas & Suggestions</a> |
-  <a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> 
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 Ideas & Suggestions</a> |
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> 
 </p>
 
 <p align="center">
