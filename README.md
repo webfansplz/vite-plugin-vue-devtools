@@ -156,7 +156,7 @@ interface VitePluginVueDevToolsOptions {
 
 ## 👨‍💻 Contributors
 
-<a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
+<a href="https://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=webfansplz/vite-plugin-vue-devtools" />   
 </a>    
 
