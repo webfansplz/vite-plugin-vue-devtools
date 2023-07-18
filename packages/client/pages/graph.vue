@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
+import { matchedKeys } from '../logic/graph'
 import { searchResults as modules } from '~/logic/graph'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
@@ -29,8 +30,19 @@ function getHoverPath(level: GraphSettingsType['hoverPathLevel'], fullPath: stri
   }
 }
 
+const isMatched = (id: string) => matchedKeys.value.includes(id)
+
+function getFontStyle(id: string) {
+  return {
+    color: isMatched(id)
+      ? '#F19B4A'
+      : isDark.value ? 'white' : 'black',
+    multi: 'html',
+  }
+}
+
 const data = computed<Data>(() => {
-  const { data, main } = modules.value
+  const data = modules.value
   if (!data)
     return { node: [], edges: [] }
   const nodes: Data['nodes'] = data.map((mod) => {
@@ -42,20 +54,14 @@ const data = computed<Data>(() => {
       modulesMap.value.set(id, { filePath: path })
     else
       modulesMap.value.get(id)!.filePath = path
-    const isInMain = !!main.find(i => i.id === id)
 
     return {
       id,
-      label: isInMain ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
+      label: isMatched(id) ? `<b>${pathSegments.at(-1)}</b>` : pathSegments.at(-1),
       title: getHoverPath(settings.graphSettings.value.hoverPathLevel, path, rootPath),
       group: path.match(/\.(\w+)$/)?.[1] || 'unknown',
       size: 15 + Math.min(mod.deps.length / 2, 8),
-      font: {
-        color: isInMain
-          ? '#F19B4A'
-          : isDark.value ? 'white' : 'black',
-        multi: 'html',
-      },
+      font: getFontStyle(id),
       shape: mod.id.includes('/node_modules/')
         ? 'hexagon'
         : mod.virtual
@@ -135,7 +141,9 @@ onMounted(() => {
     if (!settings.graphSettings.value.highlightSelection)
       return
     // @ts-expect-error network body typing error
-    network.body.data.nodes.update(network.body.data.nodes.getIds().map(id => ({ id, size: 16 })))
+    network.body.data.nodes.update(network.body.data.nodes.getIds().map(id => ({
+      id, size: 16, font: getFontStyle(id),
+    })))
     // @ts-expect-error network body typing error
     network.body.data.edges.update(network.body.data.edges.getIds().map((id) => {
       // @ts-expect-error network body typing error
@@ -163,9 +171,9 @@ onMounted(() => {
     // @ts-expect-error network body typing error
     const nonConnectedEdges = network.body.data.edges.getIds().filter(id => !network.getConnectedEdges(nodeId).includes(id))
     // @ts-expect-error network body typing error
-    network.body.data.nodes.update(nonConnectedNodes.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
+    network.body.data.nodes.update(nonConnectedNodes.map(id => ({ id, color: '#cccccc10', font: { color: '#cccccc10' } })))
     // @ts-expect-error network body typing error
-    network.body.data.edges.update(nonConnectedEdges.map(id => ({ id, color: 'rgb(69,69,69,.3)' })))
+    network.body.data.edges.update(nonConnectedEdges.map(id => ({ id, color: '#cccccc10' })))
     // @ts-expect-error network body typing error
     network.body.data.nodes.update([{ id: nodeId, color: options.groups[network.body.data.nodes.get(nodeId).group]?.color, size: 26 }])
     lastSelectedNode.value = nodeId
@@ -194,7 +202,7 @@ const { showGraphSetting } = useGraphSettings()
         </button>
       </template>
     </SearchBox>
-    <div ref="container" flex="1" :class="[isHoveringNode && metaKeyPressed ? 'cursor-pointer' : '']" />
+    <div ref="container" flex="1" :class="[isHoveringNode ? 'cursor-pointer' : '']" />
     <GraphSettings />
   </div>
 </template>
