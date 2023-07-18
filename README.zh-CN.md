@@ -2,11 +2,11 @@
   <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/bg.png" />
 </p>
 <h1 align="center">
-Vue DevTools <sup>Preview</sup>
+Vue DevTools <sup>预览</sup>
 </h1>
 
 <p align="center">
-English | <a href="./README.zh-CN.md">简体中文</a>
+<a href="./README.md">English</a> | 简体中文
 </p>
 
 <p align="center">
@@ -16,8 +16,8 @@ English | <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 Ideas & Suggestions</a> |
-  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> 
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 想法 & 建议</a> |
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ 项目路线图</a> 
 </p>
 
 <p align="center">
@@ -25,70 +25,70 @@ English | <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
 
-## 📖 Introduction
+## 📖 介绍
 
-`vite-plugin-vue-devtools` is a Vite plugin designed to enhance the Vue developer experience.
+`vite-plugin-vue-devtools` 是一个旨在增强 Vue 开发者体验的Vite插件。
 
 
 
-## 🎉 Features
+## 🎉 特性
 
 ### Pages
 
-The pages tab shows your current routes and provide a quick way to navigate to them. For dynamic routes, it also provide a form to fill with each params interactively. You can also use the textbox to play and test how each route is matched.
+`Pages` 选项卡显示您当前的页面路由并提供快速导航的方法。对于动态路由，它还提供了一个表单来交互式地填写每个参数。您还可以使用文本框来测试每个路由的匹配情况。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/pages.png" />
 
 
 ### Components
 
-Components tab show all the components you are using in your app and hierarchy. You can also select them to see the details of the component (e.g. data,props).
+`Components` 选项卡显示您应用程序的所有组件树，您还可以选择它们来查看组件的详细信息（例如数据、属性）。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/components.png" />
 
 ### Assets
 
-Assets tab that shows all your static assets and their information. You can open the asset in the browser or download it.
+`Assets` 选项卡显示所有静态资源及其信息，您可以在浏览器中打开或下载它。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/assets.png" />
 
 ### Timeline
 
-Timeline tab has three categories: Performance, Router Navigations, and Pinia. You can switch between them to see the state changes and timelines.
+`Timeline` 选项卡包含三个类别：性能、路由导航和 Pinia，您可以在它们之间切换以查看状态变化和时间线。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/timeline.png" />
 
 ### Routes
 
-Routes tab is a feature integrated with [Vue Router](https://github.com/vuejs/router), allowing you to view the registered routes and their details.
+`Routes` 选项卡是与 [Vue Router](https://github.com/vuejs/router) 集成的功能，允许您查看注册的路由及其详细信息。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/routes.png" />
 
 ### Pinia
 
-Pinia tab is a feature integrated with [Pinia](https://github.com/vuejs/pinia), allowing you to view the registered modules and their details.
+`Pinia` 选项卡是与 [Pinia](https://github.com/vuejs/pinia) 集成的功能，允许您查看注册的模块及其详细信息。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/pinia.png" />
 
 ### Graph
 
-Graph tab provides a graph view that show the relationship between components. 
+`Graph` 选项卡提供了显示组件依赖关系的视图。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/graph.png" />
 
 ### Inspect
 
-Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of Vite. It can be helpful to understand how each plugin is transforming your code and spot potential issues.
+`Inspect` 公开 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) 集成，允许您检查 Vite 的转换步骤，了解每个插件如何改变您的代码并发现潜在问题可能会有所帮助。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/inspect.png" />
 
 ### Inspector
 
-You can also use the "Inspector" feature to inspect the DOM tree and see which component is rendering it. Click to go to your editor of the specific line. Making it much easier to make changes, without the requirement of understanding the project structure thoroughly. (This feature is implemented based on the [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
+您还可以使用 `Inspector` 功能来检查 `DOM` 树并查看哪个组件正在渲染它，单击可转到特定行的编辑器，使更改变得更加容易，而无需彻底了解项目结构。 (该功能基于 [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/inspector.png" height=450 />
 
-## 📦 Installation
+## 📦 安装
 
 ```
 
@@ -98,9 +98,9 @@ pnpm install vite-plugin-vue-devtools -D
 
 ```
 
-## 🦄 Usage
+## 🦄 示例
 
-### Configuration Vite
+### Vite 配置
 
 ```ts
 import { defineConfig } from 'vite'
@@ -114,7 +114,7 @@ export default defineConfig({
 })
 ```
 
-### Options
+### 选项
 
 ```ts
 interface VitePluginVueDevToolsOptions {
@@ -128,13 +128,13 @@ interface VitePluginVueDevToolsOptions {
 }
 ```
 
-## 💡 Notice
+## 💡 注意
 
-- Only available in `development mode`.
-- Only support `Vue3.0+` .
-- Only supports single-instance `Vue` applications.
-- Doesn't support `SSR` (If you're using `Nuxt`, use [nuxt/devtools](https://github.com/nuxt/devtools) directly).
-- The plugin follows `Vue's DevTools` configuration, so if you have configured the `hide` option, it will also be applied in this plugin. e.g.
+- 仅在 `开发模式` 下可用。
+- 仅支持 `Vue3.0+` 。
+- 仅支持单实例 `Vue` 应用程序。
+- 不支持 `SSR` (如果您使用 `Nuxt` ，请使用 [nuxt/devtools](https://github.com/nuxt/devtools))。
+- 该插件遵循 `Vue` 的 `DevTools` 配置，因此如果您配置了 `hide` 选项，它也将应用于该插件。例如
 
   ```js
   // This Vue instance will be ignored by the plugin.
@@ -146,18 +146,18 @@ interface VitePluginVueDevToolsOptions {
   })
   ```
 
-## 📖 Blog Post
+## 📖 博客
 
-- [Introducing Vue DevTools (Vite Plugin)](https://gist.github.com/webfansplz/bc90a773a0dd474a34e043ab2d2a37a4)
+- [介绍 Vue DevTools (Vite 插件)](https://gist.github.com/webfansplz/bc90a773a0dd474a34e043ab2d2a37a4)
 
-## 🌸 Credits
+## 🌸 致谢
 
-- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
+- 该项目深受 [nuxt/devtools](https://github.com/nuxt/devtools) 的启发，感谢 `Anthony Fu` 和 `Nuxt` 团队的出色工作
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
 
 
-## 👨‍💻 Contributors
+## 👨‍💻 贡献者
 
 <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=webfansplz/vite-plugin-vue-devtools" />   
