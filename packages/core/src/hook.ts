@@ -9,6 +9,8 @@ export enum DevToolsHooks {
   PERFORMANCE_END = 'perf:end',
   ADD_ROUTE = 'router:add-route',
   REMOVE_ROUTE = 'router:remove-route',
+  RENDER_TRACKED = 'render:tracked',
+  RENDER_TRIGGERED = 'render:triggered',
 }
 
 export const devtoosHook = typeof window !== 'undefined'

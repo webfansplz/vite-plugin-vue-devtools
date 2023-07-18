@@ -167,7 +167,7 @@ function processState(instance: any): any {
     }))
 }
 
-function processSetupState(instance: any) {
+export function processSetupState(instance: any) {
   const raw = instance.devtoolsRawSetupState || {}
   return Object.keys(instance.setupState)
     .filter(key => !vueBuiltins.includes(key) && key.split(/(?=[A-Z])/)[0] !== 'use')
@@ -226,14 +226,14 @@ function isReadOnly(raw: any): boolean {
   return !!raw.__v_isReadonly
 }
 
-function toRaw(value: any) {
+export function toRaw(value: any) {
   if (value?.__v_raw)
     return value.__v_raw
 
   return value
 }
 
-function getSetupStateInfo(raw: any) {
+export function getSetupStateInfo(raw: any) {
   return {
     ref: isRef(raw),
     computed: isComputed(raw),

@@ -1,14 +1,11 @@
+import { DevToolsHooks } from '@vite-plugin-vue-devtools/core'
+import type { DebuggerEvent } from 'vue'
 import { updatePinia } from './pinia'
 import { instance, updateApp, app as vueApp } from './app'
 import { useDevToolsClient } from './client'
+import { getSetupStateInfo, toRaw } from '~/logic/components/data'
 
-enum DevtoolsHooks {
-  APP_INIT = 'app:init',
-  COMPONENT_UPDATED = 'component:updated',
-  COMPONENT_ADDED = 'component:added',
-  COMPONENT_REMOVED = 'component:removed',
-  COMPONENT_EMIT = 'component:emit',
-}
+type ComponentInstance = any // @TODO
 
 function hideInDevtools(component) {
   return component?.root?.type?.devtools?.hide
@@ -16,10 +13,10 @@ function hideInDevtools(component) {
 
 const client = useDevToolsClient()
 
-function produceHook() {
+function subscribeHook() {
   const client = useDevToolsClient()
   const hook = client.value.hook
-  hook.on(DevtoolsHooks.APP_INIT, (app) => {
+  hook.on(DevToolsHooks.APP_INIT, (app) => {
     if (app?._vueDevtools_hidden_)
       return
     vueApp.value = app
@@ -30,7 +27,27 @@ function produceHook() {
     return (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
   }
 
-  hook.on(DevtoolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.RENDER_TRACKED, (e: DebuggerEvent, instance: ComponentInstance) => {
+    // console.log(processSetupState(instance))
+    // console.log(getSetupStateInfo(e.target))
+    // console.log('track', e, instance.setupState, instance.devtoolsRawSetupState)
+  })
+
+  hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance) => {
+    // data type
+    const info = getSetupStateInfo(e.target)
+    const dataType = info.computed ? 'Computed' : info.ref ? 'Ref' : info.reactive ? 'Reactive' : null
+    // key
+    const index = Object.values(instance.devtoolsRawSetupState).map(i => toRaw(i)).indexOf(e.target)
+    const key = Object.keys(instance.devtoolsRawSetupState)[index]
+    // value
+    const value = !dataType || info.reactive ? e.target[e.key] : e.target.value
+    // update type
+    console.log('xxx', key, dataType, value, e.type)
+    // console.log('trigger', e, instance.setupState, instance.devtoolsRawSetupState)
+  })
+
+  hook.on(DevToolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -39,7 +56,7 @@ function produceHook() {
     updateApp(app, component)
   })
 
-  hook.on(DevtoolsHooks.COMPONENT_ADDED, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_ADDED, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -49,7 +66,7 @@ function produceHook() {
     updateApp(app, component)
   })
 
-  hook.on(DevtoolsHooks.COMPONENT_REMOVED, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_REMOVED, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -60,7 +77,7 @@ function produceHook() {
     updateApp(app, component)
   })
 
-  hook.on(DevtoolsHooks.COMPONENT_EMIT, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_EMIT, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -72,7 +89,7 @@ function produceHook() {
   })
 }
 
-function ConsumeHook(buffer: [string, Record<string, any>][]) {
+function publishHook(buffer: [string, Record<string, any>][]) {
   buffer.forEach(([_, { app, component }]) => {
     updatePinia(component)
     updateApp(app, component)
@@ -81,6 +98,6 @@ function ConsumeHook(buffer: [string, Record<string, any>][]) {
 
 export const hookApi = {
   hook: client.value.hook,
-  produce: produceHook,
-  consume: ConsumeHook,
+  subscribe: subscribeHook,
+  publish: publishHook,
 }
