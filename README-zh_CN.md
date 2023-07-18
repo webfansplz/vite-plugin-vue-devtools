@@ -132,7 +132,7 @@ interface VitePluginVueDevToolsOptions {
 - 仅在 `开发模式` 下可用。
 - 仅支持 `Vue3.0+` 。
 - 目前仅支持单实例 `Vue` 应用程序（多实例支持即将推出）。
-- 不支持 `SSR` (如果您使用 `Nuxt` ，请使用 [nuxt/devtools](https://github.com/nuxt/devtools) directly).
+- 不支持 `SSR` (如果您使用 `Nuxt` ，请使用 [nuxt/devtools](https://github.com/nuxt/devtools))。
 - 该插件遵循 `Vue` 的 `DevTools` 配置，因此如果您配置了 `hide` 选项，它也将应用于该插件。例如
 
   ```js
@@ -151,7 +151,7 @@ interface VitePluginVueDevToolsOptions {
 
 ## 🌸 制作人员
 
-- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
+- 该项目深受 [nuxt/devtools](https://github.com/nuxt/devtools) 的启发，感谢 `Anthony Fu` 和 `Nuxt` 团队的出色工作
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
 
