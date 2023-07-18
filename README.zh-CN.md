@@ -5,8 +5,9 @@
 Vue DevTools <sup>预览</sup>
 </h1>
 
-[English](./README.md) | 简体中文
-
+<p align="center">
+<a href="./README.md">English</a> | 简体中文
+</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-vue-devtools" alt="NPM Version" /></a>
@@ -26,7 +27,7 @@ Vue DevTools <sup>预览</sup>
 
 ## 📖 介绍
 
-`vite-plugin-vue-devtools` 是一个 Vite 插件，旨在增强 Vue 开发者体验。
+`vite-plugin-vue-devtools` 是一个旨在增强 Vue 开发者体验的Vite插件。
 
 
 
@@ -34,26 +35,26 @@ Vue DevTools <sup>预览</sup>
 
 ### Pages
 
-`Pages` 选项卡显示您当前的路线并提供快速导航的方法。对于动态路由，它还提供了一个表单来交互式地填写每个参数。您还可以使用文本框来播放和测试每条路线的匹配情况。
+`Pages` 选项卡显示您当前的页面路由并提供快速导航的方法。对于动态路由，它还提供了一个表单来交互式地填写每个参数。您还可以使用文本框来测试每个路由的匹配情况。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/pages.png" />
 
 
 ### Components
 
-`Components` 选项卡显示您在应用程序和层次结构中使用的所有组件，您还可以选择它们来查看组件的详细信息（例如数据、属性）。
+`Components` 选项卡显示您应用程序的所有组件树，您还可以选择它们来查看组件的详细信息（例如数据、属性）。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/components.png" />
 
 ### Assets
 
-`Assets` 选项卡显示所有静态资产及其信息，您可以在浏览器中打开资产或下载它。
+`Assets` 选项卡显示所有静态资源及其信息，您可以在浏览器中打开或下载它。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/assets.png" />
 
 ### Timeline
 
-`Timeline` 选项卡包含三个类别：性能、路由器导航和 Pinia，您可以在它们之间切换以查看状态变化和时间线。
+`Timeline` 选项卡包含三个类别：性能、路由导航和 Pinia，您可以在它们之间切换以查看状态变化和时间线。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/timeline.png" />
 
@@ -65,13 +66,13 @@ Vue DevTools <sup>预览</sup>
 
 ### Pinia
 
-`Pinia` 选项卡是与 [Pinia](https://github.com/vuejs/pinia) 集成的功能，允许您查看注册的路由及其详细信息。
+`Pinia` 选项卡是与 [Pinia](https://github.com/vuejs/pinia) 集成的功能，允许您查看注册的模块及其详细信息。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/pinia.png" />
 
 ### Graph
 
-`Graph` 选项卡提供了显示组件之间关系的图表视图。
+`Graph` 选项卡提供了显示组件依赖关系的视图。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/graph.png" />
 
@@ -131,7 +132,7 @@ interface VitePluginVueDevToolsOptions {
 
 - 仅在 `开发模式` 下可用。
 - 仅支持 `Vue3.0+` 。
-- 目前仅支持单实例 `Vue` 应用程序（多实例支持即将推出）。
+- 仅支持单实例 `Vue` 应用程序。
 - 不支持 `SSR` (如果您使用 `Nuxt` ，请使用 [nuxt/devtools](https://github.com/nuxt/devtools))。
 - 该插件遵循 `Vue` 的 `DevTools` 配置，因此如果您配置了 `hide` 选项，它也将应用于该插件。例如
 
@@ -145,11 +146,11 @@ interface VitePluginVueDevToolsOptions {
   })
   ```
 
-## 📖 博客文章
+## 📖 博客
 
 - [介绍 Vue DevTools (Vite 插件)](https://gist.github.com/webfansplz/bc90a773a0dd474a34e043ab2d2a37a4)
 
-## 🌸 制作人员
+## 🌸 致谢
 
 - 该项目深受 [nuxt/devtools](https://github.com/nuxt/devtools) 的启发，感谢 `Anthony Fu` 和 `Nuxt` 团队的出色工作
 

@@ -5,16 +5,19 @@
 Vue DevTools <sup>Preview</sup>
 </h1>
 
+<p align="center">
+English | <a href="./README.zh-CN.md">简体中文</a>
+</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-vue-devtools" alt="NPM Version" /></a>
   <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-vue-devtools" alt="NPM Downloads" /></a>
- <a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/webfansplz/vite-plugin-vue-devtools" alt="License" /></a>
+ <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/webfansplz/vite-plugin-vue-devtools" alt="License" /></a>
 </p>
 
 <p align="center">
-  <a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 Ideas & Suggestions</a> |
-  <a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> 
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 Ideas & Suggestions</a> |
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> 
 </p>
 
 <p align="center">
@@ -127,11 +130,11 @@ interface VitePluginVueDevToolsOptions {
 
 ## 💡 Notice
 
-- Only available in development mode.
-- Only support Vue3.0+.
-- Currently only supports single-instance Vue applications (multi-instance support is coming soon).
-- Doesn't support SSR (If you're using Nuxt, use [nuxt/devtools](https://github.com/nuxt/devtools) directly).
-- The plugin follows Vue's DevTools configuration, so if you have configured the `hide` option, it will also be applied in this plugin. e.g.
+- Only available in `development mode`.
+- Only support `Vue3.0+` .
+- Only supports single-instance `Vue` applications.
+- Doesn't support `SSR` (If you're using `Nuxt`, use [nuxt/devtools](https://github.com/nuxt/devtools) directly).
+- The plugin follows `Vue's DevTools` configuration, so if you have configured the `hide` option, it will also be applied in this plugin. e.g.
 
   ```js
   // This Vue instance will be ignored by the plugin.
@@ -156,7 +159,7 @@ interface VitePluginVueDevToolsOptions {
 
 ## 👨‍💻 Contributors
 
-<a href="https://github.comhttps://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
+<a href="https://github.com/webfansplz/vite-plugin-vue-devtools/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=webfansplz/vite-plugin-vue-devtools" />   
 </a>    
 

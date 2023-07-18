@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 // relative to scripts directory
 const destinations = [
   ['../README.md', '../packages/node/README.md'],
+  ['../README.zh-CN.md', '../packages/node/README.zh-CN.md'],
 ]
 
 const _filename = fileURLToPath(import.meta.url)
