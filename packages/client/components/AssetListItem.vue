@@ -4,19 +4,15 @@ const props = defineProps<{
 }>()
 
 const icon = computed(() => {
-  if (props.asset.type === 'image')
-    return 'i-carbon-image'
-  if (props.asset.type === 'video')
-    return 'i-carbon-video'
-  if (props.asset.type === 'audio')
-    return 'i-carbon-volume-up'
-  if (props.asset.type === 'font')
-    return 'i-carbon-text-small-caps'
-  if (props.asset.type === 'text')
-    return 'i-carbon-document'
-  if (props.asset.type === 'json')
-    return 'i-carbon-json'
-  return 'i-carbon-document-blank'
+  const assets = {
+    image: 'i-carbon-image',
+    video: 'i-carbon-video',
+    audio: 'i-carbon-volume-up',
+    font: 'i-carbon-text-small-caps',
+    text: 'i-carbon-document',
+    json: 'i-carbon-json',
+  }
+  return assets[props.asset.type] ?? 'i-carbon-document-blank'
 })
 </script>
 
