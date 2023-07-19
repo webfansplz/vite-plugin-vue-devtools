@@ -22,6 +22,12 @@ export const builtinTabs: BuiltinTab[] = [
     group: 'app',
   },
   {
+    path: 'rerender-trace',
+    title: 'Rerender trace',
+    icon: 'i-ic:outline-track-changes',
+    group: 'app',
+  },
+  {
     path: 'assets',
     title: 'Assets',
     icon: 'i-carbon-image-copy',

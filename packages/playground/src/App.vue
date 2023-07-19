@@ -11,6 +11,9 @@ const p = reactive({
   age: 18,
 })
 
+// setInterval(() => {
+//   count.value++
+// }, 1000)
 // watch(count, () => {
 //   p.age = count.value
 // })

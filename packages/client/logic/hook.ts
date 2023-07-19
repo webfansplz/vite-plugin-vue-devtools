@@ -1,11 +1,7 @@
 import { DevToolsHooks } from '@vite-plugin-vue-devtools/core'
-import type { DebuggerEvent } from 'vue'
 import { updatePinia } from './pinia'
 import { instance, updateApp, app as vueApp } from './app'
 import { useDevToolsClient } from './client'
-import { getSetupStateInfo, toRaw } from '~/logic/components/data'
-
-type ComponentInstance = any // @TODO
 
 function hideInDevtools(component) {
   return component?.root?.type?.devtools?.hide
@@ -26,26 +22,6 @@ function subscribeHook() {
   function skipCollect(app, uid, component) {
     return (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
   }
-
-  hook.on(DevToolsHooks.RENDER_TRACKED, (e: DebuggerEvent, instance: ComponentInstance) => {
-    // console.log(processSetupState(instance))
-    // console.log(getSetupStateInfo(e.target))
-    // console.log('track', e, instance.setupState, instance.devtoolsRawSetupState)
-  })
-
-  hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance) => {
-    // data type
-    const info = getSetupStateInfo(e.target)
-    const dataType = info.computed ? 'Computed' : info.ref ? 'Ref' : info.reactive ? 'Reactive' : null
-    // key
-    const index = Object.values(instance.devtoolsRawSetupState).map(i => toRaw(i)).indexOf(e.target)
-    const key = Object.keys(instance.devtoolsRawSetupState)[index]
-    // value
-    const value = !dataType || info.reactive ? e.target[e.key] : e.target.value
-    // update type
-    console.log('xxx', key, dataType, value, e.type)
-    // console.log('trigger', e, instance.setupState, instance.devtoolsRawSetupState)
-  })
 
   hook.on(DevToolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
     updatePinia(component)
