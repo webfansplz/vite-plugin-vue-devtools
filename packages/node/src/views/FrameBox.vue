@@ -131,7 +131,7 @@ useWindowEventListener('mouseleave', () => {
     <div
       v-show="state.position !== 'right'"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
-      :style="{ right: 0 }"
+      :style="{ right: '-6px' }"
       @mousedown.prevent="() => isResizing = { right: true }"
     />
     <div
