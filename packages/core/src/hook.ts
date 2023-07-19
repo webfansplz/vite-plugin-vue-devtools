@@ -13,8 +13,8 @@ export enum DevToolsHooks {
   RENDER_TRIGGERED = 'render:triggered',
 }
 
-export const devtoosHook = typeof window !== 'undefined'
-  ? window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
+export function createDevToolsHook() {
+  window.__VUE_DEVTOOLS_GLOBAL_HOOK__ ??= {
     events: new Map<DevToolsHooks, () => void>(),
     on(event: DevToolsHooks, fn: () => void) {
       if (!this.events.has(event))
@@ -27,7 +27,8 @@ export const devtoosHook = typeof window !== 'undefined'
         this.events.get(event).forEach(fn => fn(...payload))
     },
   }
-  : {}
+  return window.__VUE_DEVTOOLS_GLOBAL_HOOK__
+}
 
 export function collectDevToolsHookBuffer() {
   const hookBuffer: [string, Record<string, unknown>][] = []
