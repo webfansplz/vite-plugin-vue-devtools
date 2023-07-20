@@ -1,17 +1,21 @@
 <script setup lang="ts">
+import dayjs from 'dayjs'
 import { DevToolsHooks } from '@vite-plugin-vue-devtools/core'
 import type { DebuggerEvent, Ref } from 'vue'
 import { useDevToolsClient } from '~/logic/client'
+import { rootPath } from '~/logic/global'
 import { getSetupStateInfo, toRaw } from '~/logic/components/data'
 
 type ComponentInstance = any
 
 interface TraceInfo {
-  componentName: string
+  componentFile: string
+  fullFilePath: string
   key: string
   value: unknown
   dataType: string | null
   updateType: string
+  updateTime: number
 }
 
 const client = useDevToolsClient()
@@ -20,29 +24,36 @@ const isTracing = ref(false)
 const result = ref<TraceInfo[]>([])
 const traceBuffer = ref<TraceInfo[]>([])
 
-function toggleTracing(state: boolean) {
-  isTracing.value = state
-}
-
 function normalizeEventInfo(e: DebuggerEvent, instance: ComponentInstance): TraceInfo {
   const info = getSetupStateInfo(e.target)
+  // file
+  const file = instance.type.__file?.replace?.(rootPath, '') ?? '-'
   // data type
   const dataType = info.computed ? 'Computed' : info.ref ? 'Ref' : info.reactive ? 'Reactive' : null
   // key
   const index = Object.values(instance.devtoolsRawSetupState).map(i => toRaw(i)).indexOf(toRaw(e.target))
-  const key = Object.keys(instance.devtoolsRawSetupState)[index]
+  const key = index === -1 ? (e.key ?? 'unknown') : Object.keys(instance.devtoolsRawSetupState)[index]
 
   // value
   const value = !dataType || info.reactive ? e.target[e.key] : (e.target as Ref).value
-
   return {
-    componentName: '-',
+    componentFile: file,
+    fullFilePath: instance.type.__file ?? '',
     key,
     value,
-    dataType,
-    updateType: e.type,
+    dataType: dataType ?? 'unknown',
+    updateType: e.type ?? '-',
+    updateTime: Date.now(),
   }
 }
+
+hook.on(DevToolsHooks.RENDER_TRACKED, (e: DebuggerEvent, instance: ComponentInstance) => {
+  isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
+})
+
+hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance) => {
+  isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
+})
 
 function start() {
   result.value = []
@@ -53,17 +64,22 @@ function start() {
 function stop() {
   isTracing.value = false
   const typeOrder = { Ref: 0, Computed: 1 }
-  result.value = traceBuffer.value.sort((a, b) => typeOrder[a.dataType!] - typeOrder[b.dataType!])
+  result.value = traceBuffer.value.sort((a, b) => typeOrder[a.dataType!] - typeOrder[b.dataType!]).sort((a, b) => a.updateTime - b.updateTime)
   traceBuffer.value = []
 }
 
-hook.on(DevToolsHooks.RENDER_TRACKED, (e: DebuggerEvent, instance: ComponentInstance) => {
-  isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
-})
+function clear() {
+  if (isTracing.value)
+    return
+  result.value = []
+}
 
-hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance) => {
-  isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
-})
+function openInEditor(filePath: string) {
+  if (!filePath)
+    return
+  const client = useDevToolsClient()
+  client.value.openInEditor(filePath)
+}
 </script>
 
 <template>
@@ -81,7 +97,7 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentIn
           </template>
         </VTooltip>
         <VTooltip placement="bottom" :distance="12" text-center>
-          <i class="i-grommet-icons:clear" text="3.8" cursor-pointer text-secondary hover="text-black dark:text-white" />
+          <i class="i-grommet-icons:clear" text="3.8" cursor-pointer text-secondary hover="text-black dark:text-white" @click="clear" />
           <template #popper>
             <p text-xs op-50>
               Clear
@@ -123,8 +139,8 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentIn
       <table v-if="result.length && !isTracing">
         <thead border="b r base" sticky display="table-header-group" top-0 z-10>
           <tr bg-base>
-            <th p-2 text-left>
-              Component Name
+            <th p-2 text-center>
+              Component File
             </th>
             <th p-2 text-center>
               Key
@@ -138,24 +154,30 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentIn
             <th p-2 text-center>
               Update Type
             </th>
+            <th p-2 text-center>
+              Update Time
+            </th>
           </tr>
         </thead>
         <tbody border="b r base">
           <tr v-for="(item, index) in result" :key="index" class="group" h-7 border="b dashed transparent hover:base">
-            <td text-center text-sm op70>
-              {{ item.componentName }}
+            <td max-w-50 of-hidden text-ellipsis px-2 text-center text-sm underline op70 hover="text-primary" @click="openInEditor(item.fullFilePath)">
+              {{ item.componentFile }}
             </td>
-            <td w-30 ws-nowrap pr-1 text-center text-sm font-mono underline op70 hover="text-primary">
+            <td max-w-30 w-30 of-hidden text-ellipsis ws-nowrap px-2 text-center text-sm font-mono op70>
               {{ item.key }}
             </td>
-            <td w-30 ws-nowrap pr-1 text-center text-sm font-mono op70>
+            <td max-w-30 w-30 of-hidden text-ellipsis ws-nowrap px-2 text-center text-sm font-mono op70>
               {{ item.value }}
             </td>
-            <td w-30 ws-nowrap pr-1 text-center text-sm font-mono op70>
+            <td max-w-30 w-30 of-hidden text-ellipsis ws-nowrap px-2 text-center text-sm font-mono op70>
               {{ item.dataType }}
             </td>
-            <td w-30 ws-nowrap pr-1 text-center text-sm font-mono op70>
+            <td max-w-30 w-30 of-hidden text-ellipsis ws-nowrap px-2 text-center text-sm font-mono op70>
               {{ item.updateType }}
+            </td>
+            <td max-w-30 w-30 of-hidden text-ellipsis ws-nowrap px-2 text-center text-sm font-mono op70>
+              {{ dayjs(item.updateTime).format('HH:mm:ss') }}
             </td>
           </tr>
         </tbody>

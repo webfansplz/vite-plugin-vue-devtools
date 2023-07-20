@@ -33,13 +33,17 @@ export interface VitePluginVueDevToolsOptions {
   * @default ''
   */
   appendTo?: string | RegExp
+  /**
+   * Enable rerender trace feature
+   * @default true
+  */
   analyze?: Partial<AnalyzeOptions>
 }
 
 const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
   appendTo: '',
   analyze: {
-    rerender: false,
+    rerender: true,
   },
 }
 

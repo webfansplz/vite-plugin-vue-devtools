@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onRenderTracked, onRenderTriggered, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAppStore } from './stores'
 
@@ -17,17 +17,7 @@ const p = reactive({
 // watch(count, () => {
 //   p.age = count.value
 // })
-onRenderTracked((e) => {
-  const instance = getCurrentInstance()
-  // @ts-expect-error missing type
-  window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
-})
 
-onRenderTriggered((e) => {
-  const instance = getCurrentInstance()
-  // @ts-expect-error missing type
-  window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
-})
 const appStore = useAppStore()
 // const count = ref(100)
 

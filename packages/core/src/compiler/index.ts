@@ -4,7 +4,7 @@ import { analyzeByTraceRerender } from './trace-rerender'
 
 export interface AnalyzeOptions {
   /**
-   * @default false
+   * @default true
    */
   rerender: boolean
 }
