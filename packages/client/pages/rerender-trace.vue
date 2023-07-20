@@ -77,7 +77,6 @@ function clear() {
 function openInEditor(filePath: string) {
   if (!filePath)
     return
-  const client = useDevToolsClient()
   client.value.openInEditor(filePath)
 }
 </script>

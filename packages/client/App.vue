@@ -21,7 +21,7 @@ hookApi.hook.on('init:vue:app', () => {
   // perf timeline
   // close perf timeline to avoid performance issue (#9)
   // initPerfTimeline(categorizedHookBuffer.perf)
-  // consume hook buffer
+  // publish hook buffer
   hookApi.publish(categorizedHookBuffer.component ?? [])
   // init routes
   initRoutes(categorizedHookBuffer.router ?? [])
