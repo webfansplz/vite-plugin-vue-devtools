@@ -101,7 +101,7 @@ test('compiler:import:ensureImport', () => {
       id: 'onMounted',
       alias: '$$onMounted',
     }],
-  })
+  }, 0)
   expect(ms.toString()).toMatchInlineSnapshot(`
     "import { reactive as $$reactive, onMounted as $$onMounted } from 'vue';
     "
