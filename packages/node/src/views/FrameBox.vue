@@ -113,19 +113,19 @@ useWindowEventListener('mouseleave', () => {
     <div
       v-show="state.position !== 'top'"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
-      :style="{ top: 0 }"
+      :style="{ top: '-6px' }"
       @mousedown.prevent="() => isResizing = { top: true }"
     />
     <div
       v-show="state.position !== 'bottom'"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
-      :style="{ bottom: 0 }"
+      :style="{ bottom: '-6px' }"
       @mousedown.prevent="() => isResizing = { bottom: true }"
     />
     <div
       v-show="state.position !== 'left'"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
-      :style="{ left: 0 }"
+      :style="{ left: '-6px' }"
       @mousedown.prevent="() => isResizing = { left: true }"
     />
     <div
@@ -178,8 +178,8 @@ useWindowEventListener('mouseleave', () => {
 
 .vue-devtools-resize-handle-horizontal {
   position: absolute;
-  left: 6px;
-  right: 6px;
+  left: 0;
+  right: 0;
   height: 10px;
   margin: -5px 0;
   cursor: ns-resize;
@@ -187,7 +187,7 @@ useWindowEventListener('mouseleave', () => {
 }
 .vue-devtools-resize-handle-vertical {
   position: absolute;
-  top: 6px;
+  top: 0;
   bottom: 0;
   width: 10px;
   margin: 0 -5px;
