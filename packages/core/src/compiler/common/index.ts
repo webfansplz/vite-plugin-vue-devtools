@@ -26,10 +26,17 @@ function babelParse(code: string, lang: string) {
   return parse(code, options)
 }
 
+export interface ScriptOffset {
+  start: number
+  end: number
+}
+
 export function parseSFC(code: string, filename: string): {
   sfc: SFCParseResult
   script: SFCDescriptor['script']
   scriptSetup: SFCDescriptor['scriptSetup']
+  scriptOffset: ScriptOffset
+  scriptSetupOffset: ScriptOffset
   getScriptAST(): ReturnType<typeof babelParse> | undefined
   getScriptSetupAST(): ReturnType<typeof babelParse> | undefined
 } {
@@ -37,17 +44,13 @@ export function parseSFC(code: string, filename: string): {
     filename,
   })
 
-  const { descriptor, errors } = sfc
+  const { descriptor } = sfc
 
-  const scriptLang = descriptor.script?.lang || 'js'
-  const scriptSetupLang = descriptor.scriptSetup?.lang || 'js'
+  const scriptLang = descriptor.script?.lang ?? 'js'
+  const scriptSetupLang = descriptor.scriptSetup?.lang ?? 'js'
 
-  if (scriptLang !== scriptSetupLang)
+  if (descriptor.script && descriptor.scriptSetup && (scriptLang !== scriptSetupLang))
     throw new Error(`[vue-devtools] ${filename} <script> and <script setup> must use the same language`)
-  if (errors.length) {
-    console.log(`[vue-devtools] parse ${filename} failed`, errors)
-    throw new Error(`[vue-devtools] parse ${filename} failed`)
-  }
 
   const lang = scriptLang || scriptSetupLang
 
@@ -55,6 +58,14 @@ export function parseSFC(code: string, filename: string): {
     sfc,
     script: descriptor.script,
     scriptSetup: descriptor.scriptSetup,
+    scriptOffset: {
+      start: descriptor.script?.loc.start.offset ?? 0,
+      end: descriptor.script?.loc.end.offset ?? 0,
+    },
+    scriptSetupOffset: {
+      start: descriptor.scriptSetup?.loc.start.offset ?? 0,
+      end: descriptor.scriptSetup?.loc.end.offset ?? 0,
+    },
     getScriptAST() {
       if (!descriptor.script)
         return

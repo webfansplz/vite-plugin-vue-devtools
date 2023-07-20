@@ -13,7 +13,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    VueDevTools(),
+    VueDevTools({
+      analyze: {
+        rerender: true,
+      },
+    }),
     vue(),
   ],
 })

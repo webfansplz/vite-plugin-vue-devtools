@@ -15,10 +15,10 @@ export type DeepRequired<T> = {
 
 // TODO: support more, currently only analyze <script setup>
 export function analyzeCode(code: string, filename: string, options: AnalyzeOptions) {
-  if (isVUE(filename))
+  if (!isVUE(filename))
     return null
 
-  const { scriptSetup } = parseSFC(code, filename)
+  const { scriptSetup, scriptSetupOffset } = parseSFC(code, filename)
 
   if (!scriptSetup)
     return null
@@ -26,7 +26,7 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
   let ms = new MagicString(code)
 
   if (options.rerender)
-    ms = analyzeByTraceRerender(ms)
+    ms = analyzeByTraceRerender(ms, scriptSetupOffset)
 
   return {
     code: ms.toString(),

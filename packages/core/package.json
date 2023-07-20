@@ -17,12 +17,10 @@
     }
   },
   "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "*.d.ts",
-    "*.cjs",
-    "*.mjs"
+    "dist"
   ],
   "scripts": {
     "build": "unbuild",
