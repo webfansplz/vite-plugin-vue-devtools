@@ -126,6 +126,14 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
     transform(code, id) {
       const { analyze, appendTo } = pluginOptions
 
+      if (!appendTo)
+        return
+
+      const [filename] = id.split('?', 2)
+      if ((typeof appendTo === 'string' && filename.endsWith(appendTo))
+        || (appendTo instanceof RegExp && appendTo.test(filename)))
+        code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
+
       if (analyze) {
         const transformedCode = analyzeCode(code, id, analyze)
         if (!transformedCode)
@@ -135,14 +143,6 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
           map: transformedCode.map,
         }
       }
-
-      if (!appendTo)
-        return
-
-      const [filename] = id.split('?', 2)
-      if ((typeof appendTo === 'string' && filename.endsWith(appendTo))
-        || (appendTo instanceof RegExp && appendTo.test(filename)))
-        return { code: `${code}\nimport 'virtual:vue-devtools-path:app.js'` }
     },
     transformIndexHtml(html) {
       if (pluginOptions.appendTo)
