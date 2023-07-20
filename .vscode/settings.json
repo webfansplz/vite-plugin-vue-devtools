@@ -4,6 +4,5 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": false,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "references.preferredLocation": "peek"
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
