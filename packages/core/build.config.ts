@@ -6,14 +6,13 @@ export default defineBuildConfig({
   ],
   externals: [
     'vue',
-    'ast-kit',
     '@vue/compiler-sfc',
     '@babel/parser',
-    '@babel/type',
+    'estree-walker',
+    'magic-string',
   ],
   declaration: true,
   rollup: {
     emitCJS: true,
-    cjsBridge: true,
   },
 })

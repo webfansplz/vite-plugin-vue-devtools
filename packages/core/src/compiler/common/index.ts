@@ -1,3 +1,4 @@
+import type { SFCDescriptor, SFCParseResult } from '@vue/compiler-sfc'
 import { parse as sfcParse } from '@vue/compiler-sfc'
 import type { ParserOptions, ParserPlugin } from '@babel/parser'
 import { parse } from '@babel/parser'
@@ -22,14 +23,16 @@ function babelParse(code: string, lang: string) {
   const options: ParserOptions = {
     plugins: getBabelParsePlugins(lang),
   }
-  const { program, errors } = parse(code, options)
-  return {
-    ...program,
-    errors,
-  }
+  return parse(code, options)
 }
 
-export function parseSFC(code: string, filename: string) {
+export function parseSFC(code: string, filename: string): {
+  sfc: SFCParseResult
+  script: SFCDescriptor['script']
+  scriptSetup: SFCDescriptor['scriptSetup']
+  getScriptAST(): ReturnType<typeof babelParse> | undefined
+  getScriptSetupAST(): ReturnType<typeof babelParse> | undefined
+} {
   const sfc = sfcParse(code, {
     filename,
   })
@@ -70,7 +73,7 @@ export type WalkCallback = (this: WalkerContext, node: Node, parent: Node | null
 export function walkAST(node: Node, handlers: {
   enter?: WalkCallback
   leave?: WalkCallback
-}) {
+}): Node | null {
   // @ts-expect-error estree-walker types are not compatible with babel types
   return walk(node, handlers)
 }
