@@ -1,3 +1,6 @@
+import type MS from 'magic-string'
+import { entries } from './utils'
+
 /**
  * @description
  * - import <{ a, b }> from 'c'
@@ -70,8 +73,23 @@ export function collectAllImports(code: string): Record<string, AnalyzeImportRes
   return imports
 }
 
-// export function supplementImport(nodes: Node[]) {
-//   for (const node of nodes) {
-
-//   }
-// }
+export function supplementImport(
+  code: MS, results: Record<string, AnalyzeImportResult>,
+  importPackage: Record<string, { id: string; alias: string }[]>,
+) {
+  const needImportItems: Record<string, { id: string; alias: string }[]> = {}
+  for (const [source, willImport] of entries(importPackage)) {
+    const importedData = results[source]
+    if (!needImportItems || (importedData as AnalyzeImportAll).all)
+      continue
+    willImport.forEach((item) => {
+      if (!(importedData as AnalyzeImportItem[]).some(i => i.raw === item.id))
+        needImportItems[source] = [...(needImportItems[source] || []), { id: item.id, alias: item.alias }]
+    })
+  }
+  for (const [source, packages] of entries(needImportItems)) {
+    const prependCode = `import { ${packages.map(p => `${p.id} as ${p.alias}`).join(', ')} } from '${source}'`
+    code.prepend(`${prependCode};\n`)
+  }
+  return code
+}

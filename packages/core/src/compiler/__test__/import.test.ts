@@ -1,4 +1,5 @@
-import { IMPORT_ALIAS, PURE_IMPORT_RE, collectAllImports } from '../common'
+import MagicString from 'magic-string'
+import { IMPORT_ALIAS, PURE_IMPORT_RE, collectAllImports, supplementImport } from '../common'
 
 describe('compiler:imports', () => {
   test('collect imports', () => {
@@ -89,4 +90,28 @@ describe('compiler:import:alias', () => {
     const r = IMPORT_ALIAS.exec(input)!
     expect([r[1], r[2]]).toEqual(expected)
   })
+})
+
+test('compiler:import:supplementImport', () => {
+  const fixtures = {
+    vue: [
+      {
+        alias: null,
+        raw: 'ref',
+      },
+    ],
+  }
+  const ms = supplementImport(new MagicString(''), fixtures, {
+    vue: [{
+      id: 'reactive',
+      alias: '$$reactive',
+    }, {
+      id: 'onMounted',
+      alias: '$$onMounted',
+    }],
+  })
+  expect(ms.toString()).toMatchInlineSnapshot(`
+    "import { reactive as $$reactive, onMounted as $$onMounted } from 'vue';
+    "
+  `)
 })
