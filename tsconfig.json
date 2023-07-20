@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "noImplicitAny": false,
     "types": [
-      "vite/client"
+      "vite/client",
+      "vitest/globals"
     ]
   },
   "exclude": ["node_modules", "dist", "src/node/app.js"]

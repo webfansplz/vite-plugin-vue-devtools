@@ -5,7 +5,7 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
+import { PLUGIN_NAME, analyzeByTraceRerender, createRPCServer } from '@vite-plugin-vue-devtools/core'
 
 import { DIR_CLIENT } from './dir'
 import {
@@ -30,15 +30,40 @@ export interface VitePluginVueDevToolsOptions {
   * useful for projects that do not use html file as an entry
   *
   * WARNING: only set this if you know exactly what it does.
+  * @default ''
   */
   appendTo?: string | RegExp
+  /**
+   * whether to analyze the code to get more information
+   * @default true
+   */
+  analyzeCode?: boolean
 }
 
-export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions = { appendTo: '' }): PluginOption {
+const defaultOptions: Required<VitePluginVueDevToolsOptions> = {
+  appendTo: '',
+  analyzeCode: true,
+}
+
+function mergeOptions(options: VitePluginVueDevToolsOptions): Required<VitePluginVueDevToolsOptions> {
+  return {
+    ...defaultOptions,
+    ...options,
+  }
+}
+
+function analyzeAndInject(code: string, filename: string) {
+  return analyzeByTraceRerender(code, filename)
+}
+
+export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect({
     silent: true,
   })
+
+  const pluginOptions = mergeOptions(options)
+
   let config: ResolvedConfig
 
   function configureServer(server: ViteDevServer) {
@@ -108,7 +133,10 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
         return `export default ${JSON.stringify({ base: config.base })}`
     },
     transform(code, id) {
-      const { appendTo } = options
+      const { analyzeCode, appendTo } = pluginOptions
+
+      if (analyzeCode)
+        code = analyzeAndInject(code, id)
 
       if (!appendTo)
         return
@@ -119,7 +147,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
         return { code: `${code}\nimport 'virtual:vue-devtools-path:app.js'` }
     },
     transformIndexHtml(html) {
-      if (options.appendTo)
+      if (pluginOptions.appendTo)
         return
 
       return {
