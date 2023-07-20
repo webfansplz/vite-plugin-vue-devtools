@@ -27,7 +27,7 @@ English | <a href="./README.zh-CN.md">简体中文</a>
 
 ## 📖 Introduction
 
-`vite-plugin-vue-devtools` is a Vite plugin designed to enhance the Vue developer experience.
+`vite-plugin-vue-devtools` is a `Vite` plugin designed to enhance the `Vue` developer experience.
 
 
 
@@ -152,7 +152,7 @@ interface VitePluginVueDevToolsOptions {
 
 ## 🌸 Credits
 
-- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
+- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to [Anthony Fu](https://github.com/antfu) and `Nuxt` team for the awesome work!
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
 
