@@ -1,21 +1,37 @@
-import { isVUE, parseSFC, walkAST } from './common'
+import type MS from 'magic-string'
+import { entries } from './common/utils'
+import { ensureImport } from './common'
 
-// TODO: support more, currently only analyze <script setup>
-export function analyzeByTraceRerender(code: string, filename: string) {
-  if (isVUE(filename))
-    return code
+export function analyzeByTraceRerender(code: MS) {
+  const apiNames = {
+    getCurrentInstance: '__VUE_DEVTOOLS_$getCurrentInstance__',
+    onRenderTracked: '__VUE_DEVTOOLS_$onRenderTracked__',
+    onRenderTriggered: '__VUE_DEVTOOLS_$onRenderTriggered__',
+  }
 
-  const { scriptSetup, getScriptAST, getScriptSetupAST } = parseSFC(code, filename)
+  const injectedCodes = {
+    onRenderTracked: `
+    \n;${apiNames.onRenderTracked}((e) => {
+      const instance = ${apiNames.getCurrentInstance}()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });\n
+    `,
+    onRenderTriggered: `
+    \n;${apiNames.onRenderTriggered}((e) => {
+      const instance = ${apiNames.getCurrentInstance}()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });\n
+    `,
+  }
 
-  if (!scriptSetup)
-    return
+  code = ensureImport(code, {
+    vue: entries(apiNames).map(([id, alias]) => ({
+      id, alias,
+    })),
+  })
 
-  const setupAST = getScriptSetupAST()!
-
-  walkAST(setupAST, {
-    enter(node) {
-      console.log(node)
-    },
+  entries(injectedCodes).forEach(([, appendCode]) => {
+    code.append(appendCode)
   })
 
   return code

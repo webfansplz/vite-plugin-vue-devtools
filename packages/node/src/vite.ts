@@ -5,8 +5,10 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { PLUGIN_NAME, analyzeByTraceRerender, createRPCServer } from '@vite-plugin-vue-devtools/core'
+import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
 
+import { analyzeCode } from '@vite-plugin-vue-devtools/core/src'
+import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core/src'
 import { DIR_CLIENT } from './dir'
 import {
   execNpmScript,
@@ -33,27 +35,18 @@ export interface VitePluginVueDevToolsOptions {
   * @default ''
   */
   appendTo?: string | RegExp
-  /**
-   * whether to analyze the code to get more information
-   * @default true
-   */
-  analyzeCode?: boolean
+  analyze?: Partial<AnalyzeOptions>
 }
 
-const defaultOptions: Required<VitePluginVueDevToolsOptions> = {
+const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
   appendTo: '',
-  analyzeCode: true,
+  analyze: {
+    rerender: false,
+  },
 }
 
-function mergeOptions(options: VitePluginVueDevToolsOptions): Required<VitePluginVueDevToolsOptions> {
-  return {
-    ...defaultOptions,
-    ...options,
-  }
-}
-
-function analyzeAndInject(code: string, filename: string) {
-  return analyzeByTraceRerender(code, filename)
+function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<VitePluginVueDevToolsOptions> {
+  return Object.assign({}, defaultOptions, options)
 }
 
 export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions): PluginOption {
@@ -133,10 +126,17 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
         return `export default ${JSON.stringify({ base: config.base })}`
     },
     transform(code, id) {
-      const { analyzeCode, appendTo } = pluginOptions
+      const { analyze, appendTo } = pluginOptions
 
-      if (analyzeCode)
-        code = analyzeAndInject(code, id)
+      if (analyze) {
+        const transformedCode = analyzeCode(code, id, analyze)
+        if (!transformedCode)
+          return
+        return {
+          code: transformedCode.code,
+          map: transformedCode.map,
+        }
+      }
 
       if (!appendTo)
         return

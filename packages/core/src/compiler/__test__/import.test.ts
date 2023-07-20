@@ -1,5 +1,5 @@
 import MagicString from 'magic-string'
-import { IMPORT_ALIAS, PURE_IMPORT_RE, collectAllImports, supplementImport } from '../common'
+import { IMPORT_ALIAS, PURE_IMPORT_RE, collectAllImports, ensureImport } from '../common'
 
 describe('compiler:imports', () => {
   test('collect imports', () => {
@@ -92,16 +92,8 @@ describe('compiler:import:alias', () => {
   })
 })
 
-test('compiler:import:supplementImport', () => {
-  const fixtures = {
-    vue: [
-      {
-        alias: null,
-        raw: 'ref',
-      },
-    ],
-  }
-  const ms = supplementImport(new MagicString(''), fixtures, {
+test('compiler:import:ensureImport', () => {
+  const ms = ensureImport(new MagicString(''), {
     vue: [{
       id: 'reactive',
       alias: '$$reactive',
