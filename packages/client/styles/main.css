@@ -186,3 +186,18 @@ textarea {
 .popup-dialog p {
   --uno: my-4;
 }
+
+@keyframes animate-in {
+  0% { opacity: 0; transform: translateY(100%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes animate-out {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-100%); }
+}
+
+.scroll-driven-animations {
+  animation: animate-in linear forwards, animate-out linear forwards;
+  animation-timeline: view();
+  animation-range: entry, exit;
+}
