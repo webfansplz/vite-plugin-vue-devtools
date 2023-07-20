@@ -25,4 +25,19 @@ describe('compiler:common:parseSFC', () => {
       parseSFC(code, 'test.vue')
     }).not.toThrow()
   })
+  test('should throw if <script> and <script setup> use different languages', () => {
+    const code = `
+      <script lang="ts">
+        const a = 1
+      </script>
+      <script setup>
+        const a = 1
+      </script>
+      <template>
+      </template>
+    `
+    expect(() => {
+      parseSFC(code, 'test.vue')
+    }).toThrow()
+  })
 })

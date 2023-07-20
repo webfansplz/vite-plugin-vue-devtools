@@ -3,7 +3,11 @@ import type { ParserOptions, ParserPlugin } from '@babel/parser'
 import { parse } from '@babel/parser'
 import type { Node } from '@babel/types'
 import { walk } from 'estree-walker'
+import type { WalkerContext } from 'estree-walker/types/walker'
 import { isJSX, isTS } from './lang'
+
+export * from './lang'
+export * from './import'
 
 export function getBabelParsePlugins(lang: string) {
   const plugins: ParserPlugin[] = []
@@ -61,7 +65,12 @@ export function parseSFC(code: string, filename: string) {
   }
 }
 
-export function walkAST(node: Node, handlers: Parameters<typeof walk>[1]) {
+export type WalkCallback = (this: WalkerContext, node: Node, parent: Node | null, key: string | number | symbol | null | undefined, index: number | null | undefined) => void
+
+export function walkAST(node: Node, handlers: {
+  enter?: WalkCallback
+  leave?: WalkCallback
+}) {
   // @ts-expect-error estree-walker types are not compatible with babel types
   return walk(node, handlers)
 }

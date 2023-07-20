@@ -1,11 +1,11 @@
-import { parseSFC, walkAST } from './common'
-import { isVUE } from './lang'
+import { isVUE, parseSFC, walkAST } from './common'
 
+// TODO: support more, currently only analyze <script setup>
 export function analyzeByTraceRerender(code: string, filename: string) {
   if (isVUE(filename))
     return code
 
-  const { scriptSetup, getScriptAST, getScriptSetupAST, sfc } = parseSFC(code, filename)
+  const { scriptSetup, getScriptAST, getScriptSetupAST } = parseSFC(code, filename)
 
   if (!scriptSetup)
     return

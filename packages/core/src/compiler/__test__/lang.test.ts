@@ -1,4 +1,4 @@
-import { isJSX, isTS, isVUE } from '../lang'
+import { isJSX, isTS, isVUE } from '../common'
 
 describe('compiler:lang', () => {
   test.each([
