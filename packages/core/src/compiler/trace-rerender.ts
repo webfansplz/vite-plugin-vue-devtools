@@ -2,7 +2,7 @@ import type MS from 'magic-string'
 import { entries } from './common/utils'
 import { type InsertLocation, ensureImport } from './common'
 
-export function analyzeByTraceRerender(code: MS, offset: InsertLocation) {
+export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
   const apiNames = {
     getCurrentInstance: '__VUE_DEVTOOLS_$getCurrentInstance__',
     onRenderTracked: '__VUE_DEVTOOLS_$onRenderTracked__',
@@ -26,10 +26,10 @@ export function analyzeByTraceRerender(code: MS, offset: InsertLocation) {
     vue: entries(apiNames).map(([id, alias]) => ({
       id, alias,
     })),
-  }, offset.start)
+  }, location.start)
 
   entries(injectedCodes).forEach(([, appendCode]) => {
-    code.prependLeft(offset.end, appendCode)
+    code.prependLeft(location.end, appendCode)
   })
 
   return code

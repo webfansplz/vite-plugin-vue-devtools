@@ -32,7 +32,7 @@ export function isObjectFn(node: Node): node is ObjectProperty | ObjectMethod {
     )
 }
 
-export function getObjectFnBodyOffset(node: ObjectProperty | ObjectMethod): InsertLocation | null {
+export function getObjectFnBodyLocation(node: ObjectProperty | ObjectMethod): InsertLocation | null {
   if (node.type === 'ObjectMethod') {
     return {
       start: node.body.start ?? 0,

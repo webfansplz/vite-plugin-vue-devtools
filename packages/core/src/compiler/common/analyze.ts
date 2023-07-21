@@ -1,10 +1,10 @@
 import type { Identifier } from '@babel/types'
-import { getObjectFnBodyOffset, isObjectFn, walkAST } from './ast'
+import { getObjectFnBodyLocation, isObjectFn, walkAST } from './ast'
 import type { InsertLocation } from './parse'
 import { parseSFC } from './parse'
 
 /**
- * @returns insert code offset
+ * @returns insert code location
  */
 export function analyzeVueSFC(code: string, filename: string) {
   const {
@@ -31,7 +31,7 @@ export function analyzeVueSFC(code: string, filename: string) {
         if (isObjectFn(node)) {
           const name = (node.key as Identifier).name
           if (name === 'setup') {
-            const loc = getObjectFnBodyOffset(node)
+            const loc = getObjectFnBodyLocation(node)
             location = loc
               ? {
                   start: offset,
