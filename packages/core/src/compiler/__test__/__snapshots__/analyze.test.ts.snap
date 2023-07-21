@@ -1,5 +1,113 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`analyzeCode - rerender - [jt]sx? > js 1`] = `
+"
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
+      import { ref, h } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref(1)
+          
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+return () => h('div', '1')
+        }
+      })
+    "
+`;
+
+exports[`analyzeCode - rerender - [jt]sx? > jsx 1`] = `
+"
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
+      import { ref } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+return () => <div></div>
+        }
+      })
+    "
+`;
+
+exports[`analyzeCode - rerender - [jt]sx? > ts 1`] = `
+"
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
+      import { ref, h } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+return () => h('div', '1')
+        }
+      })
+    "
+`;
+
+exports[`analyzeCode - rerender - [jt]sx? > tsx 1`] = `
+"
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
+      import { ref } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+return () => <div></div>
+        }
+      })
+    "
+`;
+
 exports[`analyzeCode - rerender - sfc > only script 1`] = `
 "
       <script lang=\\"ts\\">

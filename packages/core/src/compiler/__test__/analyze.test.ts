@@ -61,3 +61,58 @@ describe('analyzeCode - rerender - sfc', () => {
     expect(result?.code).toMatchSnapshot()
   })
 })
+
+describe('analyzeCode - rerender - [jt]sx?', () => {
+  test('jsx', () => {
+    const code = `
+      import { ref } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          return () => <div></div>
+        }
+      })
+    `
+    const result = analyzeCode(code, 'test.jsx', baseConfig)
+    expect(result?.code).toMatchSnapshot()
+  })
+  test('tsx', () => {
+    const code = `
+      import { ref } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          return () => <div></div>
+        }
+      })
+    `
+    const result = analyzeCode(code, 'test.tsx', baseConfig)
+    expect(result?.code).toMatchSnapshot()
+  })
+  test('js', () => {
+    const code = `
+      import { ref, h } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref(1)
+          return () => h('div', '1')
+        }
+      })
+    `
+    const result = analyzeCode(code, 'test.js', baseConfig)
+    expect(result?.code).toMatchSnapshot()
+  })
+  test('ts', () => {
+    const code = `
+      import { ref, h } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          return () => h('div', '1')
+        }
+      })
+    `
+    const result = analyzeCode(code, 'test.ts', baseConfig)
+    expect(result?.code).toMatchSnapshot()
+  })
+})

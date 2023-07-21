@@ -18,7 +18,7 @@ export function getBabelParsePlugins(lang: string) {
   return plugins
 }
 
-function babelParse(code: string, lang: string) {
+export function babelParse(code: string, lang: string) {
   const options: ParserOptions = {
     plugins: getBabelParsePlugins(lang),
     sourceType: 'module',

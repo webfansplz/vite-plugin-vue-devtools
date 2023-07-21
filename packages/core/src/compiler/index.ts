@@ -1,5 +1,6 @@
 import MagicString from 'magic-string'
-import { analyzeVueSFC, isVUE } from './common'
+import type { InsertLocation } from './common'
+import { analyzeScriptFile, analyzeVueSFC, isAcceptableLang, isVUE } from './common'
 import { analyzeByTraceRerender } from './trace-rerender'
 
 export interface AnalyzeOptions {
@@ -14,22 +15,30 @@ export interface AnalyzeOptions {
 }
 
 export type DeepRequired<T> = {
-  [P in keyof T]-?: T[P] extends {} ? DeepRequired<T[P]> : Required<T[P]>;
+  [P in keyof T]-?: T[P] extends object ? DeepRequired<T[P]> : Required<T[P]>;
 }
 
-// TODO: support more, currently only analyze <script setup>
 export function analyzeCode(code: string, filename: string, options: AnalyzeOptions) {
-  if (!isVUE(filename))
+  if (!isAcceptableLang(filename))
     return null
 
-  const offset = analyzeVueSFC(code, filename)
-  if (!offset)
+  let location: InsertLocation | null = null
+
+  if (isVUE(filename)) {
+    location = analyzeVueSFC(code, filename)
+  }
+  else {
+    const lang = filename.split('.').pop()!
+    location = analyzeScriptFile(code, lang)
+  }
+
+  if (!location)
     return null
 
   let ms = new MagicString(code)
 
   if (options.rerender)
-    ms = analyzeByTraceRerender(ms, offset)
+    ms = analyzeByTraceRerender(ms, location)
 
   return {
     code: ms.toString(),

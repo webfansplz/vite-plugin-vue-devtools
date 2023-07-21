@@ -1,4 +1,4 @@
-import type { BlockStatement, Node, ObjectMethod, ObjectProperty } from '@babel/types'
+import type { BlockStatement, CallExpression, Node, ObjectMethod, ObjectProperty } from '@babel/types'
 import { walk } from 'estree-walker'
 import type { WalkerContext } from 'estree-walker/types/walker'
 import type { InsertLocation } from './parse'
@@ -47,4 +47,8 @@ export function getObjectFnBodyLocation(node: ObjectProperty | ObjectMethod): In
     start: body.body.start ?? 0,
     end: getNodeEndAndFilterReturn(body.body as BlockStatement),
   }
+}
+
+export function isCallOf(node: Node, name: string): node is CallExpression {
+  return node.type === 'CallExpression' && node.callee.type === 'Identifier' && node.callee.name === name
 }

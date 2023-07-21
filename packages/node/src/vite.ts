@@ -145,7 +145,7 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
           || (appendTo instanceof RegExp && appendTo.test(filename))))
         code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
 
-      if (analyze && !analyze.exclude.some(path => id.startsWith(`${projectPath}${path}`))) {
+      if (analyze && !analyze.exclude.some(excludePath => id.startsWith(`${projectPath}${excludePath}`))) {
         const transformedCode = analyzeCode(code, id, analyze)
         if (!transformedCode)
           return

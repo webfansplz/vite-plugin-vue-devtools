@@ -1,4 +1,4 @@
-import { isJSX, isTS, isVUE } from '../common'
+import { isAcceptableLang, isJSX, isTS, isVUE } from '../common'
 
 describe('compiler:lang', () => {
   test.each([
@@ -26,5 +26,16 @@ describe('compiler:lang', () => {
     ['a.vue.js', false],
   ])('isVUE(%s) === %s', (filename, expected) => {
     expect(isVUE(filename)).toBe(expected)
+  })
+  test.each([
+    ['.vue', true],
+    ['.jsx', true],
+    ['.tsx', true],
+    ['.js', true],
+    ['.ts', true],
+    ['.rs', false],
+    ['.go', false],
+  ])('isAcceptableLang(%s) === %s', (filename, expected) => {
+    expect(isAcceptableLang(filename)).toBe(expected)
   })
 })
