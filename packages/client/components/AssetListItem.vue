@@ -17,7 +17,7 @@ const icon = computed(() => {
 </script>
 
 <template>
-  <button class="scroll-driven-animations" flex="~ gap-1" w-full items-center hover="bg-active" rounded px4 py2>
+  <button flex="~ gap-1" w-full items-center hover="bg-active" rounded px4 py2>
     <div :class="icon" />
     <div of-hidden truncate ws-nowrap text-center>
       {{ asset.path }}
