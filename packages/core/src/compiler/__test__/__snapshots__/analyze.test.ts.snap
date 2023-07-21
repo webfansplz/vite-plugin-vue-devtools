@@ -3,14 +3,14 @@
 exports[`analyzeCode > only script 1`] = `
 "
       <script lang=\\"ts\\">
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
         import { ref } from 'vue'
 
         export default {
           name: \\"Test\\",
-          setup() 
-;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
-;
-{
+          setup() {
             const ref = ref<number>(1)
             
     

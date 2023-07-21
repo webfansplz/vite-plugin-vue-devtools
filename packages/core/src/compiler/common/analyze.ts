@@ -34,7 +34,7 @@ export function analyzeVueSFC(code: string, filename: string) {
             const loc = getObjectFnBodyOffset(node)
             location = loc
               ? {
-                  start: offset + loc.start,
+                  start: offset,
                   end: offset + loc.end,
                 }
               : null
