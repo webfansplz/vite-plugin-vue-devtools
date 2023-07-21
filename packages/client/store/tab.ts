@@ -107,6 +107,14 @@ function getInitialTabs() {
 // ---- States ----
 const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, getInitialTabs(), {
   shallow: true,
+  mergeDefaults(storageValue, defaults) {
+    return defaults.map((item) => {
+      const storageItem = storageValue.find(i => i.title === item.title)
+      if (storageItem)
+        return storageItem
+      return item
+    })
+  },
 })
 
 const enabledTabs = computed(() => allTabs.value.filter(item => !item.disabled))
