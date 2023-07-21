@@ -7,6 +7,10 @@
     {
       "depTypeList": ["peerDependencies"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["estree-walker"],
+      "allowedVersions": "<3.0.0"
     }
   ]
 }

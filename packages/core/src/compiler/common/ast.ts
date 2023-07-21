@@ -1,5 +1,6 @@
 import type { BlockStatement, CallExpression, Node, ObjectMethod, ObjectProperty } from '@babel/types'
 import type { WalkerContext } from 'estree-walker/types/walker'
+import { walk } from 'estree-walker'
 import type { InsertLocation } from './parse'
 
 export type WalkCallback = (this: WalkerContext, node: Node, parent: Node | null, key: string | number | symbol | null | undefined, index: number | null | undefined) => void
@@ -8,7 +9,6 @@ export async function walkAST(node: Node, handlers: {
   enter?: WalkCallback
   leave?: WalkCallback
 }): Promise<Node | null> {
-  const { walk } = await import('estree-walker')
   // @ts-expect-error estree-walker types are not compatible with babel types
   return walk(node, handlers)
 }
