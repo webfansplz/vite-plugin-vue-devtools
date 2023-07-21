@@ -14,6 +14,11 @@ export interface AnalyzeOptions {
   exclude: string[]
 }
 
+export const analyzeOptionsDefault = {
+  rerenderTrace: true,
+  exclude: ['node_modules'],
+}
+
 export type DeepRequired<T> = {
   [P in keyof T]-?: T[P] extends object ? DeepRequired<T[P]> : Required<T[P]>;
 }

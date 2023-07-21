@@ -5,7 +5,7 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { PLUGIN_NAME, analyzeCode, createRPCServer } from '@vite-plugin-vue-devtools/core'
+import { PLUGIN_NAME, analyzeCode, analyzeOptionsDefault, createRPCServer } from '@vite-plugin-vue-devtools/core'
 import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core'
 import { DIR_CLIENT } from './dir'
 import {
@@ -34,18 +34,19 @@ export interface VitePluginVueDevToolsOptions {
   */
   appendTo?: string | RegExp
   /**
-   * Enable rerender trace feature
-   * @default true
+   * Enable vue-devtools to analyze codebase by using Babel
+   * @default
+   * {
+   *   rerenderTrace: true,
+   *   exclude: ['node_modules']
+   * }
   */
   analyze?: Partial<AnalyzeOptions>
 }
 
 const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
   appendTo: '',
-  analyze: {
-    rerenderTrace: true,
-    exclude: ['node_modules'],
-  },
+  analyze: analyzeOptionsDefault,
 }
 
 function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<VitePluginVueDevToolsOptions> {
