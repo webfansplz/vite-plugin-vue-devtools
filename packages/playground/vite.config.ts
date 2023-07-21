@@ -1,4 +1,5 @@
 import { resolve } from 'node:path'
+import type { Plugin } from 'vite'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
@@ -7,13 +8,13 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   resolve: {
     alias: {
-      // Custom aliasuntil Jiti issue is resolved
+      // Custom alias until Jiti issue is resolved
       // https://github.com/unjs/jiti/issues/136
       '@vite-plugin-vue-devtools/core': resolve(__dirname, '../core/src/index'),
     },
   },
   plugins: [
-    VueDevTools(),
+    VueDevTools() as Plugin[],
     vue(),
   ],
 })

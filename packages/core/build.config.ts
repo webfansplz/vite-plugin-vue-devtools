@@ -5,8 +5,11 @@ export default defineBuildConfig({
     'src/index',
   ],
   externals: [
-    //
     'vue',
+    '@vue/compiler-sfc',
+    '@babel/parser',
+    'estree-walker',
+    'magic-string',
   ],
   declaration: true,
   rollup: {

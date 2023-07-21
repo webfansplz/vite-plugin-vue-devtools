@@ -17,12 +17,12 @@ hookApi.hook.on('init:vue:app', () => {
   // mark client as loaded
   client.value.markClientLoaded()
   // listen hook
-  hookApi.produce()
+  hookApi.subscribe()
   // perf timeline
   // close perf timeline to avoid performance issue (#9)
   // initPerfTimeline(categorizedHookBuffer.perf)
-  // consume hook buffer
-  hookApi.consume(categorizedHookBuffer.component ?? [])
+  // publish hook buffer
+  hookApi.publish(categorizedHookBuffer.component ?? [])
   // init routes
   initRoutes(categorizedHookBuffer.router ?? [])
   // init pinia

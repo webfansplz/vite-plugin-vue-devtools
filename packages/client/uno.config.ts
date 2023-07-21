@@ -84,5 +84,6 @@ export default defineConfig({
     'i-mdi:eyedropper',
     'i-carbon-close-outline',
     'i-carbon:checkmark',
+    'i-ic:outline-track-changes',
   ],
 })

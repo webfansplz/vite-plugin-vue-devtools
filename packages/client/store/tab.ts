@@ -22,6 +22,12 @@ export const builtinTabs: BuiltinTab[] = [
     group: 'app',
   },
   {
+    path: 'rerender-trace',
+    title: 'Rerender trace',
+    icon: 'i-ic:outline-track-changes',
+    group: 'app',
+  },
+  {
     path: 'assets',
     title: 'Assets',
     icon: 'i-carbon-image-copy',
@@ -101,6 +107,13 @@ function getInitialTabs() {
 // ---- States ----
 const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, getInitialTabs(), {
   shallow: true,
+  mergeDefaults(storageValue, defaults) {
+    // force update with builtin tabs avoid the client tabs is outdated
+    return defaults.map((item) => {
+      const storageItem = storageValue.find(i => i.title === item.title)
+      return storageItem ?? item
+    })
+  },
 })
 
 const enabledTabs = computed(() => allTabs.value.filter(item => !item.disabled))

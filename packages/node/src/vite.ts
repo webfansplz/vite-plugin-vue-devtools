@@ -5,8 +5,8 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
-
+import { PLUGIN_NAME, analyzeCode, analyzeOptionsDefault, createRPCServer } from '@vite-plugin-vue-devtools/core'
+import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core'
 import { DIR_CLIENT } from './dir'
 import {
   execNpmScript,
@@ -30,15 +30,36 @@ export interface VitePluginVueDevToolsOptions {
   * useful for projects that do not use html file as an entry
   *
   * WARNING: only set this if you know exactly what it does.
+  * @default ''
   */
   appendTo?: string | RegExp
+  /**
+   * Enable Vue DevTools to analyze the codebase by using Babel
+   * @default
+   * {
+   *   rerenderTrace: true, // enable rerenderTrace feature
+   * }
+  */
+  analyze?: Partial<AnalyzeOptions>
 }
 
-export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions = { appendTo: '' }): PluginOption {
+const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
+  appendTo: '',
+  analyze: analyzeOptionsDefault,
+}
+
+function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<VitePluginVueDevToolsOptions> {
+  return Object.assign({}, defaultOptions, options)
+}
+
+export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOptions): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect({
     silent: true,
   })
+
+  const pluginOptions = mergeOptions(options ?? {})
+
   let config: ResolvedConfig
 
   function configureServer(server: ViteDevServer) {
@@ -108,18 +129,26 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
         return `export default ${JSON.stringify({ base: config.base })}`
     },
     transform(code, id) {
-      const { appendTo } = options
+      const { root, base } = config
 
-      if (!appendTo)
+      const projectPath = `${root}${base}`
+
+      if (!id.startsWith(projectPath))
         return
 
+      const { analyze, appendTo } = pluginOptions
+
       const [filename] = id.split('?', 2)
-      if ((typeof appendTo === 'string' && filename.endsWith(appendTo))
-        || (appendTo instanceof RegExp && appendTo.test(filename)))
-        return { code: `${code}\nimport 'virtual:vue-devtools-path:app.js'` }
+      if (appendTo
+        && (
+          (typeof appendTo === 'string' && filename.endsWith(appendTo))
+          || (appendTo instanceof RegExp && appendTo.test(filename))))
+        code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
+
+      return analyzeCode(code, id, analyze)
     },
     transformIndexHtml(html) {
-      if (options.appendTo)
+      if (pluginOptions.appendTo)
         return
 
       return {

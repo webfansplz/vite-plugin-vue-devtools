@@ -1,14 +1,7 @@
+import { DevToolsHooks } from '@vite-plugin-vue-devtools/core'
 import { updatePinia } from './pinia'
 import { instance, updateApp, app as vueApp } from './app'
 import { useDevToolsClient } from './client'
-
-enum DevtoolsHooks {
-  APP_INIT = 'app:init',
-  COMPONENT_UPDATED = 'component:updated',
-  COMPONENT_ADDED = 'component:added',
-  COMPONENT_REMOVED = 'component:removed',
-  COMPONENT_EMIT = 'component:emit',
-}
 
 function hideInDevtools(component) {
   return component?.root?.type?.devtools?.hide
@@ -16,10 +9,10 @@ function hideInDevtools(component) {
 
 const client = useDevToolsClient()
 
-function produceHook() {
+function subscribeHook() {
   const client = useDevToolsClient()
   const hook = client.value.hook
-  hook.on(DevtoolsHooks.APP_INIT, (app) => {
+  hook.on(DevToolsHooks.APP_INIT, (app) => {
     if (app?._vueDevtools_hidden_)
       return
     vueApp.value = app
@@ -30,7 +23,7 @@ function produceHook() {
     return (!app || (typeof uid !== 'number' && !uid) || !component || hideInDevtools(component))
   }
 
-  hook.on(DevtoolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_UPDATED, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -39,7 +32,7 @@ function produceHook() {
     updateApp(app, component)
   })
 
-  hook.on(DevtoolsHooks.COMPONENT_ADDED, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_ADDED, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -49,7 +42,7 @@ function produceHook() {
     updateApp(app, component)
   })
 
-  hook.on(DevtoolsHooks.COMPONENT_REMOVED, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_REMOVED, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -60,7 +53,7 @@ function produceHook() {
     updateApp(app, component)
   })
 
-  hook.on(DevtoolsHooks.COMPONENT_EMIT, (app, uid, parentUid, component) => {
+  hook.on(DevToolsHooks.COMPONENT_EMIT, (app, uid, parentUid, component) => {
     updatePinia(component)
 
     if (skipCollect(app, uid, component))
@@ -72,7 +65,7 @@ function produceHook() {
   })
 }
 
-function ConsumeHook(buffer: [string, Record<string, any>][]) {
+function publishHook(buffer: [string, Record<string, any>][]) {
   buffer.forEach(([_, { app, component }]) => {
     updatePinia(component)
     updateApp(app, component)
@@ -81,6 +74,6 @@ function ConsumeHook(buffer: [string, Record<string, any>][]) {
 
 export const hookApi = {
   hook: client.value.hook,
-  produce: produceHook,
-  consume: ConsumeHook,
+  subscribe: subscribeHook,
+  publish: publishHook,
 }

@@ -25,6 +25,8 @@ jobs:
         run: npm i -g @antfu/ni
       - name: Install
         run: nci
+      - name: Test
+        run: nr test
       - name: Build
         run: nr build
       - name: Lint
