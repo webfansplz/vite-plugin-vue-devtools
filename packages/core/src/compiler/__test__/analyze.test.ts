@@ -1,6 +1,6 @@
 import { analyzeCode } from '..'
 
-describe('analyzeCode', () => {
+describe('analyzeCode - rerender - sfc', () => {
   test('script setup', () => {
     const code = `
       <script setup lang="ts">
