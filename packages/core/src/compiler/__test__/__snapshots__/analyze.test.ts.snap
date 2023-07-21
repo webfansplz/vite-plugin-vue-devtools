@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`analyzeCode > only script 1`] = `
+exports[`analyzeCode - rerender - sfc > only script 1`] = `
 "
       <script lang=\\"ts\\">
 ;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
@@ -36,7 +36,7 @@ return {
     "
 `;
 
-exports[`analyzeCode > script setup 1`] = `
+exports[`analyzeCode - rerender - sfc > script setup 1`] = `
 "
       <script setup lang=\\"ts\\">
 ;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
@@ -63,7 +63,7 @@ exports[`analyzeCode > script setup 1`] = `
     "
 `;
 
-exports[`analyzeCode > script setup with script 1`] = `
+exports[`analyzeCode - rerender - sfc > script setup with script 1`] = `
 "
       <script lang=\\"ts\\">
         export default {
