@@ -53,7 +53,7 @@ export function analyzeVueSFC(code: string, filename: string) {
 
 // e.g. js, jsx, ts, tsx
 export function analyzeScriptFile(code: string, lang: string) {
-  if (!code.trim().length)
+  if (!code.trim().length || !code.includes(DEFINE_COMPONENT))
     return null
   let location: InsertLocation | null = null
   const ast = babelParse(code, lang)
