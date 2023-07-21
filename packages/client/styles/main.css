@@ -147,6 +147,11 @@ textarea {
   background: #8886;
 }
 
+.no-scrollbar {
+  /* Support Firefox */
+  scrollbar-width: none
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
   width: 0 !important;
