@@ -1,5 +1,5 @@
 import MagicString from 'magic-string'
-import { isVUE, parseSFC } from './common'
+import { analyzeVueSFC, isVUE } from './common'
 import { analyzeByTraceRerender } from './trace-rerender'
 
 export interface AnalyzeOptions {
@@ -18,15 +18,14 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
   if (!isVUE(filename))
     return null
 
-  const { scriptSetup, scriptSetupOffset } = parseSFC(code, filename)
-
-  if (!scriptSetup)
+  const offset = analyzeVueSFC(code, filename)
+  if (!offset)
     return null
 
   let ms = new MagicString(code)
 
   if (options.rerender)
-    ms = analyzeByTraceRerender(ms, scriptSetupOffset)
+    ms = analyzeByTraceRerender(ms, offset)
 
   return {
     code: ms.toString(),

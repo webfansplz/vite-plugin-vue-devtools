@@ -1,0 +1,96 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`analyzeCode > only script 1`] = `
+"
+      <script lang=\\"ts\\">
+        import { ref } from 'vue'
+
+        export default {
+          name: \\"Test\\",
+          setup() 
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+{
+            const ref = ref<number>(1)
+            
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+return {
+              ref
+            }
+          }
+        }
+      </script>
+      <template>
+        <div></div>
+      </template>
+    "
+`;
+
+exports[`analyzeCode > script setup 1`] = `
+"
+      <script setup lang=\\"ts\\">
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
+        import { ref } from 'vue'
+        const a = ref<number>(1)
+      
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+</script>
+      <template>
+        <div></div>
+      </template>
+    "
+`;
+
+exports[`analyzeCode > script setup with script 1`] = `
+"
+      <script lang=\\"ts\\">
+        export default {
+          name: \\"Test\\"
+        }
+      </script>
+      <script setup lang=\\"ts\\">
+;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
+;
+
+        import { ref } from 'vue'
+        const a = ref<number>(1)
+      
+    
+;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+    });
+
+    
+;__VUE_DEVTOOLS_$onRenderTracked__((e) => {
+      const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:tracked', e, instance)
+    });
+</script>
+      <template>
+        <div></div>
+      </template>
+    "
+`;

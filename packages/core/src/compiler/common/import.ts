@@ -76,7 +76,7 @@ export function collectAllImports(code: string): Record<string, AnalyzeImportRes
 export function ensureImport(code: MS, importPackages: Record<string, { id: string; alias: string }[]>, offset: number) {
   for (const [source, packages] of entries(importPackages)) {
     const prependCode = `\n;import { ${packages.map(p => `${p.id} as ${p.alias}`).join(', ')} } from '${source}'\n;`
-    code.prependRight(offset, `${prependCode};\n`)
+    code.prependRight(offset, `${prependCode}\n`)
   }
   return code
 }

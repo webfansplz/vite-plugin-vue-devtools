@@ -103,7 +103,9 @@ test('compiler:import:ensureImport', () => {
     }],
   }, 0)
   expect(ms.toString()).toMatchInlineSnapshot(`
-    "import { reactive as $$reactive, onMounted as $$onMounted } from 'vue';
+    "
+    ;import { reactive as $$reactive, onMounted as $$onMounted } from 'vue'
+    ;;
     "
   `)
 })
