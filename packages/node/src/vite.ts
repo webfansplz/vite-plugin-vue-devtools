@@ -5,7 +5,7 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { PLUGIN_NAME, analyzeCode, createRPCServer } from '@vite-plugin-vue-devtools/core'
+import { PLUGIN_NAME, analyzeCode, analyzeOptionsDefault, createRPCServer } from '@vite-plugin-vue-devtools/core'
 import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core'
 import { DIR_CLIENT } from './dir'
 import {
@@ -34,30 +34,32 @@ export interface VitePluginVueDevToolsOptions {
   */
   appendTo?: string | RegExp
   /**
-   * Enable rerender trace feature
-   * @default true
+   * Enable vue-devtools to analyze codebase by using Babel
+   * @default
+   * {
+   *   rerenderTrace: true,
+   *   exclude: ['node_modules']
+   * }
   */
   analyze?: Partial<AnalyzeOptions>
 }
 
 const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
   appendTo: '',
-  analyze: {
-    rerender: true,
-  },
+  analyze: analyzeOptionsDefault,
 }
 
 function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<VitePluginVueDevToolsOptions> {
   return Object.assign({}, defaultOptions, options)
 }
 
-export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOptions): PluginOption {
+export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOptions): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect({
     silent: true,
   })
 
-  const pluginOptions = mergeOptions(options)
+  const pluginOptions = mergeOptions(options ?? {})
 
   let config: ResolvedConfig
 
@@ -128,6 +130,13 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
         return `export default ${JSON.stringify({ base: config.base })}`
     },
     transform(code, id) {
+      const { root, base } = config
+
+      const projectPath = `${root}${base}`
+
+      if (!id.startsWith(projectPath))
+        return
+
       const { analyze, appendTo } = pluginOptions
 
       const [filename] = id.split('?', 2)
@@ -137,7 +146,7 @@ export default function VitePluginVueDevTools(options: VitePluginVueDevToolsOpti
           || (appendTo instanceof RegExp && appendTo.test(filename))))
         code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
 
-      if (analyze) {
+      if (analyze && !analyze.exclude.some(excludePath => id.startsWith(`${projectPath}${excludePath}`))) {
         const transformedCode = analyzeCode(code, id, analyze)
         if (!transformedCode)
           return
