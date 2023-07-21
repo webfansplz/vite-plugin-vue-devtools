@@ -127,7 +127,7 @@ function openInEditor(filePath: string) {
           </p>
 
           <VDBadge
-            absolute right-0 top-0 bg-green-400:10 text-green-400
+            absolute right--0.5 top-0 rounded-0 bg-green-400:10 text-green-400
             title="Experimental"
             v-text="'Experimental'"
           />
