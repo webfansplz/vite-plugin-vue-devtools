@@ -108,11 +108,10 @@ function getInitialTabs() {
 const allTabs = useLocalStorage<Tab[]>(TABS_STORAGE_KEY, getInitialTabs(), {
   shallow: true,
   mergeDefaults(storageValue, defaults) {
+    // force update with builtin tabs avoid the client tabs is outdated
     return defaults.map((item) => {
       const storageItem = storageValue.find(i => i.title === item.title)
-      if (storageItem)
-        return storageItem
-      return item
+      return storageItem ?? item
     })
   },
 })
