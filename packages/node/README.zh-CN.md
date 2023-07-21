@@ -27,7 +27,7 @@ Vue DevTools <sup>预览</sup>
 
 ## 📖 介绍
 
-`vite-plugin-vue-devtools` 是一个旨在增强 Vue 开发者体验的Vite插件。
+`vite-plugin-vue-devtools` 是一个旨在增强 `Vue` 开发者体验的 `Vite` 插件。
 
 
 
@@ -117,6 +117,13 @@ export default defineConfig({
 ### 选项
 
 ```ts
+interface AnalyzeOptions {
+  /**
+   * @default true
+  */
+  rerenderTrace: boolean
+}
+
 interface VitePluginVueDevToolsOptions {
   /**
   * append an import to the module id ending with `appendTo` instead of adding a script into body
@@ -125,6 +132,15 @@ interface VitePluginVueDevToolsOptions {
   * WARNING: only set this if you know exactly what it does.
   */
   appendTo?: string | RegExp
+
+  /**
+   * Enable Vue DevTools to analyze the codebase by using Babel
+   * @default
+   * {
+   *   rerenderTrace: true, // enable rerenderTrace feature
+   * }
+  */
+  analyze?: Partial<AnalyzeOptions>
 }
 ```
 
@@ -152,7 +168,7 @@ interface VitePluginVueDevToolsOptions {
 
 ## 🌸 致谢
 
-- 该项目深受 [nuxt/devtools](https://github.com/nuxt/devtools) 的启发，感谢 `Anthony Fu` 和 `Nuxt` 团队的出色工作
+- 该项目深受 [nuxt/devtools](https://github.com/nuxt/devtools) 的启发，感谢 [Anthony Fu](https://github.com/antfu) 和 `Nuxt` 团队的出色工作
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
 

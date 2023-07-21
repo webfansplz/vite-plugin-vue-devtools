@@ -27,7 +27,7 @@ English | <a href="./README.zh-CN.md">简体中文</a>
 
 ## 📖 Introduction
 
-`vite-plugin-vue-devtools` is a Vite plugin designed to enhance the Vue developer experience.
+`vite-plugin-vue-devtools` is a `Vite` plugin designed to enhance the `Vue` developer experience.
 
 
 
@@ -117,6 +117,13 @@ export default defineConfig({
 ### Options
 
 ```ts
+interface AnalyzeOptions {
+  /**
+   * @default true
+  */
+  rerenderTrace: boolean
+}
+
 interface VitePluginVueDevToolsOptions {
   /**
   * append an import to the module id ending with `appendTo` instead of adding a script into body
@@ -125,6 +132,14 @@ interface VitePluginVueDevToolsOptions {
   * WARNING: only set this if you know exactly what it does.
   */
   appendTo?: string | RegExp
+  /**
+   * Enable Vue DevTools to analyze the codebase by using Babel
+   * @default
+   * {
+   *   rerenderTrace: true, // enable rerenderTrace feature
+   * }
+  */
+  analyze?: Partial<AnalyzeOptions>
 }
 ```
 
@@ -152,7 +167,7 @@ interface VitePluginVueDevToolsOptions {
 
 ## 🌸 Credits
 
-- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to Anthony Fu and Nuxt team for the awesome work!
+- This project is highly inspired by [nuxt/devtools](https://github.com/nuxt/devtools). Kudos to [Anthony Fu](https://github.com/antfu) and `Nuxt` team for the awesome work!
 
 - [vuejs/devtools](https://github.com/vuejs/devtools)
 
