@@ -3,8 +3,30 @@ import { analyzeCode } from '..'
 
 const baseConfig: AnalyzeOptions = {
   rerenderTrace: true,
-  exclude: [],
 }
+
+describe('analyzeCode - exclude', () => {
+  test('not acceptable lang', () => {
+    expect(analyzeCode('', 'test.txt', baseConfig)).toBeNull()
+  })
+  test('excluded path', () => {
+    expect(analyzeCode('', 'node_modules/test.js', baseConfig)).toBeNull()
+  })
+  test('not enabled', () => {
+    expect(analyzeCode('', 'test.js', { rerenderTrace: false })).toBeNull()
+  })
+  test('should execute', () => {
+    expect(analyzeCode(`
+      import { ref, h } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref(1)
+          return () => h('div', '1')
+        }
+      })
+    `, 'test.js', baseConfig)).not.toBeNull()
+  })
+})
 
 describe('analyzeCode - rerender - sfc', () => {
   test('script setup', () => {

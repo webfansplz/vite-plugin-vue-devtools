@@ -2,21 +2,27 @@ import MagicString from 'magic-string'
 import type { InsertLocation } from './common'
 import { analyzeScriptFile, analyzeVueSFC, isAcceptableLang, isVUE } from './common'
 import { analyzeByTraceRerender } from './trace-rerender'
+import { entries } from './common/utils'
 
 export interface AnalyzeOptions {
   /**
    * @default true
    */
   rerenderTrace: boolean
-  /**
-   * @default ['node_modules']
-   */
-  exclude: string[]
+}
+
+const excludePaths = ['node_modules']
+
+function enableAnalyze(config: AnalyzeOptions) {
+  return entries(config).some(([, enable]) => enable)
+}
+
+function hitPaths(filename: string, paths: string[]) {
+  return paths.some(path => filename.includes(path))
 }
 
 export const analyzeOptionsDefault = {
   rerenderTrace: true,
-  exclude: ['node_modules'],
 }
 
 export type DeepRequired<T> = {
@@ -24,7 +30,13 @@ export type DeepRequired<T> = {
 }
 
 export function analyzeCode(code: string, filename: string, options: AnalyzeOptions) {
-  if (!isAcceptableLang(filename))
+  /**
+   * 1. check if the file is acceptable
+   * 2. check if the file is excluded
+   * 3. check if the analyze is enabled
+   * one of the above is false, return null
+   */
+  if (!isAcceptableLang(filename) || !enableAnalyze(options) || hitPaths(filename, excludePaths))
     return null
 
   let location: InsertLocation | null = null

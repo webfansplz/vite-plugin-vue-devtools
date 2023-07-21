@@ -34,11 +34,10 @@ export interface VitePluginVueDevToolsOptions {
   */
   appendTo?: string | RegExp
   /**
-   * Enable vue-devtools to analyze codebase by using Babel
+   * Enable to allow vue-devtools analyzing codebase by using Babel
    * @default
    * {
-   *   rerenderTrace: true,
-   *   exclude: ['node_modules']
+   *   rerenderTrace: true, // enable rerenderTrace feature
    * }
   */
   analyze?: Partial<AnalyzeOptions>
@@ -146,15 +145,7 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
           || (appendTo instanceof RegExp && appendTo.test(filename))))
         code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
 
-      if (analyze && !analyze.exclude.some(excludePath => id.startsWith(`${projectPath}${excludePath}`))) {
-        const transformedCode = analyzeCode(code, id, analyze)
-        if (!transformedCode)
-          return
-        return {
-          code: transformedCode.code,
-          map: transformedCode.map,
-        }
-      }
+      return analyzeCode(code, id, analyze)
     },
     transformIndexHtml(html) {
       if (pluginOptions.appendTo)
