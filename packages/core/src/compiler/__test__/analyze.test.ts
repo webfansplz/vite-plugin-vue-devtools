@@ -2,7 +2,7 @@ import type { AnalyzeOptions } from '..'
 import { analyzeCode } from '..'
 
 const baseConfig: AnalyzeOptions = {
-  rerender: true,
+  rerenderTrace: true,
   exclude: [],
 }
 

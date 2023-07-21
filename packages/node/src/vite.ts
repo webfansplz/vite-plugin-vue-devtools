@@ -43,7 +43,7 @@ export interface VitePluginVueDevToolsOptions {
 const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
   appendTo: '',
   analyze: {
-    rerender: true,
+    rerenderTrace: true,
     exclude: ['node_modules'],
   },
 }

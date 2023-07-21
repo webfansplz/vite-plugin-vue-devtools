@@ -7,7 +7,7 @@ export interface AnalyzeOptions {
   /**
    * @default true
    */
-  rerender: boolean
+  rerenderTrace: boolean
   /**
    * @default ['node_modules']
    */
@@ -37,7 +37,7 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
 
   let ms = new MagicString(code)
 
-  if (options.rerender)
+  if (options.rerenderTrace)
     ms = analyzeByTraceRerender(ms, location)
 
   return {
