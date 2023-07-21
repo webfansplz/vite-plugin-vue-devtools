@@ -34,7 +34,7 @@ export interface VitePluginVueDevToolsOptions {
   */
   appendTo?: string | RegExp
   /**
-   * Enable to allow vue-devtools analyzing codebase by using Babel
+   * Enable Vue DevTools to analyze the codebase by using Babel
    * @default
    * {
    *   rerenderTrace: true, // enable rerenderTrace feature
