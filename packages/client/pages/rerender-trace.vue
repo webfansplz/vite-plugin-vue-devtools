@@ -107,7 +107,7 @@ function openInEditor(filePath: string) {
 
       <div v-if="!result.length" flex="~ items-center justify-center" h-screen>
         <!-- guide -->
-        <VDCard v-if="!isTracing && !result.length" flex="~ col gap2" p3 op60>
+        <VDCard v-if="!isTracing && !result.length" flex="~ col gap2" relative p3 op60>
           <p flex="~ items-center">
             Click the start button
             <button border="~ base" mx-1 inline-flex items-center justify-center p="0.5" @click="start">
@@ -125,6 +125,12 @@ function openInEditor(filePath: string) {
           <p lh-5>
             Start tracing, do something in the page. Then,<br> press the stop button to show the resulting triggers for page rerenders.
           </p>
+
+          <VDBadge
+            absolute right-0 top-0 bg-green-400:10 text-green-400
+            title="Experimental"
+            v-text="'Experimental'"
+          />
         </VDCard>
         <!-- tracing card -->
         <VDCard v-else-if="isTracing && !result.length" flex="~ col gap2" p3>
