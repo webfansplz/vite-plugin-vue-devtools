@@ -1,4 +1,10 @@
+import type { AnalyzeOptions } from '..'
 import { analyzeCode } from '..'
+
+const baseConfig: AnalyzeOptions = {
+  rerender: true,
+  exclude: [],
+}
 
 describe('analyzeCode - rerender - sfc', () => {
   test('script setup', () => {
@@ -11,7 +17,7 @@ describe('analyzeCode - rerender - sfc', () => {
         <div></div>
       </template>
     `
-    const result = analyzeCode(code, 'test.vue', { rerender: true })
+    const result = analyzeCode(code, 'test.vue', baseConfig)
     expect(result?.code).toMatchSnapshot()
   })
   test('script setup with script', () => {
@@ -29,7 +35,7 @@ describe('analyzeCode - rerender - sfc', () => {
         <div></div>
       </template>
     `
-    const result = analyzeCode(code, 'test.vue', { rerender: true })
+    const result = analyzeCode(code, 'test.vue', baseConfig)
     expect(result?.code).toMatchSnapshot()
   })
   test('only script', () => {
@@ -51,7 +57,7 @@ describe('analyzeCode - rerender - sfc', () => {
         <div></div>
       </template>
     `
-    const result = analyzeCode(code, 'test.vue', { rerender: true })
+    const result = analyzeCode(code, 'test.vue', baseConfig)
     expect(result?.code).toMatchSnapshot()
   })
 })

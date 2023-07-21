@@ -7,6 +7,10 @@ export interface AnalyzeOptions {
    * @default true
    */
   rerender: boolean
+  /**
+   * @default ['node_modules']
+   */
+  exclude: string[]
 }
 
 export type DeepRequired<T> = {

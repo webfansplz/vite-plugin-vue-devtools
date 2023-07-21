@@ -1,4 +1,5 @@
 import { resolve } from 'node:path'
+import type { Plugin } from 'vite'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
@@ -13,11 +14,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    VueDevTools({
-      analyze: {
-        rerender: true,
-      },
-    }),
+    VueDevTools() as Plugin[],
     vue(),
   ],
 })
