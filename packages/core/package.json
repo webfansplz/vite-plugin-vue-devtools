@@ -38,7 +38,7 @@
   "dependencies": {
     "@babel/parser": "^7.22.7",
     "birpc": "^0.2.12",
-    "estree-walker": "^3.0.3",
+    "estree-walker": "^2.0.2",
     "magic-string": "^0.30.1",
     "vite-hot-client": "^0.2.1"
   },
