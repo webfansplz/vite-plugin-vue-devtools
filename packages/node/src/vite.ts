@@ -5,8 +5,9 @@ import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import sirv from 'sirv'
 import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
-import { PLUGIN_NAME, analyzeCode, analyzeOptionsDefault, createRPCServer } from '@vite-plugin-vue-devtools/core'
-import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core'
+import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
+import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core/compiler'
+import { analyzeCode, analyzeOptionsDefault } from '@vite-plugin-vue-devtools/core/compiler'
 import { DIR_CLIENT } from './dir'
 import {
   execNpmScript,

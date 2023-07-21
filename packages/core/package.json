@@ -14,6 +14,11 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
+    },
+    "./compiler": {
+      "types": "./dist/compiler.d.ts",
+      "require": "./dist/compiler.cjs",
+      "import": "./dist/compiler.mjs"
     }
   },
   "main": "./dist/index.cjs",

@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       // Custom alias until Jiti issue is resolved
       // https://github.com/unjs/jiti/issues/136
+      '@vite-plugin-vue-devtools/core/compiler': resolve(__dirname, '../core/src/compiler/index'),
       '@vite-plugin-vue-devtools/core': resolve(__dirname, '../core/src/index'),
     },
   },
