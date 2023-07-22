@@ -25,7 +25,7 @@ const data = computed(() => {
       value: unref(getters),
     },
   ].filter(Boolean)
-})
+}) as ComputedRef<{ key: string; value: Record<string, unknown> }[]>
 </script>
 
 <template>
