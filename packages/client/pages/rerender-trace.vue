@@ -183,7 +183,7 @@ function openInEditor(filePath: string) {
           <i v-else class="i-tabler:capture" text="4.7" cursor-pointer text-green-600 hover="text-green-800" @click="shouldHighlight = false" />
           <template #popper>
             <p text-xs op-50>
-              Start Tracing
+              Capture rerender elements
             </p>
           </template>
         </VTooltip>
