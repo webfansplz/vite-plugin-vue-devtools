@@ -34,7 +34,7 @@ const isSupported = inSecurityContext && supportEyeDropper
 
 async function open() {
   if (!isSupported)
-    return
+    return {}
   // @ts-expect-error missing types?
   const eyeDropper = new EyeDropper()
   return eyeDropper.open()
