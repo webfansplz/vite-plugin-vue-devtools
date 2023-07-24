@@ -55,7 +55,7 @@ export function analyzeVueSFC(code: string, filename: string) {
 export function analyzeScriptFile(code: string, lang: string) {
   if (!code.trim().length || !code.includes(DEFINE_COMPONENT))
     return null
-  let location: InsertLocation | null = null
+  const location: (InsertLocation | null)[] = []
   const ast = babelParse(code, lang)
   walkAST(ast, {
     enter(node) {
@@ -63,17 +63,17 @@ export function analyzeScriptFile(code: string, lang: string) {
         for (const stmt of node.arguments[0].properties) {
           if (isSetupFn(stmt)) {
             const loc = getObjectFnBodyLocation(stmt)
-            location = loc
+            location.push(loc
               ? {
                   start: ast.start ?? 0,
                   end: loc.end,
                 }
-              : null
+              : null)
             this.skip()
           }
         }
       }
     },
   })
-  return location
+  return location.filter(Boolean) as InsertLocation[]
 }
