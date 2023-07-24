@@ -45,6 +45,7 @@ async function download(item: PackageInfo, isDev: boolean) {
     setTimeout(() => {
       terminalVisible.value = false
       locked.value = false
+      getProjectDeps()
     }, 2000)
   })
 }
