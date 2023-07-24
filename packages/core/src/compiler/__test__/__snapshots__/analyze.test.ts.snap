@@ -10,10 +10,51 @@ exports[`analyzeCode - rerender - [jt]sx? > js 1`] = `
         setup() {
           const a = ref(1)
           
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
@@ -37,10 +78,51 @@ exports[`analyzeCode - rerender - [jt]sx? > jsx 1`] = `
         setup() {
           const a = ref<number>(1)
           
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
@@ -64,10 +146,51 @@ exports[`analyzeCode - rerender - [jt]sx? > ts 1`] = `
         setup() {
           const a = ref<number>(1)
           
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
@@ -91,10 +214,51 @@ exports[`analyzeCode - rerender - [jt]sx? > tsx 1`] = `
         setup() {
           const a = ref<number>(1)
           
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
@@ -121,10 +285,51 @@ exports[`analyzeCode - rerender - sfc > only script 1`] = `
           setup() {
             const ref = ref<number>(1)
             
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
@@ -153,10 +358,51 @@ exports[`analyzeCode - rerender - sfc > script setup 1`] = `
         import { ref } from 'vue'
         const a = ref<number>(1)
       
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
@@ -185,10 +431,51 @@ exports[`analyzeCode - rerender - sfc > script setup with script 1`] = `
         import { ref } from 'vue'
         const a = ref<number>(1)
       
+    ;const __VUE_DEVTOOLS_$colors__ = [
+    ['#ff000033', 100],
+    ['#7f000033', 50],
+    ['#ffff0033', 20],
+    ['#7f7f0033', 10],
+    ['#00800033', 5],
+    ['#00400033', 0],
+  ]
+
+  function __VUE_DEVTOOLS_$debounce__(fn, delay) {
+    let timer = null
+    return function () {
+      if (timer)
+        clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+        timer = null
+      }, delay)
+    }
+  };
+
+  let __VUE_DEVTOOLS_$highlightEl__ = null
+  let __VUE_DEVTOOLS_$times__ = 0
+  const __VUE_DEVTOOLS_$debounceFn__ = __VUE_DEVTOOLS_$debounce__(() => {
+    document.body.removeChild(__VUE_DEVTOOLS_$highlightEl__)
+    __VUE_DEVTOOLS_$highlightEl__ = null
+    __VUE_DEVTOOLS_$times__ = 0
+  }, 3000)
+  
     
 ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
       const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+    if (__VUE_DEVTOOLS_$highlightEl__) {
+      __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
+      __VUE_DEVTOOLS_$times__ += 1
+    }
+    else {
+      el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
+      __VUE_DEVTOOLS_$highlightEl__ = el
+      document.body.appendChild(el)
+    }
+    __VUE_DEVTOOLS_$debounceFn__()
+  })
     });
 
     
