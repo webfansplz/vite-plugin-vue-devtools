@@ -11,7 +11,6 @@ export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
 
   const variableNames = {
     // highlight rerender inject codes
-    colors: '__VUE_DEVTOOLS_$colors__',
     debounce: '__VUE_DEVTOOLS_$debounce__',
     highlightEl: '__VUE_DEVTOOLS_$highlightEl__',
     times: '__VUE_DEVTOOLS_$times__',
@@ -19,15 +18,6 @@ export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
   }
 
   const hlPrependCodes = `
-    ;const ${variableNames.colors} = [
-    ['#ff000033', 100],
-    ['#7f000033', 50],
-    ['#ffff0033', 20],
-    ['#7f7f0033', 10],
-    ['#00800033', 5],
-    ['#00400033', 0],
-  ]
-
   function ${variableNames.debounce}(fn, delay) {
     let timer = null
     return function () {
@@ -50,13 +40,13 @@ export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
   }, 3000)
   `
 
-  const hlFn = `(el) => {
+  const hlFn = `(el, getHeaderContent) => {
     if (${variableNames.highlightEl}) {
-      ${variableNames.highlightEl}.style.backgroundColor = ${variableNames.colors}.find(([color, time]) => ${variableNames.times} >= time)[0]
       ${variableNames.times} += 1
+      const header = ${variableNames.highlightEl}.children[0]
+      header.replaceChildren(...getHeaderContent(${variableNames.times}))
     }
     else {
-      el.style.backgroundColor = ${variableNames.colors}.at(-1)[0]
       ${variableNames.highlightEl} = el
       document.body.appendChild(el)
     }

@@ -5,6 +5,7 @@ import type { ComponentInternalInstance, DebuggerEvent, Ref } from 'vue'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
 import { getSetupStateInfo, toRaw } from '~/logic/components/data'
+import { getInstanceName } from '~/logic/components'
 
 type ComponentInstance = ComponentInternalInstance & {
   devtoolsRawSetupState: Record<string, unknown>
@@ -26,6 +27,59 @@ const isTracing = ref(false)
 const result = ref<TraceInfo[]>([])
 const traceBuffer = ref<TraceInfo[]>([])
 const shouldHighlight = ref(true)
+
+function generateIndicator(el: HTMLElement, instance: ComponentInstance) {
+  const colors = [
+    ['#ff5555', 50],
+    ['#fff888', 20],
+  ] as const
+  const { width, height, top, left } = el.getBoundingClientRect()
+  const componentName = getInstanceName(instance)
+  const getHeaderContent = (times: number = 0) => {
+    const name = document.createElement('b')
+    name.textContent = `<${componentName}>`
+    const timesEl = document.createElement('b')
+    if (times > 0) {
+      timesEl.textContent = ` x ${times}`
+      timesEl.style.color = colors.find(([, t]) => times >= t)?.[0] ?? '#fff'
+    }
+    return [name, ` ${width} x ${height}`, timesEl]
+  }
+  const getHeader = () => {
+    const header = document.createElement('div')
+    header.style.position = 'absolute'
+    header.style.top = '-30px'
+    header.style.left = '0'
+    header.style.height = '30px'
+    header.style.lineHeight = '30px'
+    header.style.padding = '0 8px'
+    header.style.boxSizing = 'border-box'
+    header.style.background = '#42b883'
+    header.style.color = '#fff'
+    header.style.fontSize = '12px'
+    return header
+  }
+  const header = getHeader()
+  header.append(...getHeaderContent())
+  const getContainer = () => {
+    const container = document.createElement('div')
+    container.style.width = `${width}px`
+    container.style.height = `${height}px`
+    container.style.position = 'absolute'
+    container.style.top = `${top}px`
+    container.style.left = `${left}px`
+    container.appendChild(header)
+    container.style.pointerEvents = 'none'
+    container.style.border = '1px solid #42b88350'
+    container.style.background = '#42b88325'
+    return container
+  }
+  const container = getContainer()
+  return {
+    container,
+    getHeaderContent,
+  }
+}
 
 function normalizeEventInfo(e: DebuggerEvent, instance: ComponentInstance): TraceInfo {
   const info = getSetupStateInfo(e.target)
@@ -54,7 +108,11 @@ hook.on(DevToolsHooks.RENDER_TRACKED, (e: DebuggerEvent, instance: ComponentInst
   isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
 })
 
-hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance, cb: (el: HTMLElement) => void = () => {}) => {
+hook.on(DevToolsHooks.RENDER_TRIGGERED, (
+  e: DebuggerEvent,
+  instance: ComponentInstance,
+  cb: (el: HTMLElement, getHeaderCOntent: (t: number) => any) => void = () => { },
+) => {
   if (isTracing.value) {
     traceBuffer.value.push(normalizeEventInfo(e, instance))
     if (shouldHighlight.value) {
@@ -65,15 +123,8 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentIn
       else if (instanceEl?.nodeType === Node.ELEMENT_NODE)
         el = instanceEl as HTMLElement
       if (el) {
-        const div = document.createElement('div')
-        const { width, height, top, left } = el.getBoundingClientRect()
-        div.style.width = `${width}px`
-        div.style.height = `${height}px`
-        div.style.position = 'absolute'
-        div.style.top = `${top}px`
-        div.style.left = `${left}px`
-        div.style.pointerEvents = 'none'
-        cb(div)
+        const { container, getHeaderContent } = generateIndicator(el, instance)
+        cb(container, getHeaderContent)
       }
     }
   }
