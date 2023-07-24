@@ -28,6 +28,7 @@ const inspectorCardStyle = computed(() => ({ top: props.bounds.top < 35 ? 0 : '-
     <span class="vue-devtools-component-inspector-card" :style="inspectorCardStyle">
       &lt;{{ name }}&gt;
       <i>{{ Math.round(bounds.width * 100) / 100 }} x {{ Math.round(bounds.height * 100) / 100 }}</i>
+      <slot name="header-extra" />
     </span>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAppStore } from './stores'
+import ReadCounter from './components/ReadCounter.vue'
 
 const count = ref(0)
 const doubleCount = computed(() => {
@@ -18,7 +18,6 @@ const p = reactive({
 //   p.age = count.value
 // })
 
-const appStore = useAppStore()
 // const count = ref(100)
 
 // const map = new Map([['a', 1], ['b', 2]])
@@ -40,10 +39,10 @@ const router = useRouter()
 </script>
 
 <template>
+  {{ p.age }}
   {{ count }}
   {{ doubleCount }}
-  {{ p.age }}
-  {{ appStore.count }}
+  <ReadCounter />
   <RouterView />
   <!-- <HelloWorld msg="Vite + Vue" /> -->
   <button @click="router.push('/about')">

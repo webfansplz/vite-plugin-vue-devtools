@@ -6,8 +6,9 @@ import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import { DevToolsHooks, collectDevToolsHookBuffer } from '@vite-plugin-vue-devtools/core'
 import Frame from './FrameBox.vue'
 import ComponentInspector from './ComponentInspector.vue'
-import { useHighlightComponent, useIframe, useInspector, usePanelVisible, usePiPMode, usePosition } from './composables'
+import { useHighlightComponent, useIframe, useInspector, usePanelVisible, usePiPMode, usePosition, useRerenderHighlight } from './composables'
 import { checkIsSafari, useColorScheme, usePreferredColorScheme, warn } from './utils'
+import RerenderIndicator from './RerenderIndicator.vue'
 
 const props = defineProps({
   hook: {
@@ -79,6 +80,7 @@ const { iframe, getIframe } = useIframe(clientUrl, async () => {
 // Picture-in-Picture mode
 const { popup } = usePiPMode(getIframe, hook)
 const { overlayVisible, name: componentName, bounds, highlight, unHighlight } = useHighlightComponent()
+const { updateRerenderHighlightInfo } = useRerenderHighlight()
 
 async function setupClient(iframe: HTMLIFrameElement) {
   const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
@@ -123,6 +125,9 @@ async function setupClient(iframe: HTMLIFrameElement) {
           document.body.removeChild(scrollTarget)
         }, 2000)
       },
+    },
+    rerenderHighlight: {
+      updateInfo: updateRerenderHighlightInfo,
     },
   })
 }
@@ -284,6 +289,7 @@ collectHookBuffer()
   </div>
   <!-- component inspector -->
   <ComponentInspector v-if="overlayVisible" :bounds="bounds" :name="componentName" />
+  <RerenderIndicator />
 </template>
 
 <style scoped>

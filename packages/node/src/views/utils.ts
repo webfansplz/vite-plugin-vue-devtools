@@ -226,3 +226,16 @@ export function usePreferredColorScheme() {
 
   return computed(() => isDark.value ? 'dark' : 'light')
 }
+
+export function createDebounceFn<const P, T>(fn: (this: T, ...args: P[]) => void, delay = 100) {
+  let timer: any | null = null
+  return function (this: T, ...args: P[]) {
+    if (timer)
+      clearTimeout(timer)
+
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+      timer = null
+    }, delay)
+  }
+}
