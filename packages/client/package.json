@@ -1,7 +1,7 @@
 {
   "name": "@vite-plugin-vue-devtools/client",
   "type": "module",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "author": "webfansplz",
   "license": "MIT",
   "homepage": "https://github.com/webfansplz/vite-plugin-vue-devtools#readme",
