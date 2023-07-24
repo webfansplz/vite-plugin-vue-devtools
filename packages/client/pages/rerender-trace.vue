@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { DevToolsHooks } from '@vite-plugin-vue-devtools/core'
-import type { DebuggerEvent, Ref } from 'vue'
+import type { ComponentInternalInstance, DebuggerEvent, Ref } from 'vue'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
 import { getSetupStateInfo, toRaw } from '~/logic/components/data'
 
-type ComponentInstance = any
+type ComponentInstance = ComponentInternalInstance & {
+  devtoolsRawSetupState: Record<string, unknown>
+}
 
 interface TraceInfo {
   componentFile: string
@@ -23,6 +25,7 @@ const hook = client.value.hook
 const isTracing = ref(false)
 const result = ref<TraceInfo[]>([])
 const traceBuffer = ref<TraceInfo[]>([])
+const shouldHighlight = ref(true)
 
 function normalizeEventInfo(e: DebuggerEvent, instance: ComponentInstance): TraceInfo {
   const info = getSetupStateInfo(e.target)
@@ -51,8 +54,29 @@ hook.on(DevToolsHooks.RENDER_TRACKED, (e: DebuggerEvent, instance: ComponentInst
   isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
 })
 
-hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance) => {
-  isTracing.value && traceBuffer.value.push(normalizeEventInfo(e, instance))
+hook.on(DevToolsHooks.RENDER_TRIGGERED, (e: DebuggerEvent, instance: ComponentInstance, cb: (el: HTMLElement) => void = () => {}) => {
+  if (isTracing.value) {
+    traceBuffer.value.push(normalizeEventInfo(e, instance))
+    if (shouldHighlight.value) {
+      let el: HTMLElement | null = null
+      const instanceEl = instance.vnode.el
+      if (instanceEl?.nodeType === Node.TEXT_NODE)
+        el = instanceEl?.parentElement
+      else if (instanceEl?.nodeType === Node.ELEMENT_NODE)
+        el = instanceEl as HTMLElement
+      if (el) {
+        const div = document.createElement('div')
+        const { width, height, top, left } = el.getBoundingClientRect()
+        div.style.width = `${width}px`
+        div.style.height = `${height}px`
+        div.style.position = 'absolute'
+        div.style.top = `${top}px`
+        div.style.left = `${left}px`
+        div.style.pointerEvents = 'none'
+        cb(div)
+      }
+    }
+  }
 })
 
 function start() {
@@ -103,6 +127,15 @@ function openInEditor(filePath: string) {
             </p>
           </template>
         </VTooltip>
+        <VTooltip placement="bottom" :distance="12" text-center>
+          <i v-if="!shouldHighlight" class="i-tabler:capture" text="4.7" cursor-pointer text-secondary hover="text-black dark:text-white" @click="shouldHighlight = true" />
+          <i v-else class="i-tabler:capture" text="4.7" cursor-pointer text-green-600 hover="text-green-800" @click="shouldHighlight = false" />
+          <template #popper>
+            <p text-xs op-50>
+              Start Tracing
+            </p>
+          </template>
+        </VTooltip>
       </VDCard>
 
       <div v-if="!result.length" flex="~ items-center justify-center" h-screen>
@@ -121,6 +154,13 @@ function openInEditor(filePath: string) {
               <i class="i-grommet-icons:clear" text="3.8" text-secondary />
             </span>
             to clear the results.
+          </p>
+          <p flex="~ items-center">
+            Click the capture button
+            <span border="~ base" mx-1 inline-flex items-center justify-center p1>
+              <i class="i-tabler:capture" text="3.8" text-secondary />
+            </span>
+            to capture the rerender effect element.
           </p>
           <p lh-5>
             Start tracing, do something in the page. Then,<br> press the stop button to show the resulting triggers for page rerenders.
