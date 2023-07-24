@@ -16,7 +16,7 @@ function getColors(times: number) {
 </script>
 
 <template>
-  <template v-for="[name, { bound, rerenderCount }] in rerenderHighlightMap.entries()" :key="name">
+  <template v-for="[uid, { bound, rerenderCount, name }] in rerenderHighlightMap.entries()" :key="uid">
     <ComponentInspector
       :bounds="bound"
       :name="name"

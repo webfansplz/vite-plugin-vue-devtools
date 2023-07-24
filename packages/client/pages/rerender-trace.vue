@@ -69,7 +69,7 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (
       else if (instanceEl?.nodeType === Node.ELEMENT_NODE)
         el = instanceEl as HTMLElement
       if (el)
-        client.value.rerenderHighlight.setData(getInstanceName(instance), el.getBoundingClientRect())
+        client.value.rerenderHighlight.pushData(instance.uid.toString(), getInstanceName(instance), el.getBoundingClientRect())
     }
   }
 })

@@ -30,7 +30,7 @@ export interface VueDevtoolsHostClient {
     scrollToComponent: (_bounds: ComponentInspectorBounds) => void
   }
   rerenderHighlight: {
-    setData: (name: string, _bounds: ComponentInspectorBounds) => void
+    pushData: (uid: string, name: string, _bounds: ComponentInspectorBounds) => void
   }
 }
 

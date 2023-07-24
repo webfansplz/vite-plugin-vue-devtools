@@ -80,7 +80,7 @@ const { iframe, getIframe } = useIframe(clientUrl, async () => {
 // Picture-in-Picture mode
 const { popup } = usePiPMode(getIframe, hook)
 const { overlayVisible, name: componentName, bounds, highlight, unHighlight } = useHighlightComponent()
-const { setRerenderHighlightData } = useRerenderHighlight()
+const { pushRerenderHighlightData } = useRerenderHighlight()
 
 async function setupClient(iframe: HTMLIFrameElement) {
   const injection: any = iframe?.contentWindow?.__VUE_DEVTOOLS_VIEW__
@@ -127,7 +127,7 @@ async function setupClient(iframe: HTMLIFrameElement) {
       },
     },
     rerenderHighlight: {
-      setData: setRerenderHighlightData,
+      pushData: pushRerenderHighlightData,
     },
   })
 }

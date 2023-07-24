@@ -478,6 +478,7 @@ export function useHighlightComponent() {
 // use rerender highlight
 
 interface RerenderHighlightData {
+  name: string
   rerenderCount: number
   bound: {
     width: number
@@ -488,18 +489,20 @@ interface RerenderHighlightData {
   debounceFn: () => void
 }
 
-const rerenderHighlightMap = ref<Map</* component name */string, RerenderHighlightData>>(new Map())
+const rerenderHighlightMap = ref<Map</* component instance uid */string, RerenderHighlightData>>(new Map())
 
-function setRerenderHighlightData(name: string, bound: RerenderHighlightData['bound']) {
-  const data = rerenderHighlightMap.value.get(name)
+function pushRerenderHighlightData(uid: string, name: string, bound: RerenderHighlightData['bound']) {
+  console.log({ uid, name })
+  const data = rerenderHighlightMap.value.get(uid)
   if (!data) {
     const debounceFn = createDebounceFn(() => {
-      rerenderHighlightMap.value.delete(name)
+      rerenderHighlightMap.value.delete(uid)
     }, 3000)
-    rerenderHighlightMap.value.set(name, {
+    rerenderHighlightMap.value.set(uid, {
       rerenderCount: 0,
       bound,
       debounceFn,
+      name,
     })
     debounceFn()
     return
@@ -511,6 +514,6 @@ function setRerenderHighlightData(name: string, bound: RerenderHighlightData['bo
 export function useRerenderHighlight() {
   return {
     rerenderHighlightMap,
-    setRerenderHighlightData,
+    pushRerenderHighlightData,
   }
 }

@@ -12,7 +12,7 @@ const client = ref<VueDevtoolsHostClient>({
     scrollToComponent: () => {},
   },
   rerenderHighlight: {
-    setData: () => {},
+    pushData: () => {},
   },
 })
 
