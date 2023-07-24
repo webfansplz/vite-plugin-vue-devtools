@@ -29,6 +29,9 @@ export interface VueDevtoolsHostClient {
     unHighlight: () => void
     scrollToComponent: (_bounds: ComponentInspectorBounds) => void
   }
+  rerenderHighlight: {
+    setData: (name: string, _bounds: ComponentInspectorBounds) => void
+  }
 }
 
 export type BuiltinTabGroup = 'app' | 'modules' | 'advanced'

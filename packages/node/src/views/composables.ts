@@ -1,6 +1,6 @@
 import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
 import type { CSSProperties, Ref } from 'vue'
-import { clamp, useObjectStorage, useScreenSafeArea, useWindowEventListener, warn } from './utils'
+import { clamp, createDebounceFn, useObjectStorage, useScreenSafeArea, useWindowEventListener, warn } from './utils'
 
 interface DevToolsFrameState {
   width: number
@@ -472,5 +472,45 @@ export function useHighlightComponent() {
     bounds,
     highlight,
     unHighlight,
+  }
+}
+
+// use rerender highlight
+
+interface RerenderHighlightData {
+  rerenderCount: number
+  bound: {
+    width: number
+    height: number
+    left: number
+    top: number
+  }
+  debounceFn: () => void
+}
+
+const rerenderHighlightMap = ref<Map</* component name */string, RerenderHighlightData>>(new Map())
+
+function setRerenderHighlightData(name: string, bound: RerenderHighlightData['bound']) {
+  const data = rerenderHighlightMap.value.get(name)
+  if (!data) {
+    const debounceFn = createDebounceFn(() => {
+      rerenderHighlightMap.value.delete(name)
+    }, 3000)
+    rerenderHighlightMap.value.set(name, {
+      rerenderCount: 0,
+      bound,
+      debounceFn,
+    })
+    debounceFn()
+    return
+  }
+  data.rerenderCount += 1
+  data.debounceFn()
+}
+
+export function useRerenderHighlight() {
+  return {
+    rerenderHighlightMap,
+    setRerenderHighlightData,
   }
 }

@@ -11,6 +11,9 @@ const client = ref<VueDevtoolsHostClient>({
     unHighlight: () => {},
     scrollToComponent: () => {},
   },
+  rerenderHighlight: {
+    setData: () => {},
+  },
 })
 
 export function useDevToolsClient() {

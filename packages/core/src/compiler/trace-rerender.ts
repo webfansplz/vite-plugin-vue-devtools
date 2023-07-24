@@ -9,50 +9,6 @@ export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
     onRenderTriggered: '__VUE_DEVTOOLS_$onRenderTriggered__',
   }
 
-  const variableNames = {
-    // highlight rerender inject codes
-    debounce: '__VUE_DEVTOOLS_$debounce__',
-    highlightEl: '__VUE_DEVTOOLS_$highlightEl__',
-    times: '__VUE_DEVTOOLS_$times__',
-    debounceFn: '__VUE_DEVTOOLS_$debounceFn__',
-  }
-
-  const hlPrependCodes = `
-  function ${variableNames.debounce}(fn, delay) {
-    let timer = null
-    return function () {
-      if (timer)
-        clearTimeout(timer)
-
-      timer = setTimeout(() => {
-        fn.apply(this, arguments)
-        timer = null
-      }, delay)
-    }
-  };
-
-  let ${variableNames.highlightEl} = null
-  let ${variableNames.times} = 0
-  const ${variableNames.debounceFn} = ${variableNames.debounce}(() => {
-    document.body.removeChild(${variableNames.highlightEl})
-    ${variableNames.highlightEl} = null
-    ${variableNames.times} = 0
-  }, 3000)
-  `
-
-  const hlFn = `(el, getHeaderContent) => {
-    if (${variableNames.highlightEl}) {
-      ${variableNames.times} += 1
-      const header = ${variableNames.highlightEl}.children[0]
-      header.replaceChildren(...getHeaderContent(${variableNames.times}))
-    }
-    else {
-      ${variableNames.highlightEl} = el
-      document.body.appendChild(el)
-    }
-    ${variableNames.debounceFn}()
-  }`
-
   const injectedCodes = {
     onRenderTracked: `
     \n;${apiNames.onRenderTracked}((e) => {
@@ -62,7 +18,7 @@ export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
     onRenderTriggered: `
     \n;${apiNames.onRenderTriggered}((e) => {
       const instance = ${apiNames.getCurrentInstance}()
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, ${hlFn})
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance)
     });\n`,
   }
 
@@ -75,7 +31,6 @@ export function analyzeByTraceRerender(code: MS, location: InsertLocation) {
   entries(injectedCodes).forEach(([, appendCode]) => {
     code.prependLeft(location.end, appendCode)
   })
-  code.prependLeft(location.end, hlPrependCodes)
 
   return code
 }
