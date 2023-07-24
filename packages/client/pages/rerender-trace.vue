@@ -40,7 +40,7 @@ function generateIndicator(el: HTMLElement, instance: ComponentInstance) {
     name.textContent = `<${componentName}>`
     const timesEl = document.createElement('b')
     if (times > 0) {
-      timesEl.textContent = ` x ${times}`
+      timesEl.textContent = ` x ${times + 1}`
       timesEl.style.color = colors.find(([, t]) => times >= t)?.[0] ?? '#fff'
     }
     return [name, ` ${width} x ${height}`, timesEl]
