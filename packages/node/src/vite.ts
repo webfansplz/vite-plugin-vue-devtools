@@ -42,11 +42,18 @@ export interface VitePluginVueDevToolsOptions {
    * }
   */
   analyze?: Partial<AnalyzeOptions>
+
+  /**
+  * Customize openInEditor host (e.g. http://localhost:3000)
+  * @default false
+  */
+  openInEditorHost?: string | false
 }
 
 const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
   appendTo: '',
   analyze: analyzeOptionsDefault,
+  openInEditorHost: false,
 }
 
 function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<VitePluginVueDevToolsOptions> {
@@ -176,6 +183,8 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
     VueInspector({
       toggleComboKey: '',
       toggleButtonVisibility: 'never',
+      openInEditorHost: pluginOptions.openInEditorHost,
+      ...(pluginOptions.appendTo ? { appendTo: pluginOptions.appendTo } : {}),
     }),
   ]
 }
