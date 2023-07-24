@@ -60,8 +60,8 @@
     "vite-plugin-vue-inspector": "^3.4.2"
   },
   "devDependencies": {
-    "@types/node": "^20.4.2",
-    "fast-glob": "^3.3.0",
+    "@types/node": "^20.4.4",
+    "fast-glob": "^3.3.1",
     "image-meta": "^0.1.1",
     "pathe": "^1.1.1"
   }
