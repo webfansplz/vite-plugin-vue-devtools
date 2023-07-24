@@ -39,23 +39,25 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
   if (!isAcceptableLang(filename) || !enableAnalyze(options) || hitPaths(filename, excludePaths))
     return null
 
-  let location: InsertLocation | null = null
+  let locations: InsertLocation[] | null = null
 
   if (isVUE(filename)) {
-    location = analyzeVueSFC(code, filename)
+    const location = analyzeVueSFC(code, filename)
+    if (location)
+      locations = [location]
   }
   else {
     const lang = filename.split('.').pop()!
-    location = analyzeScriptFile(code, lang)
+    locations = analyzeScriptFile(code, lang)
   }
 
-  if (!location)
+  if (!locations || !locations.length)
     return null
 
   let ms = new MagicString(code)
 
   if (options.rerenderTrace)
-    ms = analyzeByTraceRerender(ms, location)
+    ms = analyzeByTraceRerender(ms, locations as InsertLocation[])
 
   return {
     code: ms.toString(),

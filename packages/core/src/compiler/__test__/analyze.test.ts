@@ -137,4 +137,23 @@ describe('analyzeCode - rerender - [jt]sx?', () => {
     const result = analyzeCode(code, 'test.ts', baseConfig)
     expect(result?.code).toMatchSnapshot()
   })
+  test('multiple component in one file', () => {
+    const code = `
+      import { ref, h } from 'vue'
+      const comp = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          return () => h('div', '1')
+        }
+      })
+      const comp2 = defineComponent({
+        setup() {
+          const a = ref<number>(1)
+          return () => h('div', '1')
+        }
+      })
+    `
+    const result = analyzeCode(code, 'test.ts', baseConfig)
+    expect(result?.code).toMatchSnapshot()
+  })
 })

@@ -2,7 +2,7 @@ import MagicString from 'magic-string'
 import { analyzeByTraceRerender } from '../trace-rerender'
 
 test('trace-rerender', () => {
-  const ms = analyzeByTraceRerender(new MagicString(''), { start: 0, end: 0 })
+  const ms = analyzeByTraceRerender(new MagicString(''), [{ start: 0, end: 0 }])
   expect(ms.toString()).toMatchInlineSnapshot(`
     "
     ;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
