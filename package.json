@@ -52,7 +52,7 @@
     "play": "nr -C packages/playground dev",
     "lint": "eslint .",
     "prepublishOnly": "npm run build",
-    "release": "bumpp -r",
+    "release": "nr build && bumpp -r",
     "dep:up": "taze -I major",
     "prepare": "simple-git-hooks",
     "test": "vitest"
