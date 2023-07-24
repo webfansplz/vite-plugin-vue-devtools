@@ -8,15 +8,6 @@ test('trace-rerender', () => {
     ;import { getCurrentInstance as __VUE_DEVTOOLS_$getCurrentInstance__, onRenderTracked as __VUE_DEVTOOLS_$onRenderTracked__, onRenderTriggered as __VUE_DEVTOOLS_$onRenderTriggered__ } from 'vue'
     ;
 
-        ;const __VUE_DEVTOOLS_$colors__ = [
-        ['#ff000033', 100],
-        ['#7f000033', 50],
-        ['#ffff0033', 20],
-        ['#7f7f0033', 10],
-        ['#00800033', 5],
-        ['#00400033', 0],
-      ]
-
       function __VUE_DEVTOOLS_$debounce__(fn, delay) {
         let timer = null
         return function () {
@@ -41,13 +32,13 @@ test('trace-rerender', () => {
         
     ;__VUE_DEVTOOLS_$onRenderTriggered__((e) => {
           const instance = __VUE_DEVTOOLS_$getCurrentInstance__()
-          window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el) => {
+          window.__VUE_DEVTOOLS_GLOBAL_HOOK__?.emit?.('render:triggered', e, instance, (el, getHeaderContent) => {
         if (__VUE_DEVTOOLS_$highlightEl__) {
-          __VUE_DEVTOOLS_$highlightEl__.style.backgroundColor = __VUE_DEVTOOLS_$colors__.find(([color, time]) => __VUE_DEVTOOLS_$times__ >= time)[0]
           __VUE_DEVTOOLS_$times__ += 1
+          const header = __VUE_DEVTOOLS_$highlightEl__.children[0]
+          header.replaceChildren(...getHeaderContent(__VUE_DEVTOOLS_$times__))
         }
         else {
-          el.style.backgroundColor = __VUE_DEVTOOLS_$colors__.at(-1)[0]
           __VUE_DEVTOOLS_$highlightEl__ = el
           document.body.appendChild(el)
         }
