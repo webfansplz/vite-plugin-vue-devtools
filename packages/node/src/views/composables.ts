@@ -491,8 +491,7 @@ interface RerenderHighlightData {
 
 const rerenderHighlightMap = ref<Map</* component instance uid */string, RerenderHighlightData>>(new Map())
 
-function pushRerenderHighlightData(uid: string, name: string, bound: RerenderHighlightData['bound']) {
-  console.log({ uid, name })
+function updateRerenderHighlightInfo(uid: string, name: string, bound: RerenderHighlightData['bound']) {
   const data = rerenderHighlightMap.value.get(uid)
   if (!data) {
     const debounceFn = createDebounceFn(() => {
@@ -514,6 +513,6 @@ function pushRerenderHighlightData(uid: string, name: string, bound: RerenderHig
 export function useRerenderHighlight() {
   return {
     rerenderHighlightMap,
-    pushRerenderHighlightData,
+    updateRerenderHighlightInfo,
   }
 }

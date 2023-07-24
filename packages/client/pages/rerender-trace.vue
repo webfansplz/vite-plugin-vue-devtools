@@ -26,7 +26,7 @@ const hook = client.value.hook
 const isTracing = ref(false)
 const result = ref<TraceInfo[]>([])
 const traceBuffer = ref<TraceInfo[]>([])
-const shouldHighlight = ref(true)
+const highlightEnabled = ref(true)
 
 function normalizeEventInfo(e: DebuggerEvent, instance: ComponentInstance): TraceInfo {
   const info = getSetupStateInfo(e.target)
@@ -61,7 +61,7 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (
 ) => {
   if (isTracing.value) {
     traceBuffer.value.push(normalizeEventInfo(e, instance))
-    if (shouldHighlight.value) {
+    if (highlightEnabled.value) {
       let el: HTMLElement | null = null
       const instanceEl = instance.vnode.el
       if (instanceEl?.nodeType === Node.TEXT_NODE)
@@ -69,7 +69,7 @@ hook.on(DevToolsHooks.RENDER_TRIGGERED, (
       else if (instanceEl?.nodeType === Node.ELEMENT_NODE)
         el = instanceEl as HTMLElement
       if (el)
-        client.value.rerenderHighlight.pushData(instance.uid.toString(), getInstanceName(instance), el.getBoundingClientRect())
+        client.value.rerenderHighlight.updateInfo(instance.uid.toString(), getInstanceName(instance), el.getBoundingClientRect())
     }
   }
 })
@@ -123,8 +123,8 @@ function openInEditor(filePath: string) {
           </template>
         </VTooltip>
         <VTooltip placement="bottom" :distance="12" text-center>
-          <i v-if="!shouldHighlight" class="i-tabler:capture" text="4.7" cursor-pointer text-secondary hover="text-black dark:text-white" @click="shouldHighlight = true" />
-          <i v-else class="i-tabler:capture" text="4.7" cursor-pointer text-green-600 hover="text-green-800" @click="shouldHighlight = false" />
+          <i v-if="!highlightEnabled" class="i-tabler:capture" text="4.7" cursor-pointer text-secondary hover="text-black dark:text-white" @click="highlightEnabled = true" />
+          <i v-else class="i-tabler:capture" text="4.7" cursor-pointer text-green-600 hover="text-green-800" @click="highlightEnabled = false" />
           <template #popper>
             <p text-xs op-50>
               Capture rerender elements

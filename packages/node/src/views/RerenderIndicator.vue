@@ -23,11 +23,14 @@ function getColors(times: number) {
     >
       <template #header-extra>
         <span
-          v-if="rerenderCount" :style="{
-            marginLeft: '5px',
-            color: getColors(rerenderCount),
-          }"
-        >x {{ rerenderCount + 1 }}</span>
+          v-if="rerenderCount"
+        >
+          (Rerender Count: <span
+            :style="{
+              color: getColors(rerenderCount),
+            }"
+          >{{ rerenderCount + 1 }})</span>
+        </span>
       </template>
     </ComponentInspector>
   </template>
