@@ -37,7 +37,7 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
    * one of the above is false, return null
    */
   if (!isAcceptableLang(filename) || !enableAnalyze(options) || hitPaths(filename, excludePaths))
-    return null
+    return code
 
   let locations: InsertLocation[] | null = null
 
@@ -52,7 +52,7 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
   }
 
   if (!locations || !locations.length)
-    return null
+    return code
 
   let ms = new MagicString(code)
 
