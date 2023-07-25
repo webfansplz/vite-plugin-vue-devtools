@@ -149,7 +149,7 @@ useInfiniteScroll(
           </thead>
           <tbody>
             <tr
-              v-for="(item, index) in projectDeps" :key="index" class="group" h-7
+              v-for="(item, index) in projectDeps" :key="index" class="group" h-8
               border="b dashed transparent hover:base"
             >
               <td text-sm op70>
@@ -162,8 +162,8 @@ useInfiniteScroll(
                   {{ item.version }}
                 </div>
               </td>
-              <td flex justify-center text-sm op70>
-                <div>
+              <td text-sm op70>
+                <div text-center>
                   {{ item.type }}
                 </div>
               </td>
@@ -211,7 +211,7 @@ useInfiniteScroll(
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in list" :key="index" class="group" h-7 border="b dashed transparent hover:base">
+            <tr v-for="(item, index) in list" :key="index" class="group" h-8 border="b dashed transparent hover:base">
               <td text-sm op70>
                 <div flex="inline gap3" items-center>
                   <template v-if="item?.repository?.url">
