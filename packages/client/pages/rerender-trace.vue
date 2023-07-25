@@ -201,7 +201,7 @@ function openInEditor(filePath: string) {
         </thead>
         <tbody border="b r base">
           <tr v-for="(item, index) in result" :key="index" class="group" h-7 border="b dashed transparent hover:base">
-            <td max-w-50 of-hidden text-ellipsis px-2 text-center text-sm underline op70 hover="text-primary" @click="openInEditor(item.fullFilePath)">
+            <td max-w-50 cursor-pointer of-hidden text-ellipsis px-2 text-center text-sm underline op70 hover="text-primary" @click="openInEditor(item.fullFilePath)">
               {{ item.componentFile }}
             </td>
             <td max-w-30 w-30 of-hidden text-ellipsis ws-nowrap px-2 text-center text-sm font-mono op70>
