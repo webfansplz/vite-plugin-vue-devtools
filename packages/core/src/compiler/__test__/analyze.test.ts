@@ -7,13 +7,13 @@ const baseConfig: AnalyzeOptions = {
 
 describe('analyzeCode - exclude', () => {
   test('not acceptable lang', () => {
-    expect(analyzeCode('', 'test.txt', baseConfig)).toBeNull()
+    expect(analyzeCode('', 'test.txt', baseConfig)).toBe('')
   })
   test('excluded path', () => {
-    expect(analyzeCode('', 'node_modules/test.js', baseConfig)).toBeNull()
+    expect(analyzeCode('', 'node_modules/test.js', baseConfig)).toBe('')
   })
   test('not enabled', () => {
-    expect(analyzeCode('', 'test.js', { rerenderTrace: false })).toBeNull()
+    expect(analyzeCode('', 'test.js', { rerenderTrace: false })).toBe('')
   })
   test('should execute', () => {
     expect(analyzeCode(`
