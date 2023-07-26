@@ -17,7 +17,8 @@ Vue DevTools <sup>预览</sup>
 
 <p align="center">
   <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 想法 & 建议</a> |
-  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ 项目路线图</a> 
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ 项目路线图</a> |
+  <a href="https://discord.gg/sHyy7gVPUG">🧑‍💻 Discord 频道</a> 
 </p>
 
 <p align="center">
