@@ -15,6 +15,7 @@ const filterName = ref('')
 const componentWalker = shallowRef<ComponentWalker | null>(null)
 
 watchDebounced(filterName, (value) => {
+  value = value.trim().toLowerCase()
   componentWalker.value!.componentFilter.setFilter(value)
   componentWalker.value!.getComponentTree(instance.value!).then((res) => {
     componentTree.value = res
