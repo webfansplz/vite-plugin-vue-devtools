@@ -2,7 +2,7 @@ import type { ComponentInternalInstance } from 'vue'
 import { classify, getInstanceName, kebabize } from './util'
 
 export class ComponentFilter {
-  filter: string
+  private filter: string
 
   constructor(filter: string | null) {
     this.filter = filter || ''
@@ -18,5 +18,9 @@ export class ComponentFilter {
     const name = getInstanceName(instance)
     return classify(name).toLowerCase().includes(this.filter)
       || kebabize(name).toLowerCase().includes(this.filter)
+  }
+
+  setFilter(filter: string) {
+    this.filter = filter
   }
 }
