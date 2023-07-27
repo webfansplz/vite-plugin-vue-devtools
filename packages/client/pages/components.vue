@@ -10,6 +10,17 @@ import { instance, onVueInstanceUpdate } from '~/logic/app'
 import { rootPath } from '~/logic/global'
 
 const componentTree = ref<ComponentTreeNode[]>([])
+const filterName = ref('')
+
+const componentWalker = shallowRef<ComponentWalker | null>(null)
+
+watchDebounced(filterName, (value) => {
+  value = value.trim().toLowerCase()
+  componentWalker.value!.componentFilter.setFilter(value)
+  componentWalker.value!.getComponentTree(instance.value!).then((res) => {
+    componentTree.value = res
+  })
+}, { debounce: 200 })
 
 function normalizeComponentState(value: unknown, type: string) {
   if (type === 'Reactive')
@@ -48,10 +59,10 @@ const normalizedComponentState = computed(() => {
 })
 
 function init() {
-  const walker = new ComponentWalker(500, null, true)
+  componentWalker.value = new ComponentWalker(500, null, true)
   selectedComponent.value = instance.value
   selectedComponentState.value = getInstanceState(instance.value!)
-  walker.getComponentTree(instance.value!).then((res) => {
+  componentWalker.value.getComponentTree(instance.value!).then((res) => {
     componentTree.value = res
     selectedComponentName.value = res?.[0]?.name ?? ''
     selectedComponentNode.value = res?.[0]
@@ -77,6 +88,9 @@ function openInEditor() {
   <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
+        <div v-if="componentWalker" w-full px10px py12px>
+          <VDTextInput v-model="filterName" placeholder="Find components..." />
+        </div>
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
           <ComponentTreeNode v-for="(item) in componentTree" :key="item.id" :data="item" />
         </div>
