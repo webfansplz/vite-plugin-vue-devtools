@@ -88,7 +88,7 @@ function openInEditor() {
   <div h-screen n-panel-grids>
     <Splitpanes>
       <Pane border="r base">
-        <div w-full px10px py12px>
+        <div v-if="componentWalker" w-full px10px py12px>
           <VDTextInput v-model="filterName" placeholder="Find components..." />
         </div>
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
