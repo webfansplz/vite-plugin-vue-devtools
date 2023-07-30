@@ -17,7 +17,8 @@ English | <a href="./README.zh-CN.md">简体中文</a>
 
 <p align="center">
   <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/1">💡 Ideas & Suggestions</a> |
-  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> 
+  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/discussions/2">🗺️ Project Roadmap</a> |
+  <a href="https://discord.gg/sHyy7gVPUG">🧑‍💻 Discord Channel</a> 
 </p>
 
 <p align="center">
