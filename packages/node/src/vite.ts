@@ -178,13 +178,13 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
   }
 
   return [
-    plugin,
-    inspect,
     VueInspector({
       toggleComboKey: '',
       toggleButtonVisibility: 'never',
       openInEditorHost: pluginOptions.openInEditorHost,
       ...(pluginOptions.appendTo ? { appendTo: pluginOptions.appendTo } : {}),
     }),
+    plugin,
+    inspect,
   ]
 }
