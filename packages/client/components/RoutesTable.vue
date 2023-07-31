@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RouteRecordNormalized } from 'vue-router'
+import type { RouteMeta, RouteRecordNormalized } from 'vue-router'
 
 const props = defineProps<{
   pages: RouteRecordNormalized[]
@@ -14,6 +14,10 @@ defineEmits<{
 const sorted = computed(() => {
   return [...props.pages].sort((a, b) => a.path.localeCompare(b.path))
 })
+function metaToString(meta: RouteMeta, num: number = 0) {
+  const metaStr = JSON.stringify(meta, null, num)
+  return metaStr === '{}' ? '-' : metaStr
+}
 </script>
 
 <template>
@@ -28,6 +32,9 @@ const sorted = computed(() => {
           <th text-left>
             Name
           </th>
+          <th text-left>
+            Route Meta
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -35,15 +42,11 @@ const sorted = computed(() => {
           <td w-20 pr-1>
             <div flex items-center justify-end>
               <VDBadge
-                v-if="matched.find(m => m.path === item.path)"
-                bg-green-400:10 text-green-400
-                title="active"
+                v-if="matched.find(m => m.path === item.path)" bg-green-400:10 text-green-400 title="active"
                 v-text="'active'"
               />
               <VDBadge
-                v-if="matchedPending.find(m => m.path === item.path)"
-                bg-teal-400:10 text-teal-400
-                title="next"
+                v-if="matchedPending.find(m => m.path === item.path)" bg-teal-400:10 text-teal-400 title="next"
                 v-text="'next'"
               />
             </div>
@@ -53,12 +56,15 @@ const sorted = computed(() => {
               <RoutePathItem
                 :route="item"
                 :class="matched.find(m => m.path === item.path) ? 'text-primary' : matchedPending.find(m => m.name === item.name) ? 'text-teal' : ''"
-                @navigate="(path:string) => $emit('navigate', path)"
+                @navigate="(path: string) => $emit('navigate', path)"
               />
             </div>
           </td>
           <td w-30 ws-nowrap pr-1 text-left text-sm font-mono op50>
             {{ item.name ?? '-' }}
+          </td>
+          <td w-50 ws-nowrap pr-1 text-left text-sm font-mono op50>
+            <span inline-block w-50 overflow-hidden text-ellipsis :title="metaToString(item.meta, 2)">{{ metaToString(item.meta) }}</span>
           </td>
         </tr>
       </tbody>
