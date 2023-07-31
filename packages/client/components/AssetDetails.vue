@@ -70,7 +70,8 @@ const client = useDevToolsClient()
 
       <div flex="~" items-center justify-center>
         <AssetPreview
-          max-h-80 min-h-20 min-w-20 w-auto rounded border="~ base"
+          border="~ base"
+          detail max-h-80 min-h-20 min-w-20 w-auto rounded
           :asset="asset"
           :text-content="textContent"
         />
