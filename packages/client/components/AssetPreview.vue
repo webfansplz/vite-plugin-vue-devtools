@@ -2,6 +2,7 @@
 defineProps<{
   asset: AssetInfo
   textContent?: string
+  detail?: boolean
 }>()
 </script>
 
@@ -18,6 +19,9 @@ defineProps<{
     <div v-else-if="asset.type === 'text' && !textContent" i-carbon-document text-3xl op20 />
     <div v-else-if="asset.type === 'text' && textContent" w-full self-start p4>
       <pre max-h-10rem of-hidden text-xs font-mono v-text="textContent" />
+    </div>
+    <div v-else-if="asset.type === 'video'">
+      <video :src="asset.publicPath" :autoplay="detail" :controls="detail" />
     </div>
     <div v-else i-carbon-help text-3xl op20 />
   </div>
