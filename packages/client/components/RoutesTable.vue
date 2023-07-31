@@ -42,11 +42,15 @@ function metaToString(meta: RouteMeta, num: number = 0) {
           <td w-20 pr-1>
             <div flex items-center justify-end>
               <VDBadge
-                v-if="matched.find(m => m.path === item.path)" bg-green-400:10 text-green-400 title="active"
+                v-if="matchedPending.find(m => m.path === item.path)"
+                bg-teal-400:10 text-teal-400
+                title="next"
                 v-text="'active'"
               />
               <VDBadge
-                v-if="matchedPending.find(m => m.path === item.path)" bg-teal-400:10 text-teal-400 title="next"
+                v-if="matchedPending.find(m => m.path === item.path)"
+                bg-teal-400:10 text-teal-400
+                title="next"
                 v-text="'next'"
               />
             </div>
