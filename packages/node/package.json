@@ -54,13 +54,13 @@
     "@vite-plugin-vue-devtools/core": "workspace:*",
     "@webfansplz/vuedoc-parser": "^0.0.3",
     "birpc": "^0.2.12",
-    "execa": "^7.1.1",
+    "execa": "^7.2.0",
     "sirv": "^2.0.3",
     "vite-plugin-inspect": "^0.7.33",
     "vite-plugin-vue-inspector": "^3.5.0"
   },
   "devDependencies": {
-    "@types/node": "^20.4.4",
+    "@types/node": "^20.4.5",
     "fast-glob": "^3.3.1",
     "image-meta": "^0.1.1",
     "pathe": "^1.1.1"
