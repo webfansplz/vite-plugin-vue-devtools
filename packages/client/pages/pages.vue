@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { RouteMeta } from 'vue-router'
 import { currentRoute, router, routes } from '~/logic/app'
 
 const routeInput = ref('')
@@ -25,6 +26,8 @@ function navigateToRoute(path: string) {
   router.value?.push(path)
   routeInput.value = path
 }
+
+const selectedMeta = ref<RouteMeta>()
 </script>
 
 <template>
@@ -68,7 +71,15 @@ function navigateToRoute(path: string) {
         :matched="currentRoute?.matched ?? []"
         :matched-pending="routeInputMatched"
         @navigate="navigateToRoute"
+        @select-meta="(meta: RouteMeta) => selectedMeta = meta"
       />
+      <DrawerRight
+        :model-value="!!selectedMeta"
+        auto-close w-120
+        @close="selectedMeta = undefined"
+      >
+        <RouteMetaDetail v-if="!!selectedMeta" :meta="selectedMeta" />
+      </DrawerRight>
     </VDSectionBlock>
   </div>
 </template>

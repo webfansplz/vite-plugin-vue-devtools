@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RouteRecordNormalized } from 'vue-router'
+import type { RouteMeta, RouteRecordNormalized } from 'vue-router'
 
 const props = defineProps<{
   pages: RouteRecordNormalized[]
@@ -9,11 +9,17 @@ const props = defineProps<{
 
 defineEmits<{
   (e: 'navigate', path: string): void
+  (e: 'selectMeta', meta: RouteMeta): void
 }>()
 
 const sorted = computed(() => {
   return [...props.pages].sort((a, b) => a.path.localeCompare(b.path))
 })
+
+function metaToString(meta: RouteMeta, num: number = 0) {
+  const metaStr = JSON.stringify(meta, null, num)
+  return metaStr === '{}' ? '-' : metaStr
+}
 </script>
 
 <template>
@@ -27,6 +33,9 @@ const sorted = computed(() => {
           </th>
           <th text-left>
             Name
+          </th>
+          <th text-left>
+            Route Meta
           </th>
         </tr>
       </thead>
@@ -53,12 +62,16 @@ const sorted = computed(() => {
               <RoutePathItem
                 :route="item"
                 :class="matched.find(m => m.path === item.path) ? 'text-primary' : matchedPending.find(m => m.name === item.name) ? 'text-teal' : ''"
+                hover="text-primary"
                 @navigate="(path:string) => $emit('navigate', path)"
               />
             </div>
           </td>
           <td w-30 ws-nowrap pr-1 text-left text-sm font-mono op50>
             {{ item.name ?? '-' }}
+          </td>
+          <td w-50 ws-nowrap pr-1 text-left text-sm font-mono op50 hover="text-primary op100">
+            <span inline-block w-50 cursor-pointer overflow-hidden text-ellipsis :title="metaToString(item.meta, 2)" @click="() => $emit('selectMeta', item.meta)">{{ metaToString(item.meta) }}</span>
           </td>
         </tr>
       </tbody>
