@@ -8,9 +8,6 @@ function isSetupFn(node: Node): node is ObjectMethod | ObjectProperty {
   return isObjectFn(node) && (node.key as Identifier).name === SETUP_FN
 }
 
-/**
- * @returns insert code location
- */
 export function analyzeVueSFC(code: string, filename: string) {
   const {
     scriptSetup,
@@ -18,6 +15,7 @@ export function analyzeVueSFC(code: string, filename: string) {
     script,
     scriptLocation,
     getScriptAST,
+    lang,
   } = parseSFC(code, filename)
 
   if (!scriptSetup && !script)
@@ -27,10 +25,11 @@ export function analyzeVueSFC(code: string, filename: string) {
   // script only: start: after <script>, end: before `setup` function
   // script setup and script: just use scriptSetup
 
+  let location: InsertLocation | null = null
+
   if (!scriptSetup && script) {
     const offset = scriptLocation.start
     const ast = getScriptAST()!
-    let location: InsertLocation | null = null
     walkAST(ast, {
       enter(node) {
         if (isSetupFn(node)) {
@@ -45,10 +44,13 @@ export function analyzeVueSFC(code: string, filename: string) {
         }
       },
     })
-    return location
   }
 
-  return scriptSetup ? scriptSetupLocation : scriptLocation
+  return {
+    location: location ?? (scriptSetup ? scriptSetupLocation : scriptLocation),
+    lang,
+    pureScriptCode: scriptSetup ? scriptSetup.content : script!.content,
+  }
 }
 
 // e.g. js, jsx, ts, tsx

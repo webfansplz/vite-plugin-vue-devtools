@@ -16,5 +16,5 @@
       "vitest/globals"
     ]
   },
-  "exclude": ["node_modules", "dist", "src/node/app.js"]
+  "exclude": ["node_modules", "dist", "src/node/app.js", "**/*/dist"]
 }

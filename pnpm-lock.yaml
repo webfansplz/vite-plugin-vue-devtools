@@ -198,6 +198,9 @@ importers:
       birpc:
         specifier: ^0.2.12
         version: 0.2.12
+      esm-analyzer:
+        specifier: ^0.2.6
+        version: 0.2.6
       estree-walker:
         specifier: ^2.0.2
         version: 2.0.2
@@ -3868,6 +3871,16 @@ packages:
       - supports-color
     dev: true
 
+  /esm-analyzer@0.2.6:
+    resolution: {integrity: sha512-rOc7+O4Z2WxjDK2MEuPtMtUyZCa+QeZt0m+apVInuqf26EHHhEZVH4BZiwlLactfLMk1PBccDb2soTmiCrm4jg==}
+    dependencies:
+      '@babel/parser': 7.22.7
+      estree-walker: 2.0.2
+      mitt: 3.0.1
+      p-limit: 4.0.0
+      to-path-tree: 0.2.0
+    dev: false
+
   /esno@0.16.3:
     resolution: {integrity: sha512-6slSBEV1lMKcX13DBifvnDFpNno5WXhw4j/ff7RI0y51BZiDqEe5dNhhjhIQ3iCOQuzsm2MbVzmwqbN78BBhPg==}
     hasBin: true
@@ -5337,6 +5350,10 @@ packages:
     resolution: {integrity: sha512-ILj2TpLiysu2wkBbWjAmww7TkZb65aiQO+DkVdUTBpBXq+MHYiETENkKFMtsJZX1Lf4pe4QOrTSjIfUwN5lRdg==}
     dev: true
 
+  /mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+    dev: false
+
   /mkdirp@1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
@@ -5714,7 +5731,6 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       yocto-queue: 1.0.0
-    dev: true
 
   /p-locate@4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
@@ -6885,6 +6901,10 @@ packages:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
 
+  /to-path-tree@0.2.0:
+    resolution: {integrity: sha512-TGf6IdITeelc0zNz4XCPbHb0lYagTc2Gvdm3I41vjFPsUXXFBg+c0i8oaMgftJhHLITPDTfi9KwcGDoMZ9OTIg==}
+    dev: false
+
   /to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -7918,4 +7938,3 @@ packages:
   /yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
-    dev: true

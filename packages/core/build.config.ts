@@ -11,6 +11,7 @@ export default defineBuildConfig({
     '@babel/parser',
     'estree-walker',
     'magic-string',
+    'esm-analyzer',
   ],
   declaration: true,
   rollup: {

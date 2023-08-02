@@ -60,6 +60,16 @@ function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<ViteP
   return Object.assign({}, defaultOptions, options)
 }
 
+function processAppendTo(id: string, code: string, appendTo: string | RegExp) {
+  const [filename] = id.split('?', 2)
+  if (appendTo
+    && (
+      (typeof appendTo === 'string' && filename.endsWith(appendTo))
+      || (appendTo instanceof RegExp && appendTo.test(filename))))
+    code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
+  return code
+}
+
 export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOptions): PluginOption {
   const vueDevtoolsPath = getVueDevtoolsPath()
   const inspect = Inspect({
@@ -146,14 +156,14 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
 
       const { analyze, appendTo } = pluginOptions
 
-      const [filename] = id.split('?', 2)
-      if (appendTo
-        && (
-          (typeof appendTo === 'string' && filename.endsWith(appendTo))
-          || (appendTo instanceof RegExp && appendTo.test(filename))))
-        code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
+      const analyzed = analyzeCode(code, id, analyze)
 
-      return analyzeCode(code, id, analyze)
+      if (!analyzed)
+        return processAppendTo(id, code, appendTo)
+
+      return {
+        code: processAppendTo(id, analyzed.code, appendTo),
+      }
     },
     transformIndexHtml(html) {
       if (pluginOptions.appendTo)
