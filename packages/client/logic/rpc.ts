@@ -1,6 +1,7 @@
 import { createRPCClient } from '@vite-plugin-vue-devtools/core'
 import { createHotContext } from 'vite-hot-client'
 
+import type { RPCFunctions } from 'vite-plugin-vue-devtools/client'
 import { hookApi } from './hook'
 
 const viteHotCtx = (await createHotContext('/___', `${location.pathname.split('/__devtools__')[0] || ''}/`.replace(/\/\//g, '/')))!

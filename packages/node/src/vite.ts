@@ -7,7 +7,8 @@ import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
 import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
 import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core/compiler'
-import { analyzeCode, analyzeOptionsDefault } from '@vite-plugin-vue-devtools/core/compiler'
+import { analyzeCode, analyzeOptionsDefault, getAnalyzeResultByPath, prepareStateAnalyze } from '@vite-plugin-vue-devtools/core/compiler'
+import type { ExecNpmScriptOptions, RPCFunctions } from '../client'
 import { DIR_CLIENT } from './dir'
 import {
   execNpmScript,
@@ -121,6 +122,12 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
             rpc.onTerminalExit({ data })
         },
       }),
+      stateAnalyzePrepare: async () => {
+        await prepareStateAnalyze()
+      },
+      stateAnalyzeGetResultByPath: (path: string) => {
+        return getAnalyzeResultByPath(path)
+      },
     })
   }
   const plugin = <PluginOption>{

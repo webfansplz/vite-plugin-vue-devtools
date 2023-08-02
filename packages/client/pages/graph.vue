@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { matchedKeys } from '../logic/graph'
+import { getAnalyzeStateResultByPath, matchedKeys, prepareStateAnalyze } from '../logic/graph'
 import { searchResults as modules } from '~/logic/graph'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
@@ -191,6 +191,12 @@ onMounted(() => {
   })
 })
 const { showGraphSetting } = useGraphSettings()
+
+async function clickMe() {
+  await prepareStateAnalyze()
+  const result = await getAnalyzeStateResultByPath('/Users/alex/code/contribution/vite-plugin-vue-devtools/packages/playground/src/App.vue')
+  console.log({ result })
+}
 </script>
 
 <template>
@@ -199,6 +205,9 @@ const { showGraphSetting } = useGraphSettings()
       <template #right>
         <button aria-label="Open graph settings" @click="showGraphSetting = true">
           <div i-carbon-settings />
+        </button>
+        <button @click="clickMe">
+          click me
         </button>
       </template>
     </SearchBox>

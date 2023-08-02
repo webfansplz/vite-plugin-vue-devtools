@@ -1,4 +1,5 @@
 import type { Router } from 'vue-router'
+import type { getAnalyzeResultByPath, prepareStateAnalyze } from '@vite-plugin-vue-devtools/core/compiler'
 
 type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
@@ -31,6 +32,10 @@ export interface VueDevtoolsHostClient {
   }
   rerenderHighlight: {
     updateInfo: (uid: string, name: string, _bounds: ComponentInspectorBounds) => void
+  }
+  stateAnalyze?: {
+    prepareState: typeof prepareStateAnalyze
+    getAnalyzeResultByPath: typeof getAnalyzeResultByPath
   }
 }
 

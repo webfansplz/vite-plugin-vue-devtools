@@ -199,8 +199,8 @@ importers:
         specifier: ^0.2.12
         version: 0.2.12
       esm-analyzer:
-        specifier: ^0.2.6
-        version: 0.2.6
+        specifier: ^0.3.2
+        version: 0.3.2
       estree-walker:
         specifier: ^2.0.2
         version: 2.0.2
@@ -3871,8 +3871,8 @@ packages:
       - supports-color
     dev: true
 
-  /esm-analyzer@0.2.6:
-    resolution: {integrity: sha512-rOc7+O4Z2WxjDK2MEuPtMtUyZCa+QeZt0m+apVInuqf26EHHhEZVH4BZiwlLactfLMk1PBccDb2soTmiCrm4jg==}
+  /esm-analyzer@0.3.2:
+    resolution: {integrity: sha512-FbuRZZTkdtYfnf1FDw/CM7dyONFp0OkczDYDCKwhOEFD+FNUpqigUE+NQkM2zLus0tfK4at1Pb88jiLuKR09BQ==}
     dependencies:
       '@babel/parser': 7.22.7
       estree-walker: 2.0.2
