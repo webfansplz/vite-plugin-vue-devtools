@@ -25,6 +25,10 @@ const routes = [
   { path: '/', component: Home, name: 'home', alias: '/index' },
   {
     path: '/about',
+    meta: {
+      title: 'about',
+      age: 19,
+    },
     component: About,
     children: [
       { path: '/about/:id', component: About },

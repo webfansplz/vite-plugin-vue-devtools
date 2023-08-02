@@ -62,6 +62,7 @@ function metaToString(meta: RouteMeta, num: number = 0) {
               <RoutePathItem
                 :route="item"
                 :class="matched.find(m => m.path === item.path) ? 'text-primary' : matchedPending.find(m => m.name === item.name) ? 'text-teal' : ''"
+                hover="text-primary"
                 @navigate="(path:string) => $emit('navigate', path)"
               />
             </div>
@@ -69,7 +70,7 @@ function metaToString(meta: RouteMeta, num: number = 0) {
           <td w-30 ws-nowrap pr-1 text-left text-sm font-mono op50>
             {{ item.name ?? '-' }}
           </td>
-          <td w-50 ws-nowrap pr-1 text-left text-sm font-mono op50>
+          <td w-50 ws-nowrap pr-1 text-left text-sm font-mono op50 hover="text-primary op100">
             <span inline-block w-50 cursor-pointer overflow-hidden text-ellipsis :title="metaToString(item.meta, 2)" @click="() => $emit('selectMeta', item.meta)">{{ metaToString(item.meta) }}</span>
           </td>
         </tr>
