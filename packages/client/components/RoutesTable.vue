@@ -9,11 +9,13 @@ const props = defineProps<{
 
 defineEmits<{
   (e: 'navigate', path: string): void
+  (e: 'selectMeta', meta: RouteMeta): void
 }>()
 
 const sorted = computed(() => {
   return [...props.pages].sort((a, b) => a.path.localeCompare(b.path))
 })
+
 function metaToString(meta: RouteMeta, num: number = 0) {
   const metaStr = JSON.stringify(meta, null, num)
   return metaStr === '{}' ? '-' : metaStr
@@ -68,7 +70,7 @@ function metaToString(meta: RouteMeta, num: number = 0) {
             {{ item.name ?? '-' }}
           </td>
           <td w-50 ws-nowrap pr-1 text-left text-sm font-mono op50>
-            <span inline-block w-50 overflow-hidden text-ellipsis :title="metaToString(item.meta, 2)">{{ metaToString(item.meta) }}</span>
+            <span inline-block w-50 cursor-pointer overflow-hidden text-ellipsis :title="metaToString(item.meta, 2)" @click="() => $emit('selectMeta', item.meta)">{{ metaToString(item.meta) }}</span>
           </td>
         </tr>
       </tbody>
