@@ -87,6 +87,8 @@ const data = computed<Data>(() => {
   }
 })
 
+const { drawerVisible, enable: enableStateGraph, toggleDrawerVisible, currentSelectedFile } = useStateGraph()
+
 onMounted(() => {
   const options: Options = {
     nodes: {
@@ -159,6 +161,7 @@ onMounted(() => {
 
   network.on('click', (params) => {
     const nodeId = params.nodes?.[0]
+    currentSelectedFile.value = nodeId
     if (!nodeId)
       return resetNodeStyle()
     if (settings.graphSettings.value.clickOpenInEditor && metaKeyPressed.value)
@@ -194,8 +197,6 @@ onMounted(() => {
 const { showGraphSetting } = useGraphSettings()
 
 const navbar = ref<HTMLDivElement>()
-
-const { drawerVisible, enable: enableStateGraph, toggleDrawerVisible } = useStateGraph()
 </script>
 
 <template>
@@ -216,6 +217,8 @@ const { drawerVisible, enable: enableStateGraph, toggleDrawerVisible } = useStat
     </SearchBox>
     <div ref="container" flex="1" :class="[isHoveringNode ? 'cursor-pointer' : '']" />
     <GraphSettings />
-    <DrawerRight v-model="drawerVisible" w-120 :navbar="navbar" @close="toggleDrawerVisible" />
+    <DrawerRight v-model="drawerVisible" w-120 :navbar="navbar" @close="toggleDrawerVisible">
+      <StateGraph />
+    </DrawerRight>
   </div>
 </template>
