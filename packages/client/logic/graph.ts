@@ -1,7 +1,6 @@
 import { useStorage } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { Minimatch } from 'minimatch'
-import type { ModuleInfo } from 'vite-plugin-vue-devtools/client'
 import { rpc } from './rpc'
 
 const list = ref<ModuleInfo[]>(await rpc.componentGraph())
@@ -147,11 +146,3 @@ async function filterData(isInit = false, givenData?: ModuleInfo[]) {
 }
 
 await filterData(true)
-
-export async function prepareStateAnalyze() {
-  await rpc.stateAnalyzePrepare()
-}
-
-export async function getAnalyzeStateResultByPath(path: string) {
-  return await rpc.stateAnalyzeGetResultByPath(path)
-}

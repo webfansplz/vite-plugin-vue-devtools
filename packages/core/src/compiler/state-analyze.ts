@@ -1,16 +1,19 @@
-import type { AcceptableLang } from 'esm-analyzer'
-import { Project } from 'esm-analyzer'
+type StateAnalyzeCollected = {
+  code: string
+  filename: string
+  lang: string
+}[]
 
-const project = new Project('state-analyze')
+const stateAnalyzeCollectedData: StateAnalyzeCollected = []
 
 export function collect(code: string, filename: string, lang: string) {
-  project.addFile(filename, code, lang as AcceptableLang)
+  stateAnalyzeCollectedData.push({
+    code,
+    filename,
+    lang,
+  })
 }
 
-export async function prepareStateAnalyze() {
-  await project.prepare()
-}
-
-export function getAnalyzeResultByPath(absolutePath: string) {
-  return project.getAnalyzeResults(absolutePath)
+export function getStateAnalyzeCollectedData() {
+  return stateAnalyzeCollectedData
 }

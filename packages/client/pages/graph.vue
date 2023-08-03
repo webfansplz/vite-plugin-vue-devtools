@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
-import { getAnalyzeStateResultByPath, matchedKeys, prepareStateAnalyze } from '../logic/graph'
+import { matchedKeys } from '../logic/graph'
+import { useStateGraph } from '../logic/state-graph'
 import { searchResults as modules } from '~/logic/graph'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
@@ -192,26 +193,29 @@ onMounted(() => {
 })
 const { showGraphSetting } = useGraphSettings()
 
-async function clickMe() {
-  await prepareStateAnalyze()
-  const result = await getAnalyzeStateResultByPath('/Users/alex/code/contribution/vite-plugin-vue-devtools/packages/playground/src/App.vue')
-  console.log({ result })
-}
+const navbar = ref<HTMLDivElement>()
+
+const { drawerVisible, enable: enableStateGraph, toggleDrawerVisible } = useStateGraph()
 </script>
 
 <template>
   <div relative h-screen w-full flex flex-col n-panel-grids>
-    <SearchBox>
+    <SearchBox ref="navbar">
       <template #right>
+        <button @click="enableStateGraph">
+          <div
+            i-carbon-data-vis-1 :class="{
+              'text-primary': drawerVisible,
+            }"
+          />
+        </button>
         <button aria-label="Open graph settings" @click="showGraphSetting = true">
           <div i-carbon-settings />
-        </button>
-        <button @click="clickMe">
-          click me
         </button>
       </template>
     </SearchBox>
     <div ref="container" flex="1" :class="[isHoveringNode ? 'cursor-pointer' : '']" />
     <GraphSettings />
+    <DrawerRight v-model="drawerVisible" w-120 :navbar="navbar" @close="toggleDrawerVisible" />
   </div>
 </template>

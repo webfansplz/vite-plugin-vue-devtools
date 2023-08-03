@@ -77,6 +77,9 @@ importers:
       algoliasearch:
         specifier: ^4.19.1
         version: 4.19.1
+      esm-analyzer:
+        specifier: ^0.3.3
+        version: 0.3.3
       json-editor-vue:
         specifier: ^0.10.6
         version: 0.10.6(vanilla-jsoneditor@0.17.8)(vue@3.3.4)
@@ -198,9 +201,6 @@ importers:
       birpc:
         specifier: ^0.2.12
         version: 0.2.12
-      esm-analyzer:
-        specifier: ^0.3.2
-        version: 0.3.2
       estree-walker:
         specifier: ^2.0.2
         version: 2.0.2
@@ -3871,8 +3871,8 @@ packages:
       - supports-color
     dev: true
 
-  /esm-analyzer@0.3.2:
-    resolution: {integrity: sha512-FbuRZZTkdtYfnf1FDw/CM7dyONFp0OkczDYDCKwhOEFD+FNUpqigUE+NQkM2zLus0tfK4at1Pb88jiLuKR09BQ==}
+  /esm-analyzer@0.3.3:
+    resolution: {integrity: sha512-IlNE3ykNhMOiOdBsyJE9KP9+jeSQpk+LVf715yNYIdgM2u7UE8fbymMCrUiU7H/azuzyI/adv+fHbbG9AXu6Kw==}
     dependencies:
       '@babel/parser': 7.22.7
       estree-walker: 2.0.2

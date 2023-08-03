@@ -1,5 +1,3 @@
-import { getAnalyzeResultByPath } from "@vite-plugin-vue-devtools/core/compiler"
-
 declare type AssetType = 'image' | 'font' | 'video' | 'audio' | 'text' | 'json' | 'other'
 
 declare interface AssetInfo {
@@ -47,8 +45,7 @@ declare interface RPCFunctions {
   installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   root(): string
-  stateAnalyzePrepare: (callback: () => void) => Promise<void>
-  stateAnalyzeGetResultByPath(path: string): Promise<ReturnType<typeof getAnalyzeResultByPath>>
+  getStateAnalyzeCollectedData(): Promise<{ code: string, lang: string, filename: string }[]>
 }
 
 

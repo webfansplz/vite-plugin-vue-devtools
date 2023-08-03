@@ -5,7 +5,7 @@ const { graphSettings } = useGraphSettings()
 </script>
 
 <template>
-  <nav flex="~ justify-between items-center" border="b base" pl-4 pr-6 font-light children:my-auto>
+  <nav flex="~ justify-between items-center" border="b base" z-200 pl-4 pr-6 font-light children:my-auto bg-base>
     <div flex="~ gap-4 items-center" h-54px>
       <div i-carbon-ibm-watson-discovery title="Vite Inspect" text-xl />
       <input
@@ -35,7 +35,7 @@ const { graphSettings } = useGraphSettings()
       </template>
     </div>
 
-    <div>
+    <div class="flex items-center justify-center gap-2">
       <slot name="right" />
     </div>
   </nav>

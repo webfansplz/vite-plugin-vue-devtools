@@ -79,4 +79,4 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
   }
 }
 
-export { getAnalyzeResultByPath, prepareStateAnalyze } from './state-analyze'
+export { getStateAnalyzeCollectedData } from './state-analyze'
