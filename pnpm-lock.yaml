@@ -101,6 +101,9 @@ importers:
       vite-hot-client:
         specifier: ^0.2.1
         version: 0.2.1(vite@4.4.7)
+      vue-resizables:
+        specifier: ^0.3.4
+        version: 0.3.4(vue@3.3.4)
       vue-router:
         specifier: ^4.2.4
         version: 4.2.4(vue@3.3.4)
@@ -7703,6 +7706,14 @@ packages:
     dependencies:
       vue: 3.3.4
     dev: true
+
+  /vue-resizables@0.3.4(vue@3.3.4):
+    resolution: {integrity: sha512-eLnVRngj0EMo4MKgAXppzdmtCiTEyQghQ5j4kgu1EjY80LYsqkEZp8mHPII2vdG3aFKnWZeMWuw5JysG8v5hUQ==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.3.4
+    dev: false
 
   /vue-resize@2.0.0-alpha.1(vue@3.3.4):
     resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}

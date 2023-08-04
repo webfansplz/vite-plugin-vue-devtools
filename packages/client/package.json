@@ -42,6 +42,7 @@
     "splitpanes": "^3.1.5",
     "vanilla-jsoneditor": "^0.17.8",
     "vite-hot-client": "^0.2.1",
+    "vue-resizables": "^0.3.4",
     "vue-router": "^4.2.4",
     "vuedraggable": "^4.1.0",
     "xterm": "^5.2.1",
