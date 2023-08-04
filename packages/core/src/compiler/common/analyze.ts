@@ -8,6 +8,8 @@ function isSetupFn(node: Node): node is ObjectMethod | ObjectProperty {
   return isObjectFn(node) && (node.key as Identifier).name === SETUP_FN
 }
 
+const VUE_SFC_SCRIPT_BLOCK_START_RE = /<script\b[^>]*?>/gm
+
 export function analyzeVueSFC(code: string, filename: string) {
   const {
     scriptSetup,
@@ -46,10 +48,19 @@ export function analyzeVueSFC(code: string, filename: string) {
     })
   }
 
+  // <script>
+  let offsetScriptHeader = ''
+
+  for (const item of code.matchAll(VUE_SFC_SCRIPT_BLOCK_START_RE)) {
+    if (item[0].includes('setup'))
+      offsetScriptHeader = item[0]
+  }
+
   return {
     location: location ?? (scriptSetup ? scriptSetupLocation : scriptLocation),
     lang,
     pureScriptCode: scriptSetup ? scriptSetup.content : script!.content,
+    offsetScriptHeader,
   }
 }
 

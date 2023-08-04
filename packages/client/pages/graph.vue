@@ -200,12 +200,13 @@ const navbar = ref<HTMLDivElement>()
 </script>
 
 <template>
+  <!-- i-carbon-data-vis-1 -->
   <div relative h-screen w-full flex flex-col n-panel-grids>
     <SearchBox ref="navbar">
       <template #right>
         <button @click="enableStateGraph">
           <div
-            i-carbon-data-vis-1 :class="{
+            i-material-symbols:dock-to-left :class="{
               'text-primary': drawerVisible,
             }"
           />
@@ -218,7 +219,7 @@ const navbar = ref<HTMLDivElement>()
     <div ref="container" flex="1" :class="[isHoveringNode ? 'cursor-pointer' : '']" />
     <GraphSettings />
     <DrawerRight v-model="drawerVisible" w-120 :navbar="navbar" @close="toggleDrawerVisible">
-      <StateGraph />
+      <GraphDock />
     </DrawerRight>
   </div>
 </template>

@@ -48,6 +48,7 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
   let locations: InsertLocation[] | null = null
   let codeLang = ''
   let pureScriptCode = code
+  let offsetContent = ''
 
   if (isVUE(filename)) {
     const result = analyzeVueSFC(code, filename)
@@ -55,6 +56,7 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
       result.location && (locations = [result.location])
       codeLang = result.lang
       pureScriptCode = result.pureScriptCode
+      offsetContent = result.offsetScriptHeader
     }
   }
   else {
@@ -63,6 +65,11 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
     locations = analyzeScriptFile(code, lang)
   }
 
+  // locations means that this file has one or more vue components
+  // but whether it is a component or not, we still need to collect it.
+  if (options.stateAnalyze)
+    collect(pureScriptCode, filename, codeLang, offsetContent, code)
+
   if (!locations || !locations.length)
     return null
 
@@ -70,8 +77,6 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
 
   if (options.rerenderTrace)
     ms = analyzeByTraceRerender(ms, locations as InsertLocation[])
-  if (options.stateAnalyze)
-    collect(pureScriptCode, filename, codeLang)
 
   return {
     code: ms.toString(),

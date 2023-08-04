@@ -11,10 +11,15 @@ export enum StateGraphStateEnum {
   HAS_STATE, // everything is ready
 }
 
-const rawData = ref<{
+const codeData = ref<{
+  code: string
+  filename: string
+}[]>([])
+const rawAnalyzeData = ref<{
   code: string
   lang: AcceptableLang
   path: string
+  offsetContent: string
 }[]>([])
 const project = shallowRef<Project>(new Project('state-analyze'))
 export const stateGraphState = ref(StateGraphStateEnum.NOT_READY)
@@ -22,17 +27,28 @@ export const stateGraphState = ref(StateGraphStateEnum.NOT_READY)
 export async function initRawData() {
   if (stateGraphState.value !== StateGraphStateEnum.NOT_READY)
     return
-  rawData.value = (await rpc.getStateAnalyzeCollectedData()).map(item => ({
-    code: item.code,
-    lang: item.lang as AcceptableLang,
-    path: item.filename,
-  }))
-  project.value.addFiles(rawData.value)
+  const rawData = await rpc.getStateAnalyzeCollectedData() ?? []
+  rawData.forEach((item) => {
+    rawAnalyzeData.value.push({
+      code: item.code,
+      lang: item.lang as AcceptableLang,
+      path: item.filename,
+      offsetContent: item.offsetContent,
+    })
+    codeData.value.push({
+      code: item.fullCode,
+      filename: item.filename,
+    })
+  })
+  project.value.addFiles(rawAnalyzeData.value)
   await project.value.prepare()
   stateGraphState.value = StateGraphStateEnum.READY
 }
 
 const currentSelectedFile = ref</* file name */string>()
+watch(currentSelectedFile, () => {
+  stateGraphState.value = getState()
+})
 
 export function useStateGraph() {
   const [drawerVisible, toggleDrawerVisible] = useToggle(false)
@@ -42,33 +58,44 @@ export function useStateGraph() {
     toggleDrawerVisible,
     enable: async () => {
       toggleDrawerVisible()
-      const data = await initRawData()
-      console.log({ data })
+      await initRawData()
+      stateGraphState.value = getState()
     },
     currentSelectedFile,
   }
 }
 
-function startAnalyze() {
+function getState() {
   // if not ready
   if (stateGraphState.value === StateGraphStateEnum.NOT_READY)
-    return { state: StateGraphStateEnum.NOT_READY, data: null }
+    return StateGraphStateEnum.NOT_READY
   const selectFile = currentSelectedFile.value
   // if not selected file
   if (!selectFile)
-    return { state: StateGraphStateEnum.NOT_SELECT_FILE, data: null }
+    return StateGraphStateEnum.NOT_SELECT_FILE
   // if not collected
   if (!project.value.getFilePaths().includes(selectFile))
-    return { state: StateGraphStateEnum.NOT_COLLECTED, data: null }
+    return StateGraphStateEnum.NOT_COLLECTED
   // if no state
   const data = project.value.getAnalyzeResults(selectFile)
   if (!data || !data.size)
-    return { state: StateGraphStateEnum.NO_STATE, data: null }
-  return { state: StateGraphStateEnum.HAS_STATE, data }
+    return StateGraphStateEnum.NO_STATE
+  return StateGraphStateEnum.HAS_STATE
+}
+
+function getData() {
+  return stateGraphState.value === StateGraphStateEnum.HAS_STATE
+    ? project.value.getAnalyzeResults(currentSelectedFile.value!)!
+    : null
 }
 
 export const stateGraphRawData = computed(() => {
-  const { data, state } = startAnalyze()
-  stateGraphState.value = state
-  return data
+  return getData()
+})
+
+export const currentFullCodeAndFilename = computed(() => {
+  return codeData.value.find(item => item.filename === currentSelectedFile.value) ?? {
+    code: '',
+    filename: '',
+  }
 })

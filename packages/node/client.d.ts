@@ -45,7 +45,9 @@ declare interface RPCFunctions {
   installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   root(): string
-  getStateAnalyzeCollectedData(): Promise<{ code: string, lang: string, filename: string }[]>
+  getStateAnalyzeCollectedData(): Promise<
+    { code: string, lang: string, filename: string, offsetContent: string, fullCode: string }[]
+  >
 }
 
 
