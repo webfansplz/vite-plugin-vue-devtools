@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   code: string
   filename: string
 }>()
@@ -8,7 +8,7 @@ const { highlightedCode } = await useHighlight()
 </script>
 
 <template>
-  <div class="overflow-y-auto p3">
+  <div class="overflow-x-auto overflow-y-auto">
     <div v-html="highlightedCode(code, filename.split('.').at(-1)!)" />
   </div>
 </template>
