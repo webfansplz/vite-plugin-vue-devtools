@@ -8,10 +8,12 @@ const props = withDefaults(
   defineProps<{
     modelValue?: boolean
     dim?: boolean
+    autoClose?: boolean
   }>(),
   {
     modelValue: false,
     dim: true,
+    autoClose: true,
   },
 )
 
@@ -38,10 +40,14 @@ watchEffect(
   },
 )
 
-function close() {
-  show.value = false
-  emit('close')
-}
+onClickOutside(card, () => {
+  if (props.modelValue && props.autoClose) {
+    show.value = false
+    emit('close')
+  }
+}, {
+  ignore: ['a', 'button', 'summary'],
+})
 </script>
 
 <script lang="ts">
@@ -56,11 +62,13 @@ export default {
       v-show="show" class="n-dialog fixed inset-0 z-100 flex items-center justify-center n-transition" :class="[
         show ? '' : 'op0 pointer-events-none visibility-none',
       ]"
+      role="dialog"
+      aria-modal="true"
     >
       <div
         class="absolute inset-0 -z-1" :class="[
           dim ? 'bg-black/50' : '',
-        ]" @click="close()"
+        ]"
       />
       <Card v-bind="$attrs" ref="card" class="max-h-screen of-auto">
         <slot />

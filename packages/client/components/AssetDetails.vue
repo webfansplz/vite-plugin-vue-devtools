@@ -245,7 +245,9 @@ const client = useDevToolsClient()
 
     <div flex-auto />
 
-    <VDDialog v-model="deleteDialog">
+    <VDDialog
+      v-model="deleteDialog" @close="deleteDialog = false"
+    >
       <div flex="~ col gap-4" min-h-full w-full of-hidden p8>
         <span>
           Are you sure you want to delete this asset?
@@ -260,7 +262,9 @@ const client = useDevToolsClient()
         </div>
       </div>
     </VDDialog>
-    <VDDialog v-model="renameDialog">
+    <VDDialog
+      v-model="renameDialog" @close="deleteDialog = false"
+    >
       <div flex="~ col gap-4" min-h-full w-full of-hidden p8>
         <VDTextInput v-model="newName" placeholder="New name" n="blue" />
         <div flex="~ gap2 wrap justify-center">
