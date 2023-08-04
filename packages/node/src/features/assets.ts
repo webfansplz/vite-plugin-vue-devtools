@@ -6,6 +6,7 @@ import type { ResolvedConfig } from 'vite'
 import { imageMeta } from 'image-meta'
 
 const _imageMetaCache = new Map<string, ImageMeta | undefined>()
+let cache: AssetInfo[] | null = null
 
 function guessType(path: string): AssetType {
   if (/\.(a?png|jpe?g|jxl|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path))
@@ -42,7 +43,7 @@ export async function getStaticAssets(config: ResolvedConfig): Promise<AssetInfo
     ignore: ['**/node_modules/**', '**/dist/**'],
   })
 
-  return await Promise.all(files.map(async (path) => {
+  cache = await Promise.all(files.map(async (path) => {
     const filePath = resolve(dir, path)
     const stat = await fs.lstat(filePath)
     const publicDirname = p.relative(config.root, config.publicDir)
@@ -56,6 +57,8 @@ export async function getStaticAssets(config: ResolvedConfig): Promise<AssetInfo
       mtime: stat.mtimeMs,
     }
   }))
+
+  return cache
 }
 
 export async function getImageMeta(filepath: string) {
@@ -82,4 +85,21 @@ export async function getTextAssetContent(filepath: string, limit = 300) {
     console.error(e)
     return undefined
   }
+}
+
+export async function deleteStaticAsset(filepath: string) {
+  try {
+    return await fs.unlink(filepath)
+  }
+  catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+export async function renameStaticAsset(oldPath: string, newPath: string) {
+  const exist = cache?.find(asset => asset.filePath === newPath)
+  if (exist)
+    throw new Error(`File ${newPath} already exists`)
+  return await fs.rename(oldPath, newPath)
 }

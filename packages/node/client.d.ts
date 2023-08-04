@@ -37,11 +37,14 @@ declare interface RPCFunctions {
   staticAssets(): Promise<AssetInfo[]>
   getImageMeta(path: string): Promise<ImageMeta | undefined>
   getTextAssetContent(path: string): Promise<string | undefined>
+  deleteStaticAsset(path: string): Promise<string | undefined>
+  renameStaticAsset(oldPath: string, newPath: string): Promise<string | undefined>
   getPackages(): Promise<Record<string, Omit<PackageMeta, 'name'>>>
   getVueSFCList(): Promise<string[]>
   getComponentInfo(filename: string): Promise<Record<string, unknown>>
   onTerminalData(_: { id?: string; data: string }): void
   onTerminalExit(_: { id?: string; data?: string }): void
+  onFileWatch(_: { event: string; path: string }): void
   installPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   root(): string

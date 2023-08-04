@@ -10,6 +10,7 @@ import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/cor
 import { analyzeCode, analyzeOptionsDefault } from '@vite-plugin-vue-devtools/core/compiler'
 import { DIR_CLIENT } from './dir'
 import {
+  deleteStaticAsset,
   execNpmScript,
   getComponentInfo,
   getComponentsRelationships,
@@ -18,6 +19,7 @@ import {
   getStaticAssets,
   getTextAssetContent,
   getVueSFCList,
+  renameStaticAsset,
 } from './features'
 
 function getVueDevtoolsPath() {
@@ -84,6 +86,8 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
       staticAssets: () => getStaticAssets(config),
       getImageMeta,
       getTextAssetContent,
+      deleteStaticAsset,
+      renameStaticAsset,
       getPackages: () => getPackages(config.root),
       getVueSFCList: () => getVueSFCList(config.root),
       getComponentInfo: (filename: string) => getComponentInfo(config.root, filename),
@@ -111,6 +115,10 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
             rpc.onTerminalExit({ data })
         },
       }),
+    })
+
+    server.watcher.on('all', (event, path) => {
+      rpc.onFileWatch({ event, path })
     })
   }
   const plugin = <PluginOption>{

@@ -2,14 +2,30 @@
 import { onKeyDown } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { rpc } from '~/logic/rpc'
+import { hookApi } from '~/logic/hook'
+import { rootPath } from '~/logic/global'
 
-const assets = ref<AssetInfo[]>([])
+function useAssets() {
+  const assets = ref<AssetInfo[]>([])
 
-async function getAssets() {
-  assets.value = await rpc.staticAssets()
+  getAssets()
+  const debounceAssets = useDebounceFn(() => {
+    getAssets()
+  }, 100)
+
+  async function getAssets() {
+    assets.value = await rpc.staticAssets()
+  }
+
+  hookApi.hook.on('__vue-devtools:file-watch', ({ event, path }) => {
+    if (path.startsWith(rootPath) && ['add', 'unlink'].includes(event))
+      debounceAssets()
+  })
+
+  return { assets }
 }
 
-getAssets()
+const { assets } = useAssets()
 
 const search = ref('')
 
@@ -125,7 +141,7 @@ const navbar = ref<HTMLElement>()
       :navbar="navbar"
       @close="selected = undefined"
     >
-      <AssetDetails v-if="selected" :asset="selected" />
+      <AssetDetails v-if="selected" v-model="selected" />
     </DrawerRight>
   </div>
   <VDPanelGrids v-else px5>

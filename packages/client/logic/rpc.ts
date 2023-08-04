@@ -13,4 +13,7 @@ export const rpc
     onTerminalExit({ data }: { id?: string; data: string }) {
       hookApi.hook.emit('__vue-devtools:terminal:exit__', data)
     },
+    onFileWatch(data: { event: string; path: string }) {
+      hookApi.hook.emit('__vue-devtools:file-watch', data)
+    },
   })
