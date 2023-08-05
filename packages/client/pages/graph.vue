@@ -2,6 +2,7 @@
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
 import { matchedKeys } from '../logic/graph'
+import { useStateGraph } from '../logic/state-graph'
 import { searchResults as modules } from '~/logic/graph'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
@@ -86,6 +87,8 @@ const data = computed<Data>(() => {
   }
 })
 
+const { drawerVisible, enable: enableStateGraph, toggleDrawerVisible, currentSelectedFile } = useStateGraph()
+
 onMounted(() => {
   const options: Options = {
     nodes: {
@@ -158,6 +161,7 @@ onMounted(() => {
 
   network.on('click', (params) => {
     const nodeId = params.nodes?.[0]
+    currentSelectedFile.value = nodeId
     if (!nodeId)
       return resetNodeStyle()
     if (settings.graphSettings.value.clickOpenInEditor && metaKeyPressed.value)
@@ -191,12 +195,22 @@ onMounted(() => {
   })
 })
 const { showGraphSetting } = useGraphSettings()
+
+const navbar = ref<HTMLDivElement>()
 </script>
 
 <template>
+  <!-- i-carbon-data-vis-1 -->
   <div relative h-screen w-full flex flex-col n-panel-grids>
-    <SearchBox>
+    <SearchBox ref="navbar">
       <template #right>
+        <button @click="enableStateGraph">
+          <div
+            i-material-symbols:dock-to-left :class="{
+              'text-primary': drawerVisible,
+            }"
+          />
+        </button>
         <button aria-label="Open graph settings" @click="showGraphSetting = true">
           <div i-carbon-settings />
         </button>
@@ -204,5 +218,8 @@ const { showGraphSetting } = useGraphSettings()
     </SearchBox>
     <div ref="container" flex="1" :class="[isHoveringNode ? 'cursor-pointer' : '']" />
     <GraphSettings />
+    <DrawerRight v-model="drawerVisible" w-120 :navbar="navbar" @close="toggleDrawerVisible">
+      <GraphDock />
+    </DrawerRight>
   </div>
 </template>

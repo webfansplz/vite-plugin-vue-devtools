@@ -7,7 +7,7 @@ import Inspect from 'vite-plugin-inspect'
 import VueInspector from 'vite-plugin-vue-inspector'
 import { PLUGIN_NAME, createRPCServer } from '@vite-plugin-vue-devtools/core'
 import type { AnalyzeOptions, DeepRequired } from '@vite-plugin-vue-devtools/core/compiler'
-import { analyzeCode, analyzeOptionsDefault } from '@vite-plugin-vue-devtools/core/compiler'
+import { analyzeCode, analyzeOptionsDefault, getStateAnalyzeCollectedData } from '@vite-plugin-vue-devtools/core/compiler'
 import { DIR_CLIENT } from './dir'
 import {
   execNpmScript,
@@ -58,6 +58,16 @@ const defaultOptions: DeepRequired<VitePluginVueDevToolsOptions> = {
 
 function mergeOptions(options: VitePluginVueDevToolsOptions): DeepRequired<VitePluginVueDevToolsOptions> {
   return Object.assign({}, defaultOptions, options)
+}
+
+function processAppendTo(id: string, code: string, appendTo: string | RegExp) {
+  const [filename] = id.split('?', 2)
+  if (appendTo
+    && (
+      (typeof appendTo === 'string' && filename.endsWith(appendTo))
+      || (appendTo instanceof RegExp && appendTo.test(filename))))
+    code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
+  return code
 }
 
 export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOptions): PluginOption {
@@ -111,6 +121,7 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
             rpc.onTerminalExit({ data })
         },
       }),
+      getStateAnalyzeCollectedData: () => getStateAnalyzeCollectedData(),
     })
   }
   const plugin = <PluginOption>{
@@ -146,14 +157,14 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
 
       const { analyze, appendTo } = pluginOptions
 
-      const [filename] = id.split('?', 2)
-      if (appendTo
-        && (
-          (typeof appendTo === 'string' && filename.endsWith(appendTo))
-          || (appendTo instanceof RegExp && appendTo.test(filename))))
-        code = `${code}\nimport 'virtual:vue-devtools-path:app.js'`
+      const analyzed = analyzeCode(code, id, analyze)
 
-      return analyzeCode(code, id, analyze)
+      if (!analyzed)
+        return processAppendTo(id, code, appendTo)
+
+      return {
+        code: processAppendTo(id, analyzed.code, appendTo),
+      }
     },
     transformIndexHtml(html) {
       if (pluginOptions.appendTo)

@@ -3,17 +3,18 @@ import { analyzeCode } from '..'
 
 const baseConfig: AnalyzeOptions = {
   rerenderTrace: true,
+  stateAnalyze: true,
 }
 
 describe('analyzeCode - exclude', () => {
   test('not acceptable lang', () => {
-    expect(analyzeCode('', 'test.txt', baseConfig)).toBe('')
+    expect(analyzeCode('', 'test.txt', baseConfig)).toBeNull()
   })
   test('excluded path', () => {
-    expect(analyzeCode('', 'node_modules/test.js', baseConfig)).toBe('')
+    expect(analyzeCode('', 'node_modules/test.js', baseConfig)).toBeNull()
   })
   test('not enabled', () => {
-    expect(analyzeCode('', 'test.js', { rerenderTrace: false })).toBe('')
+    expect(analyzeCode('', 'test.js', { rerenderTrace: false, stateAnalyze: false })).toBeNull()
   })
   test('should execute', () => {
     expect(analyzeCode(`
@@ -39,7 +40,7 @@ describe('analyzeCode - rerender - sfc', () => {
         <div></div>
       </template>
     `
-    const result = analyzeCode(code, 'test.vue', baseConfig)
+    const result = analyzeCode(code, 'test.vue', baseConfig) as { code: string } | undefined
     expect(result?.code).toMatchSnapshot()
   })
   test('script setup with script', () => {

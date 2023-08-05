@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { vResizable } from 'vue-resizables'
+import 'vue-resizables/style'
+
 const props = defineProps<{
   modelValue?: boolean
   navbar?: HTMLElement
@@ -39,9 +42,22 @@ export default {
     <div
       v-if="modelValue"
       ref="el"
+      v-resizable="{
+        edge: {
+          left: true,
+        },
+        border: {
+          render: true,
+          style: {
+            headless: true,
+            color: '#41B883',
+            size: 1,
+          },
+        },
+      }"
       border="l base"
-      flex="~ col gap-1"
-      absolute bottom-0 right-0 z-10 z-20 of-auto text-sm glass-effect
+      flex="~ col gap-1" absolute bottom-0 right-0 z-10 z-20 of-auto text-sm
+      glass-effect
       :style="{ top: `${top}px` }"
       v-bind="$attrs"
     >

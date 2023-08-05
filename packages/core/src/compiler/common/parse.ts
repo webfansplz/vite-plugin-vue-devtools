@@ -34,6 +34,7 @@ export function parseSFC(code: string, filename: string): {
   scriptSetupLocation: InsertLocation
   getScriptAST(): ReturnType<typeof babelParse> | undefined
   getScriptSetupAST(): ReturnType<typeof babelParse> | undefined
+  lang: string
 } {
   const sfc = sfcParse(code, {
     filename,
@@ -41,13 +42,10 @@ export function parseSFC(code: string, filename: string): {
 
   const { descriptor } = sfc
 
-  const scriptLang = descriptor.script?.lang ?? 'js'
-  const scriptSetupLang = descriptor.scriptSetup?.lang ?? 'js'
+  const scriptLang = descriptor.script?.lang
+  const scriptSetupLang = descriptor.scriptSetup?.lang
 
-  if (descriptor.script && descriptor.scriptSetup && (scriptLang !== scriptSetupLang))
-    throw new Error(`[vue-devtools] ${filename} <script> and <script setup> must use the same language`)
-
-  const lang = scriptLang || scriptSetupLang
+  const lang = (scriptSetupLang ?? scriptLang) ?? 'js'
 
   return {
     sfc,
@@ -71,5 +69,6 @@ export function parseSFC(code: string, filename: string): {
         return
       return babelParse(descriptor.scriptSetup.content, lang)
     },
+    lang,
   }
 }
