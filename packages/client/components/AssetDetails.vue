@@ -50,6 +50,7 @@ const supportsPreview = computed(() => {
     'image',
     'text',
     'video',
+    'audio',
     'font',
   ].includes(props.asset.type)
 })
