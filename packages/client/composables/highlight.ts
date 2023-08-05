@@ -14,6 +14,8 @@ setCDN('https://unpkg.com/shiki/')
 let highlighter: Highlighter
 
 async function initHighlighter() {
+  if (highlighter)
+    return highlighter
   return await getHighlighter({
     themes: ['vitesse-dark', 'vitesse-light'],
     langs: ['vue', 'javascript', 'typescript', 'jsx', 'tsx'],
