@@ -12,6 +12,7 @@ interface DevToolsFrameState {
   position: string
   isFirstVisit: boolean
   closeOnOutsideClick: boolean
+  minimizePanelInactive: number
 }
 
 interface ComponentInspectorBounds {
@@ -38,6 +39,7 @@ export const state = useObjectStorage<DevToolsFrameState>('__vue-devtools-frame-
   position: 'bottom',
   isFirstVisit: true,
   closeOnOutsideClick: false,
+  minimizePanelInactive: 50000,
 })
 
 // ---- useIframe ----
@@ -245,6 +247,7 @@ function snapToPoints(value: number) {
 }
 
 export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
+  const isHovering = ref(false)
   const isDragging = ref(false)
   const draggingOffset = reactive({ x: 0, y: 0 })
   const windowSize = reactive({ width: 0, height: 0 })
@@ -255,6 +258,7 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
     right: 10,
     bottom: 10,
   })
+  let _timer: ReturnType<typeof setTimeout> | null = null
 
   const safeArea = useScreenSafeArea()
 
@@ -277,8 +281,21 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
     windowSize.height = window.innerHeight
   }
 
+  const bringUp = () => {
+    isHovering.value = true
+    if (state.value.minimizePanelInactive < 0)
+      return
+    if (_timer)
+      clearTimeout(_timer)
+    _timer = setTimeout(() => {
+      isHovering.value = false
+    }, +state.value.minimizePanelInactive || 0)
+  }
+
   onMounted(() => {
     setWindowSize()
+
+    bringUp()
 
     useWindowEventListener('resize', () => {
       setWindowSize()
@@ -325,6 +342,19 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
   })
 
   const isVertical = computed(() => state.value.position === 'left' || state.value.position === 'right')
+  const isHidden = computed(() => {
+    if (state.value.minimizePanelInactive < 0)
+      return false
+    if (state.value.minimizePanelInactive === 0)
+      return true
+    // @ts-expect-error compatibility
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+    return !isDragging.value
+    && !state.value.open
+    && !isHovering.value
+    && !isTouchDevice
+    && state.value.minimizePanelInactive
+  })
 
   const anchorPos = computed(() => {
     const halfWidth = (panelEl.value?.clientWidth || 0) / 2
@@ -433,12 +463,40 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
     return style
   })
 
+  const panelStyle = computed(() => {
+    const style: any = {
+      transform: isVertical.value
+        ? `translate(${isHidden.value ? `calc(-50% ${state.value.position === 'right' ? '+' : '-'} 15px)` : '-50%'}, -50%) rotate(90deg)`
+        : `translate(-50%, ${isHidden.value ? `calc(-50% ${state.value.position === 'top' ? '-' : '+'} 15px)` : '-50%'})`,
+    }
+    if (isHidden.value) {
+      switch (state.value.position) {
+        case 'top':
+        case 'right':
+          style.borderTopLeftRadius = '0'
+          style.borderTopRightRadius = '0'
+          break
+        case 'bottom':
+        case 'left':
+          style.borderBottomLeftRadius = '0'
+          style.borderBottomRightRadius = '0'
+          break
+      }
+    }
+    if (isDragging.value)
+      style.transition = 'none !important'
+    return style
+  })
+
   return {
+    isHidden,
     isDragging,
-    onPointerDown,
     isVertical,
     anchorStyle,
     iframeStyle,
+    panelStyle,
+    onPointerDown,
+    bringUp,
   }
 }
 
