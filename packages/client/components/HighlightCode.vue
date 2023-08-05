@@ -13,4 +13,20 @@ const { highlightedCode } = await useHighlight()
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* copied from https://github.com/shikijs/shiki/issues/3 */
+:deep(code) {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+:deep(code) .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1rem;
+  margin-right: 1.5rem;
+  display: inline-block;
+  text-align: right;
+  @apply text-gray-400;
+}
+</style>
