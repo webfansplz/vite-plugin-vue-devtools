@@ -23,8 +23,8 @@
   "exports": {
     ".": {
       "types": "./dist/vite.d.ts",
-      "require": "./dist/vite.cjs",
-      "import": "./dist/vite.mjs"
+      "import": "./dist/vite.mjs",
+      "require": "./dist/vite.cjs"
     },
     "./*": "./*",
     "./client": {

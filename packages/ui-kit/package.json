@@ -16,18 +16,18 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
-      "require": "./dist/resolver.cjs",
-      "import": "./dist/resolver.mjs"
+      "import": "./dist/resolver.mjs",
+      "require": "./dist/resolver.cjs"
     },
     "./unocss": {
       "types": "./dist/unocss.d.ts",
-      "require": "./dist/unocss.cjs",
-      "import": "./dist/unocss.mjs"
+      "import": "./dist/unocss.mjs",
+      "require": "./dist/unocss.cjs"
     },
     "./components/*": "./dist/components/*"
   },

@@ -12,13 +12,13 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./compiler": {
       "types": "./dist/compiler.d.ts",
-      "require": "./dist/compiler.cjs",
-      "import": "./dist/compiler.mjs"
+      "import": "./dist/compiler.mjs",
+      "require": "./dist/compiler.cjs"
     }
   },
   "main": "./dist/index.cjs",
