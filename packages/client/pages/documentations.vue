@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { rpc } from '~/logic/rpc'
 import type { DocumentInfo } from '~/types'
 import { data } from '~/logic/documentations'
 
-const items = ref(data)
 const iframeViewUrl = ref('')
-rpc.getPackages().then((res) => {
-  const packagesName = Object.keys(res.packages)
-  items.value = items.value.filter(item => packagesName.includes(item.id))
-})
 
 function navigate(data: DocumentInfo) {
   if (data.openInBlank)
@@ -35,6 +29,6 @@ function back() {
     </teleport>
   </div>
   <div v-else grid grid-cols-minmax-400px h-screen select-none gap3 overflow-scroll p4 class="no-scrollbar">
-    <DocDetails v-for="(item, index) in items" :key="index" :data="item" @navigate="navigate" />
+    <DocDetails v-for="(item, index) in data" :key="index" :data="item" @navigate="navigate" />
   </div>
 </template>
