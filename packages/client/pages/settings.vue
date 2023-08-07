@@ -7,7 +7,7 @@ const {
   hiddenTabGroups,
 } = useDevToolsSettings()
 
-const { closeOnOutsideClick } = useFrameState()
+const { closeOnOutsideClick, minimizePanelInactive } = useFrameState()
 
 const scaleOptions = [
   ['Tiny', 12 / 15],
@@ -15,6 +15,15 @@ const scaleOptions = [
   ['Normal', 1],
   ['Large', 16 / 15],
   ['Huge', 18 / 15],
+]
+
+const minimizeInactiveOptions = [
+  ['Always', 0],
+  ['1s', 1000],
+  ['2s', 2000],
+  ['5s', 5000],
+  ['10s', 10000],
+  ['Never', -1],
 ]
 
 const groupedTabs = useGroupedTabs(false)
@@ -104,10 +113,21 @@ const showTabGroup = ref(false)
           <div>
             <VDDarkToggle v-slot="{ toggle, isDark }">
               <VDButton n="primary" @click="toggle">
-                <div carbon-sun translate-y--1px dark:carbon-moon /> {{ isDark.value ? 'Dark' : 'Light' }}
+                <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
               </VDButton>
             </VDDarkToggle>
           </div>
+        </div>
+        <div py3 flex="~ col gap-1">
+          <h3 mb1 text-lg>
+            Floating Panel
+          </h3>
+          <p>Minimize panel on inactive</p>
+          <VDSelect v-model="minimizePanelInactive" n="primary">
+            <option v-for="i of minimizeInactiveOptions" :key="i[0]" :value="i[1]">
+              {{ i[0] }}
+            </option>
+          </VDSelect>
         </div>
         <div py3 flex="~ col gap-1">
           <h3 mb1 text-lg>

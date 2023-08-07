@@ -30,7 +30,7 @@ const panelState = ref<{
 
 const { togglePanelVisible, closePanel, panelVisible } = usePanelVisible()
 const panelEl = ref<HTMLDivElement>()
-const { onPointerDown, anchorStyle, iframeStyle, isDragging, isVertical } = usePosition(panelEl)
+const { onPointerDown, bringUp, anchorStyle, iframeStyle, isDragging, isVertical, isHidden, panelStyle } = usePosition(panelEl)
 const vars = computed(() => {
   const colorScheme = useColorScheme()
   const dark = colorScheme.value === 'auto'
@@ -239,11 +239,15 @@ collectHookBuffer()
   <div
     id="vue-devtools-anchor"
     :style="[anchorStyle, vars]"
-    :class="{ 'vue-devtools-vertical': isVertical }"
+    :class="{
+      'vue-devtools-vertical': isVertical,
+      'vue-devtools-hide': isHidden,
+    }"
+    @mousemove="bringUp"
   >
     <!-- toggle button -->
     <div v-if="!checkIsSafari()" class="vue-devtools-glowing" :style="isDragging ? 'opacity: 0.6 !important' : ''" />
-    <div ref="panelEl" class="vue-devtools-button-panel" @pointerdown="onPointerDown">
+    <div ref="panelEl" class="vue-devtools-panel" :style="panelStyle" @pointerdown="onPointerDown">
       <div
         class="vue-devtools-icon-button vue-devtools-vue-button"
         title="Toggle Vue DevTools" aria-label="Toggle devtools panel"
@@ -256,9 +260,9 @@ collectHookBuffer()
           <path fill="#35495E" d="M50.56 0L128 133.12L204.8 0h-47.36L128 51.2L97.92 0H50.56Z" />
         </svg>
       </div>
-      <div style="border-left: 1px solid #8883;width:1px;height:10px;" />
+      <div style="border-left: 1px solid #8883;width:1px;height:10px;" class="vue-devtools-panel-content" />
       <div
-        class="vue-devtools-icon-button vue-devtools-inspector-button"
+        class="vue-devtools-icon-button vue-devtools-panel-content vue-devtools-inspector-button"
         :class="{ disabled: !inspectorLoaded }"
         :disabled="!inspectorLoaded"
         title="Toggle Component Inspector" @click="toggleInspector"
@@ -310,6 +314,19 @@ collectHookBuffer()
   color: inherit;
 }
 
+#vue-devtools-anchor.vue-devtools-hide .vue-devtools-panel {
+  max-width: 32px;
+  padding: 2px 0;
+}
+
+#vue-devtools-anchor  .vue-devtools-panel-content {
+  transition: opacity 0.4s ease;
+}
+
+#vue-devtools-anchor .vue-devtools-hide .vue-devtools-panel-content {
+  opacity: 0;
+}
+
 #vue-devtools-anchor .vue-devtools-glowing {
   position: absolute;
   left: 0;
@@ -318,7 +335,7 @@ collectHookBuffer()
   width: 160px;
   height: 160px;
   opacity: 0;
-  transition: all 0.8s ease;
+  transition: all 1s ease;
   pointer-events: none;
   z-index: -1;
   border-radius: 9999px;
@@ -350,13 +367,14 @@ collectHookBuffer()
   opacity: 0.6;
 }
 
-#vue-devtools-anchor .vue-devtools-button-panel {
+#vue-devtools-anchor .vue-devtools-panel {
   position: absolute;
   left: 0;
   top: 0;
   transform: translate(-50%, -50%);
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow: hidden;
   align-items: center;
   gap: 2px;
   height: 30px;
@@ -368,17 +386,27 @@ collectHookBuffer()
   backdrop-filter: blur(10px);
   color: var(--vue-devtools-widget-fg);
   box-shadow: 2px 2px 8px var(--vue-devtools-widget-shadow);
-  transition: background 0.2s ease;
   user-select: none;
+  max-width: 150px;
+  transition: max-width 0.4s ease, padding 0.5s ease, transform 0.3s ease, all 0.4s ease;
+}
+
+#vue-devtools-anchor .vue-devtools-vue-button {
+  flex: none;
 }
 
 #vue-devtools-anchor.vue-devtools-vertical .vue-devtools-vue-button {
   transform: rotate(-90deg);
 }
 
-#vue-devtools-anchor.vue-devtools-vertical .vue-devtools-button-panel {
+#vue-devtools-anchor.vue-devtools-hide .vue-devtools-panel {
+  max-width: 32px;
+  padding: 2px 0;
+}
+
+#vue-devtools-anchor.vue-devtools-vertical .vue-devtools-panel {
   transform: translate(-50%, -50%) rotate(90deg);
-  box-shadow: 2px -2px 8px var(--nuxt-devtools-widget-shadow);
+  box-shadow: 2px -2px 8px var(--vue-devtools-widget-shadow);
 }
 
 #vue-devtools-anchor .vue-devtools-inspector-button.disabled {
