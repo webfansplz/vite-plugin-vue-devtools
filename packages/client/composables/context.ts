@@ -17,7 +17,7 @@ const [
 ] = useSingleton<(opt: {
   text: string
   icon?: string
-  type?: 'primary' | 'error'
+  type?: 'primary' | 'warning' | 'error'
   duration?: number
 }) => void>()
 

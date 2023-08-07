@@ -2,14 +2,14 @@
 const show = ref(false)
 const icon = ref<string | undefined>()
 const text = ref<string | undefined>()
-const type = ref<'primary' | 'error' | undefined>()
+const type = ref<'primary' | 'error' | 'warning' | undefined>()
 const duration = ref<number>()
 let timer: ReturnType<typeof setTimeout> | undefined
 
 provideNotification((opt: {
   text: string
   icon?: string
-  type?: 'primary' | 'error'
+  type?: 'primary' | 'error' | 'warning'
   duration?: number
 }) => {
   text.value = opt.text
@@ -18,6 +18,17 @@ provideNotification((opt: {
   type.value = opt.type
   duration.value = opt.duration || 1500
   createTimer()
+})
+
+const textColor = computed(() => {
+  switch (type.value) {
+    case 'warning':
+      return 'text-orange'
+    case 'error':
+      return 'text-red'
+    default:
+      return 'text-primary'
+  }
 })
 
 function clearTimer() {
@@ -40,25 +51,11 @@ function createTimer() {
     :class="show ? '' : 'pointer-events-none overflow-hidden'"
   >
     <div
-      v-if="type === 'error'"
       border="~ base"
       flex="~ inline gap2"
-      m-3 inline-block items-center rounded px-4 py-1 text-red transition-all duration-300 bg-base
+      m-3 inline-block items-center rounded px-4 py-1 transition-all duration-300 bg-base
       :style="show ? {} : { transform: 'translateY(-300%)' }"
-      :class="show ? 'shadow' : 'shadow-none'"
-      @mouseenter="clearTimer"
-      @mouseleave="createTimer"
-    >
-      <div v-if="icon" :class="`i-${icon}`" />
-      <div>{{ text }}</div>
-    </div>
-    <div
-      v-else
-      border="~ base"
-      flex="~ inline gap2"
-      m-3 inline-block items-center rounded px-4 py-1 text-primary transition-all duration-300 bg-base
-      :style="show ? {} : { transform: 'translateY(-300%)' }"
-      :class="show ? 'shadow' : 'shadow-none'"
+      :class="[show ? 'shadow' : 'shadow-none', textColor]"
       @mouseenter="clearTimer"
       @mouseleave="createTimer"
     >
