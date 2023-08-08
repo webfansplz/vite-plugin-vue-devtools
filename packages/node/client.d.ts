@@ -56,3 +56,10 @@ declare interface PackageMeta {
   version: string
   name: string
 }
+
+/**
+ * - `xs` for functions that should only be available in the small view mode, e.g. `__EyeDropper`
+ * - `default` is the default view mode
+ * - `fullscreen` for fullscreen the whole devtool
+ */
+declare type ViewMode = 'xs' | 'default' | 'fullscreen'

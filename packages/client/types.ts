@@ -12,7 +12,7 @@ export interface ComponentInspectorBounds {
 export interface VueDevtoolsHostClient {
   markClientLoaded: () => void
   panel?: {
-    toggleViewMode: (mode?: 'xs' | 'default') => void
+    toggleViewMode: (mode?: ViewMode) => void
     popup: () => void
     toggle: () => void
   }

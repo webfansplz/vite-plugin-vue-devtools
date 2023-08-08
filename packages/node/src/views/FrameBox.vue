@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { PANEL_MAX, PANEL_MIN, popupWindow, state } from './composables'
 import { useWindowEventListener } from './utils'
 
@@ -14,8 +14,7 @@ const props = defineProps<{
       disable: () => void
     } | undefined
   }
-
-  viewMode: 'default' | 'xs'
+  viewMode: 'xs' | 'default' | 'fullscreen'
 }>()
 
 const container = ref<HTMLElement>()
@@ -100,6 +99,14 @@ useWindowEventListener('mouseup', () => {
 useWindowEventListener('mouseleave', () => {
   isResizing.value = false
 })
+
+const viewModeClass = computed(() => {
+  if (props.viewMode === 'xs')
+    return 'view-mode-xs'
+  if (props.viewMode === 'fullscreen')
+    return 'view-mode-fullscreen'
+  return ''
+})
 </script>
 
 <template>
@@ -107,7 +114,7 @@ useWindowEventListener('mouseleave', () => {
     v-show="state.open && !client.inspector?.isEnabled.value && !popupWindow"
     ref="container"
     class="vue-devtools-frame"
-    :class="{ 'view-mode-xs': props.viewMode === 'xs' }"
+    :class="viewModeClass"
   >
     <!-- Handlers -->
     <div
@@ -208,5 +215,17 @@ useWindowEventListener('mouseleave', () => {
 .vue-devtools-frame.view-mode-xs {
   width: 400px !important;
   height: 80px !important;
+}
+
+.vue-devtools-frame.view-mode-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1 !important;
+  bottom: 0 !important;
+  transform: none !important;
+}
+
+.vue-devtools-frame.view-mode-fullscreen :deep(iframe) {
+  border-radius: 0 !important;
 }
 </style>
