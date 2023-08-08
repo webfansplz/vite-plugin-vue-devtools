@@ -178,6 +178,15 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
               src: '/@id/virtual:vue-devtools-path:app.js',
             },
           },
+          // inject inspector script manually to ensure it's loaded after vue-devtools
+          {
+            tag: 'script',
+            injectTo: 'head',
+            attrs: {
+              type: 'module',
+              src: '/@id/virtual:vue-inspector-path:load.js',
+            },
+          },
         ],
       }
     },
@@ -187,10 +196,11 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
 
   return [
     VueInspector({
+      lazyLoad: pluginOptions.appendTo ? 200 : false,
       toggleComboKey: '',
       toggleButtonVisibility: 'never',
       openInEditorHost: pluginOptions.openInEditorHost,
-      ...(pluginOptions.appendTo ? { appendTo: pluginOptions.appendTo } : {}),
+      appendTo: pluginOptions.appendTo || 'manually',
     }),
     plugin,
     inspect,

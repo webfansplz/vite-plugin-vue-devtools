@@ -13,8 +13,9 @@ function subscribeHook() {
   const client = useDevToolsClient()
   const hook = client.value.hook
   hook.on(DevToolsHooks.APP_INIT, (app) => {
-    if (app?._vueDevtools_hidden_)
+    if (!app || app._instance.type?.devtools?.hide)
       return
+
     vueApp.value = app
     instance.value = app._instance
   })
