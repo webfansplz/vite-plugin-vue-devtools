@@ -23,7 +23,7 @@ const { hookBuffer, collect } = collectDevToolsHookBuffer()
 
 let isAppCreated = false
 const panelState = ref<{
-  viewMode: 'default' | 'xs'
+  viewMode: ViewMode
 }>({
   viewMode: 'default',
 })
@@ -90,16 +90,9 @@ async function setupClient(iframe: HTMLIFrameElement) {
   injection.setClient({
     hook,
     hookBuffer,
-    // inspector: {
-    //   enable: enableInspector,
-    //   disable: disableInspector,
-    // },
     panel: {
-      toggleViewMode: () => {
-        if (panelState.value.viewMode === 'xs')
-          panelState.value.viewMode = 'default'
-        else
-          panelState.value.viewMode = 'xs'
+      toggleViewMode: (mode?: ViewMode) => {
+        panelState.value.viewMode = mode ?? 'default'
       },
       toggle: togglePanelVisible,
       popup,
@@ -242,6 +235,7 @@ collectHookBuffer()
     :class="{
       'vue-devtools-vertical': isVertical,
       'vue-devtools-hide': isHidden,
+      'fullscreen': panelState.viewMode === 'fullscreen',
     }"
     @mousemove="bringUp"
   >
@@ -302,6 +296,10 @@ collectHookBuffer()
   z-index: 2147483645;
   transform-origin: center center;
   transform: translate(-50%, -50%) rotate(0);
+}
+#vue-devtools-anchor.fullscreen {
+  transform: none !important;
+  left: 0 !important;
 }
 
 #vue-devtools-anchor .vue-devtools-icon-button {

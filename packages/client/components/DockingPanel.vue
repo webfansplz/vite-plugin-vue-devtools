@@ -6,6 +6,7 @@ import { isInPopup } from '~/logic/state'
   <div>
     <div px3 py2 border="b base" flex="~ gap-2">
       <PopupButton v-if="!isInPopup" />
+      <FullscreenButton v-if="!isInPopup" />
       <VDDarkToggle v-slot="{ toggle, isDark }">
         <VDButton n="sm primary" @click="toggle">
           <div carbon-sun translate-y--1px dark:carbon-moon />
