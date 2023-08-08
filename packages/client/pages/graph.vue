@@ -200,7 +200,6 @@ const navbar = ref<HTMLDivElement>()
 </script>
 
 <template>
-  <!-- i-carbon-data-vis-1 -->
   <div relative h-screen w-full flex flex-col n-panel-grids>
     <SearchBox ref="navbar">
       <template #right>

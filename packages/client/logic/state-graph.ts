@@ -45,7 +45,7 @@ export async function initRawData() {
   stateGraphState.value = StateGraphStateEnum.READY
 }
 
-const currentSelectedFile = ref</* file name */string>()
+export const currentSelectedFile = ref</* file name */string>()
 watch(currentSelectedFile, () => {
   stateGraphState.value = getState()
 })
