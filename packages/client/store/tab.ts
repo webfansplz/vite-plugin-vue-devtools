@@ -171,6 +171,11 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
       groups[group].tabs.push(tab)
   }
 
+  for (const group in groups) {
+    if (groups[group].tabs.length === 0)
+      delete groups[group]
+  }
+
   return Object.entries(groups) as [AllTabGroup, { show: boolean; tabs: Tab[] } ][]
 }
 
