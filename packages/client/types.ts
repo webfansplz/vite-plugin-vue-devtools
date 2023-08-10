@@ -65,7 +65,7 @@ export interface DocumentInfo {
 export interface PackageInfo {
   name: string
   version: string
-  descriptions: string
+  description: string
   owner: {
     name: string
     link: string
