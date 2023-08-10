@@ -214,14 +214,19 @@ useInfiniteScroll(
             <tr v-for="(item, index) in list" :key="index" class="group" h-8 border="b dashed transparent hover:base">
               <td text-sm op70>
                 <div flex="inline gap3" items-center>
-                  <template v-if="item?.repository?.url">
-                    <a :href="item.repository.url" target="_blank" hover="text-primary">
+                  <VTooltip placement="top">
+                    <template v-if="item?.repository?.url">
+                      <a :href="item.repository.url" target="_blank" hover="text-primary">
+                        {{ item.name }}
+                      </a>
+                    </template>
+                    <template v-else>
                       {{ item.name }}
-                    </a>
-                  </template>
-                  <template v-else>
-                    {{ item.name }}
-                  </template>
+                    </template>
+                    <template v-if="item?.description" #popper>
+                      {{ item?.description }}
+                    </template>
+                  </VTooltip>
                 </div>
               </td>
               <VDropdown max-w="10" placement="bottom-start" :distance="5">
