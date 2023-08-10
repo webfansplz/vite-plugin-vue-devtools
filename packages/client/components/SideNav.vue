@@ -2,6 +2,10 @@
 import { getSortedTabs } from '~/store'
 
 const groupedTabs = useGroupedTabs()
+
+const renderedGroupedTabs = computed(() => {
+  return groupedTabs.value.filter(([, { tabs, show }]) => tabs.length && show)
+})
 </script>
 
 <template>
@@ -21,15 +25,13 @@ const groupedTabs = useGroupedTabs()
     </div>
 
     <div flex="~ auto col gap-0.5 items-center" of-auto class="no-scrollbar" py1>
-      <template v-for="[name, { tabs, show }], idx of groupedTabs" :key="name">
-        <template v-if="tabs.length && show">
-          <div v-if="idx" my1 h-1px w-8 border="b base" />
-          <SideNavItem
-            v-for="tab of getSortedTabs(tabs)"
-            :key="tab.path"
-            :tab="tab"
-          />
-        </template>
+      <template v-for="[name, { tabs }], idx of renderedGroupedTabs" :key="name">
+        <SideNavItem
+          v-for="tab of getSortedTabs(tabs)"
+          :key="tab.path"
+          :tab="tab"
+        />
+        <div v-if="idx !== renderedGroupedTabs.length - 1" my1 h-1px w-8 border="b base" />
       </template>
       <div flex-auto />
     </div>
