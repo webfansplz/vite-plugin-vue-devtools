@@ -171,12 +171,14 @@ function getGroupedTab(dataSource: Tab[], enabledOnly = false) {
       groups[group].tabs.push(tab)
   }
 
-  for (const group in groups) {
-    if (groups[group].tabs.length === 0)
-      delete groups[group]
-  }
+  const filteredGroups = Object.entries(groups).reduce((acc, [key, value]) => {
+    if (value.tabs.length > 0)
+      acc[key] = value
 
-  return Object.entries(groups) as [AllTabGroup, { show: boolean; tabs: Tab[] } ][]
+    return acc
+  }, {})
+
+  return Object.entries(filteredGroups) as [AllTabGroup, { show: boolean; tabs: Tab[] } ][]
 }
 
 interface GroupData { name: string; index: number }

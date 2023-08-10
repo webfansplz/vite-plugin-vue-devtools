@@ -22,7 +22,7 @@ const groupedTabs = useGroupedTabs()
 
     <div flex="~ auto col gap-0.5 items-center" of-auto class="no-scrollbar" py1>
       <template v-for="[name, { tabs, show }], idx of groupedTabs" :key="name">
-        <template v-if="tabs.length && show">
+        <template v-if="show">
           <SideNavItem
             v-for="tab of getSortedTabs(tabs)"
             :key="tab.path"
