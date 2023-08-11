@@ -1,5 +1,6 @@
 import type { ComponentInternalInstance } from 'vue'
-import { classify, getInstanceName, kebabize } from './util'
+import { getInstanceName } from '@vite-plugin-vue-devtools/core'
+import { classify, kebabize } from './util'
 
 export class ComponentFilter {
   private filter: string

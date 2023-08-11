@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.22.5",
-    "@vue/compiler-sfc": "^3.3.4"
+    "@vue/compiler-sfc": "^3.3.4",
+    "vue": "^3.3.4"
   }
 }

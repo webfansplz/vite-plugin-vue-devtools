@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { DevToolsHooks } from '@vite-plugin-vue-devtools/core'
+import { DevToolsHooks, getInstanceName } from '@vite-plugin-vue-devtools/core'
 import type { ComponentInternalInstance, DebuggerEvent, Ref } from 'vue'
 import { useDevToolsClient } from '~/logic/client'
 import { rootPath } from '~/logic/global'
 import { getSetupStateInfo, toRaw } from '~/logic/components/data'
-import { getInstanceName } from '~/logic/components'
 
 type ComponentInstance = ComponentInternalInstance & {
   devtoolsRawSetupState: Record<string, unknown>

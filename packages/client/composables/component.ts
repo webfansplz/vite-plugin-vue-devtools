@@ -1,5 +1,6 @@
 import type { ComponentInternalInstance } from 'vue'
-import { InstanceMap, getInstanceDetails, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '~/logic/components'
+import { getInstanceName } from '@vite-plugin-vue-devtools/core'
+import { InstanceMap, getInstanceDetails, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '~/logic/components'
 import { useDevToolsClient } from '~/logic/client'
 import type { ComponentTreeNode } from '~/types'
 

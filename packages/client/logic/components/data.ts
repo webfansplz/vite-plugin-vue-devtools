@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import type { ComponentInternalInstance } from 'vue'
-import { camelize, getInstanceName, getUniqueComponentId, returnError } from './util'
+import { getInstanceName } from '@vite-plugin-vue-devtools/core'
+import { camelize, getUniqueComponentId, returnError } from './util'
 
 const vueBuiltins = [
   'nextTick',

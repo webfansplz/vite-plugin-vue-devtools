@@ -1,5 +1,6 @@
 import type { ComponentInternalInstance, SuspenseBoundary } from 'vue'
-import { getInstanceName, getRenderKey, getUniqueComponentId, isBeingDestroyed, isFragment } from './util'
+import { getInstanceName } from '@vite-plugin-vue-devtools/core'
+import { getRenderKey, getUniqueComponentId, isBeingDestroyed, isFragment } from './util'
 import { ComponentFilter } from './filter'
 import { getRootElementsFromComponentInstance } from './el'
 import { getInstanceState } from './data'
