@@ -237,7 +237,7 @@ useInfiniteScroll(
                   {{ item.activeVersion ?? item.version }}
                 </td>
                 <template #popper>
-                  <ul max-h="35" of-scroll py-3>
+                  <ul max-h="35" overflow-y-auto py-3>
                     <li
                       v-for="(version) in Object.keys(item.versions).reverse()" :key="version" v-close-popper
                       border="b dashed transparent" class="group" hover="bg-active"
