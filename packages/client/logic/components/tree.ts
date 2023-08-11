@@ -3,8 +3,11 @@ import { getInstanceName, getRenderKey, getUniqueComponentId, isBeingDestroyed, 
 import { ComponentFilter } from './filter'
 import { getRootElementsFromComponentInstance } from './el'
 import { getInstanceState } from './data'
+import type { ComponentTreeNode } from '~/types'
 
 export const InstanceMap = new Map()
+export const UidToTreeNodeMap = new Map<number, ComponentTreeNode>()
+
 export class ComponentWalker {
   maxDepth: number
   recursively: boolean
@@ -27,7 +30,7 @@ export class ComponentWalker {
 
   getComponentParents(instance: ComponentInternalInstance) {
     this.captureIds = new Map()
-    const parents = []
+    const parents: ComponentInternalInstance[] = []
     this.captureId(instance)
     let parent = instance
     // eslint-disable-next-line no-cond-assign
@@ -205,6 +208,7 @@ export class ComponentWalker {
     // }
 
     InstanceMap.set(treeNode.id, getInstanceState(instance))
+    UidToTreeNodeMap.set(treeNode.uid, treeNode)
     treeNode.instance = instance
 
     return treeNode

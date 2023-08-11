@@ -1,3 +1,4 @@
+import type { ComponentInternalInstance } from 'vue'
 import type { Router } from 'vue-router'
 
 type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
@@ -27,6 +28,8 @@ export interface VueDevtoolsHostClient {
   componentInspector: {
     highlight: (_name: string, _bounds: ComponentInspectorBounds) => void
     unHighlight: () => void
+    inspectStart(cb?: (instance: ComponentInternalInstance) => void): void
+    inspectEnd(): void
     scrollToComponent: (_bounds: ComponentInspectorBounds) => void
   }
   rerenderHighlight: {

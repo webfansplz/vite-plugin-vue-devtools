@@ -1,5 +1,5 @@
 import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
-import type { CSSProperties, Ref } from 'vue'
+import type { CSSProperties, ComponentInternalInstance, Ref } from 'vue'
 import { clamp, createDebounceFn, useObjectStorage, useScreenSafeArea, useWindowEventListener, warn } from './utils'
 
 interface DevToolsFrameState {
@@ -97,6 +97,7 @@ export function useInspector() {
     if (componentInspector) {
       const _openInEditor = componentInspector.openInEditor
       componentInspector.openInEditor = async (...params: any[]) => {
+        console.log('openInEditor', ...params)
         disable()
         _openInEditor(...params)
       }
@@ -524,12 +525,57 @@ export function useHighlightComponent() {
     overlayVisible.value = false
   }
 
+  let inspectInstance: ComponentInternalInstance | null = null
+  let inspectClickCallback: ((instance: ComponentInternalInstance) => void) | null = null
+
+  const inspectFn = (e: MouseEvent) => {
+    const target = e.target as { __vueParentComponent?: ComponentInternalInstance }
+    if (target) {
+      const instance = target.__vueParentComponent
+      if (instance) {
+        const el = instance.vnode.el as HTMLElement | undefined
+        if (el && el.nodeType === Node.ELEMENT_NODE) {
+          inspectInstance = instance
+          highlight(instance.type.__name ?? '', el.getBoundingClientRect())
+          return
+        }
+      }
+    }
+    inspectInstance = null
+  }
+
+  const inspectClickFn = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (inspectInstance) {
+      inspectClickCallback!(inspectInstance)
+      inspectEnd()
+    }
+  }
+
+  function inspectStart(cb?: (instance: ComponentInternalInstance) => void) {
+    if (!inspectClickCallback)
+      inspectClickCallback = cb ?? (() => {})
+    useWindowEventListener('mouseover', inspectFn)
+    useWindowEventListener('click', inspectClickFn)
+  }
+
+  function inspectEnd() {
+    window.removeEventListener('mouseover', inspectFn)
+    window.removeEventListener('click', inspectClickFn)
+    unHighlight()
+    inspectInstance = null
+    inspectClickCallback = null
+  }
+
   return {
     name,
     overlayVisible,
     bounds,
     highlight,
     unHighlight,
+    inspectStart,
+    inspectEnd,
   }
 }
 

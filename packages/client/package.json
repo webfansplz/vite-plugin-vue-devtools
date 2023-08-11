@@ -37,6 +37,7 @@
     "json-editor-vue": "^0.10.6",
     "minimatch": "^9.0.3",
     "nanoid": "^4.0.2",
+    "scroll-into-view-if-needed": "^3.0.10",
     "splitpanes": "^3.1.5",
     "vanilla-jsoneditor": "^0.17.8",
     "vite-hot-client": "^0.2.1",
