@@ -1,6 +1,6 @@
 import { computed, onMounted, reactive, ref, shallowRef, watchEffect } from 'vue'
 import type { CSSProperties, ComponentInternalInstance, Ref } from 'vue'
-import { getInstanceName } from '@vite-plugin-vue-devtools/core/src'
+import { getInstanceName } from '@vite-plugin-vue-devtools/core'
 import { clamp, createDebounceFn, useObjectStorage, useScreenSafeArea, useWindowEventListener, warn } from './utils'
 
 interface DevToolsFrameState {
