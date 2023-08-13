@@ -28,8 +28,8 @@ export interface VueDevtoolsHostClient {
   componentInspector: {
     highlight: (_name: string, _bounds: ComponentInspectorBounds) => void
     unHighlight: () => void
-    inspectStart(cb?: (instance: ComponentInternalInstance) => void): void
-    inspectEnd(): void
+    startInspect(cb?: (instance: ComponentInternalInstance) => void): void
+    stopInspect(): void
     scrollToComponent: (_bounds: ComponentInspectorBounds) => void
   }
   rerenderHighlight: {

@@ -10,8 +10,8 @@ const client = ref<VueDevtoolsHostClient>({
     highlight: () => {},
     unHighlight: () => {},
     scrollToComponent: () => { },
-    inspectStart: () => { },
-    inspectEnd: () => { },
+    startInspect: () => { },
+    stopInspect: () => { },
   },
   rerenderHighlight: {
     updateInfo: () => {},

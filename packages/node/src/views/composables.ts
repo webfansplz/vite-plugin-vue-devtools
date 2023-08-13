@@ -549,18 +549,18 @@ export function useHighlightComponent() {
     e.stopPropagation()
     if (inspectInstance) {
       inspectClickCallback!(inspectInstance)
-      inspectEnd()
+      stopInspect()
     }
   }
 
-  function inspectStart(cb?: (instance: ComponentInternalInstance) => void) {
+  function startInspect(cb?: (instance: ComponentInternalInstance) => void) {
     if (!inspectClickCallback)
       inspectClickCallback = cb ?? (() => {})
     useWindowEventListener('mouseover', inspectFn)
     useWindowEventListener('click', inspectClickFn)
   }
 
-  function inspectEnd() {
+  function stopInspect() {
     window.removeEventListener('mouseover', inspectFn)
     window.removeEventListener('click', inspectClickFn)
     unHighlight()
@@ -574,8 +574,8 @@ export function useHighlightComponent() {
     bounds,
     highlight,
     unHighlight,
-    inspectStart,
-    inspectEnd,
+    startInspect,
+    stopInspect,
   }
 }
 

@@ -79,7 +79,7 @@ const { iframe, getIframe } = useIframe(clientUrl, async () => {
 
 // Picture-in-Picture mode
 const { popup } = usePiPMode(getIframe, hook)
-const { overlayVisible, name: componentName, bounds, highlight, unHighlight, inspectEnd, inspectStart } = useHighlightComponent()
+const { overlayVisible, name: componentName, bounds, highlight, unHighlight, stopInspect, startInspect } = useHighlightComponent()
 const { updateRerenderHighlightInfo } = useRerenderHighlight()
 
 async function setupClient(iframe: HTMLIFrameElement) {
@@ -103,8 +103,8 @@ async function setupClient(iframe: HTMLIFrameElement) {
     componentInspector: {
       highlight,
       unHighlight,
-      inspectStart,
-      inspectEnd,
+      startInspect,
+      stopInspect,
       scrollToComponent(bounds) {
         const scrollTarget = document.createElement('div')
         scrollTarget.style.position = 'absolute'

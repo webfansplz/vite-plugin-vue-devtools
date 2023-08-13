@@ -110,9 +110,9 @@ function inspectComponentClick(instance: ComponentInternalInstance) {
 function toggleInspector(target?: boolean) {
   inspectorEnabled.value = target ?? !inspectorEnabled.value
   if (inspectorEnabled.value)
-    client.value.componentInspector.inspectStart(inspectComponentClick)
+    client.value.componentInspector.startInspect(inspectComponentClick)
 
-  else client.value.componentInspector.inspectEnd()
+  else client.value.componentInspector.stopInspect()
 }
 
 const { control, c, escape } = useMagicKeys()
