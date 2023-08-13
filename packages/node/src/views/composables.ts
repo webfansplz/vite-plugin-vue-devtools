@@ -98,7 +98,6 @@ export function useInspector() {
     if (componentInspector) {
       const _openInEditor = componentInspector.openInEditor
       componentInspector.openInEditor = async (...params: any[]) => {
-        console.log('openInEditor', ...params)
         disable()
         _openInEditor(...params)
       }
