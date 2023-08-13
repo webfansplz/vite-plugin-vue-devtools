@@ -32,7 +32,6 @@
   "dependencies": {
     "@vueuse/core": "^10.3.0",
     "@vueuse/integrations": "^10.3.0",
-    "@webfansplz/vuedoc-parser": "^0.0.3",
     "algoliasearch": "^4.19.1",
     "json-editor-vue": "^0.10.6",
     "minimatch": "^9.0.3",

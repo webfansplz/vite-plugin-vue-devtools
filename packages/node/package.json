@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@vite-plugin-vue-devtools/core": "workspace:*",
-    "@webfansplz/vuedoc-parser": "^0.0.3",
+    "@webfansplz/vuedoc-parser": "^0.0.4",
     "birpc": "^0.2.12",
     "execa": "^7.2.0",
     "sirv": "^2.0.3",
