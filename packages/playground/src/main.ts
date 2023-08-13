@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import Home from './pages/Home.vue'
@@ -21,14 +22,28 @@ const pinia = createPinia()
 // })
 const app = createApp(App)
 
-const routes = [
-  { path: '/', component: Home, name: 'home', alias: '/index' },
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    component: Home,
+    name: 'home',
+    alias: '/index',
+    meta: {
+      title: 'Home',
+      some: 'a',
+      foo: 'bar',
+    },
+  },
   {
     path: '/about',
     component: About,
     children: [
       { path: '/about/:id', component: About },
     ],
+    meta: {
+      title: 'About',
+      some: 'b',
+    },
   },
   // { path: '/:articleName', component: About },
 ]

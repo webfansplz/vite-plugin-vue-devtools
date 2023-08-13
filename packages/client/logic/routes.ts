@@ -301,3 +301,11 @@ export function initRoutes(buffer: [string, Record<string, any>][]) {
     subscribeRouterChanged(router.value)
   }
 }
+
+export function tryGetAllMetaKeys(route: RouteRecordNormalized[]) {
+  const keys = new Set<string>()
+  route.forEach((record) => {
+    Object.keys(record.meta).forEach(key => keys.add(key))
+  })
+  return Array.from(keys)
+}
