@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { getComponentFileName } from './components/util'
+import { getComponentFileName } from '@vite-plugin-vue-devtools/core'
 import { useDevToolsClient } from './client'
 
 interface TimelineLayer {

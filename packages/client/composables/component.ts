@@ -1,5 +1,6 @@
 import type { ComponentInternalInstance } from 'vue'
-import { InstanceMap, getInstanceDetails, getInstanceName, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '~/logic/components'
+import { getInstanceName } from '@vite-plugin-vue-devtools/core'
+import { InstanceMap, getInstanceDetails, getInstanceOrVnodeRect, getRootElementsFromComponentInstance } from '~/logic/components'
 import { useDevToolsClient } from '~/logic/client'
 import type { ComponentTreeNode } from '~/types'
 
@@ -13,23 +14,29 @@ const expandedMap = ref<Record<ComponentTreeNode['id'], boolean>>({
 
 export const selectedComponent = ref<ComponentInternalInstance>()
 export const selectedComponentState = shallowRef<Record<string, any>[]>([])
+
+export function selectComponentTreeNode(data: ComponentTreeNode) {
+  selected.value = data.id
+  selectedComponentName.value = data.name
+  // TODO (Refactor): get instance state way
+  selectedComponentState.value = InstanceMap.get(data.id)
+  selectedComponentNode.value = data
+  // selectedComponent.value = instance.instance
+  // selectedComponentState.value = getInstanceState(instance.instance!)
+}
+
+export function setExpanded(id: string, expanded: boolean) {
+  expandedMap.value[id] = expanded
+}
+
 export function useComponent(instance: ComponentTreeNode & { instance?: ComponentInternalInstance }) {
-  function select(data: ComponentTreeNode) {
-    selected.value = data.id
-    selectedComponentName.value = data.name
-    // TODO (Refactor): get instance state way
-    selectedComponentState.value = InstanceMap.get(data.id)
-    selectedComponentNode.value = data
-    // selectedComponent.value = instance.instance
-    // selectedComponentState.value = getInstanceState(instance.instance!)
-  }
   function toggleExpand(id: string) {
     expandedMap.value[id] = !expandedMap.value[id]
   }
   const isSelected = computed(() => selected.value === instance.id)
   const isExpanded = computed(() => expandedMap.value[instance.id])
 
-  return { isSelected, select, isExpanded, toggleExpand }
+  return { isSelected, select: selectComponentTreeNode, isExpanded, toggleExpand }
 }
 
 export function useHighlightComponent(node: ComponentTreeNode): {
