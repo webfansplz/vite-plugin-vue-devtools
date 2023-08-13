@@ -40,7 +40,7 @@ export const state = useObjectStorage<DevToolsFrameState>('__vue-devtools-frame-
   position: 'bottom',
   isFirstVisit: true,
   closeOnOutsideClick: false,
-  minimizePanelInactive: 50000,
+  minimizePanelInactive: 5000,
 })
 
 // ---- useIframe ----
