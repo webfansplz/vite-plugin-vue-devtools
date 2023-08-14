@@ -17,8 +17,8 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "serve": "^14.2.0",
     "typescript": "^5.1.6",
-    "vite": "^4.4.8",
-    "vite-plugin-inspect": "^0.7.35",
+    "vite": "^4.4.9",
+    "vite-plugin-inspect": "^0.7.38",
     "vite-plugin-vue-devtools": "workspace:*"
   }
 }
