@@ -47,7 +47,7 @@ function createTimer() {
 
 <template>
   <div
-    fixed left-0 right-0 top-0 z-50 text-center text-base
+    fixed left-0 right-0 top-0 z-1000 text-center text-base
     :class="show ? '' : 'pointer-events-none overflow-hidden'"
   >
     <div
