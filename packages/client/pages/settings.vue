@@ -50,7 +50,7 @@ const showTabGroup = ref(false)
 </script>
 
 <template>
-  <div overflow-scroll px6 py6>
+  <div overflow-y-auto px6 py6>
     <VDIconTitle class="mb-5 text-xl op75" icon="i-carbon-settings" text="DevTools Settings" />
     <div grid="~ md:cols-2 gap-x-10 gap-y-3" max-w-300>
       <div flex="~ col gap-1" py3>
