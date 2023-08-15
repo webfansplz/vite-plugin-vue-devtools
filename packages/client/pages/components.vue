@@ -126,7 +126,7 @@ watchEffect(() => {
 <template>
   <div h-screen n-panel-grids>
     <Splitpanes>
-      <Pane border="r base">
+      <Pane flex flex-col border="r base">
         <div v-if="componentWalker" sticky left-0 top-0 z-300 w-full flex gap2 px10px py12px bg-base>
           <VDTextInput v-model="filterName" placeholder="Find components..." flex-1 />
           <button p2 @click="() => toggleInspector()">
@@ -144,7 +144,7 @@ watchEffect(() => {
           <ComponentTreeNode v-for="(item) in componentTree" :key="item.id" :data="item" />
         </div>
       </Pane>
-      <Pane>
+      <Pane flex flex-col>
         <div v-if="normalizedComponentState.length" border="b base" flex justify-between px-4 py-2>
           <span v-if="selectedComponentName" text-sm text-primary op90>&lt;{{ selectedComponentName }}&gt;</span>
           <p flex>
