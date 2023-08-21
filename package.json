@@ -63,10 +63,10 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.40.2",
     "@antfu/ni": "^0.21.5",
-    "@types/node": "^20.5.0",
-    "@unocss/eslint-config": "^0.55.0",
+    "@types/node": "^20.5.1",
+    "@unocss/eslint-config": "^0.55.2",
     "@vite-plugin-vue-devtools/ui-kit": "workspace:*",
-    "bumpp": "^9.1.1",
+    "bumpp": "^9.2.0",
     "eslint": "8.47.0",
     "esno": "^0.17.0",
     "lint-staged": "^14.0.0",
@@ -77,7 +77,7 @@
     "typescript": "^5.1.6",
     "unbuild": "^1.2.1",
     "vite": "^4.4.9",
-    "vitest": "^0.34.1",
+    "vitest": "^0.34.2",
     "vue": "^3.3.4"
   },
   "simple-git-hooks": {
