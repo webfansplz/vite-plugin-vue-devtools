@@ -233,8 +233,8 @@ importers:
         specifier: ^0.2.12
         version: 0.2.12
       execa:
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: ^8.0.1
+        version: 8.0.1
       sirv:
         specifier: ^2.0.3
         version: 2.0.3
@@ -1092,7 +1092,7 @@ packages:
     resolution: {integrity: sha512-BDXFbYOJzT/NBEtp71cvsrGPwGAMGRB/349rwKuoxNSiKjPraNNnlK6MIIabViCjqZugu6j+xeMDlEkWdHHJSg==}
     dependencies:
       '@esbuild-kit/core-utils': 3.1.0
-      get-tsconfig: 4.6.0
+      get-tsconfig: 4.7.0
 
   /@esbuild-kit/core-utils@3.1.0:
     resolution: {integrity: sha512-Uuk8RpCg/7fdHSceR1M6XbSZFSuMrxcePFuGgyvsBn+u339dk5OeL4jv2EojwTN2st/unJGsVm4qHWjWNmJ/tw==}
@@ -1104,7 +1104,7 @@ packages:
     resolution: {integrity: sha512-Qwfvj/qoPbClxCRNuac1Du01r9gvNOT+pMYtJDapfB1eoGN1YlJ1BixLyL9WVENRx5RXgNLdfYdx/CuswlGhMw==}
     dependencies:
       '@esbuild-kit/core-utils': 3.1.0
-      get-tsconfig: 4.6.0
+      get-tsconfig: 4.7.0
 
   /@esbuild/android-arm64@0.17.19:
     resolution: {integrity: sha512-KBMWvEZooR7+kzY0BtbTQn0OAYY7CsiydT63pVEaPtVYF0hXbUaOyZog37DKxK7NF3XacBJOpYT4adIJh+avxA==}
@@ -4317,6 +4317,21 @@ packages:
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
 
+  /execa@8.0.1:
+    resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
+    engines: {node: '>=16.17'}
+    dependencies:
+      cross-spawn: 7.0.3
+      get-stream: 8.0.1
+      human-signals: 5.0.0
+      is-stream: 3.0.0
+      merge-stream: 2.0.0
+      npm-run-path: 5.1.0
+      onetime: 6.0.0
+      signal-exit: 4.1.0
+      strip-final-newline: 3.0.0
+    dev: false
+
   /extract-comments@1.1.0:
     resolution: {integrity: sha512-dzbZV2AdSSVW/4E7Ti5hZdHWbA+Z80RJsJhr5uiL10oyjl/gy7/o+HI1HwK4/WSZhlq4SNKU3oUzXlM13Qx02Q==}
     engines: {node: '>=6'}
@@ -4541,6 +4556,11 @@ packages:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
     engines: {node: '>=10'}
 
+  /get-stream@8.0.1:
+    resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
+    engines: {node: '>=16'}
+    dev: false
+
   /get-symbol-description@1.0.0:
     resolution: {integrity: sha512-2EmdH1YvIQiZpltCNgkuiUnyukzxM/R6NDJX31Ke3BG1Nq5b0S2PhX59UKi9vZpPDQVdqn+1IcaAwnzTT5vCjw==}
     engines: {node: '>= 0.4'}
@@ -4549,16 +4569,10 @@ packages:
       get-intrinsic: 1.2.1
     dev: true
 
-  /get-tsconfig@4.6.0:
-    resolution: {integrity: sha512-lgbo68hHTQnFddybKbbs/RDRJnJT5YyGy2kQzVwbq+g67X73i+5MVTval34QxGkOe9X5Ujf1UYpCaphLyltjEg==}
-    dependencies:
-      resolve-pkg-maps: 1.0.0
-
   /get-tsconfig@4.7.0:
     resolution: {integrity: sha512-pmjiZ7xtB8URYm74PlGJozDNyhvsVLUcpBa8DZBG3bWHwaHa9bPiRpiSfovw+fjhwONSCWKRyk+JQHEGZmMrzw==}
     dependencies:
       resolve-pkg-maps: 1.0.0
-    dev: true
 
   /giget@1.1.2:
     resolution: {integrity: sha512-HsLoS07HiQ5oqvObOI+Qb2tyZH4Gj5nYGfF9qQcZNrPw+uEFhdXtgJr01aO2pWadGHucajYDLxxbtQkm97ON2A==}
@@ -4797,6 +4811,11 @@ packages:
   /human-signals@4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
+
+  /human-signals@5.0.0:
+    resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
+    engines: {node: '>=16.17.0'}
+    dev: false
 
   /humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
@@ -6845,6 +6864,11 @@ packages:
     resolution: {integrity: sha512-MY2/qGx4enyjprQnFaZsHib3Yadh3IXyV2C321GY0pjGfVBu4un0uDJkwgdxqO+Rdx8JMT8IfJIRwbYVz3Ob3Q==}
     engines: {node: '>=14'}
     dev: true
+
+  /signal-exit@4.1.0:
+    resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
+    engines: {node: '>=14'}
+    dev: false
 
   /sigstore@1.5.2:
     resolution: {integrity: sha512-X95v6xAAooVpn7PaB94TDmFeSO5SBfCtB1R23fvzr36WTfjtkiiyOeei979nbTjc8nzh6FSLeltQZuODsm1EjQ==}
