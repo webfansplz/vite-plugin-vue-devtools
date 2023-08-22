@@ -29,7 +29,7 @@ const data = computed(() => {
 </script>
 
 <template>
-  <div h-screen n-panel-grids>
+  <div h-screen of-auto n-panel-grids>
     <Splitpanes>
       <Pane border="r base" :size="40">
         <div h-screen select-none overflow-scroll p-2 class="no-scrollbar">
