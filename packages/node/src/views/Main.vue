@@ -6,7 +6,7 @@ import vueDevToolsOptions from 'virtual:vue-devtools-options'
 import { DevToolsHooks, collectDevToolsHookBuffer } from '@vite-plugin-vue-devtools/core'
 import Frame from './FrameBox.vue'
 import ComponentInspector from './ComponentInspector.vue'
-import { useHighlightComponent, useIframe, useInspector, usePanelVisible, usePiPMode, usePosition, useRerenderHighlight } from './composables'
+import { useHighlightComponent, useIframe, useInspector, usePanelState, usePanelVisible, usePiPMode, usePosition, useRerenderHighlight } from './composables'
 import { checkIsSafari, useColorScheme, usePreferredColorScheme, warn } from './utils'
 import RerenderIndicator from './RerenderIndicator.vue'
 
@@ -22,15 +22,11 @@ const hook = props.hook
 const { hookBuffer, collect } = collectDevToolsHookBuffer()
 
 let isAppCreated = false
-const panelState = ref<{
-  viewMode: ViewMode
-}>({
-  viewMode: 'default',
-})
 
 const { togglePanelVisible, closePanel, panelVisible } = usePanelVisible()
 const panelEl = ref<HTMLDivElement>()
 const { onPointerDown, bringUp, anchorStyle, iframeStyle, isDragging, isVertical, isHidden, panelStyle } = usePosition(panelEl)
+const { viewMode, toggleViewMode } = usePanelState()
 const vars = computed(() => {
   const colorScheme = useColorScheme()
   const dark = colorScheme.value === 'auto'
@@ -91,9 +87,7 @@ async function setupClient(iframe: HTMLIFrameElement) {
     hook,
     hookBuffer,
     panel: {
-      toggleViewMode: (mode?: ViewMode) => {
-        panelState.value.viewMode = mode ?? 'default'
-      },
+      toggleViewMode,
       toggle: togglePanelVisible,
       popup,
     },
@@ -237,7 +231,7 @@ collectHookBuffer()
     :class="{
       'vue-devtools-vertical': isVertical,
       'vue-devtools-hide': isHidden,
-      'fullscreen': panelState.viewMode === 'fullscreen',
+      'fullscreen': viewMode === 'fullscreen',
     }"
     @mousemove="bringUp"
   >
@@ -284,7 +278,7 @@ collectHookBuffer()
         },
         getIFrame: getIframe,
       }"
-      :view-mode="panelState.viewMode"
+      :view-mode="viewMode"
     />
   </div>
   <!-- component inspector -->

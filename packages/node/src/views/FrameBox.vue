@@ -14,7 +14,7 @@ const props = defineProps<{
       disable: () => void
     } | undefined
   }
-  viewMode: 'xs' | 'default' | 'fullscreen'
+  viewMode: ViewMode
 }>()
 
 const container = ref<HTMLElement>()
