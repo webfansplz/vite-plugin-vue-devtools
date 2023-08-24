@@ -295,7 +295,6 @@ collectHookBuffer()
 }
 #vue-devtools-anchor.fullscreen {
   transform: none !important;
-  left: 0 !important;
 }
 
 #vue-devtools-anchor .vue-devtools-icon-button {
