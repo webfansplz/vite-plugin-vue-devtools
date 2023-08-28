@@ -36,14 +36,14 @@
     "vite": "^3.1.0 || ^4.0.0-0"
   },
   "dependencies": {
-    "@babel/parser": "^7.22.10",
-    "birpc": "^0.2.12",
+    "@babel/parser": "^7.22.11",
+    "birpc": "^0.2.13",
     "estree-walker": "^2.0.2",
-    "magic-string": "^0.30.2",
+    "magic-string": "^0.30.3",
     "vite-hot-client": "^0.2.1"
   },
   "devDependencies": {
-    "@babel/types": "^7.22.10",
+    "@babel/types": "^7.22.11",
     "@vue/compiler-sfc": "^3.3.4",
     "vue": "^3.3.4"
   }
