@@ -18,6 +18,7 @@ onMounted(() => {
   if (iframeCacheMap.get(key.value)) {
     iframeEl.value = iframeCacheMap.get(key.value)!
     iframeEl.value.style.visibility = 'visible'
+    iframeLoaded.value = true
   }
   else {
     iframeEl.value = document.createElement('iframe')
@@ -45,10 +46,8 @@ watchEffect(updateIframeBox)
 watchEffect(syncColorMode)
 
 onUnmounted(() => {
-  if (iframeEl.value) {
+  if (iframeEl.value)
     iframeEl.value.style.visibility = 'hidden'
-    iframeLoaded.value = false
-  }
 })
 
 function syncColorMode() {
