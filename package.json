@@ -1,6 +1,6 @@
 {
   "name": "@vite-plugin-vue-devtools/monorepo",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "private": true,
   "packageManager": "pnpm@8.7.0",
   "description": "A vite plugin for Vue DevTools",
