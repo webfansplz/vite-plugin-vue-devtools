@@ -61,23 +61,36 @@ const normalizedComponentState = computed(() => {
   return list
 })
 
+function findComponentNode(treeNode: any[], uid: number) {
+  for (const node of treeNode) {
+    if (node.uid === uid) {
+      return node
+    }
+    else if (node.children) {
+      const findNode = findComponentNode(node.children, uid)
+      if (findNode)
+        return findNode
+    }
+  }
+  return undefined
+}
+
 function init() {
   componentWalker.value = new ComponentWalker(500, null, true)
-  selectedComponent.value = instance.value
-  selectedComponentState.value = getInstanceState(instance.value!)
   componentWalker.value.getComponentTree(instance.value!).then((res) => {
+    const currentNode = findComponentNode(res, selectedComponentNode.value?.uid || 0) || res[0]
     componentTree.value = res
-    selectedComponentName.value = res?.[0]?.name ?? ''
-    selectedComponentNode.value = res?.[0]
+    selected.value = currentNode.id
+    selectedComponentName.value = currentNode.name
+    selectedComponentNode.value = currentNode
+    selectedComponentState.value = getInstanceState(currentNode.instance)
   })
 }
 
 onMounted(() => {
   onVueInstanceUpdate((v) => {
-    if (v) {
+    if (v)
       init()
-      selected.value = 'vue-devtools:root'
-    }
   })
 })
 
