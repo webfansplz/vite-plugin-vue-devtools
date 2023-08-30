@@ -219,6 +219,7 @@ const viewModeClass = computed(() => {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1 !important;
+  left: 0 !important;
   bottom: 0 !important;
   transform: none !important;
 }
