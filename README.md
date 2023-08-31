@@ -56,7 +56,7 @@ Assets tab that shows all your static assets and their information. You can open
 
 ### Timeline
 
-Timeline tab has three categories: Performance, Router Navigations, and Pinia. You can switch between them to see the state changes and timelines.
+Timeline tab has three categories: Performance, Router Navigations, and [Pinia](https://github.com/vuejs/pinia). You can switch between them to see the state changes and timelines.
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/timeline.png" />
 
