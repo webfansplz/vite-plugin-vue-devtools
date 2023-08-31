@@ -80,7 +80,7 @@ Graph tab provides a graph view that show the relationship between components.
 
 ### Inspect
 
-Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of Vite. It can be helpful to understand how each plugin is transforming your code and spot potential issues.
+Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of [Vite](https://vitejs.dev/). It can be helpful to understand how each plugin is transforming your code and spot potential issues.
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/inspect.png" />
 
