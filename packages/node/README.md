@@ -55,7 +55,7 @@ Assets tab that shows all your static assets and their information. You can open
 
 ### Timeline
 
-Timeline tab has three categories: Performance, Router Navigations, and Pinia. You can switch between them to see the state changes and timelines.
+Timeline tab has three categories: Performance, Router Navigations, and [Pinia](https://github.com/vuejs/pinia). You can switch between them to see the state changes and timelines.
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/timeline.png" />
 
@@ -79,7 +79,7 @@ Graph tab provides a graph view that show the relationship between components.
 
 ### Inspect
 
-Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of Vite. It can be helpful to understand how each plugin is transforming your code and spot potential issues.
+Inspect expose the [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) integration, allowing you to inspect transformation steps of [Vite](https://vitejs.dev/). It can be helpful to understand how each plugin is transforming your code and spot potential issues.
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/inspect.png" />
 

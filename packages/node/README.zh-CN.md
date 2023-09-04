@@ -55,7 +55,7 @@ Vue DevTools <sup>预览</sup>
 
 ### Timeline
 
-`Timeline` 选项卡包含三个类别：性能、路由导航和 Pinia，您可以在它们之间切换以查看状态变化和时间线。
+`Timeline` 选项卡包含三个类别：性能、路由导航和 [Pinia](https://github.com/vuejs/pinia)，您可以在它们之间切换以查看状态变化和时间线。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/timeline.png" />
 
@@ -79,13 +79,13 @@ Vue DevTools <sup>预览</sup>
 
 ### Inspect
 
-`Inspect` 公开 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) 集成，允许您检查 Vite 的转换步骤，了解每个插件如何改变您的代码并发现潜在问题可能会有所帮助。
+`Inspect` 公开 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) 集成，允许您检查 [Vite](https://vitejs.dev/) 的转换步骤，了解每个插件如何改变您的代码并发现潜在问题可能会有所帮助。
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/inspect.png" />
 
 ### Inspector
 
-您还可以使用 `Inspector` 功能来检查 `DOM` 树并查看哪个组件正在渲染它，单击可转到特定行的编辑器，使更改变得更加容易，而无需彻底了解项目结构。 (该功能基于 [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
+您还可以使用 `Inspector` 功能来检查 `DOM` 树并查看哪个组件正在渲染它，单击可转到编辑器的特定行，使更改变得更加容易，而无需彻底了解项目结构。 (该功能基于 [vite-plugin-vue-inspector](https://github.com/webfansplz/vite-plugin-vue-inspector))
 
 <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/inspector.png" height=450 />
 
@@ -150,7 +150,7 @@ interface VitePluginVueDevToolsOptions {
 - 仅在 `开发模式` 下可用。
 - 仅支持 `Vue3.0+` 。
 - 仅支持单实例 `Vue` 应用程序。
-- 不支持 `SSR` (如果您使用 `Nuxt` ，请使用 [nuxt/devtools](https://github.com/nuxt/devtools))。
+- 不支持 `SSR` （如果您使用 `Nuxt` ，请使用 [nuxt/devtools](https://github.com/nuxt/devtools)）。
 - 该插件遵循 `Vue` 的 `DevTools` 配置，因此如果您配置了 `hide` 选项，它也将应用于该插件。例如
 
   ```js
