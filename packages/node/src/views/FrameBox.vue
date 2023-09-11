@@ -18,6 +18,9 @@ const props = defineProps<{
 }>()
 
 const container = ref<HTMLElement>()
+const ableToResize = computed(() => {
+  return props.viewMode === 'default'
+})
 const isResizing = ref<false | { top?: boolean; left?: boolean; right?: boolean; bottom?: boolean }>(false)
 
 watchEffect(() => {
@@ -116,49 +119,49 @@ const viewModeClass = computed(() => {
   >
     <!-- Handlers -->
     <div
-      v-show="state.position !== 'top' && props.viewMode === 'default'"
+      v-show="state.position !== 'top' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
       :style="{ top: 0 }"
       @mousedown.prevent="() => isResizing = { top: true }"
     />
     <div
-      v-show="state.position !== 'bottom' && props.viewMode === 'default'"
+      v-show="state.position !== 'bottom' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
       :style="{ bottom: 0 }"
       @mousedown.prevent="() => isResizing = { bottom: true }"
     />
     <div
-      v-show="state.position !== 'left' && props.viewMode === 'default'"
+      v-show="state.position !== 'left' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
       :style="{ left: 0 }"
       @mousedown.prevent="() => isResizing = { left: true }"
     />
     <div
-      v-show="state.position !== 'right' && props.viewMode === 'default'"
+      v-show="state.position !== 'right' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
       :style="{ right: 0 }"
       @mousedown.prevent="() => isResizing = { right: true }"
     />
     <div
-      v-show="state.position !== 'top' && state.position !== 'left' && props.viewMode === 'default'"
+      v-show="state.position !== 'top' && state.position !== 'left' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ top: 0, left: 0, cursor: 'nwse-resize' }"
       @mousedown.prevent="() => isResizing = { top: true, left: true }"
     />
     <div
-      v-show="state.position !== 'top' && state.position !== 'right' && props.viewMode === 'default'"
+      v-show="state.position !== 'top' && state.position !== 'right' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ top: 0, right: 0, cursor: 'nesw-resize' }"
       @mousedown.prevent="() => isResizing = { top: true, right: true }"
     />
     <div
-      v-show="state.position !== 'bottom' && state.position !== 'left' && props.viewMode === 'default'"
+      v-show="state.position !== 'bottom' && state.position !== 'left' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }"
       @mousedown.prevent="() => isResizing = { bottom: true, left: true }"
     />
     <div
-      v-show="state.position !== 'bottom' && state.position !== 'right' && props.viewMode === 'default'"
+      v-show="state.position !== 'bottom' && state.position !== 'right' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }"
       @mousedown.prevent="() => isResizing = { bottom: true, right: true }"
