@@ -513,14 +513,12 @@ export function usePanelState() {
       state.value.viewMode = value
     },
   })
-  let perViewMode = viewMode.value
+  let preViewMode = viewMode.value
 
   function toggleViewMode(mode: ViewMode) {
-    const newMode = mode ?? perViewMode
-    setTimeout(() => {
-      perViewMode = viewMode.value
-      viewMode.value = newMode
-    }, 0)
+    const newMode = mode ?? preViewMode
+    preViewMode = viewMode.value
+    viewMode.value = newMode
   }
 
   return { viewMode, toggleViewMode }
