@@ -61,6 +61,12 @@ export function analyzeCode(code: string, filename: string, options: AnalyzeOpti
 
   return {
     code: ms.toString(),
-    map: ms.generateMap(),
+    get map() {
+      return ms.generateMap({
+        source: filename,
+        includeContent: true,
+        hires: 'boundary',
+      })
+    },
   }
 }
