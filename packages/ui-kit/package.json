@@ -56,7 +56,7 @@
     "unocss": "^0.55.7"
   },
   "devDependencies": {
-    "unplugin": "^1.4.0",
+    "unplugin": "^1.5.0",
     "unplugin-vue-components": "^0.25.2"
   }
 }

@@ -43,7 +43,7 @@
     "vite-hot-client": "^0.2.2"
   },
   "devDependencies": {
-    "@babel/types": "^7.22.17",
+    "@babel/types": "^7.22.19",
     "@vue/compiler-sfc": "^3.3.4",
     "vue": "^3.3.4"
   }
