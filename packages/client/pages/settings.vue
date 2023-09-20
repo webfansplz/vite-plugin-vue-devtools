@@ -5,6 +5,7 @@ const {
   scale,
   hiddenTabs,
   hiddenTabGroups,
+  sidebarExpanded,
 } = useDevToolsSettings()
 
 const { closeOnOutsideClick, minimizePanelInactive } = useFrameState()
@@ -113,7 +114,7 @@ const showTabGroup = ref(false)
           <div>
             <VDDarkToggle v-slot="{ toggle, isDark }">
               <VDButton n="primary" @click="toggle">
-                <div carbon-sun translate-y--1px dark:carbon-moon /> {{ isDark.value ? 'Dark' : 'Light' }}
+                <div carbon-sun dark:carbon-moon translate-y--1px /> {{ isDark.value ? 'Dark' : 'Light' }}
               </VDButton>
             </VDDarkToggle>
           </div>
@@ -146,6 +147,15 @@ const showTabGroup = ref(false)
           <VDSwitch
             flex="~ row-reverse" py1 n-primary :model-value="closeOnOutsideClick"
             @update:model-value="toggleClickOutside"
+          />
+        </div>
+        <div py3 flex="~ justify-between gap-1">
+          <h3 mb1 text-lg>
+            {{ sidebarExpanded ? 'Scrollable' : 'Expand' }} Sidebar
+          </h3>
+          <VDSwitch
+            flex="~ row-reverse" py1 n-primary :model-value="sidebarExpanded"
+            @update:model-value="sidebarExpanded = !sidebarExpanded"
           />
         </div>
       </div>
