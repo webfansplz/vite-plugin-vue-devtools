@@ -288,7 +288,7 @@ collectHookBuffer()
     />
   </div>
   <!-- component inspector -->
-  <ComponentInspector v-if="overlayVisible" :bounds="bounds" :name="componentName" />
+  <ComponentInspector v-if="overlayVisible && bounds" :bounds="bounds" :name="componentName" />
   <RerenderIndicator />
 </template>
 
