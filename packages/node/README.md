@@ -12,6 +12,7 @@ English | <a href="./README.zh-CN.md">简体中文</a>
 <p align="center">
   <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-vue-devtools" alt="NPM Version" /></a>
   <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-vue-devtools" alt="NPM Downloads" /></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-vue-devtools" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/node/v/vite-plugin-vue-devtools" alt="Node Compatibility" /></a>
  <a href="https://github.com/webfansplz/vite-plugin-vue-devtools/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/webfansplz/vite-plugin-vue-devtools" alt="License" /></a>
 </p>
 
@@ -121,17 +122,17 @@ export default defineConfig({
 interface AnalyzeOptions {
   /**
    * @default true
-  */
+   */
   rerenderTrace: boolean
 }
 
 interface VitePluginVueDevToolsOptions {
   /**
-  * append an import to the module id ending with `appendTo` instead of adding a script into body
-  * useful for projects that do not use html file as an entry
-  *
-  * WARNING: only set this if you know exactly what it does.
-  */
+   * append an import to the module id ending with `appendTo` instead of adding a script into body
+   * useful for projects that do not use html file as an entry
+   *
+   * WARNING: only set this if you know exactly what it does.
+   */
   appendTo?: string | RegExp
   /**
    * Enable Vue DevTools to analyze the codebase by using Babel
@@ -139,13 +140,13 @@ interface VitePluginVueDevToolsOptions {
    * {
    *   rerenderTrace: true, // enable rerenderTrace feature
    * }
-  */
+   */
   analyze?: Partial<AnalyzeOptions>
 
   /**
-  * Customize openInEditor host (e.g. http://localhost:3000)
-  * @default false
-  */
+   * Customize openInEditor host (e.g. http://localhost:3000)
+   * @default false
+   */
   openInEditorHost?: string | false
 }
 ```

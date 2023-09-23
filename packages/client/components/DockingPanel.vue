@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { isInPopup } from '~/logic/state'
+
+const { sidebarExpanded } = useDevToolsSettings()
 </script>
 
 <template>
@@ -9,10 +11,14 @@ import { isInPopup } from '~/logic/state'
       <FullscreenButton v-if="!isInPopup" />
       <VDDarkToggle v-slot="{ toggle, isDark }">
         <VDButton n="sm primary" @click="toggle">
-          <div carbon-sun translate-y--1px dark:carbon-moon />
+          <div carbon-sun dark:carbon-moon translate-y--1px />
           {{ isDark.value ? "Dark" : "Light" }}
         </VDButton>
       </VDDarkToggle>
+      <VDButton n="sm primary" @click="sidebarExpanded = !sidebarExpanded">
+        <VDIcon :icon="sidebarExpanded ? 'i-carbon-side-panel-close' : 'i-carbon-side-panel-open'" />
+        {{ sidebarExpanded ? 'Minimize Sidebar' : 'Expand Sidebar' }}
+      </VDButton>
       <RouterLink
         replace
         class="n-button-base active:n-button-active focus-visible:n-focus-base n-transition n-primary n-sm hover:n-button-hover n-disabled:n-disabled"

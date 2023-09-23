@@ -6,7 +6,7 @@ import { initPinia } from './logic/pinia'
 
 const route = useRoute()
 const router = useRouter()
-const { scale } = useDevToolsSettings()
+const { scale, sidebarExpanded } = useDevToolsSettings()
 const { route: _route, isFirstVisit } = useFrameState()
 
 useColorMode()
@@ -63,7 +63,10 @@ router.replace(_route.value)
 <template>
   <main fixed inset-0 h-screen w-screen>
     <Notification />
-    <div grid="~ cols-[50px_1fr]" h-full h-screen of-hidden font-sans bg-base>
+    <div
+      :class="sidebarExpanded ? 'grid grid-cols-[250px_1fr]' : 'grid grid-cols-[50px_1fr]'"
+      h-full h-screen of-hidden font-sans bg-base
+    >
       <SideNav v-if="!route.path.startsWith('/__')" of-x-hidden of-y-auto />
       <RouterView />
     </div>
