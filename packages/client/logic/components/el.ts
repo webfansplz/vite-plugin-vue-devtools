@@ -35,7 +35,7 @@ function getFragmentRootElements(vnode: any): any[] {
  * Get the client rect for an instance.
  *
  * @param {Vue|Vnode} instance
- * @return {Object}
+ * @return {object}
  */
 export function getInstanceOrVnodeRect(instance: any): any {
   const el = instance.subTree.el

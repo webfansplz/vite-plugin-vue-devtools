@@ -13,7 +13,7 @@ export class ComponentFilter {
    * Check if an instance is qualified.
    *
    * @param {Vue|Vnode} instance
-   * @return {Boolean}
+   * @return {boolean}
    */
   isQualified(instance: ComponentInternalInstance) {
     const name = getInstanceName(instance)

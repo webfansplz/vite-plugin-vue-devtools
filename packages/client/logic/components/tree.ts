@@ -131,7 +131,7 @@ export class ComponentWalker {
    * Capture the meta information of an instance. (recursive)
    *
    * @param {Vue} instance
-   * @return {Object}
+   * @return {object}
    */
   private async capture(instance: ComponentInternalInstance, list: any[], depth: number): Promise<any> {
     if (!instance)

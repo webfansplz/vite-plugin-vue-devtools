@@ -122,17 +122,17 @@ export default defineConfig({
 interface AnalyzeOptions {
   /**
    * @default true
-  */
+   */
   rerenderTrace: boolean
 }
 
 interface VitePluginVueDevToolsOptions {
   /**
-  * append an import to the module id ending with `appendTo` instead of adding a script into body
-  * useful for projects that do not use html file as an entry
-  *
-  * WARNING: only set this if you know exactly what it does.
-  */
+   * append an import to the module id ending with `appendTo` instead of adding a script into body
+   * useful for projects that do not use html file as an entry
+   *
+   * WARNING: only set this if you know exactly what it does.
+   */
   appendTo?: string | RegExp
   /**
    * Enable Vue DevTools to analyze the codebase by using Babel
@@ -140,13 +140,13 @@ interface VitePluginVueDevToolsOptions {
    * {
    *   rerenderTrace: true, // enable rerenderTrace feature
    * }
-  */
+   */
   analyze?: Partial<AnalyzeOptions>
 
   /**
-  * Customize openInEditor host (e.g. http://localhost:3000)
-  * @default false
-  */
+   * Customize openInEditor host (e.g. http://localhost:3000)
+   * @default false
+   */
   openInEditorHost?: string | false
 }
 ```

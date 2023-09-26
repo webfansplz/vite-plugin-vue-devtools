@@ -22,7 +22,7 @@ export function getComponentFileName(options: any) {
  * Get the appropriate display name for an instance.
  *
  * @param {Vue} instance
- * @return {String}
+ * @return {string}
  */
 export function getInstanceName(instance: any) {
   const name = getComponentTypeName(instance.type || {})
