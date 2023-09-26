@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import type { ComponentInternalInstance } from 'vue'
 import { getInstanceName } from '@vite-plugin-vue-devtools/core'
 import { camelize, getUniqueComponentId, returnError } from './util'
@@ -104,13 +103,13 @@ function processProps(instance: ComponentInternalInstance) {
       value: returnError(() => instance.props[key]),
       meta: propDefinition
         ? {
-          type: propDefinition.type ? getPropType(propDefinition.type) : 'any',
-          required: !!propDefinition.required,
-          ...propDefinition.default != null ? { default: propDefinition.default.toString() } : {},
-        }
+            type: propDefinition.type ? getPropType(propDefinition.type) : 'any',
+            required: !!propDefinition.required,
+            ...propDefinition.default != null ? { default: propDefinition.default.toString() } : {},
+          }
         : {
-          type: 'invalid',
-        },
+            type: 'invalid',
+          },
       editable: false,
     })
   }

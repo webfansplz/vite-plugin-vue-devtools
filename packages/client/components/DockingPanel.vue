@@ -11,7 +11,7 @@ const { sidebarExpanded } = useDevToolsSettings()
       <FullscreenButton v-if="!isInPopup" />
       <VDDarkToggle v-slot="{ toggle, isDark }">
         <VDButton n="sm primary" @click="toggle">
-          <div carbon-sun translate-y--1px dark:carbon-moon />
+          <div carbon-sun dark:carbon-moon translate-y--1px />
           {{ isDark.value ? "Dark" : "Light" }}
         </VDButton>
       </VDDarkToggle>

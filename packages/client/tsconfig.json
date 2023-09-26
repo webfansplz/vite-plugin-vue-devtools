@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
     "lib": ["esnext", "DOM"],
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
     "jsx": "preserve",
-    "allowJs": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "noImplicitAny": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "~/*": ["./*"]
+    },
     "types": [
       "vite-plugin-pages/client",
       "vite/client",
       "vite-plugin-vue-devtools/client"
     ],
-    "paths": {
-      "~/*": ["./*"]
-    }
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false
   },
   "exclude": ["node_modules", "dist"]
 }

@@ -30,7 +30,6 @@ declare interface ExecNpmScriptOptions {
   callback?: (type: string, data: string) => void
 }
 
-
 declare interface RPCFunctions {
   componentGraph(): Promise<ModuleInfo[]>
   inspectClientUrl(): string
@@ -49,7 +48,6 @@ declare interface RPCFunctions {
   uninstallPackage(packages: string[], options?: ExecNpmScriptOptions): Promise<void>
   root(): string
 }
-
 
 declare interface PackageMeta {
   type: string
