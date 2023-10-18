@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> NOTICE：Currently, we are heavily refactoring the codebase, so there might only have limited support and slowly response now. The new version will be released soon, if you have any suggestions, please feel free to [create an issue](https://github.com/webfansplz/vite-plugin-vue-devtools/issues/new)
+
 <p align="center">
   <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/bg.png" />
 </p>
