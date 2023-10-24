@@ -4,6 +4,7 @@ const icon = ref<string | undefined>()
 const text = ref<string | undefined>()
 const type = ref<'primary' | 'error' | 'warning' | undefined>()
 const duration = ref<number>()
+const placement = ref<'top' | 'bottom'>('top')
 let timer: ReturnType<typeof setTimeout> | undefined
 
 provideNotification((opt: {
@@ -11,12 +12,14 @@ provideNotification((opt: {
   icon?: string
   type?: 'primary' | 'error' | 'warning'
   duration?: number
+  placement?: 'top' | 'bottom'
 }) => {
   text.value = opt.text
   icon.value = opt.icon
   show.value = true
   type.value = opt.type
   duration.value = opt.duration || 1500
+  placement.value = opt.placement || 'top'
   createTimer()
 })
 
@@ -47,15 +50,26 @@ function createTimer() {
 
 <template>
   <div
-    fixed left-0 right-0 top-0 z-1000 text-center text-base
-    :class="show ? '' : 'pointer-events-none overflow-hidden'"
+    fixed z-1000 text-center text-base
+    :class="[
+      {
+        'pointer-events-none overflow-hidden': !show,
+      },
+      [
+        placement === 'top' ? 'top-0' : 'bottom-0',
+      ],
+    ]"
   >
     <div
       border="~ base"
       flex="~ inline gap2"
-      m-3 inline-block items-center rounded px-4 py-1 transition-all duration-300 bg-base
-      :style="show ? {} : { transform: 'translateY(-300%)' }"
-      :class="[show ? 'shadow' : 'shadow-none', textColor]"
+      m-3 inline-block items-center rounded px-4 py-1 transition-transform duration-300 bg-base
+      :class="[
+        show
+          ? 'shadow'
+          : `shadow-none  ${placement === 'top' ? 'translate-y--300%' : 'translate-y-300%'}`,
+        textColor,
+      ]"
       @mouseenter="clearTimer"
       @mouseleave="createTimer"
     >

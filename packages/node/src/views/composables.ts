@@ -198,12 +198,14 @@ export function usePiPMode(iframeGetter: () => HTMLIFrameElement | undefined, ho
   const documentPictureInPicture = window.documentPictureInPicture
   async function popup() {
     const iframe = iframeGetter()
-    const pip = popupWindow.value = await documentPictureInPicture.requestWindow({
-      width: Math.round(window.innerWidth * state.value.width / 100),
-      height: Math.round(window.innerHeight * state.value.height / 100),
-    })
-    const style = pip.document.createElement('style')
-    style.innerHTML = `
+    let isSuccess = true
+    try {
+      const pip = popupWindow.value = await documentPictureInPicture.requestWindow({
+        width: Math.round(window.innerWidth * state.value.width / 100),
+        height: Math.round(window.innerHeight * state.value.height / 100),
+      })
+      const style = pip.document.createElement('style')
+      style.innerHTML = `
         body {
           margin: 0;
           padding: 0;
@@ -215,19 +217,25 @@ export function usePiPMode(iframeGetter: () => HTMLIFrameElement | undefined, ho
           outline: none;
         }
       `
-    pip.__VUE_DEVTOOLS_GLOBAL_HOOK__ = hook
-    pip.__VUE_DEVTOOLS_IS_POPUP__ = true
-    pip.document.title = 'Vue DevTools'
-    pip.document.head.appendChild(style)
-    pip.document.body.appendChild(iframe)
-    pip.addEventListener('resize', () => {
-      state.value.width = Math.round(pip.innerWidth / window.innerWidth * 100)
-      state.value.height = Math.round(pip.innerHeight / window.innerHeight * 100)
-    })
-    pip.addEventListener('pagehide', () => {
-      popupWindow.value = null
-      pip.close()
-    })
+      pip.__VUE_DEVTOOLS_GLOBAL_HOOK__ = hook
+      pip.__VUE_DEVTOOLS_IS_POPUP__ = true
+      pip.document.title = 'Vue DevTools'
+      pip.document.head.appendChild(style)
+      pip.document.body.appendChild(iframe)
+      pip.addEventListener('resize', () => {
+        state.value.width = Math.round(pip.innerWidth / window.innerWidth * 100)
+        state.value.height = Math.round(pip.innerHeight / window.innerHeight * 100)
+      })
+      pip.addEventListener('pagehide', () => {
+        popupWindow.value = null
+        pip.close()
+      })
+    }
+    catch (error) {
+      isSuccess = false
+      console.error(`[vite-plugin-vue-devtools] Open popup mode failed: ${(error as DOMException).message}`)
+    }
+    return isSuccess
   }
   return {
     popup,

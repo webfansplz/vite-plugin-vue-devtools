@@ -19,6 +19,7 @@ const [
   icon?: string
   type?: 'primary' | 'warning' | 'error'
   duration?: number
+  placement?: 'top' | 'bottom'
 }) => void>()
 
 export {

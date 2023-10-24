@@ -1,19 +1,40 @@
 <script setup lang="ts">
 import { useDevToolsClient } from '~/logic/client'
 
+defineProps<{
+  closePopover: () => void
+}>()
+
 const client = useDevToolsClient()
-// @ts-expect-error missing type
-const isSupported = typeof window !== 'undefined' && window.parent.documentPictureInPicture?.requestWindow
 const showPopupUnsupported = ref(false)
 const copy = useCopy()
+
+const isSupported = typeof window !== 'undefined'
+  // @ts-expect-error experimental API
+  && window.parent?.documentPictureInPicture?.requestWindow
+  && checkIsSecurityContext()
+
+const showNotification = useNotification()
 
 function popup() {
   if (!isSupported) {
     showPopupUnsupported.value = true
     return
   }
-
-  client.value?.panel?.popup()
+  const popupFn = client.value?.panel?.popup as (() => Promise<boolean>) | undefined
+  if (popupFn) {
+    popupFn().then((success) => {
+      if (!success) {
+        showNotification({
+          text: 'Open popup mode failed, check console for more details.',
+          icon: 'i-carbon-warning',
+          type: 'error',
+          duration: 3000,
+          placement: 'bottom',
+        })
+      }
+    })
+  }
 }
 </script>
 
