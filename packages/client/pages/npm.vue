@@ -64,7 +64,7 @@ async function uninstall(item: PackageMeta, type: string) {
   })
 }
 
-async function search(query: string) {
+const search = useDebounceFn(async (query: string) => {
   const res = await client.search<PackageInfo>(query, {
     attributesToRetrieve: [
       'name',
@@ -81,7 +81,7 @@ async function search(query: string) {
   responseTime.value = res.processingTimeMS
   total.value = res.nbHits
   list.value = page.value ? list.value.concat(res.hits) : res.hits
-}
+}, 300)
 
 function getProjectDeps() {
   rpc.getPackages().then((res) => {
@@ -231,6 +231,7 @@ useInfiniteScroll(
               </td>
               <VDropdown max-w="10" placement="bottom-start" :distance="5">
                 <td
+                  max-w="10"
                   hover="text-primary"
                   h-7 cursor-pointer ws-nowrap pr-1 text-left text-sm lh-7 font-mono underline op70
                 >
