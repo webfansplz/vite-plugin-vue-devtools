@@ -64,7 +64,7 @@ async function uninstall(item: PackageMeta, type: string) {
   })
 }
 
-const search = useDebounceFn(async (query: string) => {
+async function search(query: string) {
   const res = await client.search<PackageInfo>(query, {
     attributesToRetrieve: [
       'name',
@@ -81,7 +81,7 @@ const search = useDebounceFn(async (query: string) => {
   responseTime.value = res.processingTimeMS
   total.value = res.nbHits
   list.value = page.value ? list.value.concat(res.hits) : res.hits
-}, 300)
+}
 
 function getProjectDeps() {
   rpc.getPackages().then((res) => {
@@ -96,7 +96,7 @@ function getProjectDeps() {
 }
 getProjectDeps()
 
-watch(keywords, (value) => {
+watchDebounced(keywords, (value) => {
   page.value = 0
   el.value?.scrollTo({
     top: 0,
@@ -106,6 +106,7 @@ watch(keywords, (value) => {
   search(value)
 }, {
   immediate: true,
+  debounce: 300,
 })
 
 useInfiniteScroll(
