@@ -231,7 +231,6 @@ useInfiniteScroll(
               </td>
               <VDropdown max-w="10" placement="bottom-start" :distance="5">
                 <td
-                  max-w="10"
                   hover="text-primary"
                   h-7 cursor-pointer ws-nowrap pr-1 text-left text-sm lh-7 font-mono underline op70
                 >
