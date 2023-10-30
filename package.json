@@ -38,7 +38,7 @@
     "*.d.ts"
   ],
   "engines": {
-    "node": ">=v14.21.3"
+    "node": ">=20.9.0"
   },
   "scripts": {
     "dev:client": "nr -C packages/client dev",
