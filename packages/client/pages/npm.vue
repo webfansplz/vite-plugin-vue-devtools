@@ -96,7 +96,7 @@ function getProjectDeps() {
 }
 getProjectDeps()
 
-watch(keywords, (value) => {
+watchDebounced(keywords, (value) => {
   page.value = 0
   el.value?.scrollTo({
     top: 0,
@@ -106,6 +106,7 @@ watch(keywords, (value) => {
   search(value)
 }, {
   immediate: true,
+  debounce: 300,
 })
 
 useInfiniteScroll(
