@@ -68,7 +68,7 @@
     "unplugin-vue-components": "^0.25.2",
     "vis-data": "^7.1.7",
     "vis-network": "^9.1.7",
-    "vite": "^4.4.11",
+    "vite": "^5.0.1",
     "vite-plugin-pages": "^0.31.0",
     "vite-plugin-vue-devtools": "workspace:*",
     "vue": "^3.3.4",
