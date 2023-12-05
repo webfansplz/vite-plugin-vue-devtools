@@ -245,8 +245,8 @@ importers:
         specifier: ^0.7.40
         version: 0.7.40(rollup@3.28.1)(vite@4.4.11)
       vite-plugin-vue-inspector:
-        specifier: ^4.0.1
-        version: 4.0.1(vite@4.4.11)
+        specifier: ^4.0.2
+        version: 4.0.2(vite@4.4.11)
     devDependencies:
       '@types/node':
         specifier: ^20.8.3
@@ -697,8 +697,8 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-environment-visitor': 7.22.5
-      '@babel/helper-function-name': 7.22.5
+      '@babel/helper-environment-visitor': 7.22.20
+      '@babel/helper-function-name': 7.23.0
       '@babel/helper-member-expression-to-functions': 7.22.5
       '@babel/helper-optimise-call-expression': 7.22.5
       '@babel/helper-replace-supers': 7.22.20(@babel/core@7.22.10)
@@ -732,6 +732,7 @@ packages:
   /@babel/helper-environment-visitor@7.22.5:
     resolution: {integrity: sha512-XGmhECfVA/5sAt+H+xpSg0mfrHq6FzNr9Oxh7PSEBBRUb/mL7Kz3NICXb194rCqAEdxkhPT1a88teizAFyvk8Q==}
     engines: {node: '>=6.9.0'}
+    dev: false
 
   /@babel/helper-function-name@7.22.5:
     resolution: {integrity: sha512-wtHSq6jMRE3uF2otvfuD3DIvVhOsSNshQl0Qrd7qC9oQJzHvOL4qQXlQn2916+CXGywIjpGuIkoyZRRxHPiNQQ==}
@@ -739,6 +740,7 @@ packages:
     dependencies:
       '@babel/template': 7.22.15
       '@babel/types': 7.23.0
+    dev: false
 
   /@babel/helper-function-name@7.23.0:
     resolution: {integrity: sha512-OErEqsrxjZTJciZ4Oo+eoZqeW9UIiOcuYKRJA4ZAgV9myA+pOXhhmpfNCKjEH/auVfEYVFJ6y1Tc4r0eIApqiw==}
@@ -786,7 +788,7 @@ packages:
       '@babel/core': ^7.0.0
     dependencies:
       '@babel/core': 7.22.10
-      '@babel/helper-environment-visitor': 7.22.5
+      '@babel/helper-environment-visitor': 7.22.20
       '@babel/helper-module-imports': 7.22.15
       '@babel/helper-simple-access': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
@@ -1058,8 +1060,8 @@ packages:
     dependencies:
       '@babel/code-frame': 7.22.13
       '@babel/generator': 7.23.0
-      '@babel/helper-environment-visitor': 7.22.5
-      '@babel/helper-function-name': 7.22.5
+      '@babel/helper-environment-visitor': 7.22.20
+      '@babel/helper-function-name': 7.23.0
       '@babel/helper-hoist-variables': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.23.0
@@ -8180,8 +8182,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-vue-inspector@4.0.1(vite@4.4.11):
-    resolution: {integrity: sha512-Jk7YUpYFK1Slm64ct6jL9vfVNnDXsK1N3axCbfpyXmRH0pNbd9yZ58haZKyjZ/Mi47D17dB6KnxPqOLO2SR1FQ==}
+  /vite-plugin-vue-inspector@4.0.2(vite@4.4.11):
+    resolution: {integrity: sha512-KPvLEuafPG13T7JJuQbSm5PwSxKFnVS965+MP1we2xGw9BPkkc/+LPix5MMWenpKWqtjr0ws8THrR+KuoDC8hg==}
     peerDependencies:
       vite: ^3.0.0-0 || ^4.0.0-0 || ^5.0.0-0
     dependencies:
