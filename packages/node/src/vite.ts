@@ -175,7 +175,7 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
             injectTo: 'head',
             attrs: {
               type: 'module',
-              src: '/@id/virtual:vue-devtools-path:app.js',
+              src: `${config.base || '/'}@id/virtual:vue-devtools-path:app.js`,
             },
           },
           // inject inspector script manually to ensure it's loaded after vue-devtools
@@ -184,7 +184,7 @@ export default function VitePluginVueDevTools(options?: VitePluginVueDevToolsOpt
             injectTo: 'head',
             attrs: {
               type: 'module',
-              src: '/@id/virtual:vue-inspector-path:load.js',
+              src: `${config.base || '/'}@id/virtual:vue-inspector-path:load.js`,
             },
           },
         ],
