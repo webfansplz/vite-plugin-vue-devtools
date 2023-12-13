@@ -2,6 +2,7 @@
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ReadCounter from './components/ReadCounter.vue'
+import TSX from './components/TSX.vue'
 
 const count = ref(0)
 const doubleCount = computed(() => {
@@ -43,6 +44,7 @@ const router = useRouter()
   {{ count }}
   {{ doubleCount }}
   <ReadCounter />
+  TSX: <TSX />
   <RouterView />
   <!-- <HelloWorld msg="Vite + Vue" /> -->
   <button @click="router.push('/about')">
