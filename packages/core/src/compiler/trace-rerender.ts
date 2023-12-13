@@ -22,6 +22,15 @@ export function analyzeByTraceRerender(code: MS, locations: InsertLocation[]) {
     });\n`,
   }
 
+  // to avoid duplicate injection
+  const currentCode = code.toString()
+  const shouldInject = Object.entries(apiNames).map(([, alias]) => {
+    return !currentCode.includes(alias)
+  }).every(Boolean)
+
+  if (!shouldInject)
+    return code
+
   locations.forEach(({ start, end }, idx) => {
     if (idx === 0) {
       code = ensureImport(code, {
@@ -30,6 +39,7 @@ export function analyzeByTraceRerender(code: MS, locations: InsertLocation[]) {
         })),
       }, start)
     }
+
     entries(injectedCodes).forEach(([, appendCode]) => {
       code.prependLeft(end, appendCode)
     })
