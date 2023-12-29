@@ -1,3 +1,5 @@
+# 项目迁移至 [vuejs/devtools-next](https://github.com/vuejs/devtools-next)
+
 <p align="center">
   <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/bg.png" />
 </p>

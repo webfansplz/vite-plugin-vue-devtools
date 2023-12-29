@@ -1,5 +1,4 @@
-> [!IMPORTANT]
-> We are heavily refactoring the codebase, so there might only be limited support and a slow response now. The new version will be released soon, if you have any suggestions, please feel free to [create an issue](https://github.com/webfansplz/vite-plugin-vue-devtools/issues/new).
+# Project Moved to [vuejs/devtools-next](https://github.com/vuejs/devtools-next)
 
 <p align="center">
   <img src="https://github.com/webfansplz/vite-plugin-vue-devtools/raw/main/screenshots/bg.png" />
