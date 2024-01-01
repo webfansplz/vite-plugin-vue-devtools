@@ -54,7 +54,7 @@
     "@unocss/reset": "^0.56.5",
     "@vite-plugin-vue-devtools/core": "workspace:*",
     "@vite-plugin-vue-devtools/ui-kit": "workspace:*",
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@vitejs/plugin-vue": "^5.0.2",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "dayjs": "^1.11.10",
     "floating-vue": "2.0.0-beta.24",
