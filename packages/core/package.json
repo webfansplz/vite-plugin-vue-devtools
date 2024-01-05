@@ -36,15 +36,15 @@
     "vite": "^3.1.0 || ^4.0.0-0 || ^5.0.0-0"
   },
   "dependencies": {
-    "@babel/parser": "^7.23.0",
+    "@babel/parser": "^7.23.6",
     "birpc": "^0.2.14",
     "estree-walker": "^2.0.2",
-    "magic-string": "^0.30.4",
-    "vite-hot-client": "^0.2.2"
+    "magic-string": "^0.30.5",
+    "vite-hot-client": "^0.2.3"
   },
   "devDependencies": {
-    "@babel/types": "^7.23.0",
-    "@vue/compiler-sfc": "^3.3.4",
-    "vue": "^3.3.4"
+    "@babel/types": "^7.23.6",
+    "@vue/compiler-sfc": "^3.4.5",
+    "vue": "^3.4.5"
   }
 }
