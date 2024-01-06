@@ -14,6 +14,7 @@ interface DevToolsFrameState {
   isFirstVisit: boolean
   closeOnOutsideClick: boolean
   minimizePanelInactive: number
+  viewMode: ViewMode
 }
 
 interface ComponentInspectorBounds {
@@ -41,6 +42,7 @@ export const state = useObjectStorage<DevToolsFrameState>('__vue-devtools-frame-
   isFirstVisit: true,
   closeOnOutsideClick: false,
   minimizePanelInactive: 5000,
+  viewMode: 'default',
 })
 
 // ---- useIframe ----
@@ -507,6 +509,27 @@ export function usePosition(panelEl: Ref<HTMLElement | undefined>) {
     onPointerDown,
     bringUp,
   }
+}
+
+// ---- usePanelState ----
+export function usePanelState() {
+  const viewMode = computed({
+    get() {
+      return state.value.viewMode
+    },
+    set(value) {
+      state.value.viewMode = value
+    },
+  })
+  let preViewMode = viewMode.value
+
+  function toggleViewMode(mode: ViewMode) {
+    const newMode = mode ?? preViewMode
+    preViewMode = viewMode.value
+    viewMode.value = newMode
+  }
+
+  return { viewMode, toggleViewMode }
 }
 
 // ---- useHighlightComponent ----

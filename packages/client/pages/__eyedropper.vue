@@ -23,8 +23,9 @@ useEventListener('keydown', (e) => {
 })
 
 function close() {
-  client.value?.panel?.toggleViewMode()
-  router.replace(frameState.route.value)
+  router.replace(frameState.route.value).then(() => {
+    client.value?.panel?.toggleViewMode()
+  })
 }
 
 const inSecurityContext = checkIsSecurityContext()

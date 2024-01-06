@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useDevToolsClient } from '../logic/client'
 
-const isFullscreen = ref(false)
+const { viewMode } = useFrameState()
 const client = useDevToolsClient()
-
+const isFullscreen = computed(() => viewMode.value === 'fullscreen')
 function toggleFullscreen() {
   client.value.panel?.toggleViewMode(isFullscreen.value ? 'default' : 'fullscreen')
-  isFullscreen.value = !isFullscreen.value
 }
 </script>
 

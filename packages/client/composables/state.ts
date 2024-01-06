@@ -12,6 +12,7 @@ export interface DevToolsFrameState {
   isFirstVisit: boolean
   closeOnOutsideClick: boolean
   minimizePanelInactive: number
+  viewMode: ViewMode
 }
 
 const frameState = useLocalStorage<DevToolsFrameState>(FRAME_STATE_STORAGE_KEY, {
@@ -25,6 +26,7 @@ const frameState = useLocalStorage<DevToolsFrameState>(FRAME_STATE_STORAGE_KEY, 
   isFirstVisit: true,
   closeOnOutsideClick: false,
   minimizePanelInactive: 5000,
+  viewMode: 'default',
 }, { mergeDefaults: true })
 
 const frameStateRefs = toRefs(frameState)

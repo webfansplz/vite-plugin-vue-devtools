@@ -14,10 +14,13 @@ const props = defineProps<{
       disable: () => void
     } | undefined
   }
-  viewMode: 'xs' | 'default' | 'fullscreen'
+  viewMode: ViewMode
 }>()
 
 const container = ref<HTMLElement>()
+const ableToResize = computed(() => {
+  return props.viewMode === 'default'
+})
 const isResizing = ref<false | { top?: boolean; left?: boolean; right?: boolean; bottom?: boolean }>(false)
 
 watchEffect(() => {
@@ -61,9 +64,7 @@ useWindowEventListener('mousedown', (e: MouseEvent) => {
 })
 
 useWindowEventListener('mousemove', (e) => {
-  if (!isResizing.value)
-    return
-  if (!state.value.open)
+  if (!isResizing.value || !state.value.open)
     return
 
   const iframe = props.client.getIFrame()
@@ -118,49 +119,49 @@ const viewModeClass = computed(() => {
   >
     <!-- Handlers -->
     <div
-      v-show="state.position !== 'top'"
+      v-show="state.position !== 'top' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
       :style="{ top: 0 }"
       @mousedown.prevent="() => isResizing = { top: true }"
     />
     <div
-      v-show="state.position !== 'bottom'"
+      v-show="state.position !== 'bottom' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-horizontal"
       :style="{ bottom: 0 }"
       @mousedown.prevent="() => isResizing = { bottom: true }"
     />
     <div
-      v-show="state.position !== 'left'"
+      v-show="state.position !== 'left' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
       :style="{ left: 0 }"
       @mousedown.prevent="() => isResizing = { left: true }"
     />
     <div
-      v-show="state.position !== 'right'"
+      v-show="state.position !== 'right' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-vertical"
       :style="{ right: 0 }"
       @mousedown.prevent="() => isResizing = { right: true }"
     />
     <div
-      v-show="state.position !== 'top' && state.position !== 'left'"
+      v-show="state.position !== 'top' && state.position !== 'left' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ top: 0, left: 0, cursor: 'nwse-resize' }"
       @mousedown.prevent="() => isResizing = { top: true, left: true }"
     />
     <div
-      v-show="state.position !== 'top' && state.position !== 'right'"
+      v-show="state.position !== 'top' && state.position !== 'right' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ top: 0, right: 0, cursor: 'nesw-resize' }"
       @mousedown.prevent="() => isResizing = { top: true, right: true }"
     />
     <div
-      v-show="state.position !== 'bottom' && state.position !== 'left'"
+      v-show="state.position !== 'bottom' && state.position !== 'left' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ bottom: 0, left: 0, cursor: 'nesw-resize' }"
       @mousedown.prevent="() => isResizing = { bottom: true, left: true }"
     />
     <div
-      v-show="state.position !== 'bottom' && state.position !== 'right'"
+      v-show="state.position !== 'bottom' && state.position !== 'right' && ableToResize"
       class="vue-devtools-resize-handle vue-devtools-resize-handle-corner"
       :style="{ bottom: 0, right: 0, cursor: 'nwse-resize' }"
       @mousedown.prevent="() => isResizing = { bottom: true, right: true }"
@@ -221,6 +222,7 @@ const viewModeClass = computed(() => {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1 !important;
+  left: 0 !important;
   bottom: 0 !important;
   transform: none !important;
 }
